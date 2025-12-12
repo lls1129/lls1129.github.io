@@ -1,0 +1,38 @@
+name: Build LaTeX to Website
+
+on:
+  push:
+    branches: ["main"]  # Triggers when you sync Overleaf
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 1. Install Pandoc (The Translator)
+      - name: Install Pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      # 2. Convert LaTeX to HTML
+      # This command takes main.tex and makes index.html
+      # --toc adds the "Jump back and forth" Table of Contents automatically
+      # --mathjax makes math equations look good on the web
+      - name: Convert LaTeX to HTML
+        run: |
+          pandoc src/main.tex -o index.html --standalone --toc --mathjax
+
+      # 3. Commit the new index.html back to the repo
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add index.html
+          git commit -m "Auto-update website from Overleaf" || exit 0
+          git push
