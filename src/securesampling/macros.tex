@@ -1,106 +1,22 @@
-% !TEX root = ../main.tex
-
-% =========================================================
-% WEB MODE (Pandoc) - This runs on your Website
-% =========================================================
-\ifdefined\pandoc
-  % 1. FIX MATH ARGUMENTS (The \vec crash)
-  % We use \def to force Pandoc to keep the curly braces {}.
-  \def\vec#1{\boldsymbol{#1}}
-  
-  % 2. FIX BRACKETS (Text fallback)
-  \def\lbra{[\![} \def\lket{]\!]}
-  \def\llbracket{[\![} \def\rrbracket{]\!]}
-
-  % 3. FAKE ALGORITHMS (Prevent "Environment undefined" error)
-  \renewenvironment{algorithm}[1][]
-    {\medskip\noindent\textbf{Algorithm/Protocol}\par\noindent\hrulefill\par}
-    {\noindent\hrulefill\medskip}
-  \renewcommand{\caption}[1]{\medskip\noindent\textbf{Caption:} #1 \par}
-  \providecommand{\floatname}[2]{}
-  
-  % 4. FAKE THEOREMS (Simple text blocks)
-  % Note: Since main.tex defined them as "real", we redefine them here for web only.
-  \providecommand{\theoremstyle}[1]{}
-  \renewenvironment{theorem}{\medskip\noindent\textbf{Theorem.}\itshape}{\medskip}
-  \renewenvironment{lemma}{\medskip\noindent\textbf{Lemma.}\itshape}{\medskip}
-  \renewenvironment{definition}{\medskip\noindent\textbf{Definition.}\itshape}{\medskip}
-  \renewenvironment{protocol}{\medskip\noindent\textbf{Protocol.}\itshape}{\medskip}
-  \renewenvironment{fact}{\medskip\noindent\textbf{Fact.}\itshape}{\medskip}
-  \renewenvironment{claim}{\medskip\noindent\textbf{Claim.}\itshape}{\medskip}
-  \renewenvironment{corollary}{\medskip\noindent\textbf{Corollary.}\itshape}{\medskip}
-  \renewenvironment{proposition}{\medskip\noindent\textbf{Proposition.}\itshape}{\medskip}
-  \renewenvironment{example}{\medskip\noindent\textbf{Example.}\itshape}{\medskip}
-  \renewenvironment{observation}{\medskip\noindent\textbf{Observation.}\itshape}{\medskip}
-  \renewenvironment{proof}{\medskip\noindent\textbf{Proof.}\itshape}{\medskip}
-
-  % 5. FAKE COMMANDS
-  \providecommand{\State}{\noindent $\bullet$ }
-  \providecommand{\Require}{\noindent\textbf{Require: }}
-  \providecommand{\Ensure}{\noindent\textbf{Ensure: }}
-  \providecommand{\Return}{\noindent\textbf{Return: }}
-  \providecommand{\qedsymbol}{\ensuremath{\blacksquare}}
-  
-  % 6. FAKE BOXES
-  \newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
-  \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
-
-% =========================================================
-% PDF MODE (Overleaf) - This runs for your PDF
-% =========================================================
-\else
-  % 1. Real Math Vector
-  \renewcommand{\vec}[1]{\mathbf{#1}}
-
-  % 2. Real Brackets
-  \providecommand{\lbra}{\llbracket}
-  \providecommand{\lket}{\rrbracket}
-  \providecommand{\llbracket}{\llbracket}
-  \providecommand{\rrbracket}{\rrbracket}
-  
-  % 3. Real Boxes
-  \newcommand{\bbox}[1]{
-    \medskip
-    \fbox{\hbox{\medskip
-      \begin{minipage}{0.90\textwidth} \small #1 \end{minipage}
-    \quad}
-  }} 
-  \newcommand{\tbox}[1]{
-    \medskip
-    \noindent
-    \fbox{\hbox{\medskip
-      \begin{minipage}{0.9\textwidth} #1 \end{minipage}
-    \quad}
-    } \medskip
-  } 
-  
-  % Note: We do NOT define \newtheorem here. 
-  % They MUST be defined in main.tex to avoid Preamble errors.
-\fi
-
-% =========================================================
-% SHARED MACROS (Safe everywhere)
-% =========================================================
+% !TEX root = main.tex
 
 % Protocol names
-\providecommand{\flatten}{\mathsf{flatten}}
+\newcommand{\flatten}{\mathsf{flatten}}
 
-% Greek letters & Variables
-\providecommand{\e}{\epsilon}
-\renewcommand{\d}{\delta} 
+% Greek letters
+\newcommand{\e}{\epsilon}
+\renewcommand{\d}{\delta}
 \renewcommand{\a}{\alpha}
 \renewcommand{\b}{\beta}
 \def\u{\upsilon}
-\providecommand{\edp}{\e}
-\providecommand{\ddp}{\d}
-\providecommand{\esketch}{\widetilde{\e}}
-\providecommand{\dsketch}{\widetilde{\d}}
-\providecommand{\efinal}{\overline{\e}}
-\providecommand{\dfinal}{\overline{\d}}
-\providecommand{\fmin}{\min(f)}
-
-% Math Operators
-% Note: \vec is handled in the if/else block above.
+\newcommand{\edp}{\e}
+\newcommand{\ddp}{\d}
+\newcommand{\esketch}{\widetilde{\e}}
+\newcommand{\dsketch}{\widetilde{\d}}
+\newcommand{\efinal}{\overline{\e}}
+\newcommand{\dfinal}{\overline{\d}}
+\newcommand{\fmin}{\min(f)}
+\renewcommand{\vec}[1]{\mathbf{#1}}
 \def\NN{\mathbb{N}}
 \def\RR{\mathbb{R}}
 \def\F{\mathcal{F}}
@@ -109,8 +25,6 @@
 \def\SD{{\sf SD}}
 \def\D{\Delta}
 \def\from{\leftarrow}
-
-% Cryptographic Primitives
 \def\ParamGen{{\sf ParamGen}}
 \def\SecKeygen{{\sf SecKeygen}}
 \def\params{{\sf Params}}
@@ -133,7 +47,8 @@
 \def\sk{\textsc{sk}}
 \def\ek{\textsc{ek}}
 \def\polylog{\mathsf{polylog}}
-
+\def\lbra{{\llbracket}}
+\def\lket{{\rrbracket}}
 \def\nil{{\mathsf{nil}}}
 \def\trunc{{\mathsf{trunc}}}
 \def\prec{{\mathsf{approx}}}
@@ -149,13 +64,13 @@
 \def\mask{{\sf mask}}
 \newcommand{\wl}[1]{\|\w_{#1}\|_1}
 
-% Formatting
 \renewcommand{\paragraph}[1]{\medskip \noindent\textbf{#1}}
 
-\providecommand{\negl}{\mathsf{negl}}
-\providecommand{\zo}{\{0,1\}}
-\providecommand{\bitset}{\{0,1\}}
-\providecommand{\idx}{\mathsf{idx}}
+
+\newcommand{\negl}{\mathsf{negl}}
+\newcommand{\zo}{\{0,1\}}
+\newcommand{\bitset}{\{0,1\}}
+\newcommand{\idx}{\mathsf{idx}}
 \renewcommand{\to}{\rightarrow}
 \renewcommand{\sec}{\lambda}
 \newcommand{\SSS}{{\cal S}}
@@ -165,10 +80,11 @@
 \newcommand{\ignore}[1]{}
 \def\ig{\mathrm{ignore}}
 
-% Font stuff
+% font stuff
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\Left}{\mathsf{left}}
 \newcommand{\Right}{\overline{\mathsf{left}}}
+
 
 \def\fhe{\mathsf{FHE}}
 \def\ssp{\mathsf{sec\mbox{-}search}}
@@ -180,44 +96,77 @@
 \renewcommand{\S}{\mathsf{Sim}}
 \newcommand{\View}{\mathsf{View}}
 \newcommand{\Out}{\mathsf{Out}}
+
 \newcommand{\flone}{\mathsf{F}_{L_1}}
 
-% Environment Wrappers (Shortcuts)
-% \providecommand{\BD}{\begin{definition}} \providecommand{\ED}{\end{definition}}
-% \providecommand{\BCR}{\begin{corollary}} \providecommand{\ECR}{\end{corollary}}
-% \providecommand{\BEX}{\begin{example}}   \providecommand{\EEX}{\end{example}}
-% \providecommand{\BL}{\begin{lemma}}       \providecommand{\EL}{\end{lemma}}
-% \providecommand{\BP}{\begin{proposition}} \providecommand{\EP}{\end{proposition}}
-% \providecommand{\BCM}{\begin{claim}}      \providecommand{\ECM}{\end{claim}}
-% \providecommand{\BPF}{\begin{proof}}      \providecommand{\EPF}{\end{proof}}
-% \providecommand{\BEN}{\begin{enumerate}}  \providecommand{\EEN}{\end{enumerate}}
-% \providecommand{\BI}{\begin{itemize}}     \providecommand{\EI}{\end{itemize}}
-% \providecommand{\BO}{\begin{observation}} \providecommand{\EO}{\end{observation}}
-% \providecommand{\BDS}{\begin{description}}\providecommand{\EDS}{\end{description}}
 
-% Safer wrappers replacing line 186-196
-\def\BD{\begin{definition}}  \def\ED{\end{definition}}
-\def\BCR{\begin{corollary}}
-\def\ECR{\end{corollary}}
-\def\BEX{\begin{example}}    \def\EEX{\end{example}}
-\def\BL{\begin{lemma}}       \def\EL{\end{lemma}}
-\def\BP{\begin{proposition}} \def\EP{\end{proposition}}
-\def\BCM{\begin{claim}}      \def\ECM{\end{claim}}
-\def\BPF{\begin{proof}}      \def\EPF{\end{proof}}
-\def\BEN{\begin{enumerate}}
-\def\EEN{\end{enumerate}}
-\def\BI{\begin{itemize}}
-\def\EI{\end{itemize}}
-\def\BO{\begin{observation}} 
-\def\EO{\end{observation}}
-\def\BDS{\begin{description}}
-\def\EDS{\end{description}}
+\newcommand{\BD}{\begin{definition}}
+\newcommand{\ED}{\end{definition}}
+%---
 
+\newcommand{\BCR}{\begin{corollary}}
+\newcommand{\ECR}{\end{corollary}}
+%---
+
+\newcommand{\BEX}{\begin{example}}
+\newcommand{\EEX}{\end{example}}
+%---
+
+\newcommand{\BL}{\begin{lemma}}
+\newcommand{\EL}{\end{lemma}}
+%---
+
+\newcommand{\BP}{\begin{proposition}}
+\newcommand{\EP}{\end{proposition}}
+%---
+
+\newcommand{\BCM}{\begin{claim}}
+\newcommand{\ECM}{\end{claim}}
+%---
+
+%---
+\newcommand{\BPF}{\begin{proof}}
+\newcommand{\EPF}{\end{proof}}
+%---
+\newcommand{\BEN}{\begin{enumerate}}
+\newcommand{\EEN}{\end{enumerate}}
+
+
+\newcommand{\BI}{\begin{itemize}}
+\newcommand{\EI}{\end{itemize}}
+
+\newcommand{\BO}{\begin{observation}}
+\newcommand{\EO}{\end{observation}}
+
+\newcommand{\BDS}{\begin{description}}
+\newcommand{\EDS}{\end{description}}
+
+\newcommand{\bbox}[1]{
+  \medskip
+  \fbox{\hbox{\medskip
+    \begin{minipage}{0.90\textwidth}
+    \small
+    #1
+    \end{minipage}
+  \quad}
+}} 
+
+\newcommand{\tbox}[1]{
+  \medskip
+  \noindent
+  \fbox{\hbox{\medskip
+    \begin{minipage}{0.9\textwidth}
+    #1
+    \end{minipage}
+  \quad}
+  }
+  \medskip
+} 
 
 \newcommand{\DDD}{{\cal D}}
 \newcommand{\RRR}{{\cal R}}
 
-% Sketch stuff
+% sketch stuff
 \newcommand{\secparam}{\lambda}
 \newcommand{\nibf}[1]{\noindent\textbf{#1}}
 
@@ -227,7 +176,7 @@
 \newcommand{\Pp}{\Pi_{\mathsf{prod}}}
 \newcommand{\Dp}{D_{\mathsf{prod}}}
 \newcommand{\Fip}{\F_{\mathsf{aIP}}}
-\newcommand{\fl}{f_{\mathsf{Leak}}} 
+\newcommand{\fl}{f_{\mathsf{Leak}}}
 \newcommand{\ipw}{\ip{\vec{w}_1}{\vec{w}_2}}
 \newcommand{\LLw}{\|\w_1 + \w_2 \|_2^2}
 \def\w{\vec{w}}
