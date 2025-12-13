@@ -1,51 +1,55 @@
 \section{Preliminary Results}
 
 % --- Status Summary: Clearing the deck ---
-As detailed in previous sections, the research objectives for our first line of work (Secure Search, Sampling, and Similarity) and the second line of work (the baseline FACTs architecture) have been successfully met. The protocols have been implemented and the results published. 
+As detailed in previous sections, the research objectives for our first line of work (Secure Search, Sampling, and Similarity) and the second line of work (the threshold traceback for originator tracking via FACTs) have been successfully met. The results have been published and evaluated. 
 
-Therefore, this section presents preliminary experimental data solely for our \textbf{proposed third line of work}: the evolution of messaging accountability using \textit{[Insert New Tool, e.g., Zero-Knowledge Proofs / MPC]}. The goal of these experiments is to demonstrate that utilizing these more advanced cryptographic tools—which offer stronger privacy properties than the original FACTs design—remains computationally feasible for real-time deployment.
+Therefore, this section presents preliminary approach solely for our \textbf{proposed follow-up work of FACTs for messaging accountability tracking, targeting spreader instead of originator}: using \textit{efficient secure 2-party computation with malicious security}. The next steps include experiments and cryptography analysis. The goal of these experiments is to demonstrate and justify that with the most state-of-art 2-party computation building blocks such as oblivious sorting, our design is practical and efficient with today's large scale of number of users and messages on End-to-End Encrypted messaging systems. The goal of the cryptography analysis is to deliver strict security and privacy guarantee while keeping the protocol practical and cost-friendly. 
 
 % --- Result 1: Proving the 'New Tool' is fast enough ---
-\subsection{Microbenchmarks of [New Tool/Primitive]}
-Unlike the lightweight hash-based structures used in the original FACTs system, our proposed follow-up employs \textit{[New Tool Name]}. A primary concern is whether this introduces prohibitive latency. 
+\subsection{Microbenchmarks}
+Unlike the hash-based structures (CCBF) used in the original FACTs system, our proposed follow-up design runs by two non-colluding servers with malicious security. A primary concern is whether these secure 2-party computations introduces prohibitive data transfer or latency, which in turns hurts the capability of the design to handle the large scale of users and messages. 
 
-We benchmarked the core operation of this primitive (e.g., proof generation/verification) on a standard consumer laptop. Figure~\ref{fig:primitive_bench} compares the execution time of our proposed method against standard baselines.
-\begin{itemize}
-    \item \textbf{Execution Time:} The average runtime is approximately $X$ ms, which is well within the tolerance for asynchronous message delivery.
-    \item \textbf{Scalability:} As the complexity of the moderation policy increases (x-axis), the runtime grows linearly/polynomially, suggesting it can handle complex policy logic.
-\end{itemize}
+We benchmarked all major building blocks on two standard CloudLab servers with average network bandwidth and latency inside United States. Table~\ref{tab:bandwidth} shows the major communication-intensive 2-party operations and their servers' communication cost.
+% Figure~\ref{fig:primitive_bench} lists the major time-consuming parts of our proposed method through piece-wise micro-benchmarks.
+% \begin{itemize}
+%     \item \textbf{Execution Time:} The average runtime is approximately $X$ ms, which is well within the tolerance for asynchronous message delivery.
+%     \item \textbf{Scalability:} As the complexity of the moderation policy increases (x-axis), the runtime grows linearly/polynomially, suggesting it can handle complex policy logic.
+% \end{itemize}
 
 % --- Result 2: Proving it fits into the 'Different Angle' ---
 \subsection{Bandwidth Overhead Analysis}
-A key differentiator of this new angle is its focus on \textit{[Insert Specific Angle, e.g., metadata minimization / collaborative moderation]}. This often comes at the cost of increased bandwidth.
+This new follow-up work focuses on the actual spreader of controversial messages instead of the originator. A fundamental change of this is that we rely on non-colluding 2-party to make the design practical. With strong security guarantee, this often comes at the cost of increased communication overhead as well as computation cost. So far the main concern is the bandwidth and latency between two servers would set a limit of how many complaints we could handle in each epoch. 
 
-To assess feasibility, we simulated a message exchange using the new protocol constraints. Table~\ref{tab:bandwidth} shows the communication cost per message. Although the new method requires larger payloads than the original FACTs franking tags, the overhead ($< 15\%$) is acceptable for modern mobile networks (4G/5G/WiFi).
+Since our design is sequential across different components and fully parallel within each component, to assess this feasibility, we micro-benchmarked each building blocks using the state-of-art protocols on 1 million reports per epoch.  
+% Table~\ref{tab:bandwidth} shows the major building blocks and their communication cost.
 
-\begin{figure}[h!]
-    \centering
-    \begin{minipage}{0.6\textwidth}
-        \centering
-        % Placeholder for a graph showing the new tool is fast enough
-        \framebox{\parbox{0.9\textwidth}{\vspace{4cm}\centering \textbf{Benchmark: New Primitive vs. Constraints}\\ \small{(Lower is Better)}}}
-        \caption{Latency of the proposed \textit{[New Tool]} compared to the maximum acceptable latency budget.}
-        \label{fig:primitive_bench}
-    \end{minipage}
-\end{figure}
+% \begin{figure}[h!]
+%     \centering
+%     \begin{minipage}{0.6\textwidth}
+%         \centering
+%         % Placeholder for a graph showing the new tool is fast enough
+%         \framebox{\parbox{0.9\textwidth}{\vspace{4cm}\centering \textbf{Benchmark: New Primitive vs. Constraints}\\ \small{(Lower is Better)}}}
+%         \caption{Latency of the proposed \textit{[New Tool]} compared to the maximum acceptable latency budget.}
+%         \label{fig:primitive_bench}
+%     \end{minipage}
+% \end{figure}
 
 \begin{table}[h!]
     \centering
     \begin{tabular}{|l|c|c|}
         \hline
-        \textbf{Metric} & \textbf{Original FACTs (Baseline)} & \textbf{Proposed [New Method]} \\
+        \textbf{Protocols} & \textbf{Communication throughput} & \textbf{Communication rounds} \\
         \hline
-        Client Computation & 2.1 ms & 14.5 ms \\
-        Proof Size & 256 bytes & 1.2 KB \\
-        Server Verification & 0.05 ms & 3.2 ms \\
+        Poseidon Hash & 21.4GB & 400 \\
+        Schnorr Signature Verification & 1.1TB & 2250 \\
+        Oblivious Sorting & 1.01TB & 2610 \\
+        Oblivious Deduplication & 82.3GB & 60 \\
+        % Identities Reconstruction &  &  \\
         \hline
     \end{tabular}
-    \caption{Comparison of resource costs. While the proposed method using \textit{[New Tool]} incurs higher costs, it enables \textit{[New Feature]} which was previously impossible.}
+    \caption{Throughput and Round for each components in the follow-up FACTs for spreaders with one million complaints per epoch}
     \label{tab:bandwidth}
 \end{table}
 
 \subsection{Conclusion of Preliminary Data}
-These benchmarks indicate that while the proposed tools for this follow-up work are computationally heavier than the original FACTs primitives, they operate within the safety margins of modern messaging infrastructure. This confirms the feasibility of exploring this new angle without rendering the system unusable.
+These benchmarks indicate that while the proposed tools for this follow-up work are communicational heavier than the original FACTs primitives, they provide efficient and lightweight protocols for the large scale of popular E2EE messaging systems such as Signal. This confirms the capability of our design. We are also working on evaluation of end-to-end server runtime to show the actual cost of our design. 
