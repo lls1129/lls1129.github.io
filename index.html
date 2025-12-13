@@ -3174,39 +3174,43 @@ class="header-section-number">6.5.0.1</span> Achieving constant rounds
 through parallel repetition.</h4>
 <p>In Sections <a href="#sec:prod" data-reference-type="ref"
 data-reference="sec:prod">6.4</a>, we showed a sublinear communication
-protocol for product sampling when <span
-class="math inline">\(\ipw\)</span> is sufficiently large. Moreover,
-this protocol provably leaked no more information than the inner
-product. However, this protocol required <span
-class="math inline">\(O(1/\ipw)\)</span> rounds of communication. This
-raises the question of whether constant-round sublinear product sampling
-is possible under the same restrictions on the inputs.</p>
+protocol for product sampling when <span class="math inline">\(\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle\)</span> is sufficiently large. Moreover, this
+protocol provably leaked no more information than the inner product.
+However, this protocol required <span class="math inline">\(O(1/\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle)\)</span> rounds of communication. This raises the
+question of whether constant-round sublinear product sampling is
+possible under the same restrictions on the inputs.</p>
 <p>Our protocol to achieve this takes a relatively standard approach.
 Suppose that we are given the value of <span
-class="math inline">\(\ipw\)</span>. Then, since the expected number of
-samples until a collision is a function of <span
-class="math inline">\(\ipw\)</span>, we can just run the inner loop of
-protocol <span class="math inline">\(\Pp\)</span> in parallel
+class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>. Then, since the expected number of samples
+until a collision is a function of <span class="math inline">\(\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>, we can just run the inner loop of protocol
+<span class="math inline">\(\Pi_{\mathsf{prod}}\)</span> in parallel
 sufficiently many times to guarantee that the protocol would terminate
 with all but negligible probability.</p>
 <h4 data-number="6.5.0.2" id="how-many-times-to-repeat"><span
 class="header-section-number">6.5.0.2</span> How many times to
 repeat?</h4>
 <p>However, there is one catch. It is not actually possible to compute
-<span class="math inline">\(\ipw\)</span> in sublinear communication!
-One simple solution is to use our promise on the input: we could run the
-inner loop enough times to guarantee termination for any inputs
-satisfying the promise (e.g. <span
-class="math inline">\(\omega(\frac{n}{\log n}\)</span>) times). However,
-this forces us to adopt the worst-case communication cost, which might
-be undesirable. (Recall, it also offers the least leakage, which might
-be desirable.) Instead, we re-establish the trade-off between leakage
-and efficiency as follows. We begin by computing an approximation of the
-inner product in sublinear communication (see Section <a href="#sec:jlt"
-data-reference-type="ref" data-reference="sec:jlt">6.5.1</a>). Using
-this approximation, we can then realize our sublinear communication,
-constant round protocol for product sampling as follows in the next
-subsection.</p>
+<span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span> in sublinear communication! One simple
+solution is to use our promise on the input: we could run the inner loop
+enough times to guarantee termination for any inputs satisfying the
+promise (e.g. <span class="math inline">\(\omega(\frac{n}{\log
+n})\)</span> times). However, this forces us to adopt the worst-case
+communication cost, which might be undesirable. (Recall, it also offers
+the least leakage, which might be desirable.) Instead, we re-establish
+the trade-off between leakage and efficiency as follows. We begin by
+computing an approximation of the inner product in sublinear
+communication (see Section <a href="#sec:jlt" data-reference-type="ref"
+data-reference="sec:jlt">6.5.1</a>). Using this approximation, we can
+then realize our sublinear communication, constant round protocol for
+product sampling as follows in the next subsection.</p>
 <h3 data-number="6.5.1" id="sec:jlt"><span
 class="header-section-number">6.5.1</span> Secure approximation of the
 inner product</h3>
@@ -3221,22 +3225,23 @@ about <span class="math inline">\(\vec{w_1}\)</span> and <span
 class="math inline">\(\vec{w_2}\)</span></h4>
 <p>. We assumed that <span class="math inline">\(\vec{w_1}\)</span> and
 <span class="math inline">\(\vec{w_2}\)</span> are normalized and
-correlated such that <span class="math inline">\(\langle
-\vec{{w}_1},{\vec{w}_2} \rangle = \omega(\log n/n)\)</span>. In a
-similar vein, we assume that the cosine similarity of the two vectors
-<span class="math inline">\(\w_1\)</span> and <span
+correlated such that <span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle = \omega(\log n/n)\)</span>. In a similar vein, we
+assume that the cosine similarity of the two vectors <span
+class="math inline">\(\w_1\)</span> and <span
 class="math inline">\(\w_2\)</span> is not small, e.g., <span
 class="math inline">\(\omega(1/\log n)\)</span>.</p>
 <p>Recall the cosine similarity between the two vectors <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> is defined as <span
-class="math inline">\(\cos(\w_1, \w_2) = \frac{\langle \vec{w}_1,
-\vec{w}_2 \rangle}{ \|
+class="math inline">\(\cos(\vec{w}_1, \vec{w}_2) = \frac{\langle
+\vec{w}_1, \vec{w}_2 \rangle}{ \|
 \vec{w}_1 \|_2 \cdot \| \vec{w}_2 \|_2}\)</span>. Since the <span
 class="math inline">\(L_1\)</span> norm of each vector is equal to 1,
 their <span class="math inline">\(L_2\)</span> norms will typically much
 smaller than 1, which implies that the cosine similarity is usually much
-larger than <span class="math inline">\(\ipw\)</span>.</p>
+larger than <span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>.</p>
 <h4 data-number="6.5.1.2"
 id="approximating-the-inner-product-using-jlt-sketches."><span
 class="header-section-number">6.5.1.2</span> Approximating the inner
@@ -3247,10 +3252,10 @@ equal to <span class="math inline">\(\vec{M} \vec{x}\)</span>, where
 class="math inline">\(k \times n\)</span> matrix with <span
 class="math inline">\(k \ll n\)</span>. More specifically, the inner
 product of the two vectors is approximated as follows:</p>
-<p><span class="math inline">\({\sf approxIP}(\w_1, \w_2)\)</span>:    
-<span class="math inline">\(\rhd\)</span> <span
-class="math inline">\(\w_1\)</span> and <span
-class="math inline">\(\w_1\)</span> are <span
+<p><span class="math inline">\({\sf approxIP}(\vec{w}_1,
+\vec{w}_2)\)</span>:     <span class="math inline">\(\rhd\)</span> <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_1\)</span> are <span
 class="math inline">\(n\)</span> dimensional vectors.</p>
 <p>Choose <span class="math inline">\(k \times n\)</span> matrix <span
 class="math inline">\(\vec{M}\)</span> such that each entry <span
@@ -3260,15 +3265,16 @@ variance <span class="math inline">\(1\)</span>.</p>
 <p>Output <span class="math inline">\(\frac 1 k \cdot \langle
 \vec{M}\vec{w}_1, \vec{M}\vec{w}_2 \rangle\)</span>. (Here, we slightly
 abuse the notation and treat the vectors <span
-class="math inline">\(\w_1\)</span> and <span
-class="math inline">\(\w_2\)</span> as column vectors.)</p>
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> as column vectors.)</p>
 <div id="lem:jlt_k" class="lemma">
 <p><strong>Lemma 22</strong>. <em><span>(cf. <span class="citation"
 data-cites="Kaban15"></span>)</span> For all <span
-class="math inline">\(\w_1, \w_2\)</span> such that <span
-class="math inline">\(\cos(\w_1, \w_2)\geq t\)</span>, the procedure
-<span class="math inline">\({\sf approxIP}(\w_1, \w_2)\)</span>
-approximates <span class="math inline">\(\langle \vec{w}_1,
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> such that <span
+class="math inline">\(\cos(\vec{w}_1, \vec{w}_2)\geq t\)</span>, the
+procedure <span class="math inline">\({\sf approxIP}(\vec{w}_1,
+\vec{w}_2)\)</span> approximates <span class="math inline">\(\langle
+\vec{w}_1,
 \vec{w}_2 \rangle\)</span> up to a <span class="math inline">\(1\pm
 \epsilon\)</span> approximation factor with all but negligible
 probability (over the choice of the JLT matrix), using JLT dimension
@@ -3309,32 +3315,34 @@ data-cites="popets:MTBH21"></span>).</p>
 class="header-section-number">6.5.1.5</span> Inputs:</h4>
 <p>Parties <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> has inputs <span
-class="math inline">\(\w_1\)</span> and <span
-class="math inline">\(\w_2\)</span> respectively.</p>
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> respectively.</p>
 <p>The protocol proceeds as follows:</p>
 <p>Parties set up a threshold FHE scheme.</p>
 <p>They securely sample <span class="math inline">\(k \times n\)</span>
 matrix <span class="math inline">\(\vec M\)</span> described in the
 above with in the threshold FHE. In particular, they jointly generate an
-encrypted random seed <span class="math inline">\(\lbra s
-\lket\)</span>. Using this randomness, parties homomorphically evaluates
-<span class="math inline">\(\lbra PRG(s) \lket\)</span>, where <span
-class="math inline">\(PRG\)</span> is a pseudorandom generator, to
-obtain the JLT matrix <span class="math inline">\(\lbra \vec M
-    \lket\)</span>.</p>
+encrypted random seed <span class="math inline">\(\llbracket s
+\rrbracket\)</span>. Using this randomness, parties homomorphically
+evaluates <span class="math inline">\(\llbracket PRG(s)
+\rrbracket\)</span>, where <span class="math inline">\(PRG\)</span> is a
+pseudorandom generator, to obtain the JLT matrix <span
+class="math inline">\(\llbracket \vec M
+    \rrbracket\)</span>.</p>
 <p>Each party <span class="math inline">\(P_b\)</span> homomorphically
-evaluates <span class="math inline">\(\lbra \tilde \w_b \lket =
-    \lbra \vec M \w_b \lket\)</span>.</p>
+evaluates <span class="math inline">\(\llbracket \tilde \vec{w}_b
+\rrbracket =
+    \llbracket \vec M \vec{w}_b \rrbracket\)</span>.</p>
 <p>Party <span class="math inline">\(P_1\)</span> sends <span
-class="math inline">\(\lbra \tilde \w_1 \lket\)</span> to <span
-class="math inline">\(P_2\)</span>.</p>
+class="math inline">\(\llbracket \tilde \vec{w}_1 \rrbracket\)</span> to
+<span class="math inline">\(P_2\)</span>.</p>
 <p>Party <span class="math inline">\(P_2\)</span> homomorphically
-evaluates <span class="math inline">\(\lbra \langle \tilde
-    \w_1, \tilde \w_2 \rangle \lket\)</span> and sends it to <span
+evaluates <span class="math inline">\(\llbracket \langle \tilde
+    \w_1, \tilde \w_2 \rangle \rrbracket\)</span> and sends it to <span
 class="math inline">\(P_1\)</span>.</p>
 <p>Parties execute threshold decryption to obtain and output <span
 class="math inline">\(\frac 1 k \cdot \langle \tilde
-    \w_1, \tilde \w_2 \rangle\)</span>.</p>
+    \vec{w}_1, \tilde \vec{w}_2 \rangle\)</span>.</p>
 </section>
 <h4 data-number="6.5.1.6" id="security.-2"><span
 class="header-section-number">6.5.1.6</span> Security.</h4>
