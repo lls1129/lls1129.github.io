@@ -530,10 +530,8 @@ class="toc-section-number">7</span> Timeline</a></li>
 <li><a href="#preliminary-results" id="toc-preliminary-results"><span
 class="toc-section-number">8</span> Preliminary Results</a>
 <ul>
-<li><a href="#microbenchmarks-of-new-toolprimitive"
-id="toc-microbenchmarks-of-new-toolprimitive"><span
-class="toc-section-number">8.1</span> Microbenchmarks of [New
-Tool/Primitive]</a></li>
+<li><a href="#microbenchmarks" id="toc-microbenchmarks"><span
+class="toc-section-number">8.1</span> Microbenchmarks</a></li>
 <li><a href="#bandwidth-overhead-analysis"
 id="toc-bandwidth-overhead-analysis"><span
 class="toc-section-number">8.2</span> Bandwidth Overhead
@@ -590,11 +588,12 @@ that pioneer this shift across two distinct but interrelated
 domains.</p>
 <p>The first domain, <strong>Sublinear Secure Protocols</strong>,
 comprises three studies that attack the fundamental algorithmic
-bottlenecks of secure computation. These works investigate the privacy
-properties of sketching algorithms (Min-hash), develop protocols for
-secure sampling from distributed datasets without linear communication,
-and reinvent the architecture of Homomorphically Encrypted Search to
-allow for parallel, sublinear retrieval.</p>
+bottlenecks of secure computation. These works invent the new data
+structure for compressing large sparse data vector for Homomorphically
+Encrypted Search to allow for parallel, sublinear retrieval, develop
+protocols for secure sampling from distributed distributions without
+linear communication, and investigate the inherent privacy properties of
+sketching algorithms (Min-hash).</p>
 <p>The second domain, designated as <strong>FACTs</strong>, addresses
 the societal crisis of misinformation within End-to-End Encrypted
 Messaging Systems (EEMS). Here, the challenge is not merely
@@ -9877,8 +9876,8 @@ not seem applicable to our setting.</p>
 class="header-section-number">7</span> Timeline</h1>
 <p>The following timeline outlines the completion of the remaining
 research items and the preparation of the final dissertation. As noted,
-Lines 1 and 2 are largely complete. The schedule focuses on the
-execution of the third line of work and the synthesis of the thesis.</p>
+sublinear secure protocol works are largely complete. The schedule
+focuses on the execution of the follow-up work on FACTs.</p>
 <div id="tab:timeline">
 <table>
 <caption>Proposed timeline for the completion of the Ph.D.
@@ -9895,41 +9894,47 @@ Milestones</strong></th>
 <td style="text-align: left;"><strong>Completed – Present</strong></td>
 <td style="text-align: left;"><span
 class="math inline">\(\bullet\)</span> Completed research and
-publication for Secure Search/Sampling (Line 1). <span
-class="math inline">\(\bullet\)</span> Completed design, implementation,
-and evaluation of FACTs (Line 2). <span
-class="math inline">\(\bullet\)</span> Established security model and
-initial protocol design for Follow-up Work (Line 3).</td>
+publication for Secure Search/Sampling (Sublinear-communication Secure
+MPC). <span class="math inline">\(\bullet\)</span> Completed research
+and publication for Privacy-preserving set similarity via Min-Hash.
+<span class="math inline">\(\bullet\)</span> Completed design, analysis,
+and evaluation of FACTs (Accountability tracking on End-to-End Encrypted
+Messaging Systems). <span class="math inline">\(\bullet\)</span>
+Follow-up Work to enable spreader tracking via new protocol designs
+(Accountability tracking on End-to-End Encrypted Messaging
+Systems).</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Month 1 – Month 3</strong></td>
+<td style="text-align: left;"><strong>Month 1 – Month 2</strong></td>
 <td style="text-align: left;"><strong>Line 3 Implementation:</strong>
-<span class="math inline">\(\bullet\)</span> Finalize the software
-prototype for the new accountability protocol. <span
-class="math inline">\(\bullet\)</span> Conduct unit tests for
-cryptographic correctness.</td>
+<span class="math inline">\(\bullet\)</span> Analyzing the system loads
+that our new design could handle and identify bottlenecks if any. <span
+class="math inline">\(\bullet\)</span> Estimating the actual cost of the
+new designed FACTs for spreaders with two non-colluding servers.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Month 4 – Month 5</strong></td>
-<td style="text-align: left;"><strong>Line 3 Evaluation:</strong> <span
-class="math inline">\(\bullet\)</span> Run large-scale simulations to
-measure latency and bandwidth. <span
+<td style="text-align: left;"><strong>Month 1 – Month 3</strong></td>
+<td style="text-align: left;"><strong>Line 3 Security and Privacy
+Analysis:</strong> <span class="math inline">\(\bullet\)</span> Proof of
+security in malicious 2-party setting. <span
 class="math inline">\(\bullet\)</span> Compare performance against the
 original FACTs baseline. <span class="math inline">\(\bullet\)</span>
-<em>Milestone: Submit Line 3 paper to [Target Conference].</em></td>
+<em>Milestone: Submit the paper to [TBD].</em></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><strong>Month 6 – Month 7</strong></td>
+<td style="text-align: left;"><strong>Month 3 – Month 4</strong></td>
 <td style="text-align: left;"><strong>Thesis Writing (Part I):</strong>
-<span class="math inline">\(\bullet\)</span> Synthesize Lines 1 and 2
-into thesis chapters. <span class="math inline">\(\bullet\)</span> Write
-the unified Introduction and Literature Review.</td>
+<span class="math inline">\(\bullet\)</span> Update Introduction and
+Literature Review based with feedback and further research. <span
+class="math inline">\(\bullet\)</span> Integrate all finished lines of
+work and write down the full chapter of thesis research results.</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;"><strong>Month 8</strong></td>
+<td style="text-align: left;"><strong>Month 5</strong></td>
 <td style="text-align: left;"><strong>Thesis Writing (Part II) &amp;
-Defense:</strong> <span class="math inline">\(\bullet\)</span> Integrate
-Line 3 results into the final dissertation. <span
+Defense:</strong> <span class="math inline">\(\bullet\)</span> Finish
+and integrate the results of the follow-up work of FACTs on spreader
+tracking results into the final dissertation. <span
 class="math inline">\(\bullet\)</span> Final review with advisor. <span
 class="math inline">\(\bullet\)</span> <em>Milestone: Thesis
 Defense.</em></td>
@@ -9941,83 +9946,82 @@ Defense.</em></td>
 class="header-section-number">8</span> Preliminary Results</h1>
 <p>As detailed in previous sections, the research objectives for our
 first line of work (Secure Search, Sampling, and Similarity) and the
-second line of work (the baseline FACTs architecture) have been
-successfully met. The protocols have been implemented and the results
-published.</p>
-<p>Therefore, this section presents preliminary experimental data solely
-for our <strong>proposed third line of work</strong>: the evolution of
-messaging accountability using <em>[Insert New Tool, e.g.,
-Zero-Knowledge Proofs / MPC]</em>. The goal of these experiments is to
-demonstrate that utilizing these more advanced cryptographic tools—which
-offer stronger privacy properties than the original FACTs design—remains
-computationally feasible for real-time deployment.</p>
-<h2 data-number="8.1" id="microbenchmarks-of-new-toolprimitive"><span
-class="header-section-number">8.1</span> Microbenchmarks of [New
-Tool/Primitive]</h2>
-<p>Unlike the lightweight hash-based structures used in the original
-FACTs system, our proposed follow-up employs <em>[New Tool Name]</em>. A
-primary concern is whether this introduces prohibitive latency.</p>
-<p>We benchmarked the core operation of this primitive (e.g., proof
-generation/verification) on a standard consumer laptop. Figure <a
-href="#fig:primitive_bench" data-reference-type="ref"
-data-reference="fig:primitive_bench">6</a> compares the execution time
-of our proposed method against standard baselines.</p>
-<ul>
-<li><p><strong>Execution Time:</strong> The average runtime is
-approximately <span class="math inline">\(X\)</span> ms, which is well
-within the tolerance for asynchronous message delivery.</p></li>
-<li><p><strong>Scalability:</strong> As the complexity of the moderation
-policy increases (x-axis), the runtime grows linearly/polynomially,
-suggesting it can handle complex policy logic.</p></li>
-</ul>
+second line of work (the threshold traceback for originator tracking via
+FACTs) have been successfully met. The results have been published and
+evaluated.</p>
+<p>Therefore, this section presents preliminary approach solely for our
+<strong>proposed follow-up work of FACTs for messaging accountability
+tracking, targeting spreader instead of originator</strong>: using
+<em>efficient secure 2-party computation with malicious security</em>.
+The next steps include experiments and cryptography analysis. The goal
+of these experiments is to demonstrate and justify that with the most
+state-of-art 2-party computation building blocks such as oblivious
+sorting, our design is practical and efficient with today’s large scale
+of number of users and messages on End-to-End Encrypted messaging
+systems. The goal of the cryptography analysis is to deliver strict
+security and privacy guarantee while keeping the protocol practical and
+cost-friendly.</p>
+<h2 data-number="8.1" id="microbenchmarks"><span
+class="header-section-number">8.1</span> Microbenchmarks</h2>
+<p>Unlike the hash-based structures (CCBF) used in the original FACTs
+system, our proposed follow-up design runs by two non-colluding servers
+with malicious security. A primary concern is whether these secure
+2-party computations introduces prohibitive data transfer or latency,
+which in turns hurts the capability of the design to handle the large
+scale of users and messages.</p>
+<p>We benchmarked all major building blocks on two standard CloudLab
+servers with average network bandwidth and latency inside United States.
+Table <a href="#tab:bandwidth" data-reference-type="ref"
+data-reference="tab:bandwidth">2</a> shows the major
+communication-intensive 2-party operations and their servers’
+communication cost.</p>
 <h2 data-number="8.2" id="bandwidth-overhead-analysis"><span
 class="header-section-number">8.2</span> Bandwidth Overhead
 Analysis</h2>
-<p>A key differentiator of this new angle is its focus on <em>[Insert
-Specific Angle, e.g., metadata minimization / collaborative
-moderation]</em>. This often comes at the cost of increased
-bandwidth.</p>
-<p>To assess feasibility, we simulated a message exchange using the new
-protocol constraints. Table <a href="#tab:bandwidth"
-data-reference-type="ref" data-reference="tab:bandwidth">2</a> shows the
-communication cost per message. Although the new method requires larger
-payloads than the original FACTs franking tags, the overhead (<span
-class="math inline">\(&lt; 15\%\)</span>) is acceptable for modern
-mobile networks (4G/5G/WiFi).</p>
-<figure id="fig:primitive_bench">
-
-<figcaption>Latency of the proposed <em>[New Tool]</em> compared to the
-maximum acceptable latency budget.</figcaption>
-</figure>
+<p>This new follow-up work focuses on the actual spreader of
+controversial messages instead of the originator. A fundamental change
+of this is that we rely on non-colluding 2-party to make the design
+practical. With strong security guarantee, this often comes at the cost
+of increased communication overhead as well as computation cost. So far
+the main concern is the bandwidth and latency between two servers would
+set a limit of how many complaints we could handle in each epoch.</p>
+<p>Since our design is sequential across different components and fully
+parallel within each component, to assess this feasibility, we
+micro-benchmarked each building blocks using the state-of-art protocols
+on 1 million reports per epoch.</p>
 <div id="tab:bandwidth">
 <table>
-<caption>Comparison of resource costs. While the proposed method using
-<em>[New Tool]</em> incurs higher costs, it enables <em>[New
-Feature]</em> which was previously impossible.</caption>
+<caption>Throughput and Round for each components in the follow-up FACTs
+for spreaders with one million complaints per epoch</caption>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><strong>Metric</strong></th>
-<th style="text-align: center;"><strong>Original FACTs
-(Baseline)</strong></th>
-<th style="text-align: center;"><strong>Proposed [New
-Method]</strong></th>
+<th style="text-align: left;"><strong>Protocols</strong></th>
+<th style="text-align: center;"><strong>Communication
+throughput</strong></th>
+<th style="text-align: center;"><strong>Communication
+rounds</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Client Computation</td>
-<td style="text-align: center;">2.1 ms</td>
-<td style="text-align: center;">14.5 ms</td>
+<td style="text-align: left;">Poseidon Hash</td>
+<td style="text-align: center;">21.4GB</td>
+<td style="text-align: center;">400</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Proof Size</td>
-<td style="text-align: center;">256 bytes</td>
-<td style="text-align: center;">1.2 KB</td>
+<td style="text-align: left;">Schnorr Signature Verification</td>
+<td style="text-align: center;">1.1TB</td>
+<td style="text-align: center;">2250</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Server Verification</td>
-<td style="text-align: center;">0.05 ms</td>
-<td style="text-align: center;">3.2 ms</td>
+<td style="text-align: left;">Oblivious Sorting</td>
+<td style="text-align: center;">1.01TB</td>
+<td style="text-align: center;">2610</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oblivious Deduplication</td>
+<td style="text-align: center;">82.3GB</td>
+<td style="text-align: center;">60</td>
 </tr>
 </tbody>
 </table>
@@ -10026,29 +10030,31 @@ Method]</strong></th>
 class="header-section-number">8.3</span> Conclusion of Preliminary
 Data</h2>
 <p>These benchmarks indicate that while the proposed tools for this
-follow-up work are computationally heavier than the original FACTs
-primitives, they operate within the safety margins of modern messaging
-infrastructure. This confirms the feasibility of exploring this new
-angle without rendering the system unusable.</p>
+follow-up work are communicational heavier than the original FACTs
+primitives, they provide efficient and lightweight protocols for the
+large scale of popular E2EE messaging systems such as Signal. This
+confirms the capability of our design. We are also working on evaluation
+of end-to-end server runtime to show the actual cost of our design.</p>
 <h1 data-number="9" id="conclusion-1"><span
 class="header-section-number">9</span> Conclusion</h1>
 <p>This proposal outlines a comprehensive research agenda addressing the
 tension between data privacy and utility, culminating in a rigorous
 examination of accountability in end-to-end encrypted systems.</p>
-<p>Our first line of work has already established efficient,
-privacy-preserving primitives for <strong>Secure Search and
-Sampling</strong>, demonstrating that sublinear performance is
-achievable without compromising security guarantees. Our second line of
-work, <strong>FACTs</strong>, applied these principles to the urgent
-societal problem of messaging abuse, proving that accountability
-mechanisms can coexist with encryption.</p>
-<p>The proposed third line of work represents the final evolution of
-this thesis. By exploring a <em>[new specific angle]</em> to
-accountability, we aim to address the limitations of current centralized
-moderation tools. Together, these three lines of work will contribute a
-unified framework for <strong>scalable, privacy-preserving data
-systems</strong>, providing both theoretical advancements and practical
-tools for the next generation of secure communication platforms.</p>
+<p>Our first line of work has established efficient, privacy-preserving
+primitives for <strong>Secure Search</strong>, <strong>Secure
+Sampling</strong>, and <strong>Privacy-Preserving Set Similarity via
+Min-Hash</strong>, demonstrating that sublinear communication is
+achievable without compromising security and privacy guarantees. Our
+second line of work, <strong>FACTs</strong> and the ongoing follow-up
+work, focused on a more specific application, enabled threshold
+tracebacks of originator or spreader of controversial messages on E2EE
+messaging systems, proving that accountability mechanisms can coexist
+with encryption, while still remain sublinear to the number of total
+messages but only number of complaints.</p>
+<p>Together, these three lines of work will contribute a unified
+framework for <strong>scalable, privacy-preserving protocols and
+applications</strong>, providing both theoretical advancements and
+practical tools.</p>
 <aside id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
