@@ -136,17 +136,16 @@ The protocol proceeds as follows:
     pseudorandom generator, to obtain the JLT matrix $\llbracket \vec M
     \rrbracket$.
     
-    \item Each party  $P_b$ homomorphically evaluates $\llbracket \tilde \vec{w}_b \rrbracket =
+    \item Each party  $P_b$ homomorphically evaluates $\llbracket \tilde{ \vec{w}}_b \rrbracket =
     \llbracket \vec M \vec{w}_b \rrbracket$.
 
-    \item Party $P_1$ sends $\llbracket \tilde \vec{w}_1 \rrbracket$ to $P_2$.  
+    \item Party $P_1$ sends $\llbracket \tilde{\vec{w}}_1 \rrbracket$ to $P_2$.  
     
     \item Party $P_2$ homomorphically evaluates $\llbracket \langle \tilde
-    \w_1, \tilde \w_2 \rangle \rrbracket$ and sends it to  $P_1$. 
+    {\vec{w}}_1, \tilde{\vec{w}}_2 \rangle \rrbracket$ and sends it to  $P_1$. 
 
     \item Parties execute threshold decryption to obtain and output
-    $\frac 1 k \cdot \langle \tilde
-    \vec{w}_1, \tilde \vec{w}_2 \rangle$.
+    $\frac 1 k \cdot \langle \tilde{\vec{w}}_1, \tilde {\vec{w}}_2 \rangle$.
 \EEN
 \caption{Private protocol for computing approximate inner product}
 \label{fig:ip-fhe}
