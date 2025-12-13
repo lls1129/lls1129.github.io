@@ -26,7 +26,7 @@ jobs:
       - name: Convert LaTeX to HTML
         run: |
           cd src
-          pandoc main.tex -o ../index.html --standalone --toc --mathjax --include-after-body=../footer.html
+          pandoc main.tex -o ../index.html --standalone --toc --mathjax=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js --number-sections --include-after-body=../footer.html
       # pandoc main.tex --resource-path=src -o index.html --standalone --toc --mathjax
 
       # DEBUG STEP: This will print the file list in your logs so we can see if index.html exists
