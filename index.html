@@ -1767,6 +1767,31 @@ class="math inline">\(\mathcal{F}_{L_1}\)</span> in the figure below. In
 Section <a href="#sec:L1prot" data-reference-type="ref"
 data-reference="sec:L1prot">6.2.2</a>, we present a protocol that
 securely realizes this functionality.</p>
+<div class="center">
+<p><span class="math inline">\(\mathcal{F}_{L_1}\)</span>: Ideal
+functionality for two-party <span class="math inline">\(L_1\)</span>
+sampling</p>
+</div>
+<p>The functionality has the following parameter:</p>
+<ul>
+<li><p><span class="math inline">\(n \in \mathbb{N}\)</span>. The
+dimension of the input weight vectors <span
+class="math inline">\(\mathbf{w}_1\)</span> and <span
+class="math inline">\(\mathbf{w}_2\)</span>.</p></li>
+</ul>
+<p>The functionality proceeds as follows:</p>
+<ol>
+<li><p>Receive inputs <span class="math inline">\(\mathbf{w}_1\)</span>
+and <span class="math inline">\(\mathbf{w}_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Sample <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i} +
+w_{2,i}}{ \|\mathbf{w}_1 + \mathbf{w}_2\|_1 }\)</span></p></li>
+<li><p>Send <span class="math inline">\(i\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p></li>
+</ol>
 <h3 data-number="6.2.1"
 id="a-toy-protocol-towards-securely-realizing-mathcalf_l_1"><span
 class="header-section-number">6.2.1</span> A toy protocol towards
@@ -1893,9 +1918,57 @@ the decryption of <span class="math inline">\(i_2\)</span>.</p></li>
 functionality <span
 class="math inline">\(\mathcal{F}_{{\mathsf{osample(L_1)}}}\)</span> as
 follows:</p>
+<div class="center">
+<p><span
+class="math inline">\(\mathcal{F}_{{\mathsf{osample(L_1)}}}\)</span>:
+Ideal functionality for oblivious <span
+class="math inline">\(L_1\)</span> sampling.</p>
+</div>
+<p>The functionality considers two participants, the sender and the
+receiver. The functionality is parameterized with a number <span
+class="math inline">\(n\)</span>.</p>
+<p><strong>Inputs:</strong> The sender has an <span
+class="math inline">\(n\)</span>-dimensional weight vector <span
+class="math inline">\(\mathbf{w}\)</span>. The receiver has no
+input.</p>
+<p>The functionality proceeds as follows:</p>
+<ol>
+<li><p>Receive <span class="math inline">\(\mathbf{w}\)</span> from the
+sender.</p></li>
+<li><p>Sample <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w_i}{ \|\mathbf{w}\|_1
+}\)</span></p></li>
+<li><p>Choose a random pad <span class="math inline">\(\pi \in
+\{0,1\}^\ell\)</span>, where <span class="math inline">\(\ell = \lceil
+\log_2 n \rceil\)</span>.</p></li>
+<li><p>Send <span class="math inline">\(\pi\)</span> to the sender and
+<span class="math inline">\(i \oplus\pi\)</span> to the
+receiver.</p></li>
+</ol>
 <p>We also give an ideal functionality <span
 class="math inline">\(\mathcal{F}_{{\mathsf{biasCoin}}}\)</span> for the
 biased coin tossing.</p>
+<div class="center">
+<p><span
+class="math inline">\(\mathcal{F}_{{\mathsf{biasCoin}}}\)</span>: Ideal
+functionality for biased coin tossing.</p>
+</div>
+<p>The functionality considers two participants <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> and proceeds as follows:</p>
+<ol>
+<li><p>Receive a number <span class="math inline">\(s_1\)</span> as
+input from <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(s_2\)</span> from <span
+class="math inline">\(P_2\)</span>.</p></li>
+<li><p>Flip a coin <span class="math inline">\(b\)</span> with bias
+<span class="math inline">\(p = \frac{s_1}{s_1 + s_2}\)</span>.</p></li>
+<li><p>Choose a random bit <span class="math inline">\(r \in
+\{0,1\}\)</span>.</p></li>
+<li><p>Send <span class="math inline">\(r\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(r
+\oplus b\)</span> to the receiver.</p></li>
+</ol>
 <p><strong><span class="math inline">\(L_1\)</span> sampling
 protocol.</strong> Based on the above functionalities, we describe a
 protocol securely realizing <span
@@ -1979,13 +2052,13 @@ class="math inline">\(P_2\)</span> respectively.</p></li>
 plaintext space of the FHE is <span
 class="math inline">\(GF(2)\)</span>, which allows homomorphic
 bitwise-xor and bitwise-AND operations. Let <span
-class="math inline">\({\llbracket}m {\rrbracket}\)</span> denote an FHE
-encryption of plaintext <span class="math inline">\(m\)</span> which can
-be a bit or bits depending on the context.</p></li>
-<li><p>The receiver sends <span class="math inline">\({\llbracket}r_2
-{\rrbracket}\)</span> so that the sender can compute <span
-class="math inline">\({\llbracket}r {\rrbracket}:= {\llbracket}r_1
-{\rrbracket}\oplus{\llbracket}r_2 {\rrbracket}\)</span>.</p></li>
+class="math inline">\([\![m ]\!]\)</span> denote an FHE encryption of
+plaintext <span class="math inline">\(m\)</span> which can be a bit or
+bits depending on the context.</p></li>
+<li><p>The receiver sends <span class="math inline">\([\![r_2
+]\!]\)</span> so that the sender can compute <span
+class="math inline">\([\![r ]\!]:= [\![r_1 ]\!]\oplus[\![r_2
+]\!]\)</span>.</p></li>
 <li><p>The sender homomorphically evaluates the following circuit:</p>
 <ol>
 <li><p>Let <span class="math inline">\(cnt_0 = 0\)</span>. For <span
@@ -1995,13 +2068,12 @@ class="math inline">\(cnt_j = cnt_{j} + w_{j}\)</span>.</p></li>
 <span class="math inline">\(r \in [cnt_{i-1},
 cnt_{i}]\)</span>.</p></li>
 </ol>
-<p>Let <span class="math inline">\({\llbracket}i {\rrbracket}\)</span>
-be the output encryption from the above homomorphic evaluation.</p></li>
+<p>Let <span class="math inline">\([\![i ]\!]\)</span> be the output
+encryption from the above homomorphic evaluation.</p></li>
 <li><p>The sender chooses a random pad <span
 class="math inline">\(\pi\)</span>, and then it sends <span
-class="math inline">\({\llbracket}c {\rrbracket}=
-    {\llbracket}i {\rrbracket}\oplus{\llbracket}\pi
-{\rrbracket}\)</span> to the receiver.</p></li>
+class="math inline">\([\![c ]\!]=
+    [\![i ]\!]\oplus[\![\pi ]\!]\)</span> to the receiver.</p></li>
 <li><p>The two parties perform threshold decryption so that <span
 class="math inline">\(c\)</span> is decrypted to the receiver.</p></li>
 <li><p>The sender outputs <span class="math inline">\(\pi\)</span> and
@@ -2531,8 +2603,43 @@ class="math inline">\(\mathbf{w}_2\)</span> are non-negative.</p>
 functionality <span
 class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span> for two-party
 product sampling. This functionality is parametrized by a function <span
-class="math inline">\(f_{\mathsf{Leak}}\)</span> capturing the leakage
-that the functionality gives to the adversary.</p>
+class="math inline">\(\fl\)</span> capturing the leakage that the
+functionality gives to the adversary.</p>
+<div class="center">
+<p><span class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span>:
+Ideal functionality for two-party product sampling</p>
+</div>
+<p>The functionality has the following parameters:</p>
+<ul>
+<li><p><span class="math inline">\(n \in \mathbb{N}\)</span>. The
+dimension of the input weight vectors <span
+class="math inline">\(\mathbf{w}_1\)</span> and <span
+class="math inline">\(\mathbf{w}_2\)</span>.</p></li>
+<li><p>A function <span class="math inline">\(\fl\)</span> describing
+the leakage.</p></li>
+</ul>
+<p>The functionality proceeds as follows:</p>
+<ol>
+<li><p>Receive inputs <span class="math inline">\(\mathbf{w}_1\)</span>
+and <span class="math inline">\(\mathbf{w}_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Compute <span
+class="math inline">\(\mathsf{leak}=\fl(\mathbf{w}_1,\mathbf{w}_2)\)</span></p></li>
+<li><p>If <span class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
+\rangle=0\)</span>, send <span
+class="math inline">\(\mathsf{leak}\)</span> to the adversary and <span
+class="math inline">\(\bot\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p></li>
+<li><p>Otherwise, sample <span class="math inline">\(i\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i} \cdot
+w_{2,i}}{\langle \mathbf{w}_1, \mathbf{w}_2 \rangle}\)</span>, send
+<span class="math inline">\(\mathsf{leak}\)</span> to the adversary, and
+send <span class="math inline">\(i\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p></li>
+</ol>
 <h3 data-number="6.4.1" id="sec:prodLB"><span
 class="header-section-number">6.4.1</span> Impossibility of sublinear
 product sampling</h3>
@@ -2862,10 +2969,10 @@ lower bound implies that some leakage about the inputs is necessary. In
 our protocol, we show that the information leaked is at most the inner
 product <span class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>. (Formally, we set <span
-class="math inline">\(f_{\mathsf{Leak}}(\mathbf{w}_1, \mathbf{w}_2)
-=\langle \mathbf{w}_1, \mathbf{w}_2 \rangle\)</span>.) Interestingly, we
-show that this is the case even though our protocol does not, and
-cannot,<a href="#fn5" class="footnote-ref" id="fnref5"
+class="math inline">\(\fl(\mathbf{w}_1, \mathbf{w}_2) =\langle
+\mathbf{w}_1, \mathbf{w}_2 \rangle\)</span>.) Interestingly, we show
+that this is the case even though our protocol does not, and cannot,<a
+href="#fn5" class="footnote-ref" id="fnref5"
 role="doc-noteref"><sup>5</sup></a> actually compute <span
 class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>.</p>
@@ -2942,7 +3049,7 @@ class="math inline">\(i\)</span>.</p>
 class="math inline">\(\Pi_{\mathsf{prod}}^{IP}\)</span> securely
 realizes <span
 class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span> with leakage
-<span class="math inline">\(f_{\mathsf{Leak}}(\mathbf{w}_1,
+<span class="math inline">\(\fl(\mathbf{w}_1,
 \mathbf{w}_2) = \langle \mathbf{w}_1, \mathbf{w}_2 \rangle\)</span> in
 the <span class="math inline">\(\{\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{2PC}
@@ -3273,24 +3380,23 @@ class="math inline">\(\mathbf{w}_2\)</span> respectively.</p>
 n\)</span> matrix <span class="math inline">\(\mathbf{M}\)</span>
 described in the above with in the threshold FHE. In particular, they
 jointly generate an encrypted random seed <span
-class="math inline">\({\llbracket}s {\rrbracket}\)</span>. Using this
-randomness, parties homomorphically evaluates <span
-class="math inline">\({\llbracket}PRG(s) {\rrbracket}\)</span>, where
-<span class="math inline">\(PRG\)</span> is a pseudorandom generator, to
-obtain the JLT matrix <span class="math inline">\({\llbracket}\mathbf{M}
-    {\rrbracket}\)</span>.</p></li>
+class="math inline">\([\![s ]\!]\)</span>. Using this randomness,
+parties homomorphically evaluates <span class="math inline">\([\![PRG(s)
+]\!]\)</span>, where <span class="math inline">\(PRG\)</span> is a
+pseudorandom generator, to obtain the JLT matrix <span
+class="math inline">\([\![\mathbf{M}
+    ]\!]\)</span>.</p></li>
 <li><p>Each party <span class="math inline">\(P_b\)</span>
-homomorphically evaluates <span class="math inline">\({\llbracket}\tilde
-\mathbf{w}_b {\rrbracket}=
-    {\llbracket}\mathbf{M} \mathbf{w}_b {\rrbracket}\)</span>.</p></li>
+homomorphically evaluates <span class="math inline">\([\![\tilde
+\mathbf{w}_b ]\!]=
+    [\![\mathbf{M} \mathbf{w}_b ]\!]\)</span>.</p></li>
 <li><p>Party <span class="math inline">\(P_1\)</span> sends <span
-class="math inline">\({\llbracket}\tilde \mathbf{w}_1
-{\rrbracket}\)</span> to <span
+class="math inline">\([\![\tilde \mathbf{w}_1 ]\!]\)</span> to <span
 class="math inline">\(P_2\)</span>.</p></li>
 <li><p>Party <span class="math inline">\(P_2\)</span> homomorphically
-evaluates <span class="math inline">\({\llbracket}\langle \tilde
-    \mathbf{w}_1, \tilde \mathbf{w}_2 \rangle {\rrbracket}\)</span> and
-sends it to <span class="math inline">\(P_1\)</span>.</p></li>
+evaluates <span class="math inline">\([\![\langle \tilde
+    \mathbf{w}_1, \tilde \mathbf{w}_2 \rangle ]\!]\)</span> and sends it
+to <span class="math inline">\(P_1\)</span>.</p></li>
 <li><p>Parties execute threshold decryption to obtain and output <span
 class="math inline">\(\frac 1 k \cdot \langle \tilde
     \mathbf{w}_1, \tilde \mathbf{w}_2 \rangle\)</span>.</p></li>
