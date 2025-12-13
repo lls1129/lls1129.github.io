@@ -3134,35 +3134,34 @@ Rounds</h2>
 repetition.</strong> In Sections <a href="#sec:prod"
 data-reference-type="ref" data-reference="sec:prod">6.4</a>, we showed a
 sublinear communication protocol for product sampling when <span
-class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle\)</span> is sufficiently large. Moreover, this
-protocol provably leaked no more information than the inner product.
-However, this protocol required <span class="math inline">\(O(1/\langle
-\mathbf{{w}_1},
-{\mathbf{w}_2} \rangle)\)</span> rounds of communication. This raises
-the question of whether constant-round sublinear product sampling is
+class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
+\rangle\)</span> is sufficiently large. Moreover, this protocol provably
+leaked no more information than the inner product. However, this
+protocol required <span class="math inline">\(O(1/\langle \mathbf{w}_1,
+\mathbf{w}_2 \rangle)\)</span> rounds of communication. This raises the
+question of whether constant-round sublinear product sampling is
 possible under the same restrictions on the inputs.</p>
 <p>Our protocol to achieve this takes a relatively standard approach.
 Suppose that we are given the value of <span
-class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle\)</span>. Then, since the expected number of
-samples until a collision is a function of <span
-class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle\)</span>, we can just run the inner loop of
-protocol <span class="math inline">\(\Pi_{\mathsf{prod}}\)</span> in
-parallel sufficiently many times to guarantee that the protocol would
-terminate with all but negligible probability.</p>
+class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
+\rangle\)</span>. Then, since the expected number of samples until a
+collision is a function of <span class="math inline">\(\langle
+\mathbf{w}_1, \mathbf{w}_2 \rangle\)</span>, we can just run the inner
+loop of protocol <span
+class="math inline">\(\Pi_{\mathsf{prod}}\)</span> in parallel
+sufficiently many times to guarantee that the protocol would terminate
+with all but negligible probability.</p>
 <p><strong>How many times to repeat?</strong> However, there is one
 catch. It is not actually possible to compute <span
-class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle\)</span> in sublinear communication! One simple
-solution is to use our promise on the input: we could run the inner loop
-enough times to guarantee termination for any inputs satisfying the
-promise (e.g. <span class="math inline">\(\omega(\frac{n}{\log
-n})\)</span> times). However, this forces us to adopt the worst-case
-communication cost, which might be undesirable. (Recall, it also offers
-the least leakage, which might be desirable.) Instead, we re-establish
-the trade-off between leakage and efficiency as follows. We begin by
+class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
+\rangle\)</span> in sublinear communication! One simple solution is to
+use our promise on the input: we could run the inner loop enough times
+to guarantee termination for any inputs satisfying the promise
+(e.g. <span class="math inline">\(\omega(\frac{n}{\log n}\)</span>)
+times). However, this forces us to adopt the worst-case communication
+cost, which might be undesirable. (Recall, it also offers the least
+leakage, which might be desirable.) Instead, we re-establish the
+trade-off between leakage and efficiency as follows. We begin by
 computing an approximation of the inner product in sublinear
 communication (see Section <a href="#sec:jlt" data-reference-type="ref"
 data-reference="sec:jlt">6.5.1</a>). Using this approximation, we can
@@ -3176,13 +3175,13 @@ with sublinear communication. In particular, we take advantage of the
 well known Johnson–Lindenstrauss Transform (JLT) <span class="citation"
 data-cites="JL84 STOC:IndMot98"></span> sketch.</p>
 <p><strong>Additional assumptions about <span
-class="math inline">\(\mathbf{w_1}\)</span> and <span
-class="math inline">\(\mathbf{w_2}\)</span></strong>. We assumed that
-<span class="math inline">\(\mathbf{w_1}\)</span> and <span
-class="math inline">\(\mathbf{w_2}\)</span> are normalized and
-correlated such that <span class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle = \omega(\log n/n)\)</span>. In a similar vein,
-we assume that the cosine similarity of the two vectors <span
+class="math inline">\(\mathbf{w}_1\)</span> and <span
+class="math inline">\(\mathbf{w}_2\)</span></strong>. We assumed that
+<span class="math inline">\(\mathbf{w}_1\)</span> and <span
+class="math inline">\(\mathbf{w}_2\)</span> are normalized and
+correlated such that <span class="math inline">\(\langle \mathbf{w}_1,
+\mathbf{w}_2 \rangle= \omega(\log n/n)\)</span>. In a similar vein, we
+assume that the cosine similarity of the two vectors <span
 class="math inline">\(\mathbf{w}_1\)</span> and <span
 class="math inline">\(\mathbf{w}_2\)</span> is not small, e.g., <span
 class="math inline">\(\omega(1/\log n)\)</span>.</p>
@@ -3195,8 +3194,8 @@ class="math inline">\(\cos(\mathbf{w}_1, \mathbf{w}_2) = \frac{\langle
 class="math inline">\(L_1\)</span> norm of each vector is equal to 1,
 their <span class="math inline">\(L_2\)</span> norms will typically much
 smaller than 1, which implies that the cosine similarity is usually much
-larger than <span class="math inline">\(\langle \mathbf{{w}_1},
-{\mathbf{w}_2} \rangle\)</span>.</p>
+larger than <span class="math inline">\(\langle \mathbf{w}_1,
+\mathbf{w}_2 \rangle\)</span>.</p>
 <p><strong>Approximating the inner product using JLT sketches.</strong>
 The JLT sketch of <span class="math inline">\(\mathbf{x}\)</span> is
 equal to <span class="math inline">\(\mathbf{M} \mathbf{x}\)</span>,
@@ -3274,27 +3273,27 @@ class="math inline">\(\mathbf{w}_2\)</span> respectively.</p>
 n\)</span> matrix <span class="math inline">\(\mathbf{M}\)</span>
 described in the above with in the threshold FHE. In particular, they
 jointly generate an encrypted random seed <span
-class="math inline">\(\llbracket s \rrbracket\)</span>. Using this
+class="math inline">\({\llbracket}s {\rrbracket}\)</span>. Using this
 randomness, parties homomorphically evaluates <span
-class="math inline">\(\llbracket PRG(s) \rrbracket\)</span>, where <span
-class="math inline">\(PRG\)</span> is a pseudorandom generator, to
-obtain the JLT matrix <span class="math inline">\(\llbracket \mathbf{M}
-    \rrbracket\)</span>.</p></li>
+class="math inline">\({\llbracket}PRG(s) {\rrbracket}\)</span>, where
+<span class="math inline">\(PRG\)</span> is a pseudorandom generator, to
+obtain the JLT matrix <span class="math inline">\({\llbracket}\mathbf{M}
+    {\rrbracket}\)</span>.</p></li>
 <li><p>Each party <span class="math inline">\(P_b\)</span>
-homomorphically evaluates <span class="math inline">\(\llbracket \tilde{
-\mathbf{w}}_b \rrbracket =
-    \llbracket \mathbf{M} \mathbf{w}_b \rrbracket\)</span>.</p></li>
+homomorphically evaluates <span class="math inline">\({\llbracket}\tilde
+\mathbf{w}_b {\rrbracket}=
+    {\llbracket}\mathbf{M} \mathbf{w}_b {\rrbracket}\)</span>.</p></li>
 <li><p>Party <span class="math inline">\(P_1\)</span> sends <span
-class="math inline">\(\llbracket \tilde{\mathbf{w}}_1
-\rrbracket\)</span> to <span
+class="math inline">\({\llbracket}\tilde \mathbf{w}_1
+{\rrbracket}\)</span> to <span
 class="math inline">\(P_2\)</span>.</p></li>
 <li><p>Party <span class="math inline">\(P_2\)</span> homomorphically
-evaluates <span class="math inline">\(\llbracket \langle \tilde
-    {\mathbf{w}}_1, \tilde{\mathbf{w}}_2 \rangle \rrbracket\)</span> and
+evaluates <span class="math inline">\({\llbracket}\langle \tilde
+    \mathbf{w}_1, \tilde \mathbf{w}_2 \rangle {\rrbracket}\)</span> and
 sends it to <span class="math inline">\(P_1\)</span>.</p></li>
 <li><p>Parties execute threshold decryption to obtain and output <span
-class="math inline">\(\frac 1 k \cdot \langle \tilde{\mathbf{w}}_1,
-\tilde {\mathbf{w}}_2 \rangle\)</span>.</p></li>
+class="math inline">\(\frac 1 k \cdot \langle \tilde
+    \mathbf{w}_1, \tilde \mathbf{w}_2 \rangle\)</span>.</p></li>
 </ol>
 </div>
 <p><strong>Security.</strong> Since every protocol message is a
