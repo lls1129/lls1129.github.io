@@ -14,26 +14,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 1. Install Pandoc (The Translator)
       - name: Install Pandoc
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc
 
-      # 2. Convert LaTeX to HTML
-      # This command takes main.tex and makes index.html
-      # --toc adds the "Jump back and forth" Table of Contents automatically
-      # --mathjax makes math equations look good on the web
+      # THE NEW ROBUST CONVERSION STEP
+      # 1. We stay in root (no 'cd')
+      # 2. We tell pandoc: "The main file is at src/main.tex"
+      # 3. We tell pandoc: "If you need other files (inputs/images), look in 'src'" (--resource-path=src)
       - name: Convert LaTeX to HTML
         run: |
-          cd src
-          pandoc main.tex -o index.html --standalone --toc --mathjax
+          pandoc src/main.tex --resource-path=src -o index.html --standalone --toc --mathjax
 
-      # 3. Commit the new index.html back to the repo
+      # DEBUG STEP: This will print the file list in your logs so we can see if index.html exists
+      - name: Verify file generation
+        run: ls -la
+
       - name: Commit and Push changes
         run: |
           git config --global user.name 'GitHub Action'
           git config --global user.email 'action@github.com'
           git add index.html
-          git commit -m "Auto-update website from Overleaf" || exit 0
+          # The flag --allow-empty prevents failure if the file is identical to the last run
+          git commit -m "Auto-update website" --allow-empty
           git push origin HEAD:main
