@@ -4,11 +4,11 @@
 % WEB MODE (Pandoc) - This runs on your Website
 % =========================================================
 \ifdefined\pandoc
-  % 1. FIX MATH ARGUMENTS (The \vec crash)
+  % 1. FIX THE YELLOW ERROR (Missing argument for \mathbf)
   % We use \def to force Pandoc to keep the curly braces {}.
   \def\vec#1{\boldsymbol{#1}}
   
-  % 2. FIX BRACKETS (Text fallback)
+  % 2. FIX THE RED TEXT (Brackets)
   \def\lbra{[\![} \def\lket{]\!]}
   \def\llbracket{[\![} \def\rrbracket{]\!]}
 
@@ -20,7 +20,6 @@
   \providecommand{\floatname}[2]{}
   
   % 4. FAKE THEOREMS (Simple text blocks)
-  % Note: Since main.tex defined them as "real", we redefine them here for web only.
   \providecommand{\theoremstyle}[1]{}
   \renewenvironment{theorem}{\medskip\noindent\textbf{Theorem.}\itshape}{\medskip}
   \renewenvironment{lemma}{\medskip\noindent\textbf{Lemma.}\itshape}{\medskip}
@@ -39,9 +38,8 @@
   \providecommand{\Require}{\noindent\textbf{Require: }}
   \providecommand{\Ensure}{\noindent\textbf{Ensure: }}
   \providecommand{\Return}{\noindent\textbf{Return: }}
-  \providecommand{\qedsymbol}{\ensuremath{\blacksquare}}
   
-  % 6. FAKE BOXES
+  % 6. FAKE BOXES (Web-Unsafe)
   \newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
   \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
 
@@ -57,25 +55,45 @@
   \providecommand{\lket}{\rrbracket}
   \providecommand{\llbracket}{\llbracket}
   \providecommand{\rrbracket}{\rrbracket}
+
+  % 3. REAL THEOREMS (Order is CRITICAL here)
+  % We assume \usepackage{amsthm} is in main.tex
   
-  % 3. Real Boxes
+  % Step A: Define the Parent Counter first
+  \newtheorem{theorem}{Theorem}[section] 
+  
+  % Step B: Define the Children (that use [theorem])
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{definition}[theorem]{Definition}
+  \newtheorem{protocol}[theorem]{Protocol}
+  \newtheorem{fact}[theorem]{Fact}     
+  \newtheorem{claim}[theorem]{Claim}   
+  \newtheorem{corollary}[theorem]{Corollary}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{example}[theorem]{Example}
+  \newtheorem{observation}[theorem]{Observation}
+  
+  % 4. REAL BOXES
   \newcommand{\bbox}[1]{
     \medskip
     \fbox{\hbox{\medskip
-      \begin{minipage}{0.90\textwidth} \small #1 \end{minipage}
+      \begin{minipage}{0.90\textwidth}
+      \small
+      #1
+      \end{minipage}
     \quad}
   }} 
   \newcommand{\tbox}[1]{
     \medskip
     \noindent
     \fbox{\hbox{\medskip
-      \begin{minipage}{0.9\textwidth} #1 \end{minipage}
+      \begin{minipage}{0.9\textwidth}
+      #1
+      \end{minipage}
     \quad}
-    } \medskip
+    }
+    \medskip
   } 
-  
-  % Note: We do NOT define \newtheorem here. 
-  % They MUST be defined in main.tex to avoid Preamble errors.
 \fi
 
 % =========================================================
@@ -100,7 +118,7 @@
 \providecommand{\fmin}{\min(f)}
 
 % Math Operators
-% Note: \vec is handled in the if/else block above.
+% Note: \vec is handled in the if/else block above. Do not redefine it here!
 \def\NN{\mathbb{N}}
 \def\RR{\mathbb{R}}
 \def\F{\mathcal{F}}
@@ -183,41 +201,23 @@
 \newcommand{\flone}{\mathsf{F}_{L_1}}
 
 % Environment Wrappers (Shortcuts)
-% \providecommand{\BD}{\begin{definition}} \providecommand{\ED}{\end{definition}}
-% \providecommand{\BCR}{\begin{corollary}} \providecommand{\ECR}{\end{corollary}}
-% \providecommand{\BEX}{\begin{example}}   \providecommand{\EEX}{\end{example}}
-% \providecommand{\BL}{\begin{lemma}}       \providecommand{\EL}{\end{lemma}}
-% \providecommand{\BP}{\begin{proposition}} \providecommand{\EP}{\end{proposition}}
-% \providecommand{\BCM}{\begin{claim}}      \providecommand{\ECM}{\end{claim}}
-% \providecommand{\BPF}{\begin{proof}}      \providecommand{\EPF}{\end{proof}}
-% \providecommand{\BEN}{\begin{enumerate}}  \providecommand{\EEN}{\end{enumerate}}
-% \providecommand{\BI}{\begin{itemize}}     \providecommand{\EI}{\end{itemize}}
-% \providecommand{\BO}{\begin{observation}} \providecommand{\EO}{\end{observation}}
-% \providecommand{\BDS}{\begin{description}}\providecommand{\EDS}{\end{description}}
-
-% Safer wrappers replacing line 186-196
-\def\BD{\begin{definition}}  \def\ED{\end{definition}}
-\def\BCR{\begin{corollary}}
-\def\ECR{\end{corollary}}
-\def\BEX{\begin{example}}    \def\EEX{\end{example}}
-\def\BL{\begin{lemma}}       \def\EL{\end{lemma}}
-\def\BP{\begin{proposition}} \def\EP{\end{proposition}}
-\def\BCM{\begin{claim}}      \def\ECM{\end{claim}}
-\def\BPF{\begin{proof}}      \def\EPF{\end{proof}}
-\def\BEN{\begin{enumerate}}
-\def\EEN{\end{enumerate}}
-\def\BI{\begin{itemize}}
-\def\EI{\end{itemize}}
-\def\BO{\begin{observation}} 
-\def\EO{\end{observation}}
-\def\BDS{\begin{description}}
-\def\EDS{\end{description}}
-
+\providecommand{\BD}{\begin{definition}} \providecommand{\ED}{\end{definition}}
+\providecommand{\BCR}{\begin{corollary}} \providecommand{\ECR}{\end{corollary}}
+\providecommand{\BEX}{\begin{example}}   \providecommand{\EEX}{\end{example}}
+\providecommand{\BL}{\begin{lemma}}       \providecommand{\EL}{\end{lemma}}
+\providecommand{\BP}{\begin{proposition}} \providecommand{\EP}{\end{proposition}}
+\providecommand{\BCM}{\begin{claim}}      \providecommand{\ECM}{\end{claim}}
+\providecommand{\BPF}{\begin{proof
+}}      \providecommand{\EPF}{\end{proof}}
+\providecommand{\BEN}{\begin{enumerate}}  \providecommand{\EEN}{\end{enumerate}}
+\providecommand{\BI}{\begin{itemize}}     \providecommand{\EI}{\end{itemize}}
+\providecommand{\BO}{\begin{observation}} \providecommand{\EO}{\end{observation}}
+\providecommand{\BDS}{\begin{description}}\providecommand{\EDS}{\end{description}}
 
 \newcommand{\DDD}{{\cal D}}
 \newcommand{\RRR}{{\cal R}}
 
-% Sketch stuff
+% sketch stuff
 \newcommand{\secparam}{\lambda}
 \newcommand{\nibf}[1]{\noindent\textbf{#1}}
 
@@ -227,7 +227,7 @@
 \newcommand{\Pp}{\Pi_{\mathsf{prod}}}
 \newcommand{\Dp}{D_{\mathsf{prod}}}
 \newcommand{\Fip}{\F_{\mathsf{aIP}}}
-\newcommand{\fl}{f_{\mathsf{Leak}}} 
+\newcommand{\flk}{f_{\mathsf{Leak}}} 
 \newcommand{\ipw}{\ip{\vec{w}_1}{\vec{w}_2}}
 \newcommand{\LLw}{\|\w_1 + \w_2 \|_2^2}
 \def\w{\vec{w}}
@@ -241,6 +241,4 @@
 \newcommand{\FirstSuccess}{\mathsf{FirstSucess}}
 \def\llaprox{{\mathsf{L_2}\mbox{-}\mathsf{approx}}}
 \newcommand{\denom}{\mathsf{denom}}
-\newcommand{\subsubsubsection}[1]{\paragraph{#1}\mbox{}\\}
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+
