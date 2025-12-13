@@ -1,0 +1,382 @@
+\subsection{Two-party Exponential Mechanism}\label{sec:dp}
+Recall that one of our main motivations for this work is to instantiate
+a two-party version of the exponential mechanism to achieve differential
+privacy.  We observe that for many natural loss functions (i.e., when
+the loss function is additive across the two parties), the exponential
+mechanism on two parties is essentially equivalent to product sampling.
+We explain this further with a concrete example in
+Section~\ref{sec:example}.  
+
+
+\subsubsection{A concrete example}\label{sec:example}
+Suppose we want to choose a classifier minimizing the $L_2$ error over a
+test dataset while preserving differential privacy of the labeled
+examples.  
+%
+Suppose there are $n$ machine learning classifiers $(c_1, \ldots, c_n)$,
+and a test dataset $D = (d_1, \ldots, d_{|D|})$ consists of $|D|$ rows.
+Let $\ell_j \in \{0,1\}$ be the label of the $j$-th row $d_j$ of the
+dataset.
+%
+For a machine learning classifier $c_i$, we define its $L_2$ loss
+function as follows: 
+
+\[
+f^{c_i}_{\mathsf{loss}}(D) := \sum_{j \in |D|}(c_i(d_j) - \ell_j)^2/|D|.
+\]
+
+Now, consider a two-party federated setting in which the parties would
+like to perform computation on the aggregation of their local datasets.
+In particular, we assume party $P_1$ (resp., party $P_2$) holds dataset
+$D_1$ (resp., $D_2$) with $|D_1| = |D_2|$. Let $D = D_1 || D_2$.
+%We assume the parties know the size of $|D|$.  \dnote{This should not
+%violate differential privacy since (1) the test subset $D$ is usually
+%randomly sampled from the entire training set and typically has far
+%smaller size than the entire training set, so we can view $|D|$ as a
+%parameter to the algorithm and require that both parties have exactly
+%$|D|/2$ number of examples in their testing set (2) if needed, $D$
+%could be padded with dummy rows to make the count differentially
+%private.}\anote{I think it's easier to skip this discussion and just
+%set the sets to be of size $|D|/2$.}
+
+
+\paragraph{DP mechanism in the central curator model.}
+In our mechanism, the central curator would receive input from parties
+$P_1$ and $P_2$ and choose classifier $c_i$ with a $(\epsilon, 0)$-DP
+guarantee using the exponential mechanism. 
+
+We observe that the $L_2$ loss function $f^{c_i}_{\mathsf{loss}}(D)$
+over the entire dataset $D$ can be computed by each party $P_b$ {\em
+first locally computing}
+\[
+f^{c_i}_{\mathsf{loss}}(D_b) := \sum_{j \in |D_b|}(c_i(d_{b,j}) - \ell_{b,j})^2/|D|,
+\]
+and then computing 
+$f^{c_i}_{\mathsf{loss}}(D) = f^{c_i}_{\mathsf{loss}}(D_1) + f^{c_i}_{\mathsf{loss}}(D_2).$
+
+
+Based on the above observation, in our mechanism, each party $P_b$
+computes a vector $\vec{v}_b$ as follows: 
+%
+\BI
+\item[] For $b \in \{1,2\}$, let $\vec{v}_b = (v_{b,1}, \ldots, v_{b,
+n})$, where $v_{b,i} = e^{-\epsilon \cdot \frac{
+f^{c_i}_{\mathsf{loss}}(D_b)}{2 \Delta u}}$ and $\Delta u =
+\frac{\e}{40(\log n + t)}$, and $\secparam$ is the security parameter. 
+\EI
+%
+Then, each party $P_b$ computes $\w_b :=
+\frac{\vec{v}_{b}}{||\vec{v}_b||_1}$ (i.e., the normalization of
+$\vec{v}_b$), and sends $\w_b$ to the central curator. 
+%
+Finally, the curator will choose classifier $c_i$ with the probability
+$\frac{w_{i,i} \cdot w_{i,2}}{\ipw}$. 
+
+\begin{lemma}
+If $|D| \ge 40 (\log n + \secparam)/\epsilon$, our mechanism
+provides $(\epsilon, 0)$-DP.  
+\end{lemma}
+
+\begin{proof} 
+Let $q_i(D) = \frac{-f^{c_i}_{\mathsf{loss}}(D)}{2 \Delta u}$. 
+We first show that drawing a sample from the product distribution of
+$\vec{w}_1, \vec{w}_2$ is identical to running the exponential mechanism
+to select classifier $c_i$ with probability $$\frac{e^{\epsilon q_i(D)}
+}{\sum_{j \in [n]} e^{\epsilon q_j(D)}}.$$ 
+Recall that product sampling on inputs $\vec{w}_1,
+\vec{w}_2$ returns index $i$ with probability $\frac{{w}_{1,i} \cdot
+{w}_{2,i}}{\langle \vec{w}_1, \vec{w}_2\rangle}$.  Since
+${w}_{b,i} = \frac{{v}_{b,i}}{||\vec{v}_b||_1}$, we can rewrite
+the previous equation as
+\begin{align*} \frac{{w}_{1,i} \cdot {w}_{2,i}}{\langle \vec{w}_1,
+\vec{w}_2\rangle} & = \frac{{v}_{1,i}
+\cdot {v}_{2,i}}{\ip{\vec{v}_1}{\vec{v}_2}} 
+    &= \frac{e^{\epsilon \cdot q_i(D_1)}\cdot e^{\epsilon \cdot q_i(D_2)}}
+    {\sum_{j \in [n]} e^{\epsilon \cdot q_j(D_1)} \cdot e^{\epsilon \cdot q_j(D_2)}}
+    = \frac{e^{\epsilon \cdot q_i(D)}} {\sum_{j \in [n]} e^{\epsilon \cdot q_j(D)}} 
+\end{align*} 
+
+Note that the loss functions have global sensitivity of $1/|D|$ since a
+change to the $j$-th row of $D_b$ can cause
+$f^{c_i}_{\mathsf{loss}}(D_b)$ to change by $\pm 1/|D|$.
+%
+Instead of using $1/|D|$, our mechanism uses a larger value $\Delta u$.
+Since the $\Delta u$ is larger than the sensitivity whenever $|D| \ge 40 (\log{n}+\secparam)/\epsilon$, and our mechanism
+is a simple exponential mechanism, $(\e, 0)$-DP holds.  
+\qed
+\end{proof}
+
+% \dnote{Notes so we don't forget:
+% $\frac{\vec{w}_1[i] \cdot \vec{w}_2[i]}{\langle \vec{w}_1, \vec{w}_2\rangle}$
+% is equivalent to:
+% $\frac{\vec{w}_1[i] \cdot \vec{w}_2[i]}{||\vec{w}_1||_1 \cdot ||\vec{w}_2||_1\langle \vec{w}_1/||\vec{w}_1||_1, \vec{w}_2/||\vec{w}_2||_1\rangle}$}
+
+%
+%We say that $f^{c_i}_\mathsf{loss}$ has
+%\emph{low-sensitivity} if
+%Note the global sensitivity of $f^{c_i}_\mathsf{loss}$ is at most $1/|D|$.
+%\anote{I thought about generalizing this, but then
+%the error below gets really messy.  Should we generalize?}
+%
+
+\paragraph{Utility.}
+Although using a larger value $\Delta u$ deteriorates the utility of the
+mechanism, we show that the utility is still acceptable.  Applying
+Theorem~3.11
+in~\cite{DR14} to our setting, we have $$\Pr\left[f_{\sf loss}^{c_i}(D)
+\le f_{\sf loss}^{c_{opt}}(D) - \frac{2 \Delta u}{\e} \cdot (\log n + \secparam)
+\right] \le e^{-\secparam}.$$ 
+
+Noting that $\Delta u = \frac{\e}{40(\log
+n + \secparam)}$, we have $$\Pr\left[f_{\sf loss}^{c_i}(D) \le f_{\sf
+loss}^{c_{opt}}(D) - 1/20 \right] \le e^{-\secparam}.$$ 
+Viewing $f_{\sf
+loss}^{c_{opt}}(D)$ as the optimal accuracy for the chosen classifier.  This implies that our mechanism returns a classifier that is at most 5\% less accurate than the optimal classifier.  We note that an even smaller loss in accuracy can be achieved by increasing $\Delta u$ and the minimum size of $D$ accordingly.
+
+Jumping ahead, we use this larger $\Delta u$ in order to achieve
+differential privacy of the approximate inner product evaluation to be
+described in the next section.
+
+\subsubsection{Differentially-Private Inner Product for the Exponential Mechanism}
+
+\paragraph{Issue: DP is broken due to leakage $\ipw$.}
+Based on the result of the previous subsection, we can simply run the
+product sampling protocol to achieve a two-party exponential mechanism
+without the central curator. However, there is one issue we need to
+address.
+%
+In particular, the leakage from the previously described protocols for
+product sampling violates the DP guarantee of the exponential mechanism;
+the leakage $\ipw$ is clearly not differentially private with respect to
+$P_2$'s input.
+
+Thus, to instantiate the exponential mechanism, we give an alternative
+inner product approximation protocol that achieves differential privacy.
+Using this approximation, we can build a protocol that is able to sample
+from exactly the product distribution while additionally leaking a value
+$\mathsf{leak}$ that is differentially-private and thus does not violate
+the DP guarantee of the exponential mechanism.  
+%As discussed earlier,
+%the missing piece needed to instantiate the exponential mechanism is a
+%product sampling protocol with differentially-private leakage.  
+We build such a protocol based on the approximate inner product using
+the JLT given in Section~\ref{sec:jlt}.
+
+\paragraph{Approximating the inner product differentially privately.}
+We now describe a mechanism, executed by a trusted curator, to
+approximate the inner product on inputs $\vec{w}_1$ and $\vec{w}_2$ with
+${w}_{b,i} = \frac{{v}_{b,i}}{||\vec{v}_b||_1}$ for $b \in \{1,2\}$ and
+$i \in [n]$ as described above.  This mechanism is essentially the {\sf
+approxIP} algorithm described in Section~\ref{sec:jlt} with noise added
+in the exponent to guarantee differential privacy.
+
+\BEN
+\item[] \hspace{-2em} $\dIP(\w_1, \w_2)$: 
+ 
+\item Choose $k \times n$ matrix $\vec{M}$ such that each entry
+$M_{i,j}$ chosen from an independent Gaussian distribution of mean $0$
+and variance $1$. The dimension $k$ (with $k \ll n$) is determined
+appropriately according to Lemma~\ref{lem:jlt_k}.
+
+\item Choose a value $x$ from the Laplace distribution ${\sf
+Lap}(1/(\Delta u \cdot |D|))$. 
+
+\item Output $e^x \cdot \langle \vec{M}\vec{w}_1, \vec{M}\vec{w}_2
+\rangle$. 
+\EEN
+
+\paragraph{Public sampling of $\vec M$.}
+Contrary to Section~\ref{sec:rounds} where $\vec M$ was sampled inside
+the FHE, here, the matrix $\vec M$ can be publicly sampled (e.g.,
+through a commonly chosen random PRG seed), since DP is achieved through
+adding a Laplace noise. 
+
+\paragraph{Differential privacy.}
+We say that two datasets $D$ and $D'$ are \emph{neighboring} if they
+differ in exactly one row.  
+
+Recall that, as in the application described in
+Section~\ref{sec:example}, the parties' inputs to the product sampling
+are of the form $\vec{w}_b$ where ${w}_{b,i} \propto e^{-\epsilon \cdot
+\frac{f^{c_i}_{\mathsf{loss}}(D_b)}{2 \Delta u}}$ for some additive loss functions
+$f^{c_i}_\mathsf{loss}$. 
+
+
+\begin{theorem}
+If $|D| \ge 40 \cdot (\log n + \secparam)/\epsilon$, the mechanism
+$\dIP$ is $\epsilon$-differentially private w.r.t a database $D_1$
+(resp., $D_2$) when the loss functions $f^{c_i}_{\mathsf{loss}}(D)$ have
+low sensitivity $1/|D|$.  
+\end{theorem}
+
+\begin{proof}
+We prove differential privacy with respect to $D_1$ (i.e., the adversary
+knows $D_2$ and the differential privacy guarantee holds relative to
+rows of $D_1$). The reverse case is analogous.
+
+Note that the change of a single row in $D_1$ causes the values ${v}_{1,i}$ (for $i \in [n]$) and the value $\|\vec{v}_1\|_1$ to change by at most a  
+multiplicative factor of $\alpha := e^{\pm \epsilon / (2
+\Delta u \cdot |D|)}$.
+Thus, letting $\vec{M}_\ell$ be the $\ell$-th row of the JLT matrix (which is
+fixed and public), for each $\ell \in [k]$, the value $\langle
+\vec{M}_\ell,  \vec{w}_b \rangle$ can change by at most a multiplicative
+factor of $\alpha^2$. 
+%
+Therefore, the dot product $\langle \vec{M} \vec{w}_1, \vec{M}
+\vec{w}_2\rangle$ can change by at most a multiplicative factor of
+$\alpha^2$. 
+
+Ultimately, this means that we have additive sensitivity of $\epsilon/
+(\Delta u \cdot |D|)$ in the \emph{exponent}.  To achieve differential
+privacy, we thus need to multiply the dot product estimate by $e^x$,
+where $x$ is drawn from $\mathsf{Lap}(1/ (\Delta u \cdot |D|))$.  
+\qed
+\end{proof}
+
+\paragraph{Correctness.}
+We briefly analyze the estimation error due to the added noise.  Since
+$x$ is drawn from $\mathsf{Lap}(1/(\Delta u \cdot |D|))$, the
+probability that $|x| \geq \epsilon$ is at most $e^{-\Delta u \cdot
+|D|}$. When $|D| > \Delta u \cdot \secparam /\epsilon$, this probability
+is at most $e^{-\secparam}$, which is negligible. 
+
+In other words, when $D$ is a sufficiently large dataset, with
+overwhelming probability, the incurred multiplicative error is $e^{|x|}
+\le e^{\epsilon} < 1+2\epsilon$. Thus, differential privacy adds at most
+a $1 \pm 2\epsilon$ multiplicative error on top of the error of the
+approximation algorithm.
+
+\paragraph{Removing the curator.}
+We described the inner product approximation protocol as being run by a
+trusted curator.  As is standard, we can replace this curator with a
+secure 2-PC evaluating the mechanism to achieve computational DP. 
+
+\subsubsection{Instantiating the Exponential Mechanism}
+We now have all the necessary pieces to instantiate a sublinear
+communication protocol to evaluate the exponential mechanism for a
+database $D$ held jointly by two parties.
+
+\paragraph{The two-party exponential mechanism protocol.}
+We now describe the distributed exponential mechanism where $P_b$ has
+input $D_b$ and the loss functions have low sensitivity.  This protocol
+is in the $\F_\oslone$-hybrid model.
+
+\floatname{algorithm}{Protocol}\label{prot:prodsampdp}
+\begin{algorithm}[htbp]
+\textbf{Inputs:} Party $P_b$ has input $D_b$   
+
+\begin{enumerate}
+    \item $P_b$ computes $\vec{v}_b = (v_{b, 1}, \ldots, v_{b,n})$ such
+    that ${v}_{b,i} = e^{-\epsilon \cdot
+    \frac{f^{c_i}_{\mathsf{loss}}(D^b)}{2 \Delta u}}$, where $\Delta u =
+    \frac{\e}{40(\log n + \secparam)}$. 
+    Let $\vec{w}_{b}=\frac{\vec{v}_{b}}{||\vec{v}_b||_1}$.
+    
+    \item Invoke the $\F_{2PC}$ ideal functionality to evaluate $\eta = {\dIP}(\w_1,
+    \w_2)$.  Note that $\eta$ is an $(1+2\epsilon)$-approximation of the inner product.
+    
+    \item The parties execute the following steps $m=\frac{(1+2\e) \cdot
+    \omega(\log{\secparam})}{\eta}$ times in parallel.
+    
+    \BEN \item Invoke the $\F_\oslone$ ideal functionality with $P_1$ as the sender with input
+    $\vec{w}_1$ and $P_2$ as the receiver.  Let $i_{1,1}^j$ and
+    $i_{1,2}^j$ be the output of the $j$th execution to $P_1$ and $P_2$
+    respectively. 
+    
+    \item Invoke the $\F_\oslone$ ideal functionality with $P_2$ as the sender with input
+    $\vec{w}_2$ and $P_1$ as the receiver.  Let $i_{2,1}^j$ and
+    $i_{2,2}^j$ be the output of the $j$th execution to $P_1$ and $P_2$
+    respectively.
+    
+    \EEN
+    
+    \item Invoke the $\F_{2PC}$ ideal functionality for the following circuit: 
+      \BEN
+      \item[] \hspace{-2em} Input: $(i_{1,1}^j, i_{2,1}^j, i_{1,2}^j, i_{2,2}^j)$ for $j = 1, \ldots, m$. 
+      \item Let $i_1^j = i_{1,1}^j \xor i_{1,2}^j$, $i_2^j = i_{2,1}^j \xor i_{2,2}^j$. 
+      \item Find the smallest $j$ such that $i_1^j$ equals $i_2^j$, and
+      output $i_1^j$ to both $P_1$ and $P_2$.  If no such $j$ exists,
+      output $\mathsf{abort}$.  \EEN
+
+\end{enumerate}
+\textbf{Output:} Both parties output the sampled index $i$ or $\mathsf{abort}$. 
+
+\caption{Exponential Mechanism Protocol ($\Pi_{\mathsf{EM}}$) in the $\{\F_{2PC}, \F_\oslone \}$-hybrid model}
+\end{algorithm}
+
+
+\paragraph{Security.}
+We will prove the following theorem.
+
+\begin{theorem}\label{thm:prodDP}
+If $|D| \ge 40 \cdot \secparam (\log n + \secparam)/\epsilon^2$,
+protocol $\Pi_{\mathsf{EM}}$ is
+$(2\epsilon,\negl(\secparam))$-DP.
+\end{theorem}
+
+It is easy to see that this protocol runs an enough number of product
+samplings in parallel so that it does not output $\mathsf{abort}$,
+except with negligible probability  (see Section~\ref{sec:const}).
+Therefore, for the proof, we assume that the protocol does not output
+$\mathsf{abort}$.  
+
+%
+%\iffalse
+%\begin{claim}\label{lem:prodAbort}
+%For any input vectors $\vec{w}_1$, $\vec{w}_2$ such that $\ip{\vec{w}_1}{\vec{w}_2} > 0$\anote{This should probably be the same promise we used before}, the probability that Protocol~\ref{prot:prodsampdp} aborts is negligible in $\secparam$.
+%\end{claim}
+%\begin{proof}
+%We first consider the probability that there is no colliding indices in the first $r-1$ rounds
+%\begin{align*}
+%\Pr[\mbox{no collision in first }r-1 \mbox{ rounds}] = (1- \ip{\vec{w}_1}{\vec{w}_2})^{r-1}
+%\end{align*}
+%
+%\noindent
+%Since $aIP$ is an $(\eps,\delta)$-approximation\anote{Need to get the $\epsilon$ correct} of $\ip{\vec{w}_1}{\vec{w}_2}$, we know that with all but negligible probability $(1-\eps)\ip{\vec{w}_1}{\vec{w}_2} \le aIP \le (1+\eps)\ip{\vec{w}_1}{\vec{w}_2}$.
+%
+%\medskip\noindent
+%Letting $x=1/\ip{\vec{w}_1}{\vec{w}_2}$ and using the inequality $(1-1/x)^x \le e^{-1}$, we see that after $\omega(x\log{\secparam})$ rounds $\Pr[\mathsf{abort}] \le e^{-\omega(\log{\secparam})} \le \negl(\secparam)$.  Thus, given $IP$, this guarantee holds after at most $\frac{IP}{1-\eps}\cdot\omega(\log{\secparam})$ iterations.
+%\end{proof}
+%\fi
+%
+
+\begin{proof}
+We first consider where $P_1$ is corrupted by the adversary $A$. 
+Let $\view_A(D)$ be the view of the protocol to $A$ (consisting of input, output and transcript)
+in the $\{\F_{2PC}, \F_\oslone \}$-hybrid model.
+In the $j$-th invocation of $\F_\oslone$,
+the outputs $\{i_{1,1}^j,
+i_{2,1}^j\}_j, i)$ sent to $A$ by the ideal functionality are uniformly
+distributed and independent of $D$.
+Thus, WLOG, we assume that 
+$A$'s view consists of its input,
+transcript $\eta$, and output $i$.
+%
+Let $\view^{\mathsf{trans}}_A(D)$ (resp., $\view^{\mathsf{out}}_A(D)$) be the transcript (resp., output)
+contained in $A$'s view during a random execution of the protocol with input $D$.
+
+For all neighboring database $D$ and $D'$, and for all $\eta$ and $i$, we have: 
+\begin{eqnarray*}
+&& \Pr[\view^{\mathsf{trans}}_A(D) = \eta, \view^{\mathsf{out}}_A(D) = i] \\
+&& = \Pr[\view^{\mathsf{trans}}_A(D) = \eta] \cdot \Pr[\view^{\mathsf{out}}_A(D) = i | \eta]  \\
+&& \le e^{\e} \Pr[\view^{\mathsf{trans}}_A(D') = \eta] \cdot \Pr[\view^{\mathsf{out}}_A(D) = i | \eta] \\
+&& \le e^{\e} \Pr[\view^{\mathsf{trans}}_A(D') = \eta] \cdot e^{\e} \Pr[\view^{\mathsf{out}}_A(D') = i | \eta] \\
+&& = e^{2\e} \Pr[\view^{\mathsf{trans}}_A(D') = \eta, \view^{\mathsf{out}}_A(D') = i],
+\end{eqnarray*}
+
+The first inequality holds form the DP of protocol $\dIP$, and the
+second inequality holds from the DP of the exponential mechanism.
+
+The case when $P_2$ is corrupted can be proved similarly. 
+\qed
+\end{proof}
+
+
+
+% \paragraph{Performance}
+% This protocol executes at most $m=\left(\frac{aIP}{1-\epsilon}\right)\cdot \omega(\log{\secparam})$ executions of the 2-PC comparison protocol in parallel, each requiring $O(\ell)$ communication.  Finally, the 2-PC for selecting the output can be done in communication linear in the number of executions, thus giving a total communication of $O(ml) = o(n)$.  As long as we use constant-round 2-PC protocols to realize all these computations, the resulting protocol also has constant rounds.
+
+
+
+
+

@@ -1,0 +1,61 @@
+\section{$L_1$ Sampling Protocol with Secret Shared Output}  \label{apx:ssL1}
+ 
+We give a more formal description of the functionality $\F_{L_1}^{ss}$. 
+
+\bbox
+{
+\begin{center}
+ $\F_{L_1}$:  Ideal functionality for two-party $L_1$ sampling
+\end{center}
+
+The functionality has the following parameter:
+\BI
+\item $n \in \NN$. The dimension of the input weight vectors $\vec{w}_1$ and $\vec{w}_2$.
+\EI
+
+The functionality proceeds as follows:
+\BEN
+\item Receive inputs $\vec w_1$ and $\vec w_2$ from $P_1$ and $P_2$
+respectively. 
+\item Sample $i \in [n]$ with probability $\frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }$
+\item Choose a random number $\pi$ consisting of $\lceil \log n \rceil$ bits.
+\item Send $\pi$ to $P_1$ and $i \xor \pi$ to $P_2$. 
+\EEN 
+
+}
+
+\medskip
+
+We describe a protocol securely realizing
+$\F_{L_1}^{ss}$ in the $(\F_\oslone, \F_\bcoin)$-hybrid. 
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[h]
+\textbf{Inputs:} Party $P_b$ has input $\vec{w}_b$. 
+
+\BEN
+\item Execute $\F_\oslone$ with $P_1$ as a sender with input $\vec{w}_1$
+and $P_2$ as a receiver. Let $\langle i_1 \rangle$ be the secret share of the output
+index. 
+
+\item Execute $\F_\oslone$ with $P_2$ as a sender with input $\vec{w}_2$
+and $P_1$ as a receiver. Let $\langle i_2 \rangle$ be the secret share of the output
+index.
+
+\item Execute $\F_\bcoin$ where $P_1$ has input $\|\vec{w}_1\|_1$ and
+$P_2$ has input $\|\vec{w}_2\|_1$. Let $\langle b \rangle$ be the secret share of the
+output bit. In addition, $P_1$ chooses random bits $\pi$.
+
+\item Execute $\F_{2PC}$ for the following circuit: 
+      \BEN
+      \item Input: $\langle i_1 \rangle, \langle i_2 \rangle, \langle b \rangle, \pi$. 
+      \item Compute $i = i_1 \cdot (1-b) + i_2 \cdot b$.
+      \item Output $\pi$ to $P_1$ and $\pi \xor i$ to $P_2$.
+      \EEN
+\EEN
+
+\caption{Protocol securely realizing $\F_{L_1}^{ss}$ in the $(\F_\oslone, \F_\bcoin)$-hybrid.}
+\end{algorithm}
+
+Security of the protocol can be shown similarly to Theorem~\ref{th:l1}.  

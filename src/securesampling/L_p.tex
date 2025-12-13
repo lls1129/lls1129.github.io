@@ -1,0 +1,155 @@
+\subsubsection{A non-private $L_p$ sampling protocol with $\tilde{O}(1)$
+communication} \label{sec:insecureLp}
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+
+\paragraph{Inputs:} Parties $P_1$ and $P_2$ have inputs $\w_1$ and $\w_2$
+respectively. 
+
+\medskip
+
+The protocol proceeds as follows:
+\BEN
+    \item Parties run $\Pi_{\mathsf{ignore}}$ 
+    with inputs $\vec{w}_1, \vec{w}_2$
+    that samples from $D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ and obtain output $i$.
+    
+    \item For $b \in \{1, 2\}$, $P_b$ sends $w_{b,i}, ||\vec{w}_b||_p^p$.
+    Both parties compute 
+    \[
+    \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i] = \frac{w_{1,i}^p + w_{2,i}^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}
+    \quad
+    \mbox{and}
+    \quad
+    f_c(\vec{w}_1, \vec{w}_2, i) = \frac{(w_{1,i} + w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}
+    \]
+    \item Parties output $i$ with probability 
+    \begin{align*}
+        \frac{f_c(\vec{w}_1, \vec{w}_2, i)}{2^{p-1} \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]} &= \frac{c \cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2^{p-1} \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]}\\
+        &= \frac{\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]}
+        \end{align*}
+    and otherwise return to step 1.
+    
+\EEN
+\caption{Protocol for exact $L_p$ sampling ($\Pi_{L_p}$)}
+\label{fig:lpexact}
+\end{algorithm}
+In this section we present a $\tilde{O}(1)$ sampling 
+protocol for $L_p$ sampling for constant $p$.
+We present only the insecure version, extending it
+to a secure sampling protocol can be done
+entirely analogously to the construction for $L_2$ sampling
+given in Section~\ref{sec:secure}.
+
+Given input vectors $\vec{w}_1, \vec{w}_2$,
+$L_p$ sampling refers to sampling from the distribution
+$D_{L_p}(\vec{w}_1, \vec{w}_2)$ with the following
+probability mass function:
+$$\Pr[ D_{L_p}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ] 
+= \frac{(w_{1,i} + w_{2,i})^p}{ \sum_j (w_{1,j} + w_{2,j})^p }
+= \frac{(w_{1,i} + w_{2,i})^p}{ \| \w_1 + \w_2 \|_p^p }. $$
+
+We begin by defining and showing how to sample from a helper
+distribution $D_{\mathsf{ignore}, p}$.
+
+\begin{definition}
+For input vectors $\vec{w}_1, \vec{w}_2$,
+let $D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ be the distribution that ``ignores'' the cross term in $D_{L_p}(\vec{w}_1, \vec{w}_2)$.
+I.e.~$D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$
+samples index $i \in [n]$
+with probability $\frac{w^p_{1,i} + w^p_{2,i}}{||\vec{w}_1||_p^p + ||\vec{w}_2|_p^p}$.
+\end{definition}
+
+\begin{lemma}\label{lem:ignore_2}
+There exists a protocol $\Pi_{\mathsf{ignore}}$ for sampling from
+$D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ with $\tilde{O}(1)$
+communication.
+\end{lemma}
+
+\begin{proof}
+Let $\vec{w'}_b = (w_{b,1}^p, \ldots, w_{b,n}^p).$
+The lemma follows by observing the following:
+$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ \qed
+%Each party samples from its own distribution (i.e., $P_b$ outputs $i$
+%with probability $\frac{w_{b,i}^2}{||\vec{w}_b||^2}$).  Then the
+%parties do a weighted coin flip to choose which of these two values is
+%output ($P_b$'s value is chosen with probability
+%$\frac{||\vec{w}_b||_2^2}{||\vec{w}_1||_2^2+||\vec{w}_2||_2^2}$.)  It
+%is easy to see that this protocol only requires $\tilde{O}(1)$
+%communication\anote{Should we call this logarithmic?} and produces the
+%correct output distribution.
+\end{proof}
+
+\begin{definition}
+For $i \in [n]$, let the corrective parameter function be defined as 
+$$f_c(\vec{w}_1, \vec{w}_2, i) := \frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.$$
+\end{definition}
+
+
+\begin{definition} 
+The constant 
+$c := c(\vec{w}_1, \vec{w}_2)$ 
+is defined as
+\[
+c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 + \vec{w}_2||_p^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}
+\]
+This ensures that 
+for every $i$,
+$f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]$.
+\end{definition}
+
+\iffalse
+\begin{proof}
+Define 
+$c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 + \vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}$.
+Clearly, by definition of $f_c$ and $D_{L_2}(\vec{w}_1, \vec{w}_2)$ it is the case that
+$f_c(\vec{w}_1, \vec{w}_2, i) = c(\vec{w}_1, \vec{w}_2) \cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]$.
+It remains to show that $c(\vec{w}_1, \vec{w}_2) \in [1,2]$.
+For the upper bound,
+\begin{align*}
+    c(\vec{w}_1, \vec{w}_2) &= \frac{||\vec{w}_1||^2_2 + 2\langle \vec{w}_{1}, \vec{w}_{2} \rangle + ||\vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\\
+    &\leq \frac{2(||\vec{w}_1||^2_2 + ||\vec{w}_2||_2^2)}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\\
+    &= 2.
+\end{align*}
+For the lower bound,  $c(\vec{w}_1, \vec{w}_2) \geq 1$, since $2\langle \vec{w}_1, \vec{w}_2 \rangle \geq 0$ (since in our setting $\vec{w}_1, \vec{w}_2$ are positive).
+\end{proof}
+\fi
+
+The following lemma will be useful for arguing the validity of the
+final protocol.
+
+\begin{lemma} \label{lem:close_dist_2}
+For all $i \in \mathsf{supp}(D_{L_p}(\vec{w}_1, \vec{w}_2))$, 
+$$\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i].$$
+\end{lemma}
+
+The proof is found in Appendix~\ref{apx:pfLemma5}.
+
+We now present the $L_p$ sampling protocol $\Pi_{L_p}$ in Protocol~\ref{fig:lpexact}. We show the correctness and efficiency of the protocol below. 
+
+
+\begin{lemma} \label{lem:lp}
+With all but negligible probability, on inputs $\vec{w}_1$ and $\vec{w}_2$, protocol $\Pi_{L_p}$ samples exactly correctly from $D_{L_p}(\vec{w}_1, \vec{w}_2)$.
+Further, for any constant $p$, the protocol has communication
+$\tilde{O}(1)$.
+\end{lemma}
+
+The proof is found in Appendix~\ref{apx:pfLemma6}.
+We note that this result strictly generalizes
+Lemma~\ref{lem:insecure_L2_prot}.
+In particular, setting $p=2$ in the above
+protocol yields a protocol with exactly the 
+same parameters as the $L_2$ sampling protocol.
+
+
+\iffalse
+\begin{remark}
+Note that the protocol and analysis above
+did not require that vectors $\vec{w}_1, \vec{w}_2$ are normalized.
+I.e.~we do not require that $||\vec{w}_1||_1$
+or $||\vec{w}_2||_1$ are equal to $1$
+or to each other.
+\end{remark}
+\fi

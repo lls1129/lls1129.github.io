@@ -1,0 +1,145 @@
+\section{Realizing $\F_\oslone$ with OT with Less Precision}
+\label{apx:otl1}
+We implement oblivious sampling using a 1-out-of-$m$ OT scheme. In
+particular, the receiver, as an OT receiver, chooses a random index from
+$[m]$, and the sender, as an OT sender, prepares an $m$-dimensional
+input vector that encodes the $L_1$ distribution of $\vec{w}$ in a way
+that we will describe soon.
+
+\paragraph{Assumption about the level of precision of the input.} 
+With this approach, each element from the prepared OT input vector will
+be chosen uniformly with probability $\frac 1 m$. Therefore, the size
+$m$ affects the level of precision of the sampling.
+%
+In particular, we set $\mu := 1/m$ as a precision unit, and we assume
+the following:
+
+\BI
+\item[]
+  \it For each $i \in [n]$, it holds that $\frac{w_{i}}{\|\vec{w}\|_1}$ is a multiple of $\mu$.
+\EI
+%
+If the input vector $\vec w$ is not consistent with the above
+requirement, one can round it by using the following function
+$\rounding_{\mu}(\vec{w})$: 
+
+\BEN
+\item[] \hspace{-2em} $\rounding_\mu(\vec{w})$
+\item Let $\vec{w} = (w_1, \ldots, w_n)$.  For $i = 1, \ldots, n$,
+compute $w_i' = \trunc_{\mu}(w_i)$. Here, for any real number $x$ with $x \in [0,1]$, denote $\trunc_{\mu}(x) =
+\tilde x \cdot \mu$ where $\tilde x$ is an integer that minimizes $\Delta
+:= x - \tilde x \cdot \u$ subject to $\Delta \ge 0$. 
+Typically, we have $\mu = 2^{-q}$
+for a certain positive integer $q$, and $\trunc_{\mu}(x)$ is simply
+truncating the lower order bits in the binary representation of $x$. 
+
+
+
+Let $\vec{w}' = (w_1', \ldots,
+w_n')$. 
+
+\item Repeat the following until $L_1$ norm of $\vec{w}'$ becomes 1. 
+    \BI
+    \item[] Find $j = \arg\max_{i \in [n]} (w_i - w_i')$, and increase
+    $w'_j$ by $\mu$.
+    \EI
+\item Output $\vec{w}'$. 
+\EEN
+
+The above algorithm makes sure that for all $i$, it holds $|w'_i - w_i|
+< \mu$, which means $\vec{w}'$ is a good approximation of $\vec{w}$, with
+each element having an additive error of at most $\mu$. To see why, note
+that in step 1, some $w'_i$s will get truncated leading to small
+difference, i.e., $w_i - w_i' < \mu$. In step 2, since the truncated
+weights are added back to the elements in decreasing order of difference
+$(w_i - w_i')$, only some of the truncated $w'_i$s will be updated to
+$w'_i + \mu$ (which will still be close to $w_i$) until the $L_1$ norm
+of $\vec{w}'$ becomes 1. 
+
+In a situation where the low precision is acceptable, this OT-based
+solutions could be more efficient. However, if one needs a higher level
+of precision, we recommend using the FHE-based solution described in the
+next subsection.  We also observe that by using an OT protocol with
+$O(\log m)$ communication~\cite[Theorem 2.2]{IMS+09}, we expect we could
+support fairly large values of $m$.  The bottleneck on larger $m$ is
+likely to be storage, and the computation time needed for the OT.  
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+\textbf{Inputs:} The sender has input $\vec{w}$. We require every
+$w_{i}/\|\vec{w}\|_1$ is a multiple of $\mu := \frac 1 m$. 
+\BEN
+\item The sender computes the following: 
+
+  \BEN
+  \item 
+    Given $\vec{w}$, the sender prepares an $m$-dimensional input vector as follows: 
+
+  \item 
+   For $i = 1, \ldots, n$, do: 
+      \BEN
+      \item[] Let $k_i = \frac{w_i}{\|\vec{w}\|_1} \cdot m$.  Insert $k_i$ copies of the index
+      $i$ into the $m$-dimensional  vector $\vec{v}$; that
+      is, there should be $k_i$ slots (out of $m$)  whose value is $i$ in the
+      $m$-dimensional vector $\vec{v}$. 
+      \EEN
+    Note that for each $i$, the fraction of the slots containing the index
+    $i$ in $\vec{v}$ is $\frac{k_i}{m} = \frac{w_i}{\|\vec{w}\|_1}$.  
+
+  \item The sender chooses a random pad $\pi$ uniformly at random.
+
+  \item Let $\vec{v} = (v_{1}, \ldots, v_{m})$. The sender shuffles
+    $\vec{v}$ and blinds it by updating $v_{i} := v_{i} \xor \pi$ with a
+    randomly chosen $\pi$.
+  \EEN
+
+\item Execute an OT protocol where the sender is the OT sender with input
+$\vec{v}$ and the receiver is the OT receiver with a randomly chosen number from
+$[m]$. Let $u$ be the output to the OT receiver.
+
+\item Output $\pi$ to the sender and output $u$ to the receiver. 
+\EEN
+
+\caption{Oblivious sampling protocol realizing $\F_{\oslone}$ based on
+$1$-out-of-$m$ OT}
+\label{fig:osample-ot}
+\end{algorithm}
+
+
+\paragraph{Oblivious sampling protocol.} 
+With the assumption about the level of precision of the input vector
+$\vec{w}$, we can implement oblivious sampling. See
+Protocol~\ref{fig:osample-ot}. 
+
+Due to security of the OT protocol, the OT sender won't know the OT
+receiver's choice. However, since the OT receiver does know the sampled
+index, which leaks information about the data array, we hide this
+information from the OT receiver by having the OT sender {\em shuffle}
+the input vector.     
+
+At the end of the OT protocol, the sender and receiver will hold the
+sampled index $i$ in a secret shared form; that is, the sender will hold
+$\pi$ and the receiver $\pi \xor i$.  Note that the sender re-uses the
+same $\pi$ across all inputs, in order to fix its share, independently
+of the receiver index.  Security holds even with the re-use of this
+value because the receiver learns only a single element.
+
+
+\paragraph{Security.}
+We will prove the following theorem. 
+\begin{theorem} \label{thm:osample-ot}
+Protocol~\ref{fig:osample-ot} securely realizes $\F_{\oslone}$ in the
+semi-honest security model. 
+\end{theorem} 
+
+
+\begin{proof}
+We first give the simulation of the sender. This is trivial in the OT-hybrid model, as the sender receives no messages in this protocol.  The simulator submits the sender's input to $\F_{\oslone}$, and recieves $\pi$ as output.  It places $\pi$ on the sender's random tape, accepts the sender's input to the OT functionality, and terminates.  
+
+Next, we give the simulation of the receiver.  The simulator submits input to $\F_{\oslone}$, and receives output $u$.  Upon receiving OT
+choice from the adversary, it feeds $u$ to the adversary as the OT
+output. 
+The simulation is perfect, since the view of the adversary contains nothing more than 
+$u$. 
+\end{proof}
+

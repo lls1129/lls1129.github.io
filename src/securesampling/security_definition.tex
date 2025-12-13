@@ -1,0 +1,74 @@
+\section{Definitions}
+We assume that readers are familiar with security notions of standard
+cryptographic primitives~\cite{KatzLindell2007} and formal definitions
+of a protocol securely realizing an ideal functionality
+(cf.~\cite{EKR18}). 
+
+\subsection{Ideal functionality $\F_{2PC}$} 
+The ideal functionality works as follows:
+
+\bbox
+{
+\begin{center}
+ $\F_{2PC}$:  Ideal functionality for evaluating two-party circuits.  
+\end{center}
+
+The functionality has the following parameter:
+\BI
+\item Two party binary circuits $C_1(\cdot, \cdot)$ and $C_2(\cdot, \cdot)$. 
+\EI
+
+The functionality proceeds as follows:
+\BEN
+\item Receive inputs $x_1$ and $x_2$ from $P_1$ and $P_2$ respectively. 
+\item Send $C_1(x_1, x_2)$ to $P_1$ and $C_2(x_1, x_2)$ to $P_2$. 
+\EEN 
+}
+
+\medskip
+
+It is well know that Yao's protocol securely realizes $F_{2PC}$ in the
+semi-honest security setting with a constant round and $O(|C_1| +
+|C_2|)$ communication~\cite{JC:LinPin09}. 
+
+\subsection{Differential privacy}
+We say that two vectors $\vec{d} = (d_1, d_2, \ldots)$ and $\vec{d}' =
+(d_1', d_2', \ldots)$ are \emph{neighboring} if they have the same
+length, and there exists only one index $i$ s.t. $d_{i} \neq d'_{i}$.
+
+\begin{definition}[Differential privacy with a trusted curator~\cite{ICALP:Dwork06,TCC:DMNS06}]
+A mechanism $\mathcal{M}$ satisfies $(\epsilon,\delta)$-differential
+privacy if for all neighboring data sets $\vec{d}$ and $\vec{d}'$,
+and all sets $S \subseteq Range(\mathcal{M})$ \[
+\Pr[\mc{M}(\vec{d}) \in S] \le e^\epsilon \cdot \Pr[\mc{M}(\vec{d}') \in S] + \delta
+\]
+\end{definition}
+
+\paragraph{Differential privacy in the two-party setting.}
+Our presentation here follows the similar definitions given in prior
+work~\cite{C:BeiNisOmr08,TALG:SCRS17,popets:CDKY20}.  For a two-party protocol
+$\Pi$ and an input $(\vd_1, \vd_2)$, we let $\Pi(\vd_1, \vd_2)$ denote the
+execution of $\Pi$ on this input.  For an adversary $\A$ (corrupting
+either $P_1$ or $P_2$), we define Let $\view^\Pi_A(\vd_1, \vd_2)$ be the view
+of the protocol to $A$ (consisting of input, the random tape, the
+protocol transcript, and the output). 
+
+
+\begin{definition}
+Let $\edp>0$ and $0 \le \ddp < 1$. A (randomized) protocol $\Pi$
+preserves \emph{computational two-party $(\edp,\ddp)$-Differential
+Privacy}, if for any PPT distinguisher $\cal D$, for any PPT adversary $\A$,
+and for all neighboring inputs $\vd := \vd_1 \| \vd_2$ and $\vd' := \vd_1' \|
+\vd_2'$, there exists a negligible function $\negl(\cdot)$ such that,
+%
+\[\Pr[{\cal D}(\view^\Pi_A(\vd_1, \vd_2),1^\secparam)=1] \le e^\eps \cdot
+\Pr[{\cal D}(\view^\Pi_A(\vd_1', \vd_2'),1^\secparam)=1] + \delta +
+\negl(\secparam) \]
+\end{definition}
+
+
+
+
+
+
+

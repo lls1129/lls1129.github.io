@@ -1,0 +1,353 @@
+\subsection{Two-party $L_1$ Sampling}\label{sec:l1}
+In this section, we describe a secure two-party $L_1$ sampling protocol.
+Given two $n$-dimensional vectors $\vec{w}_1 = (w_{1,1}, \ldots,
+w_{1,n})$ and $\vec{w}_2 = (w_{2,1}, \ldots, w_{2,n})$ as the private
+inputs from parties $P_1$ and $P_2$ respectively, the protocol samples from the $L_1$ distribution according to
+$\vec{w}_1 + \vec{w}_2$.  
+
+\paragraph{Notation: $L_p$ norm.}
+Let $\vec{w} = (w_1, \ldots, w_n) \in \RR^n$ be a non-zero vector. \emph{The $L_p$
+norm $\Vert \w \Vert_p$ of $\vec{w}$} is defined as
+$\Vert \w \Vert_p := \left ( \sum_j |w_j|^p \right )^{1/p} .$
+When there is no subscript, it means $L_2$ norm; that is, $\Vert \w \Vert := \Vert \w \Vert_2$  
+
+\paragraph{Assumptions.}
+Throughout the paper, we assume that the values $w_{b,i}$ are
+represented by fixed-point precision numbers, and consider the cost of
+communicating such a number to be independent of $n$.
+% \anote{This is the
+% only place it felt appropriate to say something about precision.  Do you
+% like what I wrote?}
+%
+We assume all weights in vectors $\vec{w}_1$ and $\vec{w}_2$ are
+non-negative.
+
+\paragraph{Ideal functionality.}
+We first define an ideal functionality for the two-party $L_1$ sampling.
+Slightly abusing the notation, let $L_1(\vec{w}_1, \vec{w}_2)$ be a
+two-input sampling procedure based on the $L_1$ distribution of $\vec{w}_1 +
+\vec{w}_2$: 
+%
+$$\Pr[ L_1(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ] = \frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }. $$
+
+
+We give a more formal description of the functionality $\F_{L_1}$ in the
+figure below.  In Section \ref{sec:L1prot}, we present a protocol that
+securely realizes this functionality. 
+
+\bbox
+{
+\begin{center}
+ $\F_{L_1}$:  Ideal functionality for two-party $L_1$ sampling
+\end{center}
+
+The functionality has the following parameter:
+\BI
+\item $n \in \NN$. The dimension of the input weight vectors $\vec{w}_1$ and $\vec{w}_2$.
+\EI
+
+The functionality proceeds as follows:
+\BEN
+\item Receive inputs $\vec w_1$ and $\vec w_2$ from $P_1$ and $P_2$
+respectively. 
+\item Sample $i \in [n]$ with probability $\frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }$
+\item Send $i$ to $P_1$ and $P_2$. 
+
+\EEN 
+}
+
+\subsubsection{A toy protocol towards securely realizing $\F_{L_1}$}
+We describe our first attempt, which is  insecure, but provides good
+intuition on how we construct a secure protocol.  In fact, the attack on
+this broken protocol, as well as the fix presented in the next
+sub-section, remain relevant when we move to product sampling and $L_2$
+sampling as well.  Since we assume that all the weights are
+non-negative, we observe that letting $p = \frac{\|\vec{w}_1\|_1}{
+\|\vec{w}_1\|_1 + \|\vec{w}_2\|_1}$, the above measure can be re-written
+as follows:
+
+\begin{equation}
+\label{eqn:l1}
+\Pr[ L_1(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ] = 
+  \frac{w_{1,i}}{\|\vec{w}_1\|_1} \cdot p  + \frac{w_{2,i}}{\|\vec{w}_2\|_1} \cdot (1-p).
+\end{equation}
+
+
+Equation (\ref{eqn:l1}) leads us to the following natural approach.
+
+\BEN
+\item Party $P_1$ samples $i_1$ from the $L_1$ distribution according to
+$\vec{w}_1$, such that  $\Pr[P_1 \mbox{ samples } i_1] =
+\frac{w_{1,i_1}}{\|\vec{w}_1\|_1}$.
+
+\item Party $P_2$ samples $i_2$ from the $L_1$ distribution according to $\vec{w}_2$,
+such that $\Pr[P_2 \mbox{ samples } i_2] =
+\frac{w_{2,{i_2}}}{\|\vec{w}_2\|_1}$.
+
+\item Then, $P_1$ and $P_2$ execute a secure protocol for the following
+procedure:
+  \BEN
+  \item Execute a coin toss protocol with bias $p$.  Let $b$ be the output of the coin-flip. 
+  \item If $b=0$ (resp., $b=1$), output $i_1$ (resp., $i_2$).
+  \EEN
+\EEN
+
+The output of the protocol will achieve correct sampling.  
+
+\paragraph{Insecurity of the protocol.} However, this protocol has a
+subtle security issue.
+%
+For example, let $i$ be the eventual output index of the protocol. Then,
+we have the following:
+%
+\BI
+\item If the coin flip $b$ is 0, which happens with probability $p$, it
+holds that $i$ is always the same as $i_1$. 
+
+\item On the other hand, if the coin flip $b$ is 1, then $i$ will be
+the same as $i_1$ if and only if $i_2 = i_1$, which happens with
+probability $\frac{w_{2, i_1}}{ \| \vec w_2 \|_1 }$.
+\EI
+%
+This implies that we have 
+$$\Pr[ i = i_1 | i_1 ] = p + (1-p) \cdot \frac{w_{2, i_1}}{ \| \vec w_2 \|_1 }$$
+
+Now consider a distinguisher that corrupts $P_1$, chooses inputs $\w_1$
+and $\w_2$, and checks the above conditional probability, which is
+possible {\em since the distinguisher can also see $i_1$ through the corrupted
+$P_1$}.
+%
+To prove security, we should be able to construct a simulator for $P_1$
+that fools this distinguisher. However, a simulator for $P_1$ doesn't know
+$\w_2$, which causes the above conditional probability to be
+unsimulatable. 
+%
+%Interpreting this, if the coin flip $b$ is 0, which
+%happens with probability $p$, it holds that $i$ is always the same as
+%$i_1$. On the other hand, if the coin flip $b$ is 1, then $i$ will be
+%the same as $i_1$ if and only if $i_2 = i_1$, which happens with
+%probability $\frac{w_{2, i_1}}{ \| \vec w_2 \|_1 }$.
+
+In a sense, by having $P_1$ choose $i_1$, the protocol allows $P_1$ to
+measure the conditional probability $\Pr[ i = i_1 | i_1 ]$, which
+depends on the value $w_{2, i_1}$ thereby leaking information about
+$P_2$'s input to $P_1$.   
+
+
+\subsubsection{Secure $L_1$ sampling protocol}  \label{sec:L1prot}
+\paragraph{Oblivious sampling.}  
+We address the insecurity of the toy protocol by having the parties
+sample \emph{obliviously} from $\vec w_1$, $\vec w_2$.  This way, each
+party would not know whether the final output index matches the sample
+taken from its own vector, or the sample taken from the other party's
+vector. Specifically, we will construct our protocol under the framework
+described below: 
+
+\BEN
+\item The parties obliviously sample $i_1$ according to $L_1$
+distribution of $\vec w_1$. The output index $i_1$ is secret shared
+between the two parties. Let $\langle i_1 \rangle$ denote the secret share of $i_1$.
+Likewise, they obliviously sample $\langle i_2 \rangle$ from $L_1$ distribution of
+$\vec w_2$.
+
+\item Execute a secure two-party protocol to compute the following:
+  \BEN
+  \item Flip a coin $b$ with bias $p$. 
+  \item If $b=0$, output the decryption of $i_1$; otherwise output
+  the decryption of $i_2$. 
+  \EEN
+\EEN
+
+
+\paragraph{Ideal functionalities.}
+Formally, we define an ideal functionality $\F_{\oslone}$ as follows:
+
+\bbox
+{
+\begin{center}
+ $\F_{\oslone}$:  Ideal functionality for oblivious $L_1$ sampling.
+\end{center}
+
+The functionality considers two participants, the sender and the
+receiver. The functionality is parameterized with a number $n$. 
+
+\medskip
+
+\textbf{Inputs:} The sender has an $n$-dimensional weight vector $\w$.
+The receiver has no input. 
+
+\medskip
+
+The functionality proceeds as follows:
+\BEN
+\item Receive $\vec w$ from the sender.
+\item Sample $i \in [n]$ with probability $\frac{w_i}{ \|\vec{w}\|_1 }$
+\item Choose a random pad $\pi \in \zo^\ell$, where $\ell = \lceil \log_2 n \rceil$. 
+\item Send $\pi$ to the sender and $i \xor \pi$ to the receiver. 
+
+\EEN 
+}
+
+\medskip
+We also give an ideal functionality $\F_{\bcoin}$ for the biased coin tossing. 
+
+\bbox
+{
+\begin{center}
+ $\F_{\bcoin}$:  Ideal functionality for biased coin tossing.
+\end{center}
+
+The functionality considers two participants $P_1$ and $P_2$ and proceeds as
+follows:
+
+\BEN
+\item Receive a number $s_1$ as input from $P_1$ and $s_2$ from $P_2$.  
+\item Flip a coin $b$ with bias $p = \frac{s_1}{s_1 + s_2}$. 
+\item Choose a random bit $r \in \zo$.
+\item Send $r$ to $P_1$ and $r \xor b$ to the receiver. 
+\EEN 
+}
+
+\medskip
+
+\paragraph{$L_1$ sampling protocol.}
+Based on the above functionalities, we describe a protocol securely realizing
+$\F_{L_1}$ in the $(\F_\oslone, \F_\bcoin)$-hybrid. 
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[h]
+\textbf{Inputs:} Party $P_b$ has input $\vec{w}_b$. 
+
+\BEN
+\item Execute $\F_\oslone$ with $P_1$ as a sender with input $\vec{w}_1$
+and $P_2$ as a receiver. Let $\langle i_1 \rangle$ be the secret share of the output
+index. 
+
+\item Execute $\F_\oslone$ with $P_2$ as a sender with input $\vec{w}_2$
+and $P_1$ as a receiver. Let $\langle i_2 \rangle$ be the secret share of the output
+index.
+
+\item Execute $\F_\bcoin$ where $P_1$ has input $\|\vec{w}_1\|_1$ and
+$P_2$ has input $\|\vec{w}_2\|_1$. Let $\langle b \rangle$ be the secret share of the
+output bit.
+
+\item Execute $\F_{2PC}$ for the following circuit: 
+      \BEN
+      \item Input: $\langle i_1 \rangle, \langle i_2 \rangle, \langle b \rangle$. 
+      \item Output: $i_1 \cdot (1-b) + i_2 \cdot b$.
+      \EEN
+\EEN
+
+\caption{Two-party $L_1$ sampling in the $(\F_\oslone, \F_\bcoin)$-hybrid.}
+\label{fig:l1}
+\end{algorithm}
+
+\begin{theorem} \label{th:l1}
+Protocol~\ref{fig:l1} securely realizes $\F_{L_1}$ with semi-honest
+security in the $(\F_\oslone, \F_\bcoin)$-hybrid.
+\end{theorem} 
+The proof is found in Appendix~\ref{apx:pfTheorem1}.
+
+
+\paragraph{Securely realizing $\F_\oslone$ with threshold FHE.}
+%In the 1-out-of-$m$ OT-based sampling protocol, the weights have to fit
+%into $m$ slots of the OT sender input. This level of precision can often
+%be acceptable depending on the circumstances, but there will be
+%situations where a higher level of precision is necessary.  Here, we
+%describe a sampling protocol based on a threshold FHE scheme that
+%provides a higher level of precision.
+%
+The main idea of the protocol is having the parties securely sample a
+random number $r$ from $[s]$, where $s := \| \vec{w} \|_1$. Our construction is found in
+Protocol~\ref{fig:os-fhe}.
+
+\iffalse
+, which can be performed by the following
+circuit.
+
+\bbox
+{
+\BEN
+\item[] \hspace{-2em} $\rhd$ Goal: Sample a random number from $[s]$
+\item[] \hspace{-2em} $\rsample( s, \{r_{1,j}\}_{j=1}^\secparam, \pi_1, \{r_{2,j}\}_{j=1}^\secparam, \pi_2)$   ~~~$\rhd$ $r_{b,j}, \pi_b$ will
+be all random bits. 
+
+\item The sender's input is $(s, \{r_{1,j}\}_{j=1}^\secparam, \pi_1)$
+and the receiver's input is $(\{r_{2,j}\}_{j=1}^\secparam, \pi_2)$.\\ We
+assume that  all objects are represented with $\secparam$ bits.
+
+\item Compute the tight bitmask $\beta = 0^{\ell-h}1^h$ such that $s \& \beta = s$ and $s
+| \beta = \beta$ where $\&$ (resp., $|$) denotes bitwise AND (resp.,
+bitwise OR) operation. Note that we have $h$ such that $2^{h-1} \le s <
+2^h$. This computation can be done by checking all possible candidates
+of $h$ one by one.
+
+\item Let $\pi = \pi_1 \xor \pi_2$. For $j=1, \ldots, \secparam$, compute $r_j := (r_{1,j} \xor r_{2,j}) \& \beta$
+\item Let $j^*$ be the first index such that $r_{j^*} \le s$. 
+\item Output $\pi$ to the sender and output $r_{j^*} \xor \pi$ to the receiver.
+\EEN
+}
+
+\medskip
+Note that $\Pr[(r_j \& \beta) > s] < 1/2$ and therefore with
+probability $(1 - 2^{-\secparam})$ there is a good $j^*$.
+Based on this building block, we can achieve a oblivious sampling
+protocol based on threshold FHE. See Protocol \ref{fig:os-fhe}.
+\fi
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+
+\textbf{Inputs:} The sender has input $\vec{w} = (w_1, \ldots, w_n)$. 
+\BEN
+    \item The sender computes $s := \| \vec{w} \|_1$. 
+    \item The sender and the receiver execute $\F_{2PC}$ to uniformly 
+    sample $r$ from the range $[0, s)$. This is possible, since $s$ has
+    a fixed point representation. Let $r_1$ and $r_2$ be the secret
+    share of $r$ given to $P_1$ and $P_2$ respectively.  
+
+    \item The sender and the receiver set up a threshold FHE scheme. The plaintext
+    space of the FHE is $GF(2)$, which allows homomorphic bitwise-xor and
+    bitwise-AND operations. Let $\lbra m \lket$ denote an FHE encryption
+    of plaintext $m$ which can be a bit or bits depending on the
+    context.
+
+    \item The receiver sends $\lbra r_2 \lket$ so that the sender can
+    compute $\lbra r \lket := \lbra r_1 \lket \xor \lbra r_2 \lket$. 
+
+    \item The sender homomorphically evaluates the following circuit: 
+        \BEN
+        \item Let $cnt_0 = 0$. For $j=1,...,n$, let $cnt_j = cnt_{j} + w_{j}$. 
+        \item Output $i \in [1,n]$ such that $r \in [cnt_{i-1}, cnt_{i}]$.
+        \EEN 
+        Let $\lbra i \lket$ be the output encryption from the above
+        homomorphic evaluation. 
+        
+    \item The sender chooses a random pad $\pi$, and then it sends $\lbra c \lket =
+    \lbra i \lket \xor \lbra \pi \lket$ to the receiver. 
+    \item The two parties perform threshold decryption so that $c$ is
+    decrypted to the receiver. 
+    \item The sender outputs $\pi$ and the receiver outputs the
+    decryption of $c$. 
+\EEN
+\caption{Oblivious sampling from threshold FHE}
+\label{fig:os-fhe}
+\end{algorithm}
+
+\begin{theorem} \label{thm:os-fhe}
+Assuming the existence of threshold FHE with
+$\mathsf{IND}\mbox{-}\mathsf{CPA}$ security,
+Protocol~\ref{fig:os-fhe} securely realizes $\F_{\oslone}$ in the
+semi-honest security model. 
+\end{theorem} 
+The proof is found in Appendix~\ref{apx:pfTheorem2}.
+
+We note that we give another construction that relies on sub-linear
+1-out-of-$m$ oblivious transfer (OT), but requires computation that is
+exponential in the bit precision in Appendix~\ref{apx:otl1}.  
+
+\paragraph{Securely realizing $\F_\bcoin$.} The secure construction for
+$\F_\bcoin$ is straightforward and can be found in Appendix~\ref{apx:bcoin}. 
+

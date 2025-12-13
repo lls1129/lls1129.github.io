@@ -1,0 +1,419 @@
+\subsection{Technical Overview}
+
+In the following, we overload notation and let $\mathcal{D}$ denote a
+distribution as well as its probability mass function.  As discussed
+previously, we consider the case where a probability mass function is
+distributed across two parties, and the parties would like to securely
+sample from the corresponding distribution.  We consider several ways in
+which the probability mass function can be distributed across the two
+parties.
+
+\paragraph{$L_1$ sampling of convex combinations.}
+In this case, party 1 (resp. party 2) holds a vector $\vec{w}_1$ (resp.
+$\vec{w}_2$), indexed from $1$ to $n$. For $i \in [n]$,
+$w_{1,i}/||\vec{w}_1||_1$ (resp.~$w_{2,i}/||\vec{w}_2||_1$) corresponds
+to the probability mass of $i$ under distribution $\mathcal{D}_1$
+(resp.~$\mathcal{D}_2$).  The goal of the parties is to sample from the
+distribution $\mathcal{D}$, defined as follows for $i \in [n]$:
+%
+\begin{align*}
+\mathcal{D}[i] &:= \frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot \frac{w_{1,i}}{||\vec{w}_1||_1} + \frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot \frac{w_{2,i}}{||\vec{w}_2||_1}\\
+&= \frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot \mathcal{D}_1[i] + \frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot \mathcal{D}_2[i]
+\end{align*}
+%
+Note that the target distribution $\mathcal{D}$ is a convex combination
+of the distributions $\mathcal{D}_1$ and $\mathcal{D}_2$ held by the two
+parties.
+
+A potentially straightforward sampling protocol is to therefore have
+party $1$ locally draw a sample $i_1$ from $\mathcal{D}_1$, party $2$
+locally draw a sample $i_2$ from $\mathcal{D}_2$, and then run a secure
+two party computation that outputs $i_1$ with probability
+$\frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1}$ and $i_2$
+with probability $\frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 +
+||\vec{w}_2||_1}$.
+
+This protocol clearly has sublinear communication, but it unfortunately does not
+securely realize the ideal functionality.  The reason is as
+follows:~conditioned on the ideal functionality outputting a certain
+index $i^*$, the probability that $i^*$ was drawn by party $1$
+(resp.~party $2$) is $\frac{w_{1,i^*}}{w_{1,i^*} + w_{2,i^*}}$
+(resp.~$\frac{w_{2,i^*}}{w_{1,i^*} + w_{2,i^*}}$).  
+%
+Thus, if the simulator receives $i^*$ from the ideal functionality and
+has to simulate the view of party $1$, it needs to set $i_1 = i^*$ with
+probability $\frac{w_{1,i^*}}{w_{1,i^*} + w_{2,i^*}}$ and set $i_1 \neq
+i^*$ with probability $\frac{w_{2,i^*}}{w_{1,i^*} + w_{2,i^*}}$.
+However, the simulator is not able to simulate these probabilities
+correctly, since it does not know $w_{2,i^*}$.
+
+To get around this issue we therefore have the parties sample $i_1$ and
+$i_2$ {\em obliviously}. To do this with sublinear communication, we can
+use fully homomorphic encryption (FHE).  Specifically, to sample $i_1$,
+player 1 first encrypts his input $\vec{w}_1$ using an FHE scheme for
+which he does not know the secret key.  The players then jointly choose
+a random value $r \in [0,||\vec{w}_1||_1)$.  Player 1 then uses the
+homomorphic operations to find the value $i_1$ chosen by this $r$, and
+the parties use threshold decryption to recover a secret sharing of
+$i_1$.  The parties reverse roles to sample $i_2$.  Details of this
+construction are provided in Section~\ref{sec:l1}.  
+
+Additionally, an alternative construction that uses sub-linear OT for
+the oblivious sampling is provided in Appendix~\ref{apx:otl1}.
+
+\paragraph{$L_2$ Sampling of component-wise sum.}
+In this case, party 1 (resp. party 2) holds a  vector
+$\vec{w}_1$ (resp. $\vec{w}_2$), indexed from $1$ to $n$. For $i \in
+[n]$.
+%
+The goal of the parties is to sample from the distribution
+$\mathcal{D}$ 
+defined as follows for $i \in [n]$:
+\[
+\mathcal{D}[i] := \frac{(w_{1,i} + w_{2,i})^2}{||\vec{w}_1 + \vec{w}_2||_2^2}.
+\]
+
+We present a protocol that samples from this distribution with
+$\tilde{O}(1)$ communication.
+%
+This protocol relies on a novel technique that we call ``corrective
+sampling'', which is an interesting type of rejection sampling.  In what follows, we describe an insecure version of our protocol to give the intuition behind it.  To make it secure, we carry out the corrective sampling under FHE as described in Protocol~\ref{fig:l2}. 
+
+The main challenge that we face here, unlike in the case of $L_1$ sampling, is that it is impossible to  compute 
+$||\vec{w}_1 + \vec{w}_2||_2^2$ (and therefore impossible to  compute $\mathcal{D}[i]$ for each $i$)
+with sublinear
+communication~\cite{STOC:BabNisSze89}. 
+Instead, we sample index $i$ from a different, related, distribution, which is easy to sample with sub-linear communication.  We then show that we
+can efficiently correct this distribution by rejecting with the appropriate probability.  Interestingly, we show that corrective rejection, 
+which depends on the index $i$, 
+doesn't require us to explicitly compute $||\vec{w}_1 + \vec{w}_2||_2^2$.  In fact, 
+the parties never learn the corrective term at all!  
+
+First, as in rejection sampling, corrective
+sampling proceeds in trials and
+%\BI
+%\item 
+in each trial, for every $i$, the probability that the protocol
+successfully samples index $i$ is $\alpha \cdot \DDD[i]$ for some unknown constant $0 <
+\alpha < 1$. 
+%\EI
+Since the same constant $\alpha$ is applied to every index $i$, by
+repeating the trials, the protocol samples index $i$ correctly without
+skewing the distribution $\mathcal{D}$. The expected number of trials is
+$1/\alpha$. We therefore need to keep $1/\alpha \in {O}(1)$ to reach our target communication complexity.
+
+As mentioned above, we observe that {\em the protocol never has to
+explicitly compute $\alpha$}. Towards describing how this is done, first note that in $\DDD[i]$, the
+denominator, $||\vec{w}_1 + \vec{w}_2||_2^2$ -- which we assume for purposes of this exposition is at least $1$ -- is the same for every $i$,
+so it can be pushed into $\alpha$ without 
+impacting the discussion above:~letting 
+ $\alpha' = \alpha/(||\vec{w}_1 + \vec{w}_2||_2^2)$, it suffices to implement rejection sampling with a protocol that samples index $i$ with probability 
+%\begin{equation}\label{eq:techl2}
+$\alpha'\cdot (w_{i,1} + w_{i,2})^2$ = $\alpha \cdot \DDD[i]$.
+%\end{equation}
+This protocol would only need to explicitly compute 
+$(w_{i,1} + w_{i,2})^2$ (which can be done efficiently
+given $i$), but not $\alpha'$.
+
+Unfortunately, this does not quite work.
+$||\vec{w}_1 + \vec{w}_2||_2^2$ can be very large, which would then
+make $1/\alpha'$ large. We therefore must combine the above with another idea to ensure that our corrective term introduces at most a ${O}(1)$ overhead. 
+
+We achieve this by having each trial of the protocol work as follows:
+\BEN
+\item It samples index $i$ from distribution
+$\mc{D}_{\mathrm{ignore}}$, which is easy to sample. We note that the contribution of this distribution will be eventually
+canceled out through rejection.  In particular, we choose the following distribution for
+$\mc{D}_{\mathrm{ignore}}$:
+$$\DDD_\ig[i] := \frac{w^2_{1,i} + w^2_{2,i}}{\denom},$$
+where we set $\denom = ||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2$ to make
+the distribution well-defined.  Note that $\denom$ can be computed with $\tilde O(1)$ communication.
+%Note that if we performed regular rejection sampling with $\mc{D}_{\mathrm{ignore}}$,
+%our $\alpha$ value would be $1/2$, since for all $i$
+%$\mc{D}[i] \leq 2 \mc{D}_{\mathrm{ignore}}[i]$. However, this would require explicit calculation of $\mc{D}[i]$, which we do not know how to do.
+
+%can be sampled easily
+%in $O(1)$ communication and approximates the distribution $\mc{D}$.  The
+%natural next step would be to use rejection sampling based on the ratio
+%$\mc{D}_{\mathrm{ignore}}[i]/\mc{D}[i]$ to correct this to the desired
+%$L_2$ distribution.  However, as mentioned earlier, it is not possible
+%to actually compute this ratio directly, bringing us to our next
+%observation.
+
+%Now, after sampling $i$ from $\DDD_\ig$, the protocol identifies a
+%``correction term'' to achieve that can be computed with low communication and that
+%gives a bound on $\mc{D}[i]$, without actually computing $\mc{D}[i]$.
+%With this correction term, we can carry out the rejection sampling to
+%correctly sample from the $L_2$ distribution without ever explicitly
+%computing the $L_2$ norm.  Moreover, we can do so in $\tilde{O}(1)$
+%rounds requiring $\tilde{O}(1)$ communication.
+\item After sampling $i$ from $\DDD_\ig$, the protocol computes a
+``corrective bias'' for a coin flip that is dependent on $(w_{1,i} + w_{2,i})^2$. We stress that once $i$ is determined,
+computing $(w_{1,i} + w_{2,i})^2$ is easy. In particular, a coin is
+flipped with the following bias:
+$$ \Pr[ coin | i] := \frac{(w_{1,i} + w_{2,i})^2}{2 \cdot \DDD_\ig[i] \cdot \denom}  $$
+\EEN
+Overall, this makes sure that the probability that each trial outputs
+index $i$ is 
+$$ \DDD_\ig[i] \cdot \Pr[coin|i]  = \frac{(w_{1,i} + w_{2,i})^2}{2 \cdot \denom} = \alpha \mc{D}[i],$$
+where $\alpha = \frac{||\vec{w}_1 + \vec{w}_2||_2^2}{2 \cdot \denom}$.
+%which satisfies Equation~(\ref{eq:techl2}). 
+
+To conclude that this is a valid and efficient sampling procedure, we need to show the following:
+\BI
+\item $\alpha$ must be less than $1$ for the procedure to be valid. This is implied by the fact that
+$\LLw \le 2 \cdot \denom$. 
+\item $1/\alpha$ must be in $\tilde{O}(1)$ so that the procedure is efficient. We have $2 \cdot \denom \le 2 \LLw$, which implies that $\alpha$ is at least 1/2. So, the expected number of trials is at most 2. 
+\EI
+
+We extend our techniques to the setting of $L_p$
+sampling for constant $p$ in Section~\ref{sec:insecureLp}.
+
+
+%We also note that this same ``correction sampling'' technique can be
+%used to sample from any $L_p$ distribution for $p \in O(1)$ by choosing
+%a different ``correction term''.  We provide the details in
+%Section~\ref{sec:l2_new}.
+%=======
+%We present a protocol that samples from this distribution with $\tilde{O}(1)$ communication and has no leakage.
+%
+%This protocol relies on a novel technique that we call ``correction sampling'' that allows us to sample from this distribution without ever computing $||\vec{w}_1 + \vec{w}_2||_2^2$ or $\mathcal{D}[i]$ for any output $i$ as we actually cannot compute these in sublinear communication~\cite{STOC:BabNisSze89}.  This requires two critical observations:
+%
+%First, we observe that the distribution $\mc{D}_{\mathrm{ignore}}$ which samples index $i \in [n]$
+%with probability $\frac{w^2_{1,i} + w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2|_2^2}$ can be sampled easily in $\tilde{O}(1)$ communication
+%(since it can be viewed as a convex combination of distributions held by the two parties)
+%and approximates the distribution $\mc{D}$.  The natural next step would be to use rejection sampling based on the ratio $\mc{D}_{\mathrm{ignore}}[i]/(M \mc{D}[i])$, to correct this to the desired $L_2$ distribution.  However, as mentioned earlier, it is not possible to actually compute this ratio directly, bringing us to our next observation.
+%
+%Second, we identify a ``correction term'' $\hat{D}[i]$ that can be computed with low communication for a given $i$ and such that for all $i$, $\hat{D}[i] = c \cdot \mc{D}[i]$ for constant $c$. With this correction term, we can carry out the rejection sampling to correctly sample from the $L_2$ distribution without ever explicitly computing the $L_2$ norm.  Moreover, we can do so in $\tilde{O}(1)$ rounds requiring $\tilde{O}(1)$ communication.
+%
+%We also note that this same ``correction sampling'' technique can be used to sample from any $L_p$ distribution for $p \in O(1)$ by choosing a different ``correction term''.  We provide the details in Section~\ref{sec:l2_new}.
+%>>>>>>> 02dfae2db1c6f5a271369a59e991fc2286c13be5
+
+% that has the following properties:
+% \begin{itemize}
+%     %\item The protocol always achieves communication $O(n)$.
+%     %\dnote{Or is it $O(n \log n)$?}.
+%     \item When $||\vec{w}_1 + \vec{w}_2||_2^2 \in \omega(1/n)$,
+%     the protocol achieves \emph{expected} communication
+%     $\frac{\log n}{||\vec{w}_1 + \vec{w}_2||_2^2}$. 
+%     %\dnote{or is it $\frac{\log n}{||\vec{w}_1 + \vec{w}_2||_2^2}$}.
+%     \item The execution of the protocol leaks nothing more than
+%     the sampled output, as well as $||\vec{w}_1 + \vec{w}_2||_2^2$.
+%     This is again formalized via an Ideal/Real paradigm simulation, in which the simulator receives leakage of $||\vec{w}_1 + \vec{w}_2||_2^2$
+%     in the Ideal world.
+% \end{itemize}
+
+% The idea for the protocol is the following.
+% The protocol proceeds in rounds:~in round $j$, party 1 
+% (resp.~party 2) obliviously samples values $i^1_1, i^2_1, i^3_1$ (resp.~$i^1_2, i^2_2, i^3_2$) from $\mathcal{D}_1$ (resp.~$\mathcal{D}_2$).
+% Then the parties run a secure protocol that 
+% checks whether the following three events occurred:
+% Event $E_1$: $i^1_1 = i^2_1$, Event $E_2$: $i^1_2 = i^2_2$, Event $E_3$: $i^3_1 = i^3_2$.
+% Depending on which subset of events $\{E_1, E_2, E_3\}$ occurred, the protocol will output
+% one of $i^1_1, i^1_2, i^3_1$ with different probabilities.
+% Otherwise, the parties proceed, repeating the process.
+% As before, after $n$ unsuccessful rounds, party 1 encrypts its vector under FHE, and sends it to party 2, who performs the oblivious sampling locally.
+
+% The key technical challenge is 
+% correctly setting the probabilities of outputting 
+% $i^1_1, i^1_2, i^3_1$ in each of the
+% 7 possible cases (corresponding to a non-empty subset of $\{E_1, E_2, E_3\}$
+% occurring).
+% Our main insight is that by scaling the probabilities appropriately by a constant,
+% we can ensure that the overall distribution is correct via an inclusion/exclusion argument. 
+
+% Similar to the previous case, we are able to prove that the number of rounds, which is the only information leaked, is distributed as a geometric distribution with success probability
+% $||\vec{w}_1 + \vec{w}_2||_2^2$.
+% This again implies that the expected number of rounds is $1/||\vec{w}_1 + \vec{w}_2||_2^2$, and furthermore, it implies that a simulator
+% who knows $||\vec{w}_1 + \vec{w}_2||_2^2$ can simulate the terminating round by making a draw from this geometric distribution.  See Section~\ref{sec:l2} for more details.
+
+\paragraph{Product sampling.}
+In this case, party 1 (resp. party 2) holds a normalized vector $\vec{w}_1$ (resp. $\vec{w}_2$),
+indexed from $1$ to $n$. For $i \in [n]$, $w_{1,i}$
+(resp.~$w_{2,i}$) corresponds to the probability mass of $i$ under distribution $\mathcal{D}_1$ (resp.~$\mathcal{D}_2$).\footnote{Here the assumption that $\vec{w}$ are normalized is without loss of generality.}
+The goal of the parties is to sample from the distribution
+$\mathcal{D}$ 
+defined as follows for $i \in [n]$:
+\[
+\mathcal{D}[i] := \frac{w_{1,i} \cdot w_{2,i}}{\langle \vec{w}_1, \vec{w}_2 \rangle}.
+\]
+
+We begin by noting (via a simple reduction from Set Disjointness)
+that it is impossible to achieve sublinear product sampling when no restrictions are placed on the inputs $\vec{w}_1, \vec{w}_2$.
+We further show (via a more complex reduction from Set Disjointness)
+that for every protocol $\Pi$ 
+(parametrized by dimension $n$) that correctly samples from $\mathcal{D}$,
+there are inputs $\vec{w}_1 := \vec{w}_1(n), \vec{w}_2 := \vec{w}_2(n)$,
+with $\langle \vec{w}_1, \vec{w}_2 \rangle \in \Omega(1/n^2)$,
+that require linear communication complexity.
+See Section~\ref{sec:prodLB} for details.
+
+This means that in order to achieve sublinear communication complexity,
+we would need--at the minimum--a promise on the inputs
+that guarantees that $\langle \vec{w}_1, \vec{w}_2 \rangle \in \omega(1/n^2)$.  We then present a protocol that has the following properties:
+\begin{itemize}
+    \item When $\langle \vec{w}_1, \vec{w}_2 \rangle \in \omega(\log
+    n/n)$, the protocol achieves \emph{expected} communication
+    $\frac{\log n}{\langle \vec{w}_1, \vec{w}_2 \rangle}$. 
+
+    %\item The protocol achieves communication $O(n)$ at worst case. 
+    
+    \item The execution of the protocol leaks nothing more than the
+    sampled output, and $\langle \vec{w}_1, \vec{w}_2 \rangle$.  This is
+    formalized via an Ideal/Real paradigm simulation, in which the
+    simulator receives leakage of $\langle \vec{w}_1, \vec{w}_2 \rangle$
+    in the Ideal world.
+\end{itemize}
+
+The idea for the protocol is the following.  The protocol proceeds in
+rounds:~in round $j$, party 1 and 2 obliviously sample values $i_1, i_2$
+from $\mathcal{D}_1, \mathcal{D}_2$, respectively (as described for
+$L_1$ sampling).  Then the parties run a secure protocol that checks
+whether $i_1 = i_2$.  If yes, they output $i_1$. Otherwise, the parties
+repeat the process in the next round.  
+%After $n$ rounds, party 1
+%encrypts its vector under FHE, and sends it to party 2, who performs the
+%sampling procedure on top of the FHE. (With high probability, this only
+%occurs if the inner product is smaller than  promised.)
+
+The main technical portion of our security analysis is to show that the
+number of rounds (which is the only information leaked) is distributed
+as a geometric distribution with success probability $\langle \vec{w}_1,
+\vec{w}_2 \rangle$.  This implies that the expected number of rounds is
+$1/\langle \vec{w}_1, \vec{w}_2 \rangle$, and furthermore, it implies
+that a simulator who knows $\langle \vec{w}_1, \vec{w}_2 \rangle$ can
+simulate the terminating round by making a draw from this geometric
+distribution.  See Section~\ref{sec:prodip} for more details.  There, we
+also describe how we can pad the communication cost to the worst-case,
+which depends on the given promise, thereby removing the leakage of
+$\langle \vec{w}_1, \vec{w}_2 \rangle$.  
+
+% \paragraph{Is linear communication necessary for distributed $L_2$ sampling?}
+% While for the product sampling case we know that linear communication is necessary for some inputs, we do not know whether the same is true for $L_2$ sampling.
+% In fact, for the $L_2$ sampling case,
+% we show that it is possible
+% to perform \emph{approximate} $L_2$ sampling with sublinear
+% communication \emph{for every possible pair of inputs}.
+% Specifically, we show that it is possible to sample from a distribution $\mathcal{D}'$ that has $1 + O(1/n^{1/8})$-relative error
+% with respect to the target distribution $\mathcal{D}$
+% (i.e.~for any $i$ in the support of $\mathcal{D}'$,
+% $\mathcal{D}'[i] \leq (1+ O(1/n^{1/8})) \cdot \mathcal{D}[i]$)
+% with communication complexity of just $O(n^{1/2})$ (see Appendix~\ref{sec:hahaapproxip}).
+
+% Using the above result, we show that it is impossible to prove that
+% $L_2$ sampling  requires linear communication via a black-box,
+% parameter-preserving reduction from a hard language $\mathcal{L}$ that is known to require linear communication.
+% The argument uses the ``meta reduction'' technique and goes roughly as follows: Assume such a reduction exists--i.e.~that 
+% we can construct a sublinear communication protocol $\Pi_L$ for deciding $\mathcal{L}$
+% that makes black-box calls to 
+% a sublinear communcation protocol $\Pi$ for $L_2$ sampling.
+% Suppose that $\Pi$ uses $O(n^{7/8})$ communication.  Clearly, $\Pi_L$ can make at most $o(n^{1/8})$
+% number of queries to $\Pi$ (otherwise $\Pi_L$ will not have sublinear communication complexity whenever $\Pi$ does).
+% But this means that we can replace the protocol $\Pi$ with $\Pi'$--the $O(n^{1/2})$-communication approximate protocol described above that samples from $\mathcal{D}'$ instead of $\mathcal{D}$.
+% We then argue that $\Pi_L^{\Pi'}$ must still decide the language $\mathcal{L}$. Specifically, due to the $1 + O(1/n^{1/8})$-relative error guarantee,
+% %given $o(n^{1/8}$ samples from $\mathcal{D}'$ versus $\mathcal{D}$, 
+% we can show that any event that occurs during an execution of $\Pi_L^{\Pi}$ 
+% occurs with at most a small multiplicative constant factor higher probability during an execution of $\Pi_L^{\Pi'}$. By considering the events that $\Pi_L^{\Pi}$ outputs $0$ when $x \in \mathcal{L}$
+% and that $\Pi$ outputs $1$ when $x \notin \mathcal{L}$, we are able to show that $\Pi_L^{\Pi'}$ must still achieve a constant gap between YES and NO instances. Repeating a constant number of times (which does not affect the communication complexity) amplifies this gap. Since all the calls of $\Pi_L^{\Pi'}$
+% have total communication $o(n^{1/8} \cdot n^{1/2}) = o(n^{5/8})$,
+% $\Pi_L^{\Pi'}$ is a sublinear communication protocol that decides $\mathcal{L}$, which is a contradiction to the hardness of $\mathcal{L}$. See Section~\ref{sec:hahathm} and Appendix~\ref{sec:hahaprooffull} for more details.
+
+\paragraph{Product sampling in constant rounds.}
+The protocol presented above for product sampling required a
+large number of rounds stemming from the iterative rejection sampling
+procedure.  We now consider how to parallelize this process.  To do so,
+we need to compute the inner product in order to determine, 
+a priori, how many samples will
+suffice.  However, computing this value requires $O(n)$
+communication~\cite{STOC:BabNisSze89}!\anote{Need to remove $L_2$ norm from here.}
+
+The natural thing to do is therefore to use an approximation
+to the inner product that can be computed with
+sublinear communication.
+However, when replacing an exact computation of a function $f(\vec{w}_1, \vec{w}_2)$ with an approximation $\tilde{f}(\vec{w}_1, \vec{w}_2; r)$,
+one needs to be careful that \emph{more} information
+is not leaked by the output. Specifically,
+Ishai et al.~\cite{ICALP:FIMNSW01,ATA:FIMNSW06} introduced the notion of secure multiparty computation of approximations
+and, loosely speaking, their security definition says that the approximate computation is secure if its output can be simulated from the exactly correct output. 
+While our result falls slightly short of that definition,
+we are still able to give a rigorous guarantee on the amount of additional information
+leaked by our approximate functionality.
+Specifically,
+we present an approximate functionality $\tilde{f}$ and prove that the 
+output of $\tilde{f}(\vec{w}_1, \vec{w}_2; r)$ can be simulated given both the exactly correct output $f(\vec{w}_1, \vec{w}_2)$ (where $f$ is the inner product), as well as the $L_2$ norms of the individual inputs.
+
+To achieve this, we use a sublinear protocol from the 
+Johnson-Lindenstrauss Transform (JLT) to approximate the dot product
+of the input vectors.  This can be done with sublinear
+communication by having the parties jointly sample a $k \times n$ JLT
+matrix $\vec{M}$ for $k \ll n$ by choosing a short seed and expanding it
+under FHE.  The rest of the computation is then done by communicating
+vectors $\vec{M}\vec{w}_b$, which are of length $k$ rather than $n$.
+Based on this approximation, the parties can obliviously pre-sample a
+number of inputs that is sufficient with all but negligible probability,
+and then input them into a constant round secure computation protocol.
+
+Our contribution here, is to show that this variant protocol
+only requires additional leakage of $||\vec{w}_1||_2^2$, $||\vec{w}_2||_2^2$, beyond what is already leaked 
+by the original protocol (i.e., the inner product).
+% (As before this is formalized via an Ideal/Real paradigm simulation, in which the simulator receives additional leakage of $||\vec{w}_1||_2$, $\vec{w}_2||_2^2$ in the Ideal world.
+Our analysis may be of independent interest, since it shows that given $\langle \vec{w}_1, \vec{w}_2 \rangle$, $||\vec{w}_1||_2^2$, $||\vec{w}_2||_2^2$,
+%(resp.~$||\vec{w}_1 + \vec{w}_2||_2^2$),
+the values $\vec{M} \vec{w}_1$ and $\vec{M}\vec{w}_2$
+can be efficiently sampled from exactly the correct distribution, when $\vec{M}$ is a JLT matrix, and is kept private from both parties.
+We prove this result by analyzing the underlying
+joint multivariate normal distributions corresponding to $\vec{M} \vec{w}_1$ and $\vec{M} \vec{w}_2$, and showing that the mean
+and covariance 
+(which fully determine the distribution)
+depend \emph{only} on 
+the values $||\vec{w}_1||_2, ||\vec{w}_2||_2$, and $\langle \vec{w}_1, \vec{w}_2 \rangle$
+%(resp.~$||\vec{w}_1 + \vec{w}_2||_2^2$).
+See Section~\ref{sec:rounds} for more details.
+
+\paragraph{Applications to distributed exponential mechanism.}
+We first briefly describe the connection between product sampling and
+the exponential mechanism. Ignoring many details, the joint exponential
+mechanism $M$ outputs a value $i$ on input $X=(x_1,\ldots,x_n)$ with
+probability proportional to 
+%
+$$w_i = e^{c \cdot f(x_i)} = e^{c \cdot f(x_{1,i} + x_{2,i})},$$ 
+%
+where $c$ is some constant, $f$ is some scoring function, and the data values $x_i$ are partitioned between the two parties (as $x_{1,i}, x_{2,i}$). If the scoring
+function $f$ is linear, it holds that $f(x_{1,i} + x_{2,i}) = f(x_{1,i}) +
+f(x_{2,i})$, and, letting $w_{b,i} =  e^{c \cdot f(x_{b,i})}$, we can rewrite
+$w_i$ as follows:
+%
+$$w_i = w_{1,i} \cdot w_{2,i}.$$ 
+%
+Therefore, using product sampling, the parties can sample each item $i$
+with probability proportional to $w_i$.  
+%
+%In particular, in
+%Section~\ref{sec:dp}, we describe how product sampling can be used to
+%select a machine learning classifier that minimizes $L_2$ classification
+%error while preserving differential privacy of the training set. 
+%
+%In summary, we also aim at achieving two-party private sampling from
+%the
+%product distribution with small communication and round complexity. 
+
+Based on this connection, we present an application of our constant-round, product
+sampling protocol to realize a two-party exponential mechanism in Section~\ref{sec:dp}.
+%When the cost function for each potential
+%output is additively distributed across the two parties (i.e., the
+%total cost is the sum of the cost incurred by party 1 and party 2),
+%then the product sampling funcionality exactly implements the
+%exponential mechanism for sampling the outputs while guaranteeing
+%differential privacy. 
+%
+However, to use our sampling protocol in this application, we must show
+that the leakage of our protocols preserves the differential privacy
+guarantee. We indeed prove that our constant-round JLT-based protocol
+can achieve differential privacy---even when the JLT matrix $\vec{M}$ is
+public---by adding correctly distributed noise to $\langle \vec{M}
+\vec{w}_1, \vec{M} \vec{w}_2 \rangle$.  This allows parties to execute
+the exponential mechanism when the cost function is additively
+distributed across the two parties, with sublinear communication, in the
+case that $\langle \vec{w}_1, \vec{w}_2 \rangle \in \omega(\log n/n)$.
+
+

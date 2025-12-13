@@ -1,2 +1,226 @@
-\section*{Introduction}
-Here is Introduction. 
+\section{Introduction}
+The contemporary digital landscape is defined by a fundamental tension between the exponential growth of data and the imperative to protect the privacy of the individuals generating it. As datasets scale into the terabytes and petabytes, and as digital communication becomes the primary medium for societal discourse, the computational paradigms that served the early internet are reaching their limits. Traditional cryptographic protocols for privacy—such as Secure Multi-Party Computation (MPC) and Fully Homomorphic Encryption (FHE)—offer mathematically robust guarantees of confidentiality. However, these protocols typically exhibit linear or super-linear complexity with respect to the input size ($O(n)$). In a world of massive datasets, linear complexity is often synonymous with infeasibility. A query that requires touching every record in a billion-row database, even if cryptographically secure, remains practically useless if it takes days to execute.
+
+Consequently, the frontier of cryptographic research has shifted toward the development of \textbf{sublinear algorithms}—protocols that scale logarithmically ($\tilde{O}(\log n)$) or constantly ($\tilde{O}(1)$) relative to the dataset size. This thesis report synthesizes four seminal contributions that pioneer this shift across two distinct but interrelated domains.
+
+The first domain, \textbf{Group 1}, comprises three studies that attack the fundamental algorithmic bottlenecks of secure computation. These works investigate the privacy properties of sketching algorithms (Min-hash), develop protocols for secure sampling from distributed datasets without linear communication, and reinvent the architecture of Homomorphically Encrypted Search to allow for parallel, sublinear retrieval.
+
+The second domain, designated as \textbf{Group 2}, addresses the societal crisis of misinformation within End-to-End Encrypted Messaging Systems (EEMS). Here, the challenge is not merely computational efficiency but the architectural reconciliation of user privacy with platform accountability. The proposed solution, the Fuzzy Anonymous Complaint Tally System (FACTS), leverages a novel probabilistic data structure to achieve sublinear scalability in complaint auditing, proving that privacy and moderation need not be mutually exclusive.
+
+A unifying theme across both groups is the strategic utilization of \textbf{approximation} and \textbf{probabilistic correctness}. Whether it is the ``fuzzy'' counting of complaints in FACTS, the rejection sampling in secure estimation, or the false-positive rates of compressed encodings in search, these works demonstrate that controlled relaxation of exactness is the key to unlocking sublinear performance. This introduction delineates the theoretical underpinnings and practical implications of these advancements, setting the stage for a detailed technical analysis.
+
+\subsection{The Linear Bottleneck in Secure Computation}
+To understand the necessity of the contributions discussed herein, one must first appreciate the ``Linearity Wall.'' In standard secure computation, if Party A holds a vector $x$ and Party B holds a vector $y$, computing a function $f(x, y)$ usually requires processing every bit of the inputs to avoid leaking information about which bits were ``useful.'' For example, in Private Information Retrieval (PIR), the server must process the entire database to answer a single query; otherwise, the server learns which items were \textit{not} touched, narrowing down the user's interest.
+
+While techniques like Oblivious RAM (ORAM) can hide access patterns, they impose logarithmic overheads that, while asymptotically better than linear scanning for multiple accesses, still require significant bandwidth and state management. The research in Group 2 specifically targets scenarios where even these overheads are unacceptable, aiming for protocols where communication depends on the \textit{output size} or the \textit{security parameter}, rather than the input database size.
+
+\subsection{Group 1: Primitives for Sublinear Privacy}
+The second group explores the building blocks of sublinear privacy.
+\begin{itemize}
+    \item \textbf{Min-Hash Privacy:} The first paper in this group interrogates the ``folklore'' that sketching algorithms like Min-hash are inherently private. It rigorously proves that while sketches compress data (sublinear representation), they do not automatically guarantee Differential Privacy (DP) in the public hash setting. The authors introduce \textbf{Distributional Differential Privacy (DDP)} and \textbf{Noisy Min-Hash} to bridge this gap, allowing for constant-size comparisons of massive sets with formal privacy guarantees.[1]
+    \item \textbf{Secure Sampling:} The second paper addresses the problem of sampling from joint distributions (e.g., $L_1, L_2$, Product) partitioned across users. It proves that while general product sampling is impossible with sublinear communication, specific correlated inputs allow for efficient protocols. The introduction of \textbf{Corrective Sampling}—a technique that corrects a proxy distribution into a target distribution without computing normalization factors—allows for constant-round sampling protocols.[1]
+    \item \textbf{Encrypted Search:} The final paper tackles the sequential bottleneck in FHE search. Prior systems required a round of interaction for every matching record found. The authors propose \textbf{Compressed Oblivious Encoding (COE)}, allowing a server to compress all search results into a single package. This reduces the fetching time by orders of magnitude (1800x in experiments), effectively making FHE search viable for real-time applications.[1]
+\end{itemize}
+
+Collectively, these works argue that the future of privacy-preserving technologies lies in the domain of sublinear algorithms, where mathematical approximation provides the necessary slack to achieve scalability.
+
+\subsection{Group 2: Accountability via Probabilistic Structures}
+The first group focuses on the application of ``fighting fake news''.[1] EEMS platforms like WhatsApp and Signal utilize encryption that hides message content from the service provider. This prevents the automated content moderation used by platforms like Facebook or Twitter. The FACTS system introduces a paradigm where moderation is triggered only by a consensus of user complaints.
+
+The core innovation here is the \textbf{Collaborative Counting Bloom Filter (CCBF)}.[1] This data structure allows the system to tally complaints against millions of messages without the server knowing which complaints correspond to which message until a threshold is crossed. This is achieved by ``mixing'' counters in a shared bit array. The efficiency is strictly sublinear: identifying a message for audit requires no linear scan of the database, and registering a complaint requires flipping a single bit. This work exemplifies how probabilistic data structures—traditionally used for efficiency in networking—can be repurposed as privacy primitives.
+
+\section{Group 1: Privacy-Preserving Accountability in Encrypted Messaging}
+
+The proliferation of end-to-end encrypted messaging systems (EEMS) has created a significant dilemma for digital governance. While these platforms provide essential protection for user privacy, shielding communications from surveillance capitalism and authoritarian overreach, they simultaneously create opaque channels for the viral dissemination of misinformation. The ``Fighting Fake News'' research [1] proposes a technical resolution to this dilemma through the Fuzzy Anonymous Complaint Tally System (FACTS).
+
+\subsection{The Operational Context and Problem Space}
+EEMS platforms such as Signal, Telegram, and WhatsApp guarantee that the service provider cannot access the plaintext of messages. This architectural feature renders traditional server-side content moderation impossible. There is no central authority to scan for hash matches against known databases of child exploitation material or disinformation campaigns.
+
+Previous attempts to introduce accountability into these systems have largely failed to balance scalability with privacy.
+\begin{itemize}
+    \item \textbf{Message Franking:} This technique allows a recipient to cryptographically prove to a moderator that a specific sender sent a specific abusive message. While effective for harassment, it relies on a single report to break privacy.
+    \item \textbf{Traceback Schemes:} Proposals like those by Tyagi et al. allow for the tracing of message origins. However, these often require extensive metadata ``housekeeping'' that scales linearly with the number of messages in the system. Furthermore, a single malicious complaint can trigger a traceback, revealing the entire transmission chain and compromising the privacy of innocent users who merely forwarded the content.[1]
+\end{itemize}
+
+FACTS addresses these deficiencies by introducing a \textbf{threshold-based moderation model}. The underlying hypothesis is that ``fake news'' and viral misinformation are characterized by their broad dissemination and high volume of reception. In contrast, private communications—including sensitive leaks or whistleblowing—are typically targeted and low-volume.[1] Therefore, the privacy of a message should only be revoked if a significant number of independent users (e.g., $>1000$) complain about it.
+
+\subsection{System Architecture and Protocols}
+FACTS operates as an overlay on existing EEMS infrastructure. It introduces a suite of protocols—\texttt{Originate}, \texttt{SendMsg}, \texttt{RcvMsg}, \texttt{Complain}, and \texttt{Audit}—that manage the lifecycle of a message's accountability metadata without breaking the underlying encryption until the threshold conditions are met.[1]
+
+\subsubsection{Message Origination and Tagging}
+When a user $A$ originates a message $\mathfrak{m}$, they engage in the \texttt{Originate} protocol with the server $S$. This generates a cryptographic tag, $tag_{\mathfrak{m}}$, which binds the message to the originator.
+\begin{itemize}
+    \item The tag contains an encryption of the sender's identity ($e = Enc_{PK_S}(A)$) and a signature by the server on the message hash and the encrypted identity.
+    \item Crucially, the server signs the hash of the message without seeing the message itself. This ensures that the server can later verify the authenticity of the tag (preventing framing attacks) without learning the content or the originator during normal transmission.[1]
+\end{itemize}
+
+When User $A$ sends the message to User $B$, the $tag_{\mathfrak{m}}$ accompanies the encrypted payload. If User $B$ forwards the message to User $C$, the original tag is preserved (or re-wrapped), ensuring that the complaint trail always points back to the original source, not the intermediate forwarder.
+
+\subsubsection{The Complaint Mechanism}
+The \texttt{Complain} protocol is the core of the privacy architecture. A user $C$ who receives a message can issue a complaint to the server. The critical requirement is \textbf{Complaint Privacy}: the server must not know \textit{which} message is being complained about, nor the current tally of complaints for any specific message, until the threshold is crossed.
+
+If the server simply maintained a database of counters $(Counter_{\mathfrak{m}})$, every complaint would leak access patterns. Updating $Counter_{\mathfrak{m}}$ reveals interest in message $\mathfrak{m}$. Even if the counter value is encrypted, the access pattern allows the server to build a histogram of viral messages.
+
+To solve this, FACTS utilizes the \textbf{Collaborative Counting Bloom Filter (CCBF)}, a probabilistic data structure that allows for oblivious counting.
+
+\subsection{The Collaborative Counting Bloom Filter (CCBF)}
+The CCBF is a novel contribution that enables ``fuzzy'' counting by hiding individual message counters within a shared, global state. This structure avoids the heavy communication overhead of Oblivious RAM (ORAM) while providing sufficient privacy against a semi-honest server.[1]
+
+\subsubsection{Data Structure and ``Hiding in Plain Sight''}
+The server maintains a single bit vector $T$ of size $s$ (e.g., 12 MB). This vector represents the aggregated state of all complaints in the system for a given epoch (e.g., one day).
+\begin{itemize}
+    \item \textbf{Item Sets ($V_{\mathfrak{m}}$):} Upon message origination, every message $\mathfrak{m}$ is mapped to a random subset of $v$ indices in $T$. These indices effectively form the ``counter'' for that message.
+    \item \textbf{User Sets ($U_C$):} To prevent Sybil attacks or malicious inflation of counts, every user $C$ is assigned a fixed, random subset of $u$ indices in $T$ that they are \textit{authorized} to modify.
+\end{itemize}
+
+This dual-mapping strategy is the key to security. A user cannot simply flip all bits in $V_{\mathfrak{m}}$ to trigger an audit because they only have write-access to $U_C$.
+
+\subsubsection{The Complaint Logic}
+When User $C$ wishes to complain about message $\mathfrak{m}$:
+\begin{enumerate}
+    \item \textbf{Intersection Calculation:} The user computes the intersection of the message's Item Set and their own User Set: $I = V_{\mathfrak{m}} \cap U_C$.
+    \item \textbf{Oblivious Update:}
+    \begin{itemize}
+        \item If the intersection $I$ contains indices where the bit in $T$ is currently 0, the user selects one such index and instructs the server to flip it to 1.
+        \item If the intersection is empty (or all bits are already 1), the user flips a random 0-bit within their User Set $U_C$ that is \textit{not} related to the message.
+    \end{itemize}
+    \item \textbf{Server View:} The server observes only that User $C$ requested to flip bit $k$. Since $k \in U_C$, the action is authorized. However, since index $k$ is statistically likely to belong to the Item Sets of thousands of other messages, the server gains negligible information about which message was targeted.[1]
+\end{enumerate}
+
+\subsubsection{The Tipping Point and Threshold Enforcement}
+Counting in the CCBF is approximate. As more users complain about various messages, the bit vector $T$ fills up (bloom filter collisions). A message is considered to have reached the threshold $t$ when the number of set bits in its Item Set $V_{\mathfrak{m}}$ reaches a calculated \textbf{Tipping Point} $\tau$.
+
+The tipping point is not simply $t$. It is a dynamic value calculated based on the global density of the table $T$. The system calculates the probability that bits in $V_{\mathfrak{m}}$ would be set to 1 purely by background noise (complaints on other messages). An audit is triggered only when the density of 1s in $V_{\mathfrak{m}}$ statistically exceeds this background noise level by a margin corresponding to the threshold $t$.[1]
+
+Mathematical analysis provided in the research proves that this mechanism allows for the enforcement of thresholds with high accuracy. The error rate (auditing too early or too late) is typically below 10\% in theory and below 3\% in realistic deployment scenarios.[1]
+
+\subsection{Security Guarantees and Integrity}
+FACTS provides a robust set of security properties that protect against both server surveillance and user malice.
+
+\subsubsection{Privacy Guarantees}
+\begin{itemize}
+    \item \textbf{Message Privacy:} The content of the message remains encrypted from the server. The server only obtains the decryption key (via the \texttt{Audit} protocol) if the user proves, via the CCBF, that the complaint threshold has been met.[1]
+    \item \textbf{Complaint Privacy:} As described, the CCBF hides the target of complaints. A user complaining about a rare leak looks identical to a user complaining about a viral meme.
+    \item \textbf{Traffic Analysis Resistance:} Users can issue ``dummy'' complaints (flipping random bits in $U_C$) to mask their activity, ensuring that the act of complaining itself does not leak sensitive timing information.[1]
+\end{itemize}
+
+\subsubsection{Integrity Guarantees}
+\begin{itemize}
+    \item \textbf{Originator Integrity:} The cryptographic binding in $tag_{\mathfrak{m}}$ prevents framing. Even if a coalition of malicious users triggers an audit on a message, they cannot alter the encrypted identity of the originator. The server decrypts the identity \textit{inside} the tag, which was signed by the server at origination.[1]
+    \item \textbf{Complaint Integrity:} Malicious users cannot artificially inflate the complaint count for a victim message significantly. Since each user is restricted to a small $U_C$, they can only flip bits that happen to overlap with $V_{\mathfrak{m}}$. To force an audit, an adversary would need to control a massive number of colluding users, scaling linearly with the threshold $t$.[1]
+\end{itemize}
+
+\subsection{Scalability and Deployment Considerations}
+The system is designed for scale.
+\begin{itemize}
+    \item \textbf{Storage:} A 12 MB CCBF table can track complaints for millions of concurrent messages.
+    \item \textbf{Communication:} A complaint requires sending only $\log |T|$ bits (the index of the bit to flip), which is negligible compared to message payloads.
+    \item \textbf{Latency:} Experiments demonstrate that the overhead for sending messages is minimal (<100ms), and complaint issuance is dominated by network latency rather than computation.[1]
+\end{itemize}
+
+However, the system has limitations. The CCBF fills up over time, necessitating the concept of \textbf{Epochs} (e.g., daily resets). Once the table is too full, the false positive rate rises, and the system must be refreshed. Additionally, FACTS is most effective for large thresholds (hundreds or thousands). For small thresholds (e.g., $t=5$), the statistical noise of the CCBF makes accurate discrimination difficult.[1]
+
+\section{Group 2: Sublinear Algorithms for Secure Computation}
+
+The second group of research papers pivots from the specific application of misinformation to the foundational algorithmic challenges of privacy-preserving computation. These works attack the ``Linearity Wall''—the constraint that secure computations typically require resources proportional to the input size ($O(n)$). By developing protocols with sublinear complexity ($\tilde{O}(1)$ or $\tilde{O}(\log n)$), these contributions lay the groundwork for privacy at the scale of big data.
+
+\subsection{On the Privacy of Sublinear-Communication Jaccard Index Estimation}
+
+The first paper in this group, ``On the Privacy of Sublinear-Communication Jaccard Index Estimation via Min-hash,'' examines the privacy properties of \textbf{sketching algorithms}.[1] Sketches are compact, sublinear summaries of large datasets used to estimate properties like cardinality or similarity. The Jaccard Index, a measure of similarity between two sets $A$ and $B$ ($J(A,B) = |A \cap B| / |A \cup B|$), is widely estimated using the \textbf{Min-hash} sketch.
+
+\subsubsection{The Privacy ``Folklore''}
+There has long been a ``folklore belief'' in the data mining community that sketches are inherently privacy-preserving. Since a sketch compresses a massive set into a few kilobytes, it is information-theoretically impossible to reconstruct the full set from the sketch. Therefore, the reasoning goes, releasing the sketch does not leak the raw data.
+
+This research rigorously challenges and refines this belief. It proves that while reconstruction is impossible, \textbf{membership inference} is often trivial. If an adversary knows the hash functions used to create the sketch (the ``Public Hash'' setting), they can hash a target element $x$ and check if the resulting hash value appears in the sketch. If it does, they learn with high probability that $x \in A$.
+
+\subsubsection{Formalizing Sketch Privacy}
+The authors categorize the privacy of Min-hash into three functionalities:
+\begin{enumerate}
+    \item \textbf{$\mathcal{F}_{privH}$ (Private Hash):} The hash functions are kept secret (e.g., computed inside MPC). The paper proves that in this setting, the Min-hash output satisfies \textbf{Differential Privacy (DP)} without added noise. The inherent ``error'' of the sampling process acts as the noise required for DP, provided the intersection size is not 0 or 1.[1]
+    \item \textbf{$\mathcal{F}_{minH}$ (Public Hash):} The hash functions are known. Here, standard DP fails due to the deterministic membership attack described above.
+    \item \textbf{$\mathcal{F}_{noisy-minH}$ (Noisy Public Hash):} To restore privacy in the public setting, the authors propose adding calibrated Laplacian noise to the sketch output.
+\end{enumerate}
+
+\subsubsection{Distributional Differential Privacy (DDP)}
+A major theoretical contribution is the handling of the Public Hash setting using \textbf{Distributional Differential Privacy (DDP)}. The authors argue that while Min-hash is not private for \textit{arbitrary} worst-case inputs, it is private for inputs that possess sufficient \textbf{min-entropy}.
+
+If the input dataset contains sufficient uncertainty from the adversary's perspective, the Min-hash sketch does not leak membership. To prove this, the authors derive a \textbf{Strong Chain Rule} for min-entropy. This mathematical tool proves that applying hash functions to a high-entropy source acts as a randomness extractor, ensuring that the output sketch looks uniform and leaks negligible information about specific elements.[1]
+
+\subsubsection{The Noisy Min-Hash Protocol}
+For scenarios where input entropy cannot be guaranteed, the paper presents a secure two-party protocol for $\mathcal{F}_{noisy-minH}$. This protocol uses \textbf{Private Set Intersection Cardinality (PSI-CA)} to compute the Min-hash collision counts in the encrypted domain. It then adds Laplacian noise to these counts \textit{before} revealing them. This method achieves standard $(\epsilon, \delta)$-DP while maintaining higher accuracy than competing approaches like the ``Sketch-Flip-Merge'' estimator.[1]
+
+\subsection{Secure Sampling with Sublinear Communication}
+
+The second paper, ``Secure Sampling with Sublinear Communication,'' addresses the problem of sampling from a joint probability distribution defined by data partitioned across two parties.[1]
+
+\subsubsection{The Problem of Distributed Sampling}
+Consider Party $P_1$ holding vector $w_1$ and Party $P_2$ holding vector $w_2$, both of size $n$. They wish to sample an index $i \in [n]$ with probability proportional to a function of their combined weights, such as the sum ($L_1$: $w_{1,i} + w_{2,i}$) or product ($w_{1,i} \cdot w_{2,i}$).
+
+A trivial solution is for $P_1$ to send $w_1$ to $P_2$, but this costs $O(n)$ communication. The goal is to achieve this sampling with communication complexity that is \textbf{sublinear} in $n$ (e.g., $\tilde{O}(1)$ or $\tilde{O}(\log n)$).
+
+\subsubsection{$L_1$ Sampling via Oblivious Selection}
+For the $L_1$ distribution (sampling $\propto w_{1,i} + w_{2,i}$), the authors utilize \textbf{Fully Homomorphic Encryption (FHE)}.
+\begin{enumerate}
+    \item \textbf{Local Sampling:} $P_1$ samples an index $i_1$ from their local distribution $w_1$. $P_2$ samples $i_2$ from $w_2$.
+    \item \textbf{Secure Combination:} The system must select either $i_1$ or $i_2$ based on the total weight of each party. The probability of choosing $i_1$ should be $||w_1||_1 / (||w_1||_1 + ||w_2||_1)$.
+    \item \textbf{Oblivious Protocol:} Using FHE, the parties can execute this biased coin toss and selection without revealing the total weights or the unselected index. This protocol achieves sublinear communication because it only transmits the encrypted indices and the aggregated weight scalars, not the full vectors.[1]
+\end{enumerate}
+
+\subsubsection{$L_2$ Sampling and Corrective Sampling}
+The $L_2$ distribution (sampling $\propto (w_{1,i} + w_{2,i})^2$) is significantly harder because the normalization constant (the squared Euclidean norm $||w_1 + w_2||_2^2$) includes cross-terms ($2 \sum w_{1,i}w_{2,i}$) that are impossible to compute exactly with sublinear communication.
+
+To solve this, the authors invent \textbf{Corrective Sampling}, a novel rejection sampling technique adapted for MPC.[1]
+\begin{enumerate}
+    \item \textbf{Proxy Distribution:} The parties sample from a ``proxy'' distribution that is easy to compute, specifically proportional to $w_{1,i}^2 + w_{2,i}^2$ (ignoring cross-terms).
+    \item \textbf{Local Correction:} Once an index $i$ is sampled from the proxy, the parties compute a rejection probability based on the ratio of the true $L_2$ weight to the proxy weight \textit{at that specific index}. Crucially, calculating this ratio for a single index $i$ requires only $O(1)$ communication (exchanging $w_{1,i}$ and $w_{2,i}$).
+    \item \textbf{Efficiency:} The protocol proves that the rejection rate is bounded by a small constant ($1/\alpha \approx 2$), meaning the protocol terminates in a constant number of rounds.[1]
+\end{enumerate}
+
+This technique demonstrates that global normalization constants are not strictly necessary for sampling if one can perform local corrections efficiently.
+
+\subsubsection{Product Sampling and Impossibility}
+For Product Sampling (sampling $\propto w_{1,i} \cdot w_{2,i}$), the paper proves a stark negative result: \textbf{general sublinear product sampling is impossible}. The proof reduces the problem to Set Disjointness, which has a communication lower bound of $\Omega(n)$.
+
+However, the authors identify a ``sweet spot'': if the vectors are \textbf{sufficiently correlated} ($\langle w_1, w_2 \rangle = \omega(\log n / n)$), sublinear sampling becomes feasible.[1] They provide a protocol that succeeds under this promise, leaking only the inner product of the vectors.
+
+\subsubsection{Application: The Exponential Mechanism}
+The practical impact of this work is demonstrated by implementing the \textbf{Distributed Exponential Mechanism} for Differential Privacy. This mechanism selects outputs with probability exponential in a utility score. For additive utility functions, this maps to product sampling. By using the sublinear product sampling protocol (modified with a differentially private approximation of the inner product using Johnson-Lindenstrauss transforms), the authors provide the first sublinear secure implementation of this fundamental DP mechanism.[1]
+
+\subsection{Compressed Oblivious Encoding for Homomorphically Encrypted Search}
+
+The final paper addresses the efficiency of searching encrypted databases. ``Compressed Oblivious Encoding for Homomorphically Encrypted Search'' identifies and resolves a critical bottleneck in FHE-based search systems.[1]
+
+\subsubsection{The Sequential Bottleneck}
+Existing FHE search schemes (like LEAF) allow a server to identify matching records but struggle to return them to the client efficiently. To retrieve $k$ matches, previous protocols required $k$ sequential rounds of interaction. The client had to retrieve match $i$, decrypt it, and then issue a new query for ``the next match after $i$.'' This serialization, combined with $O(n)$ homomorphic multiplications per fetch, made retrieval prohibitively slow.[1]
+
+\subsubsection{Parallel Retrieval via COE}
+The authors introduce \textbf{Compressed Oblivious Encoding (COE)}, a framework that separates the ``Match'' phase from the ``Fetch'' phase.
+\begin{enumerate}
+    \item \textbf{Match:} The server evaluates the query homomorphically to generate an encrypted bit vector of matches.
+    \item \textbf{Encode:} Instead of retrieving items one by one, the server compresses the entire result set into a compact, encrypted data structure (the COE).
+    \item \textbf{Decode:} The client downloads the COE, decrypts it, and locally extracts all result indices or data.
+\end{enumerate}
+
+This approach allows for \textbf{parallel retrieval} of all results in a single round of communication with $\tilde{O}(1)$ complexity relative to the database size.[1]
+
+\subsubsection{Algorithmic Innovations}
+The authors propose two COE variants:
+\begin{itemize}
+    \item \textbf{Compressed Oblivious Index Encoding (COIE):} Encodes the \textit{indices} of matches.
+    \item \textbf{Compressed Oblivious Data Encoding (CODE):} Encodes the \textit{data} itself.
+\end{itemize}
+
+To implement these efficiently, the paper utilizes:
+\begin{itemize}
+    \item \textbf{Bloom Filters (BF-COIE):} The server inserts matching indices into an encrypted Bloom Filter. Since Bloom Filter insertion uses bitwise operations (additions in the FHE domain), this avoids expensive homomorphic multiplications.
+    \item \textbf{Power Sums (PS-COIE):} The server computes power sums of the matching indices ($\sum i, \sum i^2 \dots$) using only scalar multiplication (multiplying ciphertext by plaintext). The client solves the system of equations (Newton's sums) to recover the indices.[1]
+\end{itemize}
+
+By eliminating homomorphic multiplications in the encoding step, the system achieves an \textbf{1800x speed-up} in fetching time for 16 records compared to prior art.[1] This work fundamentally changes the performance characteristics of FHE search, moving it from a theoretical capability to a practically deployable service.
+
+\section*{Conclusion}
+
+The body of research presented in this thesis report marks a decisive step away from the linear-complexity paradigm that has long constrained secure computation. By embracing \textbf{approximation}—whether through the ``fuzzy'' counters of FACTS, the sketch errors of Min-hash, the proxy distributions of Corrective Sampling, or the probabilistic encoding of COE—these works demonstrate that privacy and scalability are compatible.
+
+Group 1 (FACTS) illustrates how these principles can be applied to solve urgent societal problems like misinformation, creating accountability structures that respect encryption. Group 2 provides the algorithmic toolkit—sampling, sketching, and searching—necessary to build such systems efficiently. Together, they define a new standard for privacy-preserving computation: one that is rigorous in its security definitions but pragmatic in its resource utilization, capable of operating at the speed and scale of the modern internet.
+

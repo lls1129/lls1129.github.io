@@ -1,0 +1,260 @@
+\subsection{Product Sampling in Constant Rounds}\label{sec:rounds}
+
+\paragraph{Achieving constant rounds through parallel repetition.}
+In Sections~\ref{sec:prod}, we showed a sublinear communication protocol
+for product sampling when $\ipw$ is sufficiently large.  Moreover, this
+protocol provably leaked no more information than the inner product.
+However, this protocol required $O(1/\ipw)$ rounds of communication.
+This raises the question of whether constant-round sublinear product
+sampling is possible under the same restrictions on the inputs.
+
+Our protocol to achieve this takes a relatively standard approach.
+Suppose that we are given the value of $\ipw$.  Then, since the expected
+number of samples until a collision is a function of $\ipw$, we can just
+run the inner loop of protocol $\Pp$ in parallel sufficiently many times
+to guarantee that the protocol would terminate with all but negligible
+probability.  
+
+\paragraph{How many times to repeat?} However, there is one catch.  It
+is not actually possible to compute $\ipw$ in sublinear communication!
+One simple solution is to use our promise on the input:~we could run the
+inner loop enough times to guarantee termination for any inputs
+satisfying the promise (e.g.~$\omega(\frac{n}{\log n}$) times).
+However, this forces us to adopt the worst-case communication cost,
+which might be undesirable.  (Recall, it also offers the least leakage,
+which might be desirable.) 
+%
+Instead, we re-establish the trade-off between leakage and efficiency as
+follows.  We begin by computing an approximation of the inner product in
+sublinear communication (see Section~\ref{sec:jlt}). Using this
+approximation, we can then realize our sublinear communication, constant
+round protocol for product sampling as follows in the next subsection.  
+
+\subsubsection{Secure approximation of the inner product}
+\label{sec:jlt}
+We achieve a protocol that securely approximates the inner product with
+sublinear communication. In particular, we take advantage of the well
+known Johnson–Lindenstrauss Transform (JLT)~\cite{JL84,STOC:IndMot98}
+sketch. 
+
+
+\paragraph{Additional assumptions about $\w_1$ and $\w_2$}. 
+We assumed that $\w_1$ and $\w_2$ are normalized and correlated such
+that $\ipw = \omega(\log n/n)$. In a similar vein, we assume that the
+cosine similarity of the two vectors $\w_1$ and $\w_2$ is not small,
+e.g., $\omega(1/\log n)$. 
+
+Recall the cosine similarity between the two vectors $\vec{w}_1$ and
+$\vec{w}_2$ is defined as %
+$\cos(\w_1, \w_2) = \frac{\langle \vec{w}_1, \vec{w}_2 \rangle}{ \|
+\vec{w}_1 \|_2 \cdot \| \vec{w}_2 \|_2}$.
+% 
+Since the $L_1$ norm of each vector is equal to 1, their $L_2$ norms
+will typically much smaller than 1, which implies that the cosine
+similarity is usually much larger than $\ipw$. 
+
+
+\paragraph{Approximating the inner product using JLT sketches.}
+The JLT sketch of $\vec{x}$ is equal to $\vec{M} \vec{x}$, where $\vec{M}$ is a
+random $k \times n$ matrix with $k \ll n$. More specifically, the inner product
+of the two vectors is approximated as follows:
+
+\BEN
+\item[] \hspace{-2em} ${\sf approxIP}(\w_1, \w_2)$: 
+	~~~ $\rhd$ $\w_1$ and $\w_1$ are $n$ dimensional vectors. 
+\item Choose $k \times n$ matrix $\vec{M}$ such that each entry $M_{i,j}$ is chosen from an
+independent Gaussian distribution of mean $0$ and variance $1$.
+
+\item Output $\frac 1 k \cdot \langle \vec{M}\vec{w}_1, \vec{M}\vec{w}_2 \rangle$. (Here, we
+slightly abuse the notation and treat the vectors $\w_1$ and $\w_2$ as column vectors.)
+\EEN
+
+\begin{lemma} {\rm (cf.~\cite[Corollary 3.1]{Kaban15})}
+\label{lem:jlt_k}
+For all $\w_1, \w_2$ such that $\cos(\w_1, \w_2)\geq t$, the
+procedure ${\sf approxIP}(\w_1, \w_2)$ approximates $\langle \vec{w}_1,
+\vec{w}_2 \rangle$ up to a $1\pm \epsilon$ approximation factor with all but
+negligible probability (over the choice of the JLT matrix), using JLT dimension
+$k = \omega\left(\frac{\log(n)}{t^2 \cdot \epsilon^2}\right)$. 
+\end{lemma}
+
+
+\paragraph{Privacy of the approximate output.} What is interesting is that the
+approximate inner product doesn't reveal anything more than the inner product
+itself. In this sense, it satisfies the notion of private
+approximation introduced in~\cite{FIM+06}. In particular, we prove the following:
+
+\begin{lemma}\label{lem:simip}
+The output of $\mathsf{approxIP}(\vec{w}_1, \vec{w}_2)$ can be simulated
+perfectly given only $\langle \vec{w}_1, \vec{w}_1 \rangle$, $\langle
+\vec{w}_2, \vec{w}_2 \rangle$, and $\langle \vec{w}_1, \vec{w}_2 \rangle$.
+\end{lemma}
+
+The proof is found in Appendix~\ref{apx:pfLemma10}. 
+
+
+\paragraph{Private protocol via JLT.} 
+Using the JLT sketch, we can design a private protocol approximating the
+inner product. See Protocol~\ref{fig:ip-fhe}. The protocol uses
+threshold FHE (e.g., ~\cite{popets:MTBH21}). 
+%and (for simplicity) works
+%in the pre-processing model.  We note, however, that this pre-processing
+%could be elminated by having the parties jointly generate an encrypted
+%random seed $s$ and using randomness generated by applying a PRG to the
+%seed $s$ (under FHE encryption) to sample the JLT matrix $\lbra \vec M
+%\lket$.  \dnote{Should the PRG solution be emphasized more? B/c some
+%people may not like pre-processing. We already require FHE (and
+%essentially arbitrary computation under it) so not sure what the
+%drawback is of the PRG-based solution.} \anote{I agree with Dana here.
+%I think we should present the PRG-based solution instead of the
+%pre-processing model.}
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+
+
+
+\paragraph{Inputs:} Parties $P_1$ and $P_2$ has inputs $\w_1$ and $\w_2$
+respectively. 
+
+\medskip
+
+The protocol proceeds as follows:
+\BEN
+    \item Parties set up a threshold FHE scheme.  \item They securely
+    sample $k \times n$ matrix $\vec M$ described in the above with in
+    the threshold FHE. In particular, they jointly generate an encrypted
+    random seed $\lbra s \lket$. Using this randomness, parties
+    homomorphically evaluates $\lbra PRG(s) \lket$, where $PRG$ is a
+    pseudorandom generator, to obtain the JLT matrix $\lbra \vec M
+    \lket$.
+    
+    \item Each party  $P_b$ homomorphically evaluates $\lbra \tilde \w_b \lket =
+    \lbra \vec M \w_b \lket$.
+
+    \item Party $P_1$ sends $\lbra \tilde \w_1 \lket$ to $P_2$.  
+    
+    \item Party $P_2$ homomorphically evaluates $\lbra \langle \tilde
+    \w_1, \tilde \w_2 \rangle \lket$ and sends it to  $P_1$. 
+
+    \item Parties execute threshold decryption to obtain and output
+    $\frac 1 k \cdot \langle \tilde
+    \w_1, \tilde \w_2 \rangle$.
+\EEN
+\caption{Private protocol for computing approximate inner product}
+\label{fig:ip-fhe}
+\end{algorithm}
+
+
+\paragraph{Security.}
+Since every protocol message is a ciphertext, based on semantic security
+of the threshold FHE, it is easy to see that the protocol securely
+realizes a functionality for computing ${\sf approxIP}$. 
+%
+Based on Lemma~\ref{lem:simip}, the leakage profile of the functionality is
+$\langle \vec{w}_1, \vec{w}_1 \rangle$, $\langle
+\vec{w}_2, \vec{w}_2 \rangle$, and $\langle \vec{w}_1, \vec{w}_2 \rangle$.
+
+
+
+
+\subsubsection{Constant-round protocol for product sampling}
+\label{sec:const}
+Note that the Protocol~\ref{prot:prodsampapx} has the following 
+structure.  In particular:
+
+\BI
+\item The probability that Protocol~\ref{prot:prodsampapx} samples a
+good index and halts in a given trial is $p = \bra \w_1, \w_2 \ket$.
+\EI
+
+We need to repeat $r$ trials in parallel so that the probability that
+all $r$ trials fail is negligible. In other words, we should have 
+%
+$$(1 - p)^{r} \le e^{-p \cdot r} \le e^{-\omega(\log \secparam)}.$$ 
+%
+This means that we should have
+$r > \frac {\omega(\log \secparam)}{p}$. 
+
+Moreover, in the previous subsection, we discussed how to obtain a good estimate
+$\tilde p = (1 \pm \e) p$. 
+Therefore, we should have 
+$$r > \frac {(1+\eps) \cdot \omega(\log \secparam) }{\tilde p}> \frac
+{\omega(\log \secparam)} p .$$
+
+In summary, by running $\frac {(1+\eps) \cdot \omega(\log \secparam)
+}{\tilde p}$ instances in parallel, we achieve constant round protocols
+for product sampling  with negligible failure probability. The final
+protocol should perform extra steps to hide from which trial the output
+comes from, and these changes can made in a straightforward way.
+
+
+
+%
+%We now describe a constant round protocol for product sampling given an
+%$(\epsilon,\delta)$-approximation of $\ipw$.  This protocol is in the
+%$\F_\oslone$-hybrid model.
+%
+%\floatname{algorithm}{Protocol}\label{prot:prodsampdp}
+%\begin{algorithm}[htbp]
+%\textbf{Inputs:} Party $P_i$ has input $\vec{w}_i$ of length $n$.   
+%
+%\begin{enumerate}
+%    \item Parties hold $aIP$ an $(\epsilon, \delta)$-approximation of $\ip{\vec{w}_1}{\vec{w}_2}$ with $\delta=\negl(\secparam)$.
+%    
+%    \item The parties execute the following steps $m=\left(\frac{aIP}{1-\epsilon}\right)\cdot \omega(\log{\secparam})$ times in parallel.
+%    
+%    \BEN
+%    \item Execute $\F_\oslone$ with $P_1$ as the sender with input $\vec{w}_1$ and $P_2$ as the receiver.  Let $i_{1,1}^j$ and $i_{1,2}^j$ be the output of the $j$th execution to $P_1$ and $P_2$ respectively. 
+%    
+%    \item Execute $\F_\oslone$ with $P_2$ as the sender with input $\vec{w}_2$ and $P_1$ as the receiver.  Let $i_{2,1}^j$ and $i_{2,2}^j$ be the output of the $j$th execution to $P_1$ and $P_2$ respectively.
+%    
+%    \EEN
+%    
+%    \item Execute $\F_{2PC}$ for the following circuit: 
+%      \BEN
+%      \item[] \hspace{-2em} Input: $(i_{1,1}^j, i_{2,1}^j, i_{1,2}^j, i_{2,2}^j)$ for $j = 1, \ldots, m$. 
+%      \item Let $i_1^j = i_{1,1}^j \xor i_{1,2}^j$, $i_2^j = i_{2,1}^j \xor i_{2,2}^j$. 
+%      \item Find the smallest $j$ such that $i_1^j == i_2^j$, and output $i_1^j$ to both $P_1$ and $P_2$.  If no such $j$ exists, output $\mathsf{abort}$.
+%      \EEN
+%
+%\end{enumerate}
+%\textbf{Output:} Both parties output the sampled index $i$ or $\mathsf{abort}$. 
+%
+%\caption{Constant-round product sampling ($\Pp^{cr}$)}
+%\end{algorithm}
+%
+%\paragraph{Security}
+%\anote{It actually seems that we no longer need to hide the round of abort?  Could you just use a comparison protocol that outputs result in the clear?}
+%We will prove the following theorem.
+%\begin{theorem}\label{thm:prodDP}
+%$\Pp^{DP}$ is secure \anote{Need to capture leakage from approximation algorithm.}
+%\end{theorem}
+%Before proving the main theorem, we prove the following claim to argue that this protocol does not output $\mathsf{abort}$, except with negligible probability.
+%
+%\begin{claim}\label{lem:prodAbort}
+%For any input vectors $\vec{w}_1$, $\vec{w}_2$ such that $\ip{\vec{w}_1}{\vec{w}_2} > 0$, the probability that Protocol~\ref{prot:prodsampdp} aborts is negligible in $\secparam$.
+%\end{claim}
+%\begin{proof}
+%We first consider the probability that there is no colliding indices in the first $r-1$ rounds
+%\begin{align*}
+%\Pr[\mbox{no collision in first }r-1 \mbox{ rounds}] = (1- \ip{\vec{w}_1}{\vec{w}_2})^{r-1}
+%\end{align*}
+%
+%\noindent
+%Since $aIP$ is an $(\eps,\delta)$-approximation of $\ip{\vec{w}_1}{\vec{w}_2}$, we know that with all but negligible probability $(1-\eps)\ip{\vec{w}_1}{\vec{w}_2} \le aIP \le (1+\eps)\ip{\vec{w}_1}{\vec{w}_2}$.
+%
+%\medskip\noindent
+%Letting $x=1/\ip{\vec{w}_1}{\vec{w}_2}$ and using the inequality $(1-1/x)^x \le e^{-1}$, we see that after $\omega(x\log{\secparam})$ rounds $\Pr[\mathsf{abort}] \le e^{-\omega(\log{\secparam})} \le \negl(\secparam)$.  Thus, given $IP$, this guarantee holds after at most $\frac{IP}{1-\eps}\cdot\omega(\log{\secparam})$ iterations.
+%\end{proof}
+%
+%We can now prove Theorem~\ref{thm:prodDP}. Due to Claim~\ref{lem:prodAbort}, for the remainder of this proof, we assume that the protocol does not output $\mathsf{abort}$.  
+%
+%\begin{proof}
+%The rest of the proof is essentially identical to the proof of Theorem~\ref{thm:prodIP}.  
+%\end{proof}
+%
+%\paragraph{Performance}
+%This protocol executes at most $m=\left(\frac{aIP}{1-\epsilon}\right)\cdot \omega(\log{\secparam})$ executions of the 2-PC comparison protocol in parallel, each requiring $O(\ell)$ communication.  Finally, the 2-PC for selecting the output can be done in communication linear in the number of executions, thus giving a total communication of $O(ml) = o(n)$.  As long as we use constant-round 2-PC protocols to realize all these computations, the resulting protocol also has constant rounds.
+%
+%

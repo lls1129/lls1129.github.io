@@ -1,0 +1,550 @@
+\subsection{Two-party Product Sampling}
+\label{sec:prod}
+We next consider the problem of two-party sampling from a product
+distribution.  Specifically, given $n$-dimensional vectors
+$\vec{w_1}=(w_{1,1},\ldots,w_{1,n})$ and
+$\vec{w_2}=(w_{2,1},\ldots,w_{2,n})$ as the private inputs from $P_1$
+and $P_2$ respectively, we wish to sample from the distribution $\Dp$
+defined by
+
+\[
+\Pr[\Dp(\vec{w}_1,\vec{w}_2)=i] = 
+\frac{w_{1,i}\cdot w_{2,i}}{\sum_{j=1}^n w_{1,j} \cdot w_{2,j}} = 
+\frac{w_{1,i} \cdot w_{2,i}}{\ipw}
+\]
+
+Of course, if $\ipw = 0$, the probability space is not well-defined, and
+in this case, we require the protocol to simply output $\bot$. 
+
+%\paragraph{Assumptions.}
+As before, we assume that all weights in $\vec{w}_1$ and $\vec{w}_2$ are
+non-negative.
+
+\iffalse
+We also assume, without loss of generality, that $$\|
+\vec{w}_1 \|_1 = \| \vec{w}_2 \|_1 = 1;$$ otherwise, the parties can
+start the protocol by dividing $\vec{w}_b$ by $\|\vec{w}_b\|_1$, since
+we have 
+
+\[
+\Pr\left[\Dp\left(\frac{\vec{w}_1}{\|\vec{w}_1\|_1},\frac{\vec{w}_2}{\|\vec{w}_2\|_1}\right)=i\right] = 
+\frac{ \frac{w_{1,i}}{\|\vec{w}_1\|_1} \cdot \frac{w_{2,i}}{\|\vec{w}_2\|_1}}{
+  \ip{\frac{\vec{w}_1}{\|\vec{w}_1\|_1}}{\frac{\vec{w}_2}{\|\vec{w}_2\|_1}
+  }} = \Pr[\Dp(\vec{w}_1,\vec{w}_2)=i].
+\]
+
+\paragraph{Communication efficiency and modeling the leakage.}
+Our goal is to find a protocol for two-party sampling with sublinear (in
+$n$) communication.  However, unlike the case for $L_1$ and $L_2$ sampling, we
+show that this goal is actually impossible (see
+Section~\ref{sec:prodLB}). Roughly speaking, if parties are allowed to
+have arbitrary input vectors, then a sublinear communication solution to
+product sampling implies a sublinear communication solution to the
+disjointness problem, which is known to be impossible.
+
+Thus, to achieve our original goal we consider restrictions on the
+parties' inputs.  In particular, we consider a setting where the inputs
+of the two parties are sufficiently correlated, i.e. $\ipw =
+\omega\left(\frac{1}{n}\right)$.  Under this assumption, we show a
+protocol achieving sublinear communication for product sampling (see
+Section~\ref{sec:prodip}).  
+
+As the reader may observe, the performance of our protocol depends on
+properties of the parties' inputs.  Thus, just by observing the runtime
+of the protocol, an adversary may infer information about the other
+party's input.  We explicitly model and bound this leakage to show that
+at most the inner product of the two input vectors is leaked.
+\fi
+
+
+\paragraph{Ideal functionality.}
+We now define an ideal functionality $\Fp$ for two-party product
+sampling. This functionality is parametrized by a function $\fl$
+capturing the leakage that the functionality gives to the adversary.  
+
+\bbox
+{
+\begin{center}
+ $\Fp$:  Ideal functionality for two-party product sampling
+\end{center}
+
+The functionality has the following parameters:
+\BI
+\item $n \in \NN$. The dimension of the input weight vectors $\vec{w}_1$ and $\vec{w}_2$.
+\item A function $\fl$ describing the leakage.
+
+%\item A leakage function $\ell$ specifies what kind of information the
+%functionality leaks about the private inputs of parties $P_1$ and $P_2$. 
+\EI
+
+The functionality proceeds as follows:
+\BEN
+\item Receive inputs $\vec w_1$ and $\vec w_2$ from $P_1$ and $P_2$
+respectively. 
+\item Compute $\mathsf{leak}=\fl(\vec{w}_1,\vec{w}_2)$
+\item If $\ipw=0$, send $\mathsf{leak}$ to the adversary and $\bot$ to
+$P_1$ and $P_2$. 
+\item Otherwise, sample $i$ with probability $\frac{w_{1,i} \cdot
+w_{2,i}}{\ip{\vec{w}_1}{\vec{w}_2}}$, send $\mathsf{leak}$ to the
+adversary, and send $i$ to $P_1$ and $P_2$.
+\EEN 
+}
+
+\medskip
+
+
+\subsubsection{Impossibility of sublinear product sampling}\label{sec:prodLB}
+Our goal is to find a protocol for two-party sampling with sublinear (in
+$n$) communication.  However, unlike the case for $L_1$ sampling, we
+show that this goal is actually impossible. Roughly speaking, if parties
+are allowed to have arbitrary input vectors, then a sublinear
+communication solution to product sampling implies a sublinear
+communication solution to the disjointness problem, which is known to be
+impossible.
+
+For our impossibility result, we first define the two-party disjointness problem.
+
+\paragraph{Disjointness problem.}
+The disjointness problem checks if two input sets $S$ and $T$ are
+disjoint (i.e., $S \cap T = \emptyset$). Specifically, we consider 
+a function $\mathsf{DISJ}^n: \zo^n \times \zo^n \to \zo$ defined as:
+$$ \mathsf{DISJ}^n(v_S, v_T) = \left \{ 
+    \begin{array}{l} 1 \mbox{ if } \bra v_S,  v_T \ket = 0 \\
+    0 \mbox{ otherwise } 
+  \end{array} \right .$$ 
+In the above, $v_S$ and $v_T$ are the characteristic vectors of $S$ and
+$T$ respectively. The communication complexity of the solution to the
+disjointness problem is known to have a linear lowerbound, as shown in
+the following Theorem:
+
+\begin{theorem}[\cite{tcs:Razborov92,siamdm:KalSch92,jcss:BJKS04}]
+For any (even non-private) two-party protocol $\Pi$ where each party
+holds $v_S$ and $v_T$ respectively, if $\Pi$ computes $\mathsf{DISJ}^n(v_S,
+v_T)$ correctly with probability at least 2/3, the communication
+complexity of $\Pi$ is $\Theta(n)$.
+\end{theorem}
+
+\paragraph{Our impossibility result.}
+We first observe that a simple reduction from Disjointness gives us
+that is impossible to achieve sublinear product sampling. Specifically,
+disjointness can be directly learned from whether the product sampling
+protocol outputs $\bot$ or not. 
+
+Our impossibility result is stronger. We show that it is impossible to
+achieve sublinear product sampling \emph{even when the product sampling
+protocol is executed with input vectors $\w_1$ and $\w_2$ in which all coordinates are bounded away from $0$}, which in particular guarantees that $\langle \vec{w}_1, \vec{w}_2 \rangle$ is bounded away from $0$. 
+
+%
+Before stating a formal theorem below, for $0 < \gamma < 1$, we first
+define $\gamma$-heaviness;~we say that a vector $\vec{w}$ is
+\emph{$\gamma$-heavy} when each coordinate of $\vec{w}$ is a number
+contained in $[\gamma,1]$. 
+
+\begin{theorem} \label{th:lower_bound}
+Let $\vec{w}_1$ and $\vec{w}_2$ be 
+ $\gamma$-heavy vectors of length $n$, each respectively held by $P_1$
+ and $P_2$.   Assume there exists a two-party protocol $\Pp$ for the
+ product sampling from $\w_1$ and $\w_2$, with communication at most $C
+ := C(n, \gamma)$.  
+ 
+ Then, for any $\gamma \le 1/2n$, there exists a constant $\rho$ and a
+ probabilistic protocol computing $\mathsf{DISJ}^n$ correctly with
+ probability at least 2/3 that has communication at most $\log(n) + 1 +
+ \rho \cdot (C + 1)$.  
+ \end{theorem}
+
+
+\subsubsubsection{Proof of Theorem~\ref{th:lower_bound}} 
+We construct a protocol computing $\mathsf{DISJ}^n$ by taking advantage
+of $\Pp$ as follows: 
+
+\paragraph{The protocol for $\mathsf{DISJ}^n$}
+
+\noindent
+Parties $\mathbf{A}$ and $\mathbf{B}$ each get as input
+a vector $\tilde{\vec{a}}$, $\tilde{\vec{b}} \in \{0,1\}^n$.
+The goal is to output $1$ if the vectors are ``disjoint''
+and $0$ otherwise.
+
+\begin{description}
+\item{Edge Case:}
+If one of the parties' inputs has Hamming weight $0$, then they output
+$1$ and send $1$ to the other party.  From now on, we assume that the
+Hamming weight of each party's input is at least $1$.
+
+\item{Preamble:}
+We call the party with the lower Hamming weight input the
+\emph{designated party}. To determine this, $\mathbf{A}$ sends to
+$\mathbf{B}$ the Hamming weight of its input vector $\tilde{\vec{a}}$.
+If $\mathbf{B}$'s input has higher Hamming weight, it sends back the bit
+$1$ to $\mathbf{A}$; otherwise it sends $0$. 
+
+\item{Input Transformation:}
+Let $g_\gamma: \zo \to \RR$ be a boosting function defined as
+$g_\gamma(0) = \gamma$ and $g_\gamma(1) = 1$. 
+%
+Each party $\mathbf{A}$, $\mathbf{B}$ locally transforms their input
+vector $\tilde{\vec{a}}$, $\tilde{\vec{b}}$ to $\vec{a}$, $\vec{b}$ by
+applying the boosting function in order to ensure $\gamma$-heaviness.
+That is, for $i \in [n]$, set $a_i = g_\gamma(\tilde{a}_i)$ and $b_i =
+g_\gamma(\tilde{b}_i)$. 
+
+\item{Sampling Protocol:}
+The parties run the sampling protocol $\Pp(\vec{a},\vec{b})$ and both receive some output
+$i^*$.
+\item{Output Computation:}
+The \emph{designated party} checks the $i^*$th bit of its input by which
+we denote $x$ (i.e., $x = \tilde a_{i^*}$ or $x = \tilde b_{i^*}$
+depending on which party is the designated party). It sends $1-x$ to the
+other party. Both parties output $1-x$. 
+\end{description}
+
+\noindent
+The following lemmas give the completeness and soundness of the protocol.
+
+\begin{lemma} \label{clm:completeness} If $\tilde{\vec{a}}$,
+$\tilde{\vec{b}}$ are disjoint, then the parties both output $1$ with
+probability at least $\frac{1}{2 + n \cdot \gamma}$.  
+\end{lemma}
+
+\begin{lemma}  \label{clm:soundness}
+If $\tilde{\vec{a}}$, $\tilde{\vec{b}}$ are not disjoint, then the
+parties both output $1$ with probability at most $1-\frac{1}{1 + n \cdot
+\gamma}$.  
+\end{lemma}
+
+Before we prove the lemmas, we briefly describe how we can use these
+lemmas to achieve a protocol that correctly computes $\mathsf{DISJ}$
+with probability at least $2/3$. 
+%
+Note that we can get a gap by setting $\gamma = \frac{1}{2n}$.  In other
+words, parties output $1$ when disjoint with probability at least
+$\frac{2}{5}$.  Parties output $1$ when not disjoint with probability at
+most $\frac{1}{3}$. Since we have a constant gap between completeness
+and soundness, this can be amplified to $2/3$ and $1/3$ by running the
+protocol a constant number of times.
+
+\paragraph{Remarks.}
+We would like to characterize the sublinearity condition for product
+sampling protocols using the normalized input vectors.  We can do this
+since without loss of generality we can assume that input vectors to the
+product sampling protocols are normalized; in particular, for any
+(non-normalized) vectors $\w_1$ and $\w_2$, we have 
+
+\[
+\Pr\left[\Dp\left(\frac{\vec{w}_1}{\|\vec{w}_1\|_1},\frac{\vec{w}_2}{\|\vec{w}_2\|_1}\right)=i\right]
+= 
+\frac{ \frac{w_{1,i}}{\|\vec{w}_1\|_1} \cdot
+\frac{w_{2,i}}{\|\vec{w}_2\|_1}}{
+  \ip{\frac{\vec{w}_1}{\|\vec{w}_1\|_1}}{\frac{\vec{w}_2}{\|\vec{w}_2\|_1}
+    }} = \Pr[\Dp(\vec{w}_1,\vec{w}_2)=i].
+\]
+
+Specifically, we show below that the impossibility theorem implies that
+in order to achieve sublinear communication complexity for product
+sampling, we would need, at the minimum, a promise on the inputs that
+guarantees that $$\langle \vec{w}_1, \vec{w}_2 \rangle \in
+\Omega(1/n^2),$$ when $\w_1, \w_2$ are normalized vectors. 
+
+To do this, first note that the theorem implies that sublinear
+communication product sampling needs to have $\gamma \in \Omega(1/n)$. 
+%
+Now, in the proof, any non-disjoint binary vectors $\tilde{\vec{a}}$,
+$\tilde{\vec{b}}$ to the $\mathsf{DISJ}$ problem has $\langle
+\tilde{\vec{a}}$, $\tilde{\vec{b}} \rangle \ge 1$, and these vectors are
+transformed to $g_\gamma(\tilde{\vec{a}})$ and
+$g_\gamma(\tilde{\vec{b}})$.
+%
+Let $\w_1$ and $\w_2$ be the normalized vectors
+$g_\gamma(\tilde{\vec{a}})$ and $g_\gamma(\tilde{\vec{b}})$; that is,
+$\w_1 := g_\gamma(\tilde{\vec{a}}) / \| g_\gamma(\tilde{\vec{a}}) \|_1$
+and $\w_2 =  g_\gamma(\tilde{\vec{b}}) / \| g_\gamma(\tilde{\vec{b}})
+\|_1$. Since each entry of $g_\gamma(\tilde{\vec{a}})$ and
+$g_\gamma(\tilde{\vec{a}})$ is at most 1, we have $\|g_\gamma(\tilde{\vec{a}})\|_1 \le n$ and $\|g_\gamma(\tilde{\vec{b}})\|_1 \le n$.
+Therefore, we have 
+%
+$$\ipw \ge \frac {\langle g_\gamma(\vec{a}), g_\gamma(\vec{b}) \rangle } { n \cdot n } \ge \frac 1 {n^2}.$$ 
+
+\begin{proof}[Proof of Lemma~\ref{clm:completeness}]
+Assume that $\tilde{\vec{a}}$, $\tilde{\vec{b}}$ are disjoint, and
+moreover, assume WLOG that $\mathbf{A}$ is the designated party, and its
+input vector has Hamming weight $w$.  Recall that $a_i = g_\gamma(\tilde
+a_i)$ and $b_i = g_\gamma(\tilde b_i)$. 
+Let 
+\begin{eqnarray*} 
+&& W_{0,0} :=  \sum_{i : \tilde{a}_i=0, \tilde{b}_i=0} a_i \cdot b_i,
+~~~~~~ 
+W_{1,0}  :=  \sum_{i : \tilde{a}_i=1, \tilde{b}_i=0} a_i \cdot b_i \\
+&& W_{0,1}  :=  \sum_{i : \tilde{a}_i=0, \tilde{b}_i=1} a_i \cdot b_i,
+~~~~~~
+W_{1,1}  :=  \sum_{i : \tilde{a}_i=1, \tilde{b}_i=1} a_i \cdot b_i \\
+\end{eqnarray*}
+
+Note that $W_{0,0} \leq n \cdot \gamma^2$.  Further, $W_{1,1} = 0$,
+since the vectors are disjoint, and $W_{1,0} = w \cdot \gamma$ since the
+Hamming weight of $\tilde{\vec{a}}$ is exactly $w$.  Additionally, note
+that $W_{0,1} \geq W_{1,0}$, since $\mathbf{A}$ is the designated party,
+so the Hamming weight of $\tilde{\vec{a}}$ is less than or equal to the
+Hamming weight of $\tilde{\vec{b}}$.
+
+Note that when the designated party is $\mathbf{A}$, then the output of
+the protocol is $1 - a_{i^*}$. Using the above facts, the probability
+of outputting $1$ is 
+%
+\begin{align*}
+\frac{W_{0,0} + W_{0,1}}{W_{1,1} + W_{0,0} + W_{0,1} + W_{1,0}}
+&\ge 
+\frac{W_{0,1}}{W_{0,0} + W_{0,1} + W_{1,0}}\\
+&\geq \frac{W_{0,1}}{n\gamma^2 + 2W_{0,1}}\\
+&=\frac{w \cdot \gamma}{n\gamma^2 + 2w \cdot \gamma}\\
+&=\frac{w}{n\gamma + 2w}\\
+&\geq \frac{1}{n\gamma + 2},
+\end{align*}
+where the last inequality follows since $w \geq 1$, due to the Edge Case
+step of the protocol. \qed
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{clm:soundness}]
+Assume that $\tilde{\vec{a}}$,
+$\tilde{\vec{b}}$ are not disjoint.
+As before, consider $W_{0,0}$, $W_{1,0}$, $W_{0,1}$, and $W_{1,1}$. 
+Note that $W_{1,1} \geq 1$ since the inputs are not disjoint. We also
+have $W_{0,0} + W_{0,1} + W_{1,0} \leq n \cdot \gamma$, since $a_i$ or
+$b_i$ is $\gamma$ in these cases. 
+
+
+Using the above facts, the probability of outputting $0$
+is 
+\begin{align*}
+\frac{W_{1,0} + W_{1,1}}{W_{1,1} + W_{0,0} + W_{0,1} + W_{1,0}}
+&\geq
+\frac{W_{1,1}}{W_{1,1} + n \cdot \gamma}\\
+&\ge \frac{1}{1 + n \cdot \gamma}.
+\end{align*} \qed
+\end{proof}
+
+
+\subsubsection{Product sampling while leaking at most the inner product}
+\label{sec:prodip}
+
+\paragraph{Assumptions.}
+As before, we assume that all weights in $\vec{w}_1$ and $\vec{w}_2$ are
+non-negative. As discussed in the previous subsection, we also assume,
+without loss of generality, that $$\| \vec{w}_1 \|_1 = \| \vec{w}_2 \|_1
+= 1.$$ 
+
+\paragraph{Overview.}
+We now show that the impossibility result of Section~\ref{sec:prodLB}
+can be bypassed if we make some assumptions on the inputs.
+Specifically, if we restrict ourselves to the case when
+$\ipw=\omega\left(\frac{\log n}{n}\right)$, then we can achieve a sublinear
+communication protocol for product sampling on inputs $\vec{w}_1,
+\vec{w}_2$\footnote{Regarding $\ipw$, there is a gap between the
+lowerbound result (i.e., $\Omega(\frac{1}{n^2})$) and our construction
+(i.e., $\omega(\frac{\log n}{n})$). Resolving the gap is left as an
+interesting open problem.}.
+Of course, by observing that the protocol uses sub-linear
+communication, due to our lower-bound, both parties will learn that such
+a promise on the inputs is satisfied;~the lower bound implies that some
+leakage about the inputs is necessary.  
+%
+In our protocol, we show that the information leaked is at most the
+inner product $\ipw$.
+(Formally, we set $\fl(\w_1, \w_2) =\ipw$.)  Interestingly, we show that
+this is the case even though our protocol does not, and
+cannot,\footnote{This can be shown by a simple modification of the lower
+bound proof from Section~\ref{sec:prodLB}.} actually compute $\ipw$.
+
+
+\paragraph{Product sampling protocol.}
+Roughly, the protocol works as follows.  The protocol proceeds in rounds
+where in each round $P_1$ and $P_2$ use the oblivious $L_1$ sampling
+with a single input vector ($\F_\oslone$) to produce two secret-shared
+sampled indices, one from $P_1$'s input vector, and one from $P_2$'s
+input vector.  The parties then run a secure 2-PC protocol to securely
+compare these values, and if they are equal, output the sampled index.
+If the two sampled indices are not equal, the parties move to the next
+round.
+
+We describe a private two-party protocol for product sampling leaking at
+most the inner product (see Protocol~\ref{prot:prodsampapx}). This
+protocol is in the $\{\F_\oslone, \F_{2PC} \}$-hybrid model.
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+\textbf{Inputs:} Party $P_b$ has input $\vec{w}_b$ of length $n$.   
+
+\begin{enumerate}
+    \item Invoke the $\F_\oslone$ ideal functionality with $P_1$ as the
+    sender with input $\vec{w}_1$ and $P_2$ as the receiver.  Let
+    $i_{1,1}$ and $i_{1,2}$ be the output from the ideal functionality
+    to $P_1$ and $P_2$ respectively. 
+    
+    \item Invoke the $\F_\oslone$ ideal functionality with $P_2$ as the
+    sender with input $\vec{w}_2$ and $P_1$ as the receiver.  Let
+    $i_{2,1}$ and $i_{2,2}$ be the output from the ideal functionality
+    to $P_1$ and $P_2$ respectively.
+    
+    \item Invoke the $\F_{2PC}$ ideal functionality with the following circuit: 
+      \BEN
+      \item[] \hspace{-2em} Input: $(i_{1,j}, i_{2,j})$ for $j = 1, 2$. 
+      \item Let $i_1 = i_{1,1} \xor i_{1,2}$, $i_2 = i_{2,1} \xor i_{2,2}$. 
+      \item If $i_1$ is equal to $i_2$, output $i_1$ to both $P_1$ and $P_2$. Otherwise,
+      output $\bot$.
+      \EEN
+  
+    \item If the output from the ideal functionality is $\bot$, go back to Step 1.
+    Otherwise, output whatever $\F_{2PC}$ outputs. 
+\end{enumerate}
+\textbf{Output:} Both parties output the sampled value $i$. 
+
+\caption{Product sampling ($\Pp^{IP}$) in the $\{\F_\oslone, \F_{2PC} \}$-hybrid.
+\label{prot:prodsampapx}
+}
+\end{algorithm}
+
+
+% A value is sampled by each party (without the party knowing the value sampled).
+% An equality check is performed.
+% If it fails, the parties learn that equality fails.
+% If it succeeds, the parties learn the output.
+
+% The parties re-run the above procedure until it succeeds. They output whatever was outputted in the succeeding run.
+
+\paragraph{Security.}
+We will prove the following theorem.
+\begin{theorem}\label{th:prodIP}
+Protocol $\Pp^{IP}$ securely realizes $\Fp$ with leakage $\fl(\w_1,
+\w_2) = \ip{\vec{w}_1}{\vec{w}_2}$ in the $\{\F_\oslone, \F_{2PC}
+\}$-hybrid model with semi-honest security.
+\end{theorem}
+
+\begin{proof}
+We describe the simulator $\Sim$ in the $\{\F_\oslone, \F_{2PC} \}$-hybrid model
+for the case that Party 1 is corrupted.
+The simulator and proof of security are analogous in the case that Party 2 is corrupted.
+
+$\Sim$ receives as input
+$\vec{w}_1$, the output $i^*$, and $\ip{\vec{w}_1}{\vec{w}_2}$.
+$\Sim$ samples $r^*$ from a geometric distribution with success probability $p = \langle
+\vec{w}_1, \vec{w}_2 \rangle$.
+
+$\Sim$ invokes Party 1 on input $\vec{w}_1$.
+For $i \in [r^*-1]$, 
+Party 1 sends its input to the first
+invocation of 
+$\F_\oslone$ and $\Sim$
+returns to it a random value in $\mathbb{Z}_n$.
+Party 1 sends its input to the second
+invocation of 
+$\F_\oslone$ and $\Sim$
+returns to it a random value in $\mathbb{Z}_n$.
+Party 1 sends its input to the 
+$\F_{2PC}$ functionality and $\Sim$
+returns to it $\bot$.
+For $i = r^*$,
+Party 1 sends its input to the first
+invocation of 
+$\F_\oslone$ and $\Sim$
+returns to it a random value in $\mathbb{Z}_n$.
+Party 1 sends its input to the second
+invocation of 
+$\F_\oslone$ and $\Sim$
+returns to it a random value in $\mathbb{Z}_n$.
+Party 1 sends its input to the 
+$\F_{2PC}$ functionality and $\Sim$
+returns to it $i^*$.
+
+It is clear that the view of Party 1
+is identical in the ideal and real world,
+assuming that $\Sim$
+samples the first succeeding round,
+$r^*$, from the correct distribution.
+In the following, we argue that this is 
+indeed the case.
+
+\iffalse
+Note that each round of the protocol consists of two runs of the
+oblivious sampling protocol. Thus, it can be simulated by having the
+simulator playing as $F_\oslone$.
+
+The only thing left to simulate is the number of rounds, $r^*$. The simulator receives
+from the ideal functionality $\Fp$ the sampled output $i^*$.  We show
+that given $\fl=\ip{\vec{w}_1}{\vec{w}_2}$ and the output $i^*$, the
+simulator can sample the first succeeding round $r^*$ from the exact
+correct distribution.
+\fi
+
+First, note that on any given round, we have 
+$$p_c := \Pr[\mbox{collision}] = \sum_i \Pr[i_i = i \wedge i_2 = i] = \sum_i w_{1,i} \cdot w_{2,i} = \ipw.$$ 
+
+
+Let ${\sf FirstSuccess}(r)$ denote an event in which the protocol
+succeeds for the first time on the $r$-th round.  Now, for $r \in
+\mathbb{N}$, we have 
+%
+\begin{align*}
+&\Pr[{\sf FirstSuccess}(r) \mbox{ AND the output is } i^*]\\
+&=
+\Pr[\mbox{no collision in first } r-1 \mbox{ rounds}] \cdot \Pr[i_1 = i^* \wedge i_2 = i^* \mbox{ on the $r$th round}]\\
+&= (1-p_c)^{r-1} \cdot \Pr[i_1 = i^* \wedge i_2 = i^*] 
+\end{align*}
+%
+Now, the probability that the protocol eventually outputs $i^*$ is:
+\begin{align*}
+&\Pr[\mbox{protocol eventually outputs } i^* \mbox{ after some number of rounds}]\\
+&= \sum_{j=1}^\infty \Pr[{\sf FirstSuccess}(j) \mbox{ AND the output is } i^*] \\ &= \Pr[i_1 = i^* \wedge i_2 = i^*]
+\sum_{j=1}^\infty (1-p_c)^{j-1}
+= \Pr[i_1 = i^* \wedge i_2 = i^*] \cdot \frac{1}{p_c}.
+\end{align*}
+Thus, the probability of ${\sf FirstSuccess}(r)$ conditioned on the
+output being $i^*$ is:
+\begin{align*}
+&\Pr[{\sf FirstSuccess}(r) | \mbox{ the output is $i^*$}]\\
+&= \frac{\Pr[{\sf FirstSuccess}(r) \mbox{ AND the output is }
+i^*]}{\Pr[\mbox{protocol eventually outputs } i^* \mbox{ after some number of rounds}]}\\
+&= \frac{(\Pr[i_1 = i^* \wedge i_2 = i^*]) \cdot (1-p_c)^{r-1}}{\Pr[i_1
+= i^* \wedge i_2 = i^*] \cdot \frac{1}{p_c}}\\
+&= p_c \cdot (1-p_c)^{r-1}.
+\end{align*}
+
+The above is exactly the probability of the number of Bernoulli trials
+(with probability $p_c = \langle \vec{w}_1, \vec{w}_2 \rangle$) needed to
+get one success.  Sampling the number of rounds is therefore equivalent
+to sampling the random variable corresponding to the number of rounds
+from a geometric distribution with success probability $p_c = \langle
+\vec{w}_1, \vec{w}_2 \rangle$,
+which is exactly what $\Sim$ does. \qed
+%This can be efficiently simulated given
+%just the dot product $p = \langle \vec{w}_1, \vec{w}_2 \rangle$. 
+\end{proof}
+
+\paragraph{Performance.}
+As shown above, the number of rounds $r$ needed by this protocol is
+distributed as the number of Bernoulli trials (with probability $p =
+\ipw$) needed to get one success.  Thus, the expected number of rounds
+is $r=\frac{1}{\ipw}$.  In each round, the communication consists of a
+secure 2-PC of equality on $O(\log n)$-bit inputs, which can be done in
+$O(\log n)$ communication and $O(1)$ rounds.  Thus, in total, this
+protocol has expected communication $O(\frac{\log n}{\ipw})$ and
+$O(\frac{1}{\ipw})$ rounds.  This communication is sublinear in $n$ when
+$\ipw = \omega\left(\frac{\log n}{n}\right)$.\medskip
+
+\noindent \textbf{Trading efficiency for privacy.}  In the proof above, the simulator requires the value of $\ipw$, which is not revealed by the output.  However, a slight modification to the protocol allows us to remove this leakage at the cost of additional, though still sub-linear, communication.  
+Instead of terminating the protocol the first time there is a collision in the $L_1$ samples, we can pad the communication cost by making $O(\frac{n}{\log n})$ 
+calls to $\F_{\oslone}$.  Under the promise of $\ipw = \omega(\frac{\log n}{n})$, this ensures a collision in 
+the outputs (with all but negligible probability).  The parties can then use $O(\frac{n}{\log n})$ communication to obliviously find and output the collision, without revealing the index, and avoiding the leakage of $\ipw$.  
+
+Generalizing this idea, we arrive at a set of similar protocol modifications that support a continuous set of tradeoffs:~instead of choosing between  leaking $\ipw$ to the simulator, or padding to the maximum communication, we 
+can choose to leak some lower bound on $\ipw$, and modify the protocol to make a proportionate number of calls to $\F_{\oslone}$, search (obliviously) for a collision, and repeat if necessary.  
+
+Without a full proof, we provide some intuition for the fact that this tradeoff between leakage and communication is inherent.  We can do that by generalizing the statement of Theorem \ref{th:lower_bound}.  We first modify the definition of $\gamma$-heavy defined previously:~for any $t(n) = O(n)$, we say that a vector $\w$ of length $n$ is $\gamma_{t,n}$-heavy if each of the $t := t(n)$ coordinates of $\w$ is a number contained in $[\gamma, 1]$. 
+In particular, we now allow $t(n) = o(n)$.  Then, with a small modification to the reduction, we can prove that if $\w_1$ and $\w_2$ are $\gamma_{t,n}$-heavy, and if there exists a protocol $\Pp$ for product sampling with communication at most $C := C(n, \gamma)$, then there exists a protocol for computing $\mathsf{DISJ}^t$ with communication $\log(n) + O(C)$.  In the modified reduction, the parties simply increase the weights of the $t$ input slots (as before), and append $n-t$ entries containing 0 at the end.  
+Since we know that $\mathsf{DISJ}^t$ requires $O(t)$ communication, the implication is that we have increasingly weaker communication bounds as we are provided increasingly strong promises on the inner product.  
+Conversely, for a certain set of input vectors, observing the communication of the sampling protocol gives you a bound on the inner product of the inputs.  The less communication observed, the tighter that bound, and the greater the leakage.  
+
+
+
+
+
+

@@ -1,0 +1,319 @@
+\section{Proofs} \label{apx:proof}
+
+\subsection{Proof of Theorem~\ref{th:l1}}\label{apx:pfTheorem1}
+We describe the simulator $\Sim$ in the $\{\F_\oslone, \F_{2PC} \}$-hybrid model
+for the case that Party 1 is corrupted.
+The simulator and proof of security are analogous in the case that Party 2 is corrupted.
+
+$\Sim$ receives as input
+$\vec{w}_1$, the output $i^*$, and $||\vec{w}_1 + \vec{w}_2||_2$.
+$\Sim$ samples $r^*$ from a geometric distribution with success probability $p = ||\vec{w}_1 + \vec{w}_2||_2^2$.
+
+$\Sim$ invokes Party 1 on input $\vec{w}_1$.
+For $i \in [r^*-1]$, 
+Party 1 sends its input to the first three
+invocations of 
+$\F_\oslone$ and $\Sim$
+returns to it three random values in $\mathbb{Z}_n$.
+Party 1 sends its input to the second three
+invocations of 
+$\F_\oslone$ and $\Sim$
+returns to it three random values in $\mathbb{Z}_n$.
+Party 1 sends its input to the 
+$\F_{2PC}$ functionality and $\Sim$
+returns to it $\bot$.
+For $i = r^*$,
+Party 1 sends its input to the first three
+invocation of 
+$\F_\oslone$ and $\Sim$
+returns to it three random values in $\mathbb{Z}_n$.
+Party 1 sends its input to the second three
+invocations of 
+$\F_\oslone$ and $\Sim$
+returns to it three random values in $\mathbb{Z}_n$.
+Party 1 sends its input to the 
+$\F_{2PC}$ functionality and $\Sim$
+returns to it $i^*$.
+
+It is clear that the view of Party 1
+is identical in the ideal and real world,
+assuming that $\Sim$
+samples the first succeeding round,
+$r^*$, from the correct distribution.
+In the following, we argue that this is 
+indeed the case.
+
+As was shown in the correctness analysis,
+if the protocol has not already halted before
+round $r$, then
+the probability of halting (and outputting some valid
+index) in round $r$ is:
+\[
+||\vec{w}_1||^2 + 2 \langle \vec{w}_1, \vec{w}_2 \rangle +  ||\vec{w}_2||^2 = ||\vec{w}_1 | \vec{w}_2||_2^2.
+\]
+Since $r^*$ is defined as the round in which the protocol halts,
+the distribution on $r^*$ is exactly the distribution on
+the number of Bernoulli trials
+(with probability $p = ||\vec{w}_1 | \vec{w}_2||_2^2$) needed to
+get one success.  Sampling the number of rounds is therefore equivalent
+to sampling the random variable corresponding to the number of rounds
+from a geometric distribution with success probability $p = ||\vec{w}_1 | \vec{w}_2||_2^2$,
+which is exactly what $\Sim$ does.
+
+
+\subsection{Proof of Theorem~\ref{thm:os-fhe}}\label{apx:pfTheorem2}
+We first give the simulation of the sender. The simulator proceeds as
+follows: 
+\BI
+\item Send  $\vec{w}$ to $\F_{\oslone}$ and receive $\pi$ as the output.  Place $\pi$ on the random tape of the sender. 
+
+
+\item Simulate the output of $F_{2PC}$ by sending a random
+$r_1$  to the sender.  
+\item Simulate the key generation protocol honestly. 
+\item Send a random encryption for
+$\lbra r_2 \lket$ in Step 4. 
+\EI
+Due the semantic security of the underlying FHE scheme, the simulation
+is indistinguishable. 
+%
+Next, we give the simulation of the receiver. 
+
+\BI
+\item The simulator receives output $i \xor \pi$ from $\F_{\oslone}$.
+
+\item The simulator works as functionality $F_{2PC}$ sending a random
+$r_2$ as the output to the receiver. 
+
+\item The simulator runs the key generation protocol honestly, and stores the threshold decryption key of the sender. 
+
+\item In step 6, the simulator computes $c := \lbra i \xor \pi \lket$ and sends it
+to the receiver. 
+
+\item The simulator runs the threshold decryption protocol honestly. 
+\EI
+The simulation is perfect. 
+
+
+\subsection{Proof of Theorem~\ref{th:l2}} \label{apx:pfTheorem3}
+We describe the simulator $\Sim$ in the $\{\F_{L_1}^{ss}, \F_{2PC}\}$-hybrid model
+for the case that Party 1 is corrupted.
+The simulator and proof of security are analogous in the case that Party 2 is corrupted.
+
+$\Sim$ receives as input
+$\vec{w}_1$ and the output $i^*$.
+$\Sim$ invokes Party 1 on input $\vec{w}_1$.
+For $j \in [B]$, the simulator works as follows:
+\BI    
+    
+\item Upon Party 1 sending its input to $\F_{L_1}$, $\Sim$ returns a uniformly random share $r$\anote{I don't want to specify the space here since this depends on the precision.}
+
+\item In place of the encryption of $w_{2,i_j}$ from Party 2, $\Sim$ sends Party 1 an FHE ciphertext encrypting 0.
+
+\item Upon Party 1 sending its input to $\F_{2PC}$, $\Sim$ returns to Party 1 an FHE ciphertext encrypting 0.
+\EI
+
+% Party 1 sends its input to the
+% invocations of 
+% $\F_{L_1}$ and $\Sim$
+% returns to it a random values in.
+% $\Sim$ sends to Party 1 an FHE ciphertext
+% encrypting $0$, in place of the encryption of 
+% $w_{2,i_j}$ from Party 2.
+% Party 1 sends its input to $\F_\bcoin$
+% and $\Sim$ sends to Party 1 an FHE ciphertext
+% encrypting $0$, on behalf of the ideal functionality.
+% After the loop completes,
+% Party 1 sends its input to $\F_{2PC}$
+% and $\Sim$ returns to it $i^*$
+% on behalf of the ideal functionality.
+
+The only differences in the view of Party 1
+in the ideal and hybrid worlds,
+are that 
+(1) In the hybrid world it gets a secret share of
+$i_j$, whereas in the ideal world it gets a uniformly random value;
+(2) In the hybrid world it gets an encryption of $w_{2,i_j}$ from Party 2, whereas in the ideal world it gets an encryption of 0;
+(3) In the hybrid world it gets encryptions of
+$i_j$ or $0$ from the ideal functionality
+$\F_{2PC}$, whereas in the ideal world it always
+gets encryptions of $0$.
+
+Receiving uniformly random values instead of correct secret shares does not affect the view of Party 1, since the additive secret sharing used
+has perfect secrecy.
+Further, switching from encryptions
+of $w_{2,i_j}$ and $i_j$ to encryptions of $0$
+is indistinguishable due to the semantic security
+of the threshold FHE scheme.
+Thus, the view of Party 1 is computationally indistinguishable in the hybrid world and the ideal world.
+
+This concludes the proof of security of the $L_2$
+sampling protocol.
+ 
+%
+%\subsection{Proof of Theorem~\ref{th:l2}}
+%Note that the entire view of Party $P_b$ consists of the secret shares
+%received in from the oblivious sampling functionality, its view in the
+%secure protocol computation, the final output, denoted $i^*$, and the
+%round $r^*$ which returned $i^*$.
+%
+%The simulator receives $i^*$ from the ideal functionality and must draw
+%$i^*$ from the correct distribution.  Given this, the entire view of
+%Party $P_b$ can be simulated.
+%
+%As before, we show that the simulator can sample the first succeeding
+%round $r^*$ from the exact correct distribution, given only the value of
+%$p = ||\vec{w}_1||^2 + 2 \langle \vec{w}_1, \vec{w}_2 \rangle +
+%||\vec{w}_2||^2$.
+%
+%Let ${\Success}$ denote an event in which the protocol succeeds
+%in the current round. Note the protocol is engineered to have the
+%following property: $\Pr[\Success] = p/6$. 
+%Let $\Output(i)$ denote an event in which the protocol outputs
+%Then, we have $$q_{i^*} = \Pr[ \Output(i^*) |\Success] =
+%\frac{(w_{1,i^*} + w_{2,i^*})^2}{p}.$$
+%
+%Let $\FirstSuccess(r)$ denote an event in which the protocol
+%succeeds for the first time on the $r$-th round.  Then, note that for $r
+%\in \mathbb{N}$, the probability that the protocol succeeds for the
+%first time in the $r$-th round AND the output
+%being $i^*$ is equal to:
+%\begin{align*}
+%&\Pr[\FirstSuccess(r^*) \wedge \Output(i^*)]\\
+%&=
+%\Pr[\bot \mbox{ returned in first } r^*-1 \mbox{ rounds}] \cdot
+%\Pr[\Success \wedge \Output(i^*)]\\
+%&= (1-p/6)^{r^*-1} \cdot p/6 \cdot q_{i^*},
+%\end{align*}
+%
+%Now, the probability that the protocol eventually outputs $i^*$ (after some number of rounds) is:
+%\[
+%\Pr[\Output(i^*)]
+%= \sum_{r=1}^\infty \Pr[\FirstSuccess(r) \wedge \Output(i^*)]
+%= q_{i^*}.
+%\]
+%
+%Thus, the \emph{conditional probability} that the protocol succeeds for the first time on the $r^*$-th round conditioned on the output
+%being $i^*$ is equal to
+%\begin{align*}
+%&\Pr[\FirstSuccess(r^*) ~|~ \Output(i^*)] \\
+%&= \frac{\Pr[\FirstSuccess(r^*) \wedge \Output(i^*)]}{\Pr[\Output(i^*)] }\\
+%&= (1-p/6)^{r^*-1} \cdot p/6.
+%\end{align*}
+%
+%The above is exactly the probability of the number of Bernoulli trials (with probability $p/6$ needed to get one success.
+%Sampling the number of rounds is therefore equivalent to sampling the random variable
+%corresponding to the number of rounds from
+%a geometric distribution with success probability $p/6$.
+%This can be efficiently simulated given just the $L_2$ norm $p = ||\vec{w}_1||^2 + 2 \langle \vec{w}_1, \vec{w}_2 \rangle +  ||\vec{w}_2||^2$.
+%
+
+\subsection{Proof of Lemma~\ref{lem:close_dist_2}}\label{apx:pfLemma5}
+We want to show that
+\begin{align*}
+    \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] &= \frac{(w_{1,i} + w_{2,i})^p}{||\vec{w}_1 + \vec{w}_2||_p^p}\\
+   &= \frac{(w_{1,i} + w_{2,i})^p}{c \cdot (||\vec{w}_1||_p^p  + ||\vec{w}_2||_p^p)}\\
+    &\leq \frac{2^{p-1} (w^p_{1,i} + w^p_{2,i})}{c \cdot (||\vec{w}_1||_p^p  + ||\vec{w}_2||_p^p)}\\
+    &= 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i].
+\end{align*}
+The inequality holds due to Jensen's inequality with convex function $f(x) = x^p$:
+\begin{align*}
+1/2^p \cdot(w_{1,i} + w_{2,i})^p & = f(1/2 \cdot w_{i,1} + 1/2 \cdot w_{i,2}) \\
+& \le 1/2 \cdot f(w_{i,1}) +  1/2 \cdot f(w_{2,i}) \\
+& = 1/2 (w_{i,1}^p + w_{i,2}^p). 
+\end{align*}
+This completes the proof of Lemma~\ref{lem:close_dist_2}.
+ 
+
+\subsection{Proof of Lemma~\ref{lem:lp}}\label{apx:pfLemma6}
+Note that $\Pi_{L_p}$ simply performs rejection sampling in a distributed setting where sampling from $D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ and computing the probabilities is done in a distributed manner. It is therefore well-known that
+as long as for all $i \in [n]$,
+\begin{equation} \label{eq:rejection_2}
+    \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq 2^p/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i],
+\end{equation}
+then $\Pi_{L_2}$ samples from the exact correct distribution, and
+the number of samples required from $D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ in protocol $\Pi_{L_2}$ follows a geometric distribution with probability $c/2^p$.
+Thus, if condition (\ref{eq:rejection_2}) is met, the protocol 
+samples exactly correctly and completes in an expected $2^p/c \leq 2^p \in \tilde{O}(1)$ number of rounds (since $c \geq 1$ and $p \in O(1)$).
+Further, it can be immediately noted that condition (\ref{eq:rejection_2}) is met due to Lemma~\ref{lem:close_dist_2}.
+Finally, each round has $\tilde{O}(1)$ communication, since $\Pi_{\mathsf{ignore}}$ has communication $\tilde{O}(1)$ (by Lemma~\ref{lem:ignore_2})
+and since, in addition to that, only a constant number of length $\tilde{O}(1)$ values are exchanged in each round.
+Combining the above, we have that $\Pi_{L_p}$ has expected
+communication $\tilde{O}(1)$
+and worst case (with all but negligible probability) communication $\tilde{O}(1)$.
+
+\subsection{Proof of Lemma~\ref{lem:simip}}\label{apx:pfLemma10}
+We will show that the joint distribution over the $i$-th entries of
+$\tilde{\vec{w}_1} := \vec{M} \w_1 = (\tilde w_{1,1}, \ldots, \tilde w_{1,k})$,
+$\tilde{\vec{w}_2} = \vec{M} \w_2 = (\tilde w_{2,1}, \ldots, \tilde w_{2,k})$
+can be sampled perfectly, given only $\langle \vec{w}_1, \vec{w}_1 \rangle$,
+$\langle \vec{w}_2, \vec{w}_2 \rangle$, and $\langle \vec{w}_1, \vec{w}_2
+\rangle$.  
+
+Due to independence of each of the coordinates of $\tilde{\vec{w}_1},
+\tilde{\vec{w}_2}$, this immediately implies that the entire
+$\mathsf{approxIP}(\vec{w}_1, \vec{w}_2)$ can be simulated perfectly given only
+$\langle \vec{w}_1, \vec{w}_1 \rangle$, $\langle \vec{w}_2, \vec{w}_2 \rangle$,
+and $\langle \vec{w}_1, \vec{w}_2 \rangle$.
+
+\noindent
+We begin by noting that
+\begin{eqnarray*}
+\tilde{w}_{1,i}  &=& w_{1,1} M_{i,1} + w_{1,2} M_{i,2} + \cdots + w_{1,n} M_{i,n} \\
+\tilde{w}_{2,i}  &=& w_{2,1} M_{i,1} + w_{2,2} M_{i,2} + \cdot + w_{2,n} M_{i,n}
+\end{eqnarray*}
+
+\noindent
+In the following, we show how to jointly sample
+$(\tilde{w}_{1,i}, \tilde{w}_{2,i})$.
+
+\begin{description}
+\item{Step 1:}
+We begin by sampling from the marginal distribution over the first element of
+the tuple $\tilde{w}_{1,i}$.  Note that $\tilde{w}_{1,i}$ is distributed
+exactly as a Gaussian random variable with mean $0$ and variance $\langle
+\vec{w}_1, \vec{w}_1 \rangle$.  Thus, we can perfectly sample from the marginal
+distribution over $\tilde{w}_{1,i}$ given only $\langle \vec{w}_1, \vec{w}_1
+\rangle$.  Let $z$ be the resulting sample.
+
+\item{Step 2:} We would now like to sample from the conditional distribution
+$\tilde{w}_{2,i}$, conditioned on $\tilde{w}_{1,i} = z$.
+
+First, the conditional distribution of $M_{i,1}, \ldots, M_{i,n}$ conditioned
+on $w_{1,1} M_{i,1} + w_{1,2} M_{i,2} + \cdots + w_{1,n} M_{i,n} = z$ is
+defined by the multivariate Gaussian distribution with the following mean
+$\vec{\mu}$ and covariance matrix $\vec{\Sigma}$
+(see Corollary 7 in~\cite{C:DDGR20}):
+\[
+\vec{\mu} = \frac{z}{\langle \vec{w}_1, \vec{w}_1 \rangle} \cdot \vec{w}_1
+, ~~~~~
+\vec{\Sigma} = \vec{I} - \frac{\vec{w}_1\vec{w}_1^T}{\langle \vec{w}_1, \vec{w}_1 \rangle}
+\]
+Now, $\tilde{w}_{2,i}$ is a linear combination of the variables $M_{i,1},
+\ldots, M_{i,n}$ with coefficients $w_{2,1}, \ldots, w_{2,n}$.  Therefore,
+$\tilde{w}_{2,i}$ is distributed as a univariate Gaussian with mean $\mu'$ and
+variance $\sigma'$ as follows (see \cite{Liu} for example).
+\[
+\mu' = \langle \vec{w}_2, \vec{\mu} \rangle = \frac{z \langle \vec{w}_1,
+\vec{w}_2 \rangle}{\langle \vec{w}_1, \vec{w}_1 \rangle} 
+\]
+and
+\[
+\sigma' = \vec{w}_2^T\vec{\Sigma}\vec{w}_2
+= \vec{w}_2^T\vec{w}_2 - \frac{\vec{w}_2^T\vec{w}_1\vec{w}_1^T\vec{w}_2}{\langle \vec{w}_1, \vec{w}_1 \rangle}
+= \langle \vec{w}_2, \vec{w}_2 \rangle -
+\frac{(\langle \vec{w}_1, \vec{w}_2 \rangle)^2}{\langle \vec{w}_1, \vec{w}_1 \rangle}
+\]
+Note that the mean and variance depend only on 
+$\langle \vec{w}_1, \vec{w}_1 \rangle$, 
+$\langle \vec{w}_2, \vec{w}_2 \rangle$,
+and $\langle \vec{w}_1, \vec{w}_2 \rangle$,
+so we can sample from this distribution given only
+those values.
+Let $y$ be the resulting sample.
+\item{Step 3:}
+Output $(z, y)$
+\end{description}
+
+
+ 

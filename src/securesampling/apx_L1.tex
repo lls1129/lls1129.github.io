@@ -1,0 +1,46 @@
+\section{Securely Realizing $\F_\bcoin$ with Semi-honest Security}
+\label{apx:bcoin}
+
+We can securely realize $\F_\bcoin$, by executing $\F_{2PC}$ for the
+following circuit $C_{\coinflip}$. Since we just execute $\F_{2PC}$ with
+a circuit, security of the protocol is immediate. 
+%
+\BEN
+\item[] \hspace{-2em} $C_{\coinflip}( \|\vec{w}_1\|_1,
+\{r_{1,j}\}_{j=1}^\secparam, b_1, \|\vec{w}_2\|_1, \{ r_{2,j}
+\}_{j=1}^\secparam, b_2)$   ~~~$\rhd$ $r_j, b_j$ are random bits. 
+\item $P_1$'s input is $(\|\vec{w}_b\|_1, \{r_{1,j}\}, b_1)$ and $P_2$'s input
+is $ (\|\vec{w}_2\|_1, \{r_{2,j}\}, b_2)$. We require $\|\vec{w}_1\|_1,
+\|\vec{w}_2\|_1, \{r_{1,j}\}, \{r_{2,j}\} \in \zo^\secparam$, and $b_1, b_2 \in \zo$. 
+
+\item Let $s_1 = \|\vec{w}_1\|_1$ and $s_2 = \|\vec{w}_2\|_1$.
+Let $s = s_1 + s_2$. Compute $\mask = 0^{\secparam-h}1^h$ such that $s
+\& \mask = s$ and $s | \mask = \mask$ where $\&$ (resp., $|$) denotes
+bitwise AND (resp., bitwise OR) operation. Note that there is a single
+$h$ satisfying the above conditions, i.e., the effective bit-length $h$
+of $s$ with $2^{h-1} \le s < 2^h$. This computation can be done by
+checking all possible candidates of $h$ one by one in $O(\secparam)$
+steps.
+
+\item For $j = 1,...,\secparam$, let $r_j = (r_{1,j} \xor r_{2,j}) \&
+\mask$. Note that it holds $r_j < 2^h$.
+
+\item Find the first $j^*$ such that $r_{j^*} \le s$.  If there is no such
+$j^*$ output error.
+
+\item Compute $b = b_1 \xor b_2$. 
+
+\item If $r_{j^*} \le s_1$, output $b$ to both $P_1$ and $P_2$. 
+  Otherwise, output $b$ to $P_1$ and $b \xor 1$ to $P_2$. 
+\EEN
+
+Note that $\Pr[r_j > s] = 1 - s/2^{h}  < 1/2.$ Therefore, with
+$\secparam$ repetitions, we have a good $j^*$ with probability
+$1-2^{-\secparam}$. 
+%
+Finally, we have $\Pr[r_{j^*} \le s_1| r_{j^*} \le s] = \frac {s_1}{s} =
+p$. 
+
+
+
+

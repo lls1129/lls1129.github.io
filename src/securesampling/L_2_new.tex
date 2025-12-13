@@ -1,0 +1,257 @@
+\subsection{Two Party $L_2$ Sampling}\label{sec:l2}
+In this section we consider the two-party $L_2$ sampling
+functionality.
+Given input vectors $\vec{w}_1, \vec{w}_2$,
+this functionality samples from the distribution
+$D_{L_2}(\vec{w}_1, \vec{w}_2)$ with the following
+probability mass function:
+$$\Pr[ D_{L_2}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ] 
+= \frac{(w_{1,i} + w_{2,i})^2}{ \sum_j (w_{1,j} + w_{2,j})^2 }
+= \frac{(w_{1,i} + w_{2,i})^2}{ \| \w_1 + \w_2 \|_2^2 }. $$
+
+We begin by presenting a non-private protocol for two-party $L_2$
+sampling with $\tilde{O}(1)$ communication in
+Section~\ref{sec:insecure}, the construction is found in Protocol~\ref{fig:l2approx}. We then show how to implement the protocol
+securely in Section~\ref{sec:secure}.
+
+\subsubsection{A non-private $L_2$ sampling protocol with $\tilde{O}(1)$
+communication} \label{sec:insecure}
+
+We begin by defining and showing how to sample from a helper
+distribution $D_{\mathsf{ignore}}$.
+
+\begin{definition}
+For input vectors $\vec{w}_1, \vec{w}_2$,
+let $D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$ be the distribution that ``ignores'' the cross term in $D_{L_2}(\vec{w}_1, \vec{w}_2)$.
+I.e.~$D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$
+samples index $i \in [n]$
+with probability $\frac{w^2_{1,i} + w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}$.
+\end{definition}
+
+\begin{lemma}\label{lem:ignore}
+There exists a protocol $\Pi_{\mathsf{ignore}}$ for sampling from
+$D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$ with $\tilde{O}(1)$
+communication.
+\end{lemma}
+
+\begin{proof}
+Let $\vec{w'}_b = (w_{b,1}^2, \ldots, w_{b,n}^2).$
+The lemma follows by observing the following:
+$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ \qed
+%Each party samples from its own distribution (i.e., $P_b$ outputs $i$
+%with probability $\frac{w_{b,i}^2}{||\vec{w}_b||^2}$).  Then the
+%parties do a weighted coin flip to choose which of these two values is
+%output ($P_b$'s value is chosen with probability
+%$\frac{||\vec{w}_b||_2^2}{||\vec{w}_1||_2^2+||\vec{w}_2||_2^2}$.)  It
+%is easy to see that this protocol only requires $\tilde{O}(1)$
+%communication\anote{Should we call this logarithmic?} and produces the
+%correct output distribution.
+\end{proof}
+
+\begin{definition}
+For $i \in [n]$, let the corrective parameter function be defined as 
+$$f_c(\vec{w}_1, \vec{w}_2, i) := \frac{w_{1,i}^2 + 2w_{1,i}w_{2,i} +
+w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.$$
+\end{definition}
+
+
+\begin{definition} 
+The constant 
+$c := c(\vec{w}_1, \vec{w}_2)$ 
+is defined as
+\[
+c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 + \vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}
+\]
+This ensures that 
+for every $i$,
+$f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]$.
+\end{definition}
+
+\iffalse
+\begin{proof}
+Define 
+$c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 + \vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}$.
+Clearly, by definition of $f_c$ and $D_{L_2}(\vec{w}_1, \vec{w}_2)$ it is the case that
+$f_c(\vec{w}_1, \vec{w}_2, i) = c(\vec{w}_1, \vec{w}_2) \cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]$.
+It remains to show that $c(\vec{w}_1, \vec{w}_2) \in [1,2]$.
+For the upper bound,
+\begin{align*}
+    c(\vec{w}_1, \vec{w}_2) &= \frac{||\vec{w}_1||^2_2 + 2\langle \vec{w}_{1}, \vec{w}_{2} \rangle + ||\vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\\
+    &\leq \frac{2(||\vec{w}_1||^2_2 + ||\vec{w}_2||_2^2)}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\\
+    &= 2.
+\end{align*}
+For the lower bound,  $c(\vec{w}_1, \vec{w}_2) \geq 1$, since $2\langle \vec{w}_1, \vec{w}_2 \rangle \geq 0$ (since in our setting $\vec{w}_1, \vec{w}_2$ are positive).
+\end{proof}
+\fi
+
+The following lemma will be useful for arguing the validity of the
+final protocol.
+
+\begin{lemma} \label{lem:close_dist}
+For all $i \in \mathsf{supp}(D_{L_2}(\vec{w}_1, \vec{w}_2))$, 
+$\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]$.
+\end{lemma}
+
+\begin{proof}
+\begin{align*}
+    \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] &= \frac{w^2_{1,i} + 2w_{1,i}w_{2,i} + w^2_{2,i}}{||\vec{w}_1||_2^2 + 2\langle \vec{w}_1, \vec{w}_2 \rangle + ||\vec{w}_2||_2^2}\\
+    &=  \frac{w^2_{1,i} + 2w_{1,i}w_{2,i} + w^2_{2,i}}{c \cdot (||\vec{w}_1||_2^2  + ||\vec{w}_2||_2^2)}\\
+    &\le \frac{2 \cdot (w_{1,i}^2  + w_{2,i}^2)}{c \cdot ||\vec{w}_1||_2^2  + ||\vec{w}_2||_2^2}\\
+    & = \frac{2}{c} \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]
+\end{align*}
+The inequality holds since
+\begin{align*}
+2(w^2_{1,i} + w^2_{2,i}) - (w^2_{1,i} + 2w_{1,i}w_{2,i} + w^2_{2,i}) 
+&= w^2_{1,i} -2w_{1,i}w_{2,i} + w^2_{2,i}\\
+&= (w_{1,i} - w_{2,i})^2\\
+&\geq 0.
+\end{align*}
+\qed
+\end{proof}
+
+We now present the $L_2$ sampling protocol $\Pi_{L_2}$, which is described in Protocol~\ref{fig:l2approx}. We show the correctness and efficiency of the protocol. 
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[htbp]
+
+\paragraph{Inputs:} Parties $P_1$ and $P_2$ have inputs $\w_1$ and $\w_2$
+respectively. 
+
+\medskip
+
+The protocol proceeds as follows:
+\BEN
+    \item Parties run $\Pi_{\mathsf{ignore}}$ 
+    with inputs $\vec{w}_1, \vec{w}_2$
+    that samples from $D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$ and obtain output $i$.
+    
+    \item For $b \in \{1, 2\}$, $P_b$ sends $w_{b,i}, ||\vec{w}_b||_2^2$.
+    Both parties compute 
+    \[
+    \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i] = \frac{w_{1,i}^2 + w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}
+    \quad
+    \mbox{and}
+    \quad
+    f_c(\vec{w}_1, \vec{w}_2, i) = \frac{w_{1,i}^2 + 2w_{1,i}w_{2,i} + w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}
+    \]
+    \item Parties output $i$ with probability 
+    \begin{align*}
+        \frac{f_c(\vec{w}_1, \vec{w}_2, i)}{2 \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]} &= \frac{c \cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2 \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]}\\
+        &= \frac{\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2/c \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]}
+        \end{align*}
+    and otherwise return to step 1.
+    
+\EEN
+\caption{Protocol for exact $L_2$ sampling ($\Pi_{L_2}$)}
+\label{fig:l2approx}
+\end{algorithm}
+
+\begin{lemma} \label{lem:insecure_L2_prot}
+With all but negligible probability, on inputs $\vec{w}_1, \vec{w}_2$, $\Pi_{L_2}$ samples exactly correctly from $D_{L_2}(\vec{w}_1, \vec{w}_2)$, and has communication
+$\tilde{O}(1)$.
+\end{lemma}
+
+\begin{proof}
+Note that $\Pi_{L_2}$ simply performs rejection sampling in a distributed setting where sampling from $D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$ and computing the probabilities is done in a distributed manner. It is therefore well-known that
+as long as for all $i \in [n]$,
+\begin{equation} \label{eq:rejection}
+    \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i],
+\end{equation}
+then $\Pi_{L_2}$ samples from the exact correct distribution, and
+the number of samples required from $D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)$ in protocol $\Pi_{L_2}$ follows a geometric distribution with probability $c/2$.
+Thus, if condition (\ref{eq:rejection}) is met, the protocol 
+samples exactly correctly and completes in an expected $2/c$ (with $2/c \leq 2$, since $c \ge 1$) number of rounds.   
+Further, it can be immediately noted that condition (\ref{eq:rejection}) is met due to Lemma~\ref{lem:close_dist}.
+Finally, each round has $\tilde{O}(1)$ communication, since $\Pi_{\mathsf{ignore}}$ has communication $\tilde{O}(1)$ (by Lemma~\ref{lem:ignore})
+and since, in addition to that, only a constant number of length $\tilde{O}(1)$ values are exchanged in each round.
+Combining the above, we have that $\Pi_{L_2}$ has expected
+communication $\tilde{O}(1)$
+and worst case (with all but negligible probability) communication $\tilde{O}(1)$.
+\qed
+\end{proof}
+
+\begin{remark}
+Note that the protocol and analysis above
+did not require that vectors $\vec{w}_1, \vec{w}_2$ are normalized.
+I.e.~we do not require that $||\vec{w}_1||_1$
+or $||\vec{w}_2||_1$ are equal to $1$
+or to each other.
+\end{remark}
+
+\subsubsection{Secure $L_2$ Sampling From FHE}
+\label{sec:secure}
+
+\floatname{algorithm}{Protocol}
+\begin{algorithm}[h]
+\textbf{Inputs:} Party $P_b$ has input $\vec{w}_b$. 
+
+\BEN
+\item Let $B \in \tilde{O}(1)$. The parties perform
+the following steps for $j \in [B]$:
+
+\begin{enumerate}
+\item Sample from $D_{\mathsf{ignore}}(\vec{w}_1,\vec{w}_2)$
+by doing the following:
+Invoke ideal functionality $\F_{L_1}^{ss}$ with $P_1$'s input set to $\vec{w}_1 \odot \vec{w}_1$
+and $P_2$'s input 
+set to $\vec{w}_2 \odot \vec{w}_2$. 
+Let $\langle i_j \rangle$ be the secret share of the output
+index. 
+
+\item Parties compute encryptions of $w_{1,i_j}, w_{2,i_j}$ using a threshold FHE
+scheme as follows.  
+\begin{itemize}\item Parties compute an encryption of $i_j$ by exchanging encryptions of their shares and adding them.  \item Party $b$ encrypts $\vec{w}_b$ and uses FHE to locally compute an encryption of $w_{b,i_j}$. \item  The parties then send these ciphertexts to each other.\end{itemize}
+\anote{Commenting out this footnote unless we can figure out how to include it in a protocol box}
+% \footnote{A simpler version of this step can be realized by having $\F_{L_1}$ output a secret sharing of $w_{b,i_j}$ in addition to $i_j$, but we present it this way for modularity purposes.}
+
+\item Rejection Sampling. Compute a threshold FHE ciphertext $\widehat{\mathsf{bias}}_j$ that
+encrypts
+\[
+\frac{f_c(\vec{w}_1, \vec{w}_2)_{i_j}}{2 \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i_j]} =
+\frac{w_{1,i_j}^2 + 2w_{1,i_j}w_{2,i_j}+w_{2,i_j}^2}{2(w_{1,i_j}^2 + w_{2,i_j}^2)}.
+\]
+Invoke ideal functionality $\F_{2PC}$ 
+that takes  encrypted bias $\widehat{\mathsf{bias}}_j$, the threshold decryption keys, index $i_j$, and random bits. The functionality executes a circuit that flips a coin with bias $\widehat{\mathsf{bias}}_j$ and returns a ciphertext $\widehat{\mathsf{out}}_j$, which is
+an encryption of $i_j$ if the coin evaluates to $1$
+and an encryption of $0$ otherwise.
+\end{enumerate}
+
+\item Execute $\F_{2PC}$ for the following circuit: 
+      \BEN
+      \item Input: $(\widehat{\mathsf{out}}_1, \ldots, \widehat{\mathsf{out}}_B)$ and threshold decryption keys. 
+      \item Output: $i_j$ corresponding to the minimum
+      $j$ such that $\widehat{\mathsf{out}}_j$ decrypts to $i_j \neq 0$.
+      Or $\bot$ if no such $j \in [B]$ exists.
+      \EEN
+\EEN
+
+\caption{Two-party $L_2$ sampling in the $(\F_{L_1}, F_{2PC})$-hybrid.}
+\label{fig:l2}
+\end{algorithm}
+
+\paragraph{$L_2$ sampling protocol.}
+We present our secure $L_2$ sampling protocol in
+Protocol~\ref{fig:l2}.
+For two $n$-dimensional vectors $\vec{w}_1$ and $\vec{w}_2$, we
+denote by $\vec{w}_1 \odot \vec{w}_2$ the $n$-dimensional
+vector whose $i$-th entry is equal to
+$w_{1,i} \cdot w_{2,i}$.
+
+Our $L_2$ sampling protocol uses ideal functionality $\F_{L_1}^{ss}$, which works essentially the same as $\F_{L_1}$ except that the output index is secret shared among both parties. We can securely realize this functionality with semi-honest security through a trivial change in the protocol $\Pi_{L_1}$;~for the sake of completeness, we provide the details in Appendix~\ref{apx:ssL1}.
+ 
+
+\paragraph{Efficiency and correctness.}
+It is clear that the total communication complexity of the protocol is $\tilde{O}(1)$, since each step in the loop has complexity $\tilde{O}(1)$ and the loop iterates $B \in \tilde{O}(1)$ number of times.
+Correctness is also immediate, since the protocol simply implements the $\Pi_{L_2}$ sampling procedure, which was proven in Section \ref{sec:insecure} to be correct, and to require at most $B \in \tilde{O}(1)$ samples, with all but negligible probability,
+ 
+ \paragraph{Security.} Security of our protocol is stated through the following theorem.
+\begin{theorem}
+\label{th:l2}
+Assuming the existence of threshold FHE with
+$\mathsf{IND}\mbox{-}\mathsf{CPA}$ security,
+Protocol~\ref{fig:l2} securely realizes the $L_2$ sampling
+functionality in
+the $\{\F_{L_1}^{ss}, \F_{2PC}\}$-hybrid model with semi-honest security.
+\end{theorem}
+%
+We provide the proof in Appendix~\ref{apx:pfTheorem3}.
