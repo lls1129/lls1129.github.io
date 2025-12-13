@@ -25,7 +25,9 @@ jobs:
       # 3. We tell pandoc: "If you need other files (inputs/images), look in 'src'" (--resource-path=src)
       - name: Convert LaTeX to HTML
         run: |
-          pandoc src/main.tex --resource-path=src -o index.html --standalone --toc --mathjax
+          cd src
+          pandoc main.tex -o ../index.html --standalone --toc --mathjax
+      # pandoc main.tex --resource-path=src -o index.html --standalone --toc --mathjax
 
       # DEBUG STEP: This will print the file list in your logs so we can see if index.html exists
       - name: Verify file generation
