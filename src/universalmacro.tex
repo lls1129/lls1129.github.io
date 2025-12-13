@@ -5,18 +5,17 @@
 % =========================================================
 \ifdefined\pandoc
   % --- FIX VECTORS & BRACKETS ---
-  \def\vec#1{\boldsymbol{#1}} % Fixes "Missing argument" crash
+  \def\vec#1{\boldsymbol{#1}} 
   \def\lbra{[\![} \def\lket{]\!]}
   \def\llbracket{[\![} \def\rrbracket{]\!]}
   
-  % --- FIX ALGORITHMS (Environment Style) ---
-  % Draws thick lines to make it look like a box on the web
-  \renewenvironment{algorithm}[1][]
-    {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
-    {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
-
-  % --- FIX PROTOCOLS (Command Style from macro.tex) ---
-  % Maps \protocol{...} to a static text block
+  % --- FIX MISSING BOOLEANS (Prevents "Hiding" bug) ---
+  \newif\ifllncs \llncsfalse
+  \def\commentson{1}
+  \providecommand{\textcolor}[2]{#2} % Fixes color crash
+  
+  % --- FIX PROTOCOLS ---
+  % We define the superset (5 arguments) to be safe.
   \newcommand{\protocol}[5]{
     \medskip\par\noindent\rule{\linewidth}{1.5pt}
     \par\noindent\textbf{#1} (Figure #3)
@@ -24,14 +23,20 @@
     \par #5
     \par\noindent\rule{\linewidth}{1.5pt}\medskip
   }
+  % Support for \pprotocol (used in commands.tex)
   \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+
+  % --- FAKE ALGORITHMS ---
+  \renewenvironment{algorithm}[1][]
+    {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
+    {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
   % --- FAKE THEOREMS ---
   \providecommand{\theoremstyle}[1]{}
   \renewenvironment{theorem}{\medskip\noindent\textbf{Theorem.}\itshape}{\medskip}
   \renewenvironment{lemma}{\medskip\noindent\textbf{Lemma.}\itshape}{\medskip}
   \renewenvironment{definition}{\medskip\noindent\textbf{Definition.}\itshape}{\medskip}
-  \renewenvironment{protocol}{\medskip\noindent\textbf{Protocol.}\itshape}{\medskip}
+  \renewenvironment{protocol-env}{\medskip\noindent\textbf{Protocol.}\itshape}{\medskip}
   \renewenvironment{fact}{\medskip\noindent\textbf{Fact.}\itshape}{\medskip}
   \renewenvironment{claim}{\medskip\noindent\textbf{Claim.}\itshape}{\medskip}
   \renewenvironment{remark}{\medskip\noindent\textbf{Remark.}\itshape}{\medskip}
@@ -58,17 +63,20 @@
   \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
 
 % =========================================================
-% 2. PDF MODE (Overleaf) - Uses Real Packages
+% 2. PDF MODE (Overleaf)
 % =========================================================
 \else
   % Real Vectors
   \renewcommand{\vec}[1]{\mathbf{#1}}
-
   % Real Brackets
   \providecommand{\lbra}{\llbracket}
   \providecommand{\lket}{\rrbracket}
   \providecommand{\llbracket}{\llbracket}
   \providecommand{\rrbracket}{\rrbracket}
+  
+  % Missing Booleans (Safe Defaults)
+  \newif\ifllncs \llncsfalse
+  \def\commentson{1}
 
   % Real Boxes
   \newcommand{\bbox}[1]{
@@ -86,7 +94,7 @@
     } \medskip
   }
   
-  % Real Protocol Command (from macro.tex)
+  % Protocol (5 Arguments)
   \newlength{\protowidth}
   \newcommand{\protocol}[5]{
     {\begin{figure}[#4]
@@ -99,13 +107,14 @@
     \end{center}
     \vspace{-4ex}
     \end{figure}}}
+  \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 \fi
 
 % =========================================================
 % 3. SHARED MACROS (Merged from All Papers)
 % =========================================================
 
-% --- Environment Shortcuts (Using \def to silence warnings) ---
+% --- Environment Shortcuts ---
 \def\BD{\begin{definition}}  \def\ED{\end{definition}}
 \def\BCR{\begin{corollary}}  \def\ECR{\end{corollary}}
 \def\BEX{\begin{example}}    \def\EEX{\end{example}}
@@ -118,7 +127,7 @@
 \def\BO{\begin{observation}} \def\EO{\end{observation}}
 \def\BDS{\begin{description}}\def\EDS{\end{description}}
 
-% --- Standard Greek/Math ---
+% --- Greek/Math ---
 \providecommand{\e}{\epsilon}
 \renewcommand{\d}{\delta} 
 \renewcommand{\a}{\alpha}
@@ -152,8 +161,9 @@
 \def\poly{\mathsf{poly}}
 \def\negl{\mathsf{negl}}
 \newcommand{\nnegl}{\textsf{non-negl}}
+\newcommand{\anote}[1]{} % Ignore notes on web
 
-% --- Paper 2 Specifics (Merged) ---
+% --- Variables ---
 \providecommand{\edp}{\e}
 \providecommand{\ddp}{\d}
 \providecommand{\esketch}{\widetilde{\e}}
@@ -161,11 +171,11 @@
 \providecommand{\efinal}{\overline{\e}}
 \providecommand{\dfinal}{\overline{\d}}
 \providecommand{\fmin}{\min(f)}
-\providecommand{\idx}{\mathsf{idx}} % Used in Paper 1
-\providecommand{\nzx}{\mathsf{nzx}} % Used in Paper 2
+\providecommand{\idx}{\mathsf{idx}}
+\providecommand{\nzx}{\mathsf{nzx}}
 \providecommand{\nil}{\mathsf{nil}}
 
-% --- Paper 3 Specifics (Merged from macro.tex) ---
+% --- Merged from macro.tex / commands.tex ---
 \newcommand{\supp}{{\sf Supp}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\shuffle}{{\sf shuffle}}
@@ -182,42 +192,6 @@
 \newcommand{\spoiler}{\mathsf{spoiler}}
 \newcommand{\leak}{\mathsf{leak}}
 \newcommand{\bad}{\mathsf{BAD}}
-
-% --- Common Utility ---
-\renewcommand{\paragraph}[1]{\medskip \noindent\textbf{#1}}
-\providecommand{\zo}{\{0,1\}}
-\providecommand{\bitset}{\{0,1\}}
-\renewcommand{\to}{\rightarrow}
-\renewcommand{\sec}{\lambda}
-\newcommand{\SSS}{{\cal S}}
-\newcommand{\Exp}{{\bf Exp}}
-\newcommand{\Var}{{\bf Var}}
-\newcommand{\Null}{{\sf null}}
-\newcommand{\ignore}[1]{}
-\def\ig{\mathrm{ignore}}
-
-% --- Fonts & Cal ---
-\newcommand{\mc}[1]{\mathcal{#1}}
-\newcommand{\DDD}{{\cal D}}
-\newcommand{\RRR}{{\cal R}}
-\newcommand{\MMM}{\mathcal{M}}
-\newcommand{\HH}{\mathcal{H}}
-\newcommand{\A}{\mathcal{A}}
-\newcommand{\B}{\mathcal{B}}
-\newcommand{\Z}{\mathcal{Z}}
-\newcommand{\U}{\mathcal{U}}
-
-% --- MPC & Protocols ---
-\def\fhe{\mathsf{FHE}}
-\def\ssp{\mathsf{sec\mbox{-}search}}
-\def\Game{\mathsf{Game}_\fhe^\ssp(\mc{A})}
-\def\Adv{\mathsf{Adv}_\fhe^\ssp(\mc{A})}
-\renewcommand{\S}{\mathsf{Sim}}
-\newcommand{\View}{\mathsf{View}}
-\newcommand{\Out}{\mathsf{Out}}
-\newcommand{\flone}{\mathsf{F}_{L_1}}
-
-% --- From commands.tex ---
 \newcommand{\k}{\kappa}
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\halfn}{\frac{n}{2}}
@@ -257,3 +231,31 @@
 \def\vd{{\vec{d}}}
 \def\mask{{\sf mask}}
 \newcommand{\wl}[1]{\|\w_{#1}\|_1}
+\renewcommand{\paragraph}[1]{\medskip \noindent\textbf{#1}}
+\providecommand{\zo}{\{0,1\}}
+\providecommand{\bitset}{\{0,1\}}
+\renewcommand{\to}{\rightarrow}
+\renewcommand{\sec}{\lambda}
+\newcommand{\SSS}{{\cal S}}
+\newcommand{\Exp}{{\bf Exp}}
+\newcommand{\Var}{{\bf Var}}
+\newcommand{\Null}{{\sf null}}
+\newcommand{\ignore}[1]{}
+\def\ig{\mathrm{ignore}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\DDD}{{\cal D}}
+\newcommand{\RRR}{{\cal R}}
+\newcommand{\MMM}{\mathcal{M}}
+\newcommand{\HH}{\mathcal{H}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\U}{\mathcal{U}}
+\def\fhe{\mathsf{FHE}}
+\def\ssp{\mathsf{sec\mbox{-}search}}
+\def\Game{\mathsf{Game}_\fhe^\ssp(\mc{A})}
+\def\Adv{\mathsf{Adv}_\fhe^\ssp(\mc{A})}
+\renewcommand{\S}{\mathsf{Sim}}
+\newcommand{\View}{\mathsf{View}}
+\newcommand{\Out}{\mathsf{Out}}
+\newcommand{\flone}{\mathsf{F}_{L_1}}
