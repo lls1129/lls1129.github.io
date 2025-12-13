@@ -1,0 +1,1028 @@
+
+\subsection{Proof of Theorem~\ref{thm:CDDP2}}\label{apx:proof_CDDP2}
+\paragraph{On the definition of a $\theta$-good iteration.}
+We keep the same definition of a $\theta$-good iteration, except we set the
+exponent to $1/n_R'$, instead of $1/n_R$, and we also require $\theta \le 1/10$. 
+In particular, 
+\begin{itemize}
+    \item $\min h(A) = \min h(I)$
+    ~and~ $\min h(I) \in
+    \left[1-\left(\frac{1}{2}+\theta\right)^t, 
+        1-\left(\frac{1}{2}-\theta\right)^t\right]$
+        with $\boxed{t = \frac{1}{n_R'}}$. 
+\end{itemize}
+%
+
+
+\paragraph{Bundle of good iterations $K_\theta$.}
+The total number of iterations in the min-hash protocol $\PPH$ is $k =
+\Omega(\kappa \cdot \lg\lg\kappa)$. We require that $n_R/k^2 =
+\Omega(\kappa)$. 
+
+Using Lemma \ref{lem:good_event}, with all but negligible probability,
+at least $\Omega(\kappa \cdot \lg\lg\kappa)$ iterations are
+$\theta$-good. Recall that $G_\theta$ denotes the set of $\theta$-good
+iterations, and $K_\theta = G_\theta \setminus S_\xs$. We set $k_g =
+|K_\theta|$.  
+%
+We further divide these $k_g$ iterations into $u = \lg\lg \kappa$ bundles, each of which 
+is of size $k_b = \Omega(\kappa)$.  
+Those bundles are denoted by $K_{\theta, 1}, \ldots, K_{\theta,u}$. We also let $K_{bad} := \overline{K_{\theta}}$. 
+
+
+\paragraph{Random variables for the protocol output.}
+Let $out^+_{bad}$ be the protocol's match count for sets $A, \Bp$ w.r.t. the hash functions in $K_{bad}$:
+\[ out^+_{bad} := \left | \{ j \in K_{bad} : \min h_j(A) = \min h_j(\Bp) \} \right |. \]
+Likewise, let $out_{bad}$ be the number of matches for sets $A$ and $B$ (instead of $\Bp$) in iterations in $K_{bad}$. 
+Similarly, for $i \in [u]$, we let $out^+_{i}$ and $out_i$ denote the output for the $i$-th
+bundle, with or without $\xs$ respectively. 
+Note that $out^+_{i} = out_i$, since we ruled out $S_\xs$ from $K_\theta$. 
+%each bundle
+%consists of only $\theta$-good hash functions (so some element in $I$ that is \emph{not equal} to $x^*$ is %the minimum from set $A$).
+%We therefore denote by $out_i := out^+_{i}$.
+Note that the final output of the min-hash protocol for input $\Bp$
+is equal to $out^+_{bad} + \sum_{i=1}^u out_i$; 
+the final output for input $B$ is $out_{bad} + \sum_{i=1}^u out_i$.
+%
+Let 
+\[
+\vec{out} = out^+_{bad} || out_{bad} || out_1 || \cdots || out_u.
+\]
+We also consider the output with the $i$th bundle missing; that is, for $i \in [u]$ let
+\[
+\vec{out}_{-i} = out^+_{bad} || out_{bad} || out_1 || \cdots
+|| out_{i-1} || out_{i+1} || \cdots
+|| out_u.
+\]
+
+\paragraph{Upper-bounding leakage from the output.}
+Since $|K_{bad}|$ and $|K_{\theta,i}|$ are at most $k \in poly(\kappa)$, 
+%we can safely assume
+%\[ |K_{bad}| \le \kappa^{\lg\lg \kappa}. \] 
+%Since $|K_{\theta,i}| = (\lg^3 \kappa) \lg\lg \kappa$,
+we can safely assume that the total number of bits 
+in $\vec{out}$ is 
+\[ 2\lg |K_{bad}| + \sum_{i=1}^u \lg |K_{\theta, i}| \leq ( 2 + \lg\lg \kappa) \lg |poly(\kappa)| \le \kappa. \]
+
+%\mingyu{It seems we need to increase it to $6 (\lg \lg (\kappa))^2$ for the $\kappa$ we consider. Actually, why not just bound it by $2 \lg(\kappa)^2$ directly? \url{https://www.desmos.com/calculator/ahtkeo35bk} }
+
+%\dnote{end move this}
+%Intuitively, we want to argue there exists a set of hash functions of size $n'_R$ in the bundle, such that %the corresponding output is determined solely by $R' = R \setminus R''$ of size $n'$, where we can claim %high individual entropy. }
+
+\paragraph{Distribution of $R$ and its min-entropy.}
+The original distribution on the secret set $R$ is the uniform distribution over
+all sets of size $n_R$ with each element is chosen from a universe $\U$. The
+universe $\U$ has size $\ell \cdot n_R$ with $\ell \ge 4(n_R)^3$.
+   
+Now choose, uniformly at random, a partition $\{U_1, \ldots, U_{n_R}\}$ of $\U$
+where each $|U_j| = \ell$ such that the element in the $j$th slot of $R$ belongs
+to $U_j$. These universes $\{U_1, \ldots, U_{n_R}\}$ are leaked in the analysis.
+
+Let $\DDD$ denote the
+    original distribution over the set $R$, but conditioned on the leaked information $\{ U_1, \ldots, U_{n_R} \}$. The distribution $\DDD$ is equivalent to a distribution over streams of $n_R$ elements,
+    where the element in the $i$-th slot is chosen uniformly at random from $U_i$.
+    Therefore, $\DDD$ has min-entropy 
+    $n_R \lg \ell$.
+    %\[n_R \lg \ell \ge n_R  (3\lg n_R + 2) = 3n_R \lg n_R + 2n_R.\]
+
+We additionally consider arbitrary leakage $f(R)$
+of length $L$ such that 
+\[n_R \lg \ell - L \ge  \frac{8n_R}{9} \lg \ell + 2n_R.\]
+
+\paragraph{Available iterations in a bundle.}
+For a fixed set $Z \subseteq R$, in a min-hash graph, 
+we say that a set of iterations in the $i$th bundle $K_{\theta, i}$ is available
+with respect to $Z$ if there are no edges from $Z$ to that set. In other words, no elements in $Z$ contribute to the final count reduction for any of those iterations. In this
+sense, those iterations are is still available for the count reduction by the other elements than those in
+$Z$. 
+More formally, consider a graph $G \from {\bf MinhashG}_{H_1}(A, I, \xs, H_2)$ and letting $G = (\XXX, \YYY, \EEE)$, we define 
+\[ \Avail_G(K_{\theta,i}, Z) := \{ j \in K_{\theta, i}:  \forall z \in Z: (z, j) \not \in  \EEE)\}.  \]
+
+\paragraph{Existence of a good bundle.}
+We now describe an experiment to check if the $i$th bundle of iterations is good
+in the sense that given the fixed hash, the distribution $\DDD$ (after the
+leakage) satisfies the DP-like property conditions specified in
+Lemma~\ref{cor:fixed_oracle_prob}. Roughly speaking, Lemma~\ref{cor:fixed_oracle_prob}
+shows that a bundle will be good with a high probability. %
+\medskip
+
+\begin{enumerate}
+\item[] \hspace{-2em} Process \textbf{IsAGoodBundle}$(i, \vec{out}_{-i}, \DDD, A, I, \xs, H_1, H_2)$:
+    \item Consider $G \from {\bf MinhashG}_{H_1}(A, I, \xs, H_2)$.
+    \item Let $\DDD_{1,i} := \DDD \mid \vec{out}_{-i}$.
+    In other words, $\DDD_{1,i}$ is the distribution $\DDD$ on $R$, but conditioned on the output vector $\vec{out}_{-i}$.
+    If $\DDD_{1,i}$ has min-entropy
+    less than $n_R \lg(\ell) - L - 2\kappa$ then output $\mathsf{FAIL}_{1,i}$ and terminate. 
+    \item 
+    Check if if there is a leakage function $f_G(R)$ which leaks $V = \{j_1,
+    \ldots, j_{n'_R} \}$ and $T = \Avail_G(K_{\theta,i}, R \setminus R')$ such
+    that there exists a distribution with the Geometric Collision Property over
+    sets $R' = \{x_j \in R : j \in V\}$. If there is no such distribution,
+    output $\mathsf{FAIL}_{2,i}$ and terminate. % 
+    Let $\DDD_{2,i} := \DDD_{1,i} | f_G(R)$. 
+    
+    \item If it holds $|T| \le \frac{1}{10} | K_{\theta,i}|$,
+    output $\mathsf{FAIL}_{3,i}$ and terminate. 
+   Let $k_v = |T|$. 
+   \item 
+    Compute $D_{T, r}(\DDD_{2,i})$ and check if $D_{T,r}$ satisfies the conditions given in Lemma~\ref{cor:fixed_oracle_prob}. 
+    Output $\mathsf{FAIL}_{4,i}$ and terminate, if the above check fails. 
+     \iffalse
+   $D_r = \sum_{R' \in \mathsf{Supp}(\tilde{\mathcal{D}}_i)} \rho_i I_{R', r}$ is non-negligible in $\kappa$, or
+    for some $r \in [a, b]$
+    \[
+    \Pr_{\mathcal{K}'_i(U \setminus S'')} \left [\frac{D_r}{E^{n'}_{k,r}} \notin
+    \{e^{-\epsilon'}E^{n'}_{k,r}, e^{\epsilon'}E^{n'}_{k,r}\} \right].
+    \]
+    \dnote{define the notation $\mathcal{K}'_i(U \setminus R'')$--hash functions
+    are undefined on this set.}
+    By Corollary~\ref{cor:fixed_oracle_prob}, 
+    % Lemma~\ref{lem:fixed_oracle_prob}, 
+    $p \leq p^* \in O(\lg^6(\kappa)/n^{0.5})$.
+     If for some $r \in [k]$
+    $D_r$ is non-negligible and $|D_r - E^{n'}_{k,r)}| \geq e^{\epsilon'} E^{n'}_{k,r}$ with respect to the fixed $\mathcal{K}_i$, output $\mathsf{FAIL}_{4,i}$.
+    \item Output $\mathsf{FAIL}_{4,i}$ with probability $(p^*-p)/(1-p)$
+    \fi
+    \item Output SUCCESS.
+\end{enumerate}
+
+\paragraph{Failure probability $\mathsf{FAIL}_{1,i}$.}
+We claim that $\mathsf{FAIL}_{1,i}$ takes place  with a negligible
+probability. By applying \cite[Lemma 2.2]{DORS08}, the average min-entropy of
+$\DDD|\vec{out}_{-i}$ is at least $n_R\lg \ell - L - \kappa$, which implies that
+the min-entropy of $\DDD | \vec{out}_{-i}$ is at least $n_R\lg \ell - L -
+2\kappa \ge  \frac{8n_R}{9} \lg \ell + n_R$ with probability $1 - 2^{-\kappa}$
+(assuming that $n_R \ge 2\kappa$).
+    
+\paragraph{Failure probability $\mathsf{FAIL}_{2,i}$.} 
+\begin{lemma} \label{lem:fail2}
+The experiment outptus $\mathsf{FAIL}_{2,i}$ with a negligible probability. 
+\end{lemma}
+We give the proof later in Appendix~\ref{sec:tradeoff}.
+
+\paragraph{Failure probability $\mathsf{FAIL}_{3,i}$}
+We show that  $\FAIL{3,i}$ occurs with negligible probability.
+Let $n = n_R$ and $n' = n'_R$ for brevity of notation. Recall that $n' = n/3$. 
+%
+Let $X_j$ be an indicator variable that
+represents whether there is an edge from $(n-n')$ nodes to iteration
+$j$. Therefore, 
+we have 
+\[ \Pr_{H_2}[|T| = r] = \Pr_{H_2} \left[ \sum_{j=1}^{k_b} X_j = k_b - r \right]. \]
+%
+Recall that $p_j \le 1-(\etan)^{1/n'}$ and 
+$\Pr[X_j = 1] = 1 - (1 - p_j)^{n-n'} \le 1 - (\etan)^\frac{n-n'}{n'} = 1 - (\etan)^2 \le 1 - (2/5)^2$.
+%\mingyu{I don't think we have mentioned $n_R = 3 n'_R$ in the proof. We mentioned in high level intuition of the proof in the main body.}
+%
+Therefore, we have 
+\[m:= {\bf E}\left[ \sum_{j=1}^{k_b} X_j \right] \le k_b \cdot (1
+- (\etan)^2) \le 0.84 k_b\]
+%
+Using the Chernoff bound and due to $k_b \in \Omega(\secparam)$, 
+we have 
+\[ \Pr_{H_2}\left [|T| \le \frac{k_b}{10} \right] = \Pr_{H_2} \left[ \sum_{j=1}^{k_b} X_j \ge \frac{9}{10}k_b \right] \le \exp\left(-\frac{(0.9 k_b - m_0)^2}{2 m_0}\right) = 
+\exp(-\Omega(\kappa)).  \qedhere\] 
+
+%In
+%the next section, we will show that distribution $\DDD_{2,i}$ has the
+%geometric collision property in Lemma \ref{lem:dist_collision}. This
+%implies that over the choice of the hash functions, the process outputs
+%$\mathsf{FAIL}_{3,i}$ with negligible probability in $\kappa$ due to
+%the following lemma.
+\paragraph{Failure probability $\FAIL{4,i}$.}
+By Lemma \ref{cor:fixed_oracle_prob},
+for all $i \in [u]$, 
+conditioned on $\mathsf{FAIL}_{1,i}$, $\mathsf{FAIL}_{2,i}$, $\mathsf{FAIL}_{3,i}$ not occurring, let
+\[
+p_4 := \Pr_{H_1, H_2}[\textbf{IsAGoodBundle}(i, \vec{out}_{-i}, \DDD, A,
+I, \xs, H_1, H_2)  =\  \mathsf{FAIL}_{4,i}]. \] 
+Then, we have $p_4 \in O(k_v \lg^3(\kappa)/(n_R)^{0.5})$.
+
+\paragraph{Existence of a good bundle out of $u$ bundles.}
+Observe that conditioned on $\mathsf{FAIL}_{1,i}$,
+$\mathsf{FAIL}_{2,i}$, $\mathsf{FAIL}_{3,i}$ not occurring, the process
+outputs $\Fail_{4,i}$ independently of $(\vec{out}_{-i}, R')$, since the
+hash values in $H_2$ for any iteration are chosen independently of those
+for the other iterations.
+%
+Using the above, since $k_v /\sqrt{n_R} = O(1/\sqrt{\kappa})$, we have the following:
+
+
+\begin{itemize}
+\item[] \it
+The experiment {\bf IsAGoodBundle} outputs SUCCESS for at least one bundle with probability $1 - p_4^u = 1 - \negl(\kappa)$.
+\end{itemize}
+
+\iffalse
+The probability
+that {\bf IsAGoodBundle} outputs P(\vec{out}_{-i}, \mathcal{S})$ outputs a value in $\{\mathsf{FAIL}_{1,i}, \mathsf{FAIL}_{2,i}, \mathsf{FAIL}_{3,i}, \mathsf{FAIL}_{4,i} \}$
+for all $i \in [u]$ is at most negligible
+(since $p^* \in O(\lg^6(\kappa)/n^{0.5})$ and $u \in \Omega( \lg \lg(\kappa))$). Where the probability is taken over the choice of the set $\mathcal{S}$ and the choice of hashes.
+\end{lemma}
+
+\vspace{5mm}
+\fi
+
+\paragraph{Noise distribution.}
+We define a noise distribution
+$\Phi$ and give an analysis of the hockey stick divergence of $\Phi(r)$ and $\Phi(r-\lg\lg(\kappa))$.
+
+\begin{definition}[Noise distribution $\Phi$]
+We define $\Phi(r)$ as follows:
+\begin{itemize}
+    \item Choose $H_1$ and $H_2$ randomly.  
+    \item Let $i^* \in [u]$ be the index to the bundle that {\bf IsAGoodBundle} outputs SUCCESS.
+    \item For $r \in [0, k_v]$,  output $D_{T, r}(\DDD_{2,i^*})$, where $T = \Avail_G(K_{\theta, i^*}, R \setminus R')$.
+    \item For $r \not \in [0, k_v]$, $\Phi(r) := 0$ 
+\end{itemize}
+\end{definition}
+
+\begin{lemma} \label{lem:hockeyphi}
+The hockey stick divergences
+$\hsd{e^\epsilon}{\Phi(r)}{\Phi(r-\lg\lg(\kappa))}$ and \\ $\hsd{e^\epsilon}{\Phi(r-\lg\lg(\kappa))}{\Phi(r)}$
+are both negligible in $\kappa$.
+\end{lemma}
+
+\begin{proof}
+For brevity, for any $r$, denote $D_r := D_{T, r}(\DDD_{2,i^*})$. 
+Conditioned on {\bf IsAGoodBundle} outputting SUCCESS with input $\vec{out}_{-{i^*}}$, 
+we have $a$ and $b$ such that
+for $r \in [a + \lg\lg \kappa, b]$,
+\[
+e^{-\ee} \le 
+\frac{e^{-\epsilon/3}E^{n'}_{k_v, r}}{e^{\epsilon/3}E^{n'}_{k_v, r-\lg\lg(\kappa)}} \le 
+\frac{D_r}{D_{r-\lg\lg(\kappa)}} 
+\le \frac{e^{\epsilon/3}E^{n'}_{k_v, r}}{e^{-\epsilon/3}E^{n'}_{k_v, r-\lg\lg(\kappa)}} 
+\le e^{\ee}. 
+\]
+%
+%
+The first and last inequalities are from Corollary~\ref{lem:concrete_expected_probs}. The second and third inequalities are from the condition that the process outputs SUCCESS. 
+The hockey stick divergence $\hsd{e^\epsilon}{\Phi(r)}{\Phi(r-\lg\lg(\kappa))}$ is therefore at most
+\[
+\sum_{r \not \in [a+\lg\lg\kappa, b]}  D_r \le k_v \cdot \negl(\kappa) = \negl(\kappa). \qedhere
+\]
+Similarly, $\hsd{e^\epsilon}{\Phi(r-\lg\lg(\kappa))}{\Phi(r)}$ is also $\negl(\kappa)$. 
+\end{proof}
+
+\paragraph{Putting it all together.}
+Let $c$ be the final count produced by running protocol $\PPH$.
+We consider the probabilities
+\[\Pr_{H_1, H_2,\mathcal{D}}[
+c \mid \Bp]
+\mbox{~~and~~}
+\Pr_{H_1, H_2, \mathcal{D}}[c \mid B]. \]
+
+We consider only runs of the protocol that yield $c$
+and for which there exists some
+$i^* \in [u]$ such that the process ${\bf IsAGoodBundle}$ returns SUCCESS given $\vec{out}_{-i^*}$ as input. 
+We just have argued that such an $i^*$ exists with all but negligible probability.
+
+Further, we consider only runs of the protocol for
+which
+$out^+_{bad}  - out_{bad} \leq s = \lg\lg(\kappa)$.
+By Lemma~\ref{lem:sen}, this also occurs with all but negligible probability,
+%
+We will also leak $k_v = |\Avail(K_{\theta, i^*}, R \setminus R')|$. 
+
+Conditioned on the above events, by the definition of the distribution $\Phi$,
+the value $out_{i^*}$ contributes $(k_v - r)$ to the final count $c$
+with probability $p = \Phi(r)$.
+%
+Recall that every iteration $j$ in $K_{\theta,i^*}$ is good, which means $\min h_j(A) = \min h_j(I)$, potentially contributing to the output.
+
+
+Therefore, assuming none of bad events occur (which happens with overwhelming probability),
+by applying Lemma~\ref{lem:hockeyphi},
+the probability that the ratio of probabilities of a certain output $out$
+for $\Bp$ and $B$ is not contained in $[e^{-\epsilon}, e^{\epsilon}]$ is $\negl(\kappa)$, and therefore we conclude that the protocol satisfies the DDP security.
+
+\subsection{Proof of Lemma~\ref{cor:fixed_oracle_prob}}
+
+
+
+\label{sec:fixed_oracle_prob}
+When considering the probability of $D_{T,r}(\DDD)$ and $I_{R', T, r}$ over the choice of $H_2$, the identity of $T$ doesn't matter except for its size $k_b = |T|$. Therefore, in this case, we will simply use $D_{k_b,r}(\DDD)$ and $I_{R', k_b, r}$
+Moreover, when it is clear from the context, we will sometimes omit
+$k_b$ and $\DDD$ and say $E^{R'}_{r} = E^{n'_R}_r$ and $I_{R',r} = I_{R', k_b, r}$, and 
+%
+$D_r = D_{k_b,r}(\DDD)$.  
+
+We first show the following lemma holds. 
+
+\begin{lemma} \label{lem:fixed_oracle_prob}
+Let $\DDD$ be a distribution over sets of size $n_R'$ with geometric
+collision property. Fix $H_1$ and consider $k_b, \theta, a, b$ specified in Lemma~\ref{lem:concrete_expected_probs} with the same requirements. 
+Then, we have the following:
+
+\begin{description}
+\item[Case 1:] If $r \not \in [a+s, b]$, we have 
+$\Pr_{H_2}\left[ D_{k_b,r}(\DDD) \le \negl(\secparam) \right] \ge 1 - \negl(\secparam)$.
+\item[Case 2:] If $r \in [a,b]$, then we have 
+
+\[ \Pr_{H_2}\left[ e^{-\epsilon/3} E^{n'_R}_{k_b,r} \leq D_{k_b,r}(\DDD) \leq e^{\epsilon/3} E^{n'_R}_{k_b,r} \right] \ge 1-(e^{\epsilon/3}-1)^{-2} \cdot \frac{16 \lg^3(\kappa)}{\sqrt{n_R}}. \]
+\end{description}
+\end{lemma}
+%
+Then, Lemma~\ref{cor:fixed_oracle_prob} follows by taking a union bound over different cases of $r \in [k_b]$. 
+\qedhere
+
+\subsubsection{Proof of Lemma~\ref{lem:fixed_oracle_prob}}
+
+We also define $\rho(R') := \Pr_{R' \sim \tilde{\mathcal{D}}}[R']$. 
+
+\paragraph{Proof for Case 1.}
+We first consider Case (1). By applying the Case (1) of 
+Corollary~\ref{lem:concrete_expected_probs}, we have
+$E^{n_R'}_{r} \in \mathsf{negl}(\kappa)$.  Given
+$E^{n_R'}_{r} \in \mathsf{negl}(\kappa)$, we show 
+\[
+\Pr_{H_2}\left[ D_r(\DDD) \leq \mathsf{negl}(\kappa) \right] \ge 1 - \negl(\kappa).
+\]
+
+Recall that 
+$D_r(\DDD) = \sum_{R'} \rho(R') \cdot I_{R',r}$.  Assume toward
+the contradiction that the negation of the statement holds. This means
+there are polynomials $p$ and $q$, and a collection $\sf Heavy$ of $R'$s
+such that
+%
+\[ \Pr_{H_2}\left[
+\sum_{R' \in {\sf Heavy}} \rho(R') \cdot I_{R', r} \ge 1/p(\kappa) \right] \ge 1/q(\kappa). 
+\]
+
+The above implies that $\sum_{R' \in {\sf Heavy}} \rho(R')  \ge 1/p(\kappa)$. 
+Now, since $\DDD$ and $H_2$ are independent, we have
+$
+\sum_{R' \in {\sf Heavy}} \rho(R') \Pr_{H_2}\left[I_{R', r} \right] 
+\ge \frac{1}{p(\kappa) q(\kappa)}.
+$
+However, considering that $\Pr_{H_2}\left[I_{R', r}\right] = E^{n_R'}_{r}$, which is negligible, the above is a contradiction.  
+
+
+\paragraph{Proof for Case 2.}
+We will bound $D_r = \sum_{R'} \rho(R') \cdot I_{R', r}$ using Chebyshev
+inequality. For this, we would like to bound the variance of $D_r$.
+%and $I_{R'_j,r}$ with both $R'_i$ and $R'_j$ sampled from $\DDD$, using which we then bound the variance of $D_r$. 
+
+
+%For this, we will first bound the covariance of $I_{R'_i,r}$
+%and $I_{R'_j,r}$ with both $R'_i$ and $R'_j$ sampled from $\DDD$, using which we then bound the variance of $D_r$. 
+
+We start with showing the following lemma, which will allow us to ignore
+the tail when we bound the variance.  Below, the value $z$ will
+correspond to the size of the intersection of the two sets $R'_i$ and
+$R'_j$.
+
+\begin{lemma}\label{lem:edges}
+Fix $H_1$.  Consider a graph $G \from {\bf MinhashG}_{H_1}(A, I, \xs, H_2)$.
+Consider any set $T$ of iterations in $G$ such that $|T| = k_b$. 
+%
+Let $Z$ be a set of left nodes in $G$ such that $|Z| \le n'_R$. Let $z = |Z|$. Consider the probability (over the choice of $H_2$) that $Z$ has more than $z \lg\lg \kappa$ outgoing edges in $G$. This probability is negligible in $\kappa$.
+\end{lemma}
+
+\begin{proof}
+Let $p = 1 - (\etan)^{1/n'_R}$.  We first show that $p \le 1/n'_R.$
+Recall $\theta \le 1/10$, which implies $e^{-1} \le 1/2 - \theta = \etan$. Therefore, we have
+$(1-1/n_R')^{n_R'} \le e^{-1} \le \etan$, so 
+$1-1/n_R' \le (\etan)^{1/n_R'}$. Therefore, we have $p = 1 - (\etan)^{1/n'_R} \le 1/n'_R$.
+
+Let $\edges(Z, T)$ be the set of edges from $Z$ to $T$. Over the choice of $H_2$, the probability that each pair in $Z \times T$ forms an edge is at most $p$. Therefore, we can simply use a Binomial distribution to bound the probability. In particular, 
+with $t = \lg\lg \kappa$ we have
+\begin{align*}
+\Pr_{H_2}\big[ |\edges(Z,T)| \ge zt\big] \le \Pr \big[ \Bino(z\hat{k}, p) \ge zt \big]  
+\le \binom{z\hat{k}}{zt} \cdot p^{zt} 
+\le \binom{z\hat{k}}{zt} \cdot \left(\frac{1}{n_R'}\right)^{zt} 
+\le \left(\frac{e \hat{k}}{t n'_R}\right)^{zt}\end{align*}
+Since $n'_R$ is much larger than $k_b$, the above probability becomes negligible in $\kappa$. 
+\end{proof}
+
+%Applying again Lemma~\ref{lem:concrete_expected_probs}, we
+%set parameters $a,b$ accordingly. Note that
+%there is a negligible function $\psi$ such that for all $r$ such that $r \not \in [a+s,b]$, %we have $E^{n'_R}_{r, k} \leq \psi(\kappa)$,
+%and for all $r \in [a,b]$, we have $E^{n'_R}_{r, k} \geq
+%\psi(\kappa)$.  
+%
+Now we prove the following lemma towards bounding the variance of $D_r$. 
+\begin{lemma} \label{lem:dependency}
+Fix $H_1$. 
+We set the parameters for $k_b, a$ and $b$ as stated in Lemma~\ref{cor:fixed_oracle_prob}.
+% Lemma~\ref{lem:fixed_oracle_prob}.
+Let $R'_i, R'_j$ be sets of nodes on the left of size $n'_R$ such that
+with $|R'_i \cap R'_j| = z$.
+Let $\zeta = z \lg\lg\kappa$.
+%
+Then for all $a \leq r \leq b$, we
+have  
+\begin{align*}
+\Pr_{H_2}[I_{R'_i,r} \wedge I_{R'_j, r}]
+= \EE_{H_2}[I_{R'_i,r} \cdot I_{R'_j, r}]
+\leq  \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z k_b/n'_R} } \right) \left(E^{n'_R}_r\right)^2 
+\end{align*}
+\end{lemma}
+
+\begin{proof}
+Fix $R'_i, R'_j$ with $|R'_i \cap R'_j| = z$.  Let $Z = R'_i \cap R'_j$
+and $X = R'_i - Z$.  
+%
+Then, we have 
+% \begin{align*}
+% \Pr_{H_2}[I_{R'_i,r} \wedge I_{R'_j, r}] & = 
+% \sum_{m=0}^r \Pr[ I_{X,m} \wedge I_{Z, r-m} \wedge I_{R'_j, r} ] 
+%  \le 
+% \sum_{m=0}^r \Pr[ I_{X,m} \wedge I_{R'_j, r} ]  \\
+% &= \sum_{m=0}^r \Pr[I_{X, m}] \cdot \Pr[I_{R'_j, r}] \\
+% &=  \left( \sum_{m=0}^{r-\zeta} \Pr[I_{X, m}] + 
+%  \sum_{m=r-\zeta+1}^{r} \Pr[I_{X, m}]  \right) \cdot E^{n'_R}_r \\
+% &= E^{n'_R}_r \cdot  \sum_{m=\zeta}^{r} \Pr[I_{Z, m}] + 
+%  E^{n'_R}_r \cdot  \sum_{m=r-\zeta+1}^{r} \Pr[I_{X, m}] \\
+% &\le E^{n'_R}_r \cdot \negl(\kappa) + 
+%  E^{n'_R}_r \cdot  \sum_{m=r-\zeta+1}^{r} \Pr[I_{X, m}]. 
+%  \end{align*}
+%  \mingyu{The last equality step is problematic. Only the conditional probability variants hold $\Pr[I_{X, r-m}|I_{R'_i,r}] = \Pr[I_{Z, m}|I_{R'_i,r}]$.}
+% The last inequality holds due to Lemma~\ref{lem:edges}. 
+\begin{align*}
+\Pr_{H_2}[I_{R'_i,r} \wedge I_{R'_j, r}] & = 
+\sum_{m=0}^r \Pr[ I_{X,m} \wedge I_{Z, r-m} \wedge I_{R'_j, r} ]\\
+  & \leq \sum_{m=0}^{r-\zeta} \Pr[I_{Z, r-m}] + \sum_{m=r-\zeta+1}^r \Pr[ I_{X,m}  \wedge I_{R'_j, r} ] \\
+  & = \sum_{m = \zeta}^{r} \Pr[I_{Z, m}] + \sum_{m=r-\zeta+1}^r \Pr[ I_{X,m} ] \cdot \Pr[I_{R'_j, r} ] \\
+&\le  \negl(\kappa) + \sum_{m=r-\zeta+1}^r \Pr[I_{X, m}] \cdot \Pr[I_{R'_j, r}]\\
+&= \negl(\kappa) + E^{n'_R}_r\cdot \sum_{m=r-\zeta+1}^r \Pr[I_{X, m}] .
+ \end{align*}
+The second inequality holds due to Lemma~\ref{lem:edges}. 
+
+It is left to bound $\Pr[I_{X, m}]$ for $m \in (r-\zeta, r]$. We observe
+that 
+$\Pr_{H_2}[I_{X, m}] = \Pr[I_{R'_i, m} |~ I_{Z, 0}]$. 
+%
+In other words, the event that $X$ contributes to noise pattern $m$ is
+equivalent to the event that $R'_i$ contributes to $m$ conditioned on the
+intersection having no contribution.
+%
+Therefore, we have 
+ \[ \Pr_{H_2}[I_{X, m}] = \frac{\Pr[I_{R'_i, m} \wedge I_{Z, 0}]}{ \Pr[I_{Z,0}] }
+ \le \frac{\Pr[I_{R'_i, m}]}{ \etan^{z k_b/n'_R} } = 
+ \frac{E^{n'_R}_{m}}{ \etan^{z k_b/n'_R} }.\]
+
+We now bound $E_m^{n'_R}$ for $m \in (r-\zeta, r]$.  Let $m^* :=
+\arg\max_{m} \{E^{n'_R}_m: m \in (r-\zeta, r] \}$.  Using Corollary~\ref{lem:concrete_expected_probs} we have
+ $E^{n'_R}_{m^*}
+ \le (e^{\ee/3})^{\zeta} \cdot E^{n'_R}_{r} + \negl(\kappa)$.
+%
+Therefore, we have 
+\begin{align*}
+\Pr_{H_2}[I_{R'_i,r} \wedge I_{R'_j, r}] &\le  \negl(\kappa) +  E^{n'_R}_r \cdot  \sum_{m=r-\zeta+1}^{r} \Pr[I_{X, m}] 
+~\le~ \negl(\kappa)  + \zeta \cdot E^{n'_R}_r \cdot \Pr[I_{X, m^*}] \\
+&=  \negl(\kappa)  + \zeta \cdot E^{n'_R}_r \cdot  \frac{E^{n'_R}_{m^*}}{ \etan^{z k_b/n'_R} } 
+=  \negl(\kappa) + \zeta \cdot E^{n'_R}_r \cdot  \frac{e^{\zeta \ee/3} E^{n'_R}_{r} + \negl(\kappa)}{ \etan^{z k_b/n'_R} } \\
+&\le \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z k_b/n'_R} } \right) \left(E^{n'_R}_r\right)^2  \qedhere
+\end{align*} 
+\end{proof}
+
+
+We set the parameters for $H_1, k_b, a$ and $b$ as stated in Lemma~\ref{cor:fixed_oracle_prob}.
+Let $\mathcal{D}$ be a distribution with the geometric
+collision property. 
+Then, we show that for every $a \leq r \leq b$, we have 
+\[
+\mathsf{Var}_{H_2} [D_r] \leq
+\frac{16 \lg^3(\kappa)}{\sqrt{n_R}} \left (E^{n'_R}_{k_b, r} \right )^2.
+\]
+
+Consider any $r \in [a, b]$. Recall that $D_r := \sum_{R' \in
+\mathsf{Supp}(\tilde{\mathcal{D}})} \rho(R') \cdot  I_{R', r}$. 
+
+\begin{align*}
+\mathsf{Var}_{H_2}[D_r] &\quad \quad =  \sum_{R'_i, R'_j}
+\rho(R'_i) \cdot \rho(R'_j) \cdot ( \mathbb{E}[I_{R'_i, r } \cdot I_{R'_j, r}
+] - \mathbb{E}[I_{R'_i, r }] \cdot \mathbb{E}[I_{R'_j, r}] ) \\
+&\quad \quad \leq  \sum_{R'_i, R'_j : |R'_i \cap R'_j| \ge 1} \rho(R'_i) \cdot \rho(R'_j) \cdot \mathbb{E}[I_{R'_i,r} \cdot I_{R'_j, r}]\\ 
+&\quad \quad =  \sum_{z=1}^{n'_R}
+\Pr_{R'_i, R'_j \sim \DDD} [|R'_i \cap R'_j| = z]
+\cdot \mathbb{E}[I_{R'_i,r} \cdot I_{R'_j, r}] \\
+&\quad \quad \le \sum_{z=1}^{n'_R} \left(\frac{1}{\sqrt{n_R}}\right)^z \cdot 
+\left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3} + 1)}{\etan^{
+z k/n'_R} } \right) \cdot \left(E^{n'_R}_r\right)^2  \\
+&\quad \quad \le \sum_{z=1}^{n'_R} \left(\frac{1}{\sqrt{n_R}}\right)^z \cdot 
+\left(  \zeta \cdot \frac{e^\zeta + 2}{(2/5)^{\zeta/3} } \right) \cdot \left(E^{n'_R}_r\right)^2  \\
+&\quad \quad \le \sum_{z=1}^{n'_R} \left(\frac{1}{\sqrt{n_R}}\right)^z \cdot 
+\left(  8^{\zeta+1} \right) \cdot \left(E^{n'_R}_r\right)^2  \\
+\end{align*}
+The first inequality holds because if $R'_i$ are $R'_j$ are disjoint, then $I_{R'_i,r}$ and $I_{R'_j, r}$ are independent over the choice of $H_2$, and the relevant terms are canceled out. The second inequality is due to the geometric collision property of $\DDD$ and Lemma~\ref{lem:dependency}. The third inequality holds with $\epsilon\leq 3$ since $\theta < 1/10$ and $k_b$ is much smaller than $n'_R$. 
+%
+Therefore, we have $\mathsf{Var}_{H_2}[D_r] \le 
+8 \cdot \left(E^{n'_R}_r\right)^2 \cdot \sum_{z=1}^{n'_R} \left(
+ \frac{\lg^3\kappa }{\sqrt{n_R}} \right)^z  \leq \frac{16 \lg^3 \kappa}{\sqrt{n_R}} {\left (E^{n'_R}_{r} \right )}^2$. 
+\qed
+
+Finally, by Chebyshev, we have that for all $a \leq r \leq b$,
+\begin{align*} \label{eq:chebyshev}
+\Pr_{H_2}\left [D_r \notin [e^{-\epsilon/3} (E^{n'_R}_{k_b, r}), e^{\epsilon/3} (E^{n'_R}_{k_b, r})]  \right ] & \leq \Pr\left [|D_r -E^{n'_R}_{k_b, r}| \geq  (1-e^{-\epsilon/3}) \cdot E^{n'_R}_{k_b, r} \right ] \\
+& \leq  \frac{\mathsf{Var}[D_r]}{(1-e^{-\epsilon/3})^{2} \cdot (E^{n'_R}_{k_b, r})^2} 
+\leq  \frac{16 \lg^3(\kappa)}{(1-e^{-\epsilon/3})^{2}\sqrt{n_R}}. 
+\end{align*}
+
+
+
+
+\subsection{Strong Chain Rule} \label{sec:construct-gcp2}
+
+%\subsubsubsection{Strong chain-rule for min-entropy sources}
+\iffalse
+\paragraph{General chain rule for min-entropy is too weak.}
+We treat the distribution $\DDD_{2,i}$ of the input sequence as joint distribution of $n$ elements. 
+Intuitively, we need to argue that even after the leakage of some input elements, each of the other elements still have a sufficient of amount of min-entropy, which essentially guarantees the geometric collision property. The problem is, however, that the chain rule \cite[Lemma 2.2]{DORS08} that can be applied in general is too weak in our setting, losing too much min-entropy too fast. 
+\fi
+
+\paragraph{Strong chain rule for a special case: achieving flatness through clustering.}
+Fortunately, a stronger version of the chain rule is known to hold for a special leakage pattern, i.e., when elements are conditioned {\em in order} \cite{skorski2019strong}; very roughly speaking, for every $i$, the min-entropy of $R_i | (R_1, \ldots, R_{i-1})$ is essentially the same as the min-entropy of $(R_1, \ldots, R_i)$ minus the min-entropy of $(R_1, \ldots, R_{i-1})$ at the sacrifice of an additional small leakage, which is called a {\em spoiling leakage}. 
+
+They achieve this by grouping possible sequences with a similar distributional characteristic into the same cluster. Then, in every cluster, the distribution of sequences conditioned on that cluster will be essentially flat. Now, the spoiling leakage corresponds to the cluster identifier. By making every cluster contain sufficiently many sequences (leading to sufficient min-entropy due to flatness), the total number of clusters can be small (leading to a short spoiling leakage).
+
+
+\iffalse
+We treat the distribution $\DDD_{2,i}$ of the input as joint distribution over {\em blocks}. Please note that blocks and bundles are different notions in this paper; the input is split into {\em blocks} and good iterations into {\em bundles}. 
+In particular, that is, by releasing additional bits, conditioned distributions of blocks are shown to be nearly flat, and then we argue that a sufficient number to blocks has high min-entropy, even conditioned on the previous blocks and the additional bits. Finally, we show that the high min-entropy blocks are transformed into a distribution with the geometric collision property.  
+\fi
+
+\paragraph{Notes on notations.} For brevity, in this section, we omit the subscript from $n_R$, i.e., we denote $n = n_R$. For any sequence of random variables $R = R_1, \dots, R_n$ (for the secret input $R$), we denote $R_{<i} = R_1,\dots,R_{i-1}$ and $R_{\leq i} = R_1,\dots,R_{i}$. Likewise, we extend such subscript notations and use $R_{>i}$ and $R_{\ge i}$. We use lower case $r = r_1,\dots,r_n$ to denote the actual set/sequence.
+
+
+\paragraph{Strong chain rule for our setting.}
+%
+We first adapt the result in \cite{skorski2019strong} into our setting.  Then, we argue that a sufficient number of elements still have high min-entropy, even conditioned on the previous elements. Finally, we show that these high min-entropy (conditioned)  elements provide the geometric collision property.  
+
+\begin{theorem} [Block structures with few bits spoiled in our setting]\label{thm:chain_leak_2}  We consider a min-hash graph $G = (\XXX, \YYY, \EEE)$ constructed from 
+ ${\bf MinhashG}_{H_1}(A, I, \xs, H_2)$, while focusing on a single bundle $K_{\theta,*}$ of iterations.
+
+Let $\mathcal{U} = U_1 \times \cdots \times U_n$ be a fixed universe
+and $R = (R_1,\dots,R_n)$ be a sequence of (possibly correlated) random variables where each $R_i$ is over $U_i$ (and all are disjoint) and $|U_i| = \ell$ for all $i$.
+Then, for any $\epsilon \in (0, 1)$ 
+and any $\dd > 0$, 
+there exists a spoiling 
+leakage function $f_G(R)$ that satisfies the following properties. 
+\begin{enumerate}
+\iffalse
+\item %We will omit the subscript of $f$ for brevity. 
+Let $Im(f)$ be the set of images of $f$ and $Dom(f)$ be the domain of $f$.  
+Images except $\bot$ have at least $\frac{\epsilon |Dom(f)|}{|Im(f)|}$ pre-images.   \mingyu{Domain, why do we need to lower bound the pre-images?}
+\dnote{This takes care of the partitions with low weight. We ultimately need this, along with $|Im(f)|$ to lower bound the remaining min-entropy in $X$ after revealing $y$.}
+\fi
+    \item It holds that $\Pr_{R}[f(R) = \bot] \leq \epsilon n$.
+    \item 
+    Let $Im(f)$ be the set of images of $f$. 
+    Every $y \in Im(f) \setminus \{\bot\}$ specifies two disjoint sets $V$ and $W$ such that $V \cup W = [n]$.
+    
+    \item 
+    Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in V$, every element in distribution $R_i \mid R_{<i}$ has low probability weight, i.e.,
+    \begin{align*}
+    &\forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) = y, \forall i \in V: ~~
+    \Pr\left[R_i = r_i~ \Bigg |~R_{<i} = r_{<i},~ y\right]
+    \leq  \frac{2^{\delta}}{n^{1.5}}.
+    \end{align*}
+    \item Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in W$, it holds that $R_i \mid R_{<i}$ has small support size, i.e.,
+    \begin{eqnarray*}
+        \forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) =  y, \forall i \in W: \\
+        \left | \left \{ r_i : \Pr[R_i = r_i|R_{<i} = r_{<i}, y]] \geq 0 \right \}  \right | \leq 2^{\delta} \cdot n^{1.5}.
+    \end{eqnarray*}
+    \item $|Im(f)| \leq  n \cdot (2e)^{n/2} \cdot \frac{(n+k_b)!}{n!} \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}$.
+    \item $\Avail_G(K_{\theta,*}, R_W)$  can be computed from $f(R)$, where $R_W := \{R_i : i \in W\}$.
+\end{enumerate}
+\end{theorem}
+
+\subsubsection{Proof of Theorem \ref{thm:chain_leak_2}}
+By following the general idea of \cite{skorski2019strong}, we will build clusters, and the spoiling leakage will be the cluster identifier. However, we will slightly change the way we build clusters.
+
+\paragraph{Condition 1.}
+Throughout our proof, we let $\Pr[r_i]$ denote $\Pr[R_i = r_i]$ for brevity, whenever the referred random variable is clear.
+Before forming the clusters, we will first like to exclude all sequences $r \in \U = U_1 \times\dots\times U_n$ having a very small probability 
+$\Pr_{R}[R_i = r_i \mid R_{<i} = r_{<i}] < \epsilon/\ell$ for any $i \in [n]$ and only consider the remaining $\U' \subset \U$. Specifically, we let $f(r) = \perp$ for all $r \notin \U'$.
+As we will see later, this probability lower bound is vital to upper bound $|Im(f)|$. 
+
+\begin{claim}
+Let $\U'$ be the set containing all the sequences $r$ such that $\Pr_{R}[R_i = r_i \mid R_{<i} = r_{<i}] \geq \epsilon/\ell$ for all $i \in [n]$ . Then, we have $\Pr[ r \in \U' ] \ge 1 - \epsilon n$.  
+\end{claim}  
+
+\begin{proof}
+For each $i \in [n]$, and any $r_{<i} \in U_1 \times\dots\times U_{i-1}$, we have 
+\[ \sum_{u \in U_i: \Pr_{R}[R_i = u \mid R_{<i} = r_{<i}] < \epsilon/\ell} \Pr_{R}[R_i = u \mid R_{<i} = r_{<i}] < \sum_{u \in U_i} \epsilon/\ell =\epsilon. \]
+Therefore, using a union bound across all $i\in [n]$, we have
+$\Pr[r \not \in \U'] \leq \ee \cdot n$. \qedhere  
+\end{proof}
+%
+
+\paragraph{Building clusters.} 
+For each $r \in \U'$, we describe how to compute $f(r) = (f_1(r), f_2(r),$ $\ldots, f_n(r))$, which will serve as the cluster identifier. 
+%
+ Let $\round(a)$ denote a rounding function that rounds $a$ to the closest multiple of $\delta/2$. We say $a \approx_{\round} a'$ if $\round(a) = \round(a')$. 
+
+\begin{enumerate}
+\item[] \hspace{-2em} For each $r$, do the following:
+\item Let $f_{>n}(r) = \bot$ for any $r$, and initialize $W = \emptyset$.
+\item For $i = n,\dots,1$, do the following: 
+\begin{enumerate}
+\item 
+Let $\sur^1_i(r)$ denote the surprise of the $i$th element of $r$. More formally, 
+    \[\sur^1_i(r) = -\lg \Pr_{R}[R_i = r_i \mid R_{<i} = r_{<i}, ~f_{>i}(R) = f_{>i}(r)]. \]
+    This surprise measure represents how rare and surprising the event $r_i$ is, conditioned on $r_{<i}$, $f_{>i}(r)$. In a sense, we will group sequences with similar surprises into a cluster. 
+
+\item 
+Let $\sur^2_i(r)$ denote the surprise of the sequences with a similar surprise level in aggregate.  
+    \[\sur^2_i(r) = -\lg \Pr_{R}[\sur^1_i(R) \approx_{\round} \sur^1_i(r) 
+     \mid R_{<i} = r_{<i}, ~f_{>i}(R) = f_{>i}(r)].\]
+Note $\sur^1_i(r) \ge \sur^2_i(r)$, since at least sequence $r$ has $\sur^1_i(r)$ and possibly more points may approximately share the surprise.
+Note also that $\sur^2_i(r)$ is a deterministic function of $\sur^1_i(r), r_{<i}$, $f_{>i}(r)$. 
+
+\item If $\round(\sur^1_i(r)) - \round(\sur^2_i(r)) \geq 1.5\lg(n)$ then let $f_i(r) = (\round(\sur^1_i(r)), \true)$.
+%
+\item 
+Otherwise, let $f_i(r) = (\round(\sur^1_i(r)), \false, H_i)$ and 
+add $i$ to $W$. 
+%
+Here, $H_i$ is defined as $N(\{r_i\})\setminus N(r_W)$, where  
+$N$ refers to the neighbors (restricted to $K_{\theta,*}$) of the input set of nodes in $G$. In other words, $H_i$ contains the iterations newly covered by element $r_i$; any iterations previously covered by $r_W$ are ruled out in $H_i$. In this way, we can reduce the length of the cluster identifier.
+\end{enumerate}
+
+\item Set $f(r) = f_1(r),\dots,f_n(r)$. 
+      Set $V = [n] \setminus W$.
+\end{enumerate}
+
+\paragraph{Conditions 2 and 3.}
+Condition 2 follows from how $V$ is computed in step 3. We now show that condition 3 holds. In particular, 
+$\forall y \in Im(f(\cdot)) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) = y, \forall i \in V$ we have
+\begin{align*}
+\Pr[r_i \mid r_{<i}, y] & = \Pr[r_i \mid r_{<i}, y_{\geq i}] = \frac{\Pr[r_i \land r_{<i} \land y_{\geq i}]}{\Pr[r_{<i} \land y_{\geq i}]}
+&= \frac{\Pr[r_i \land r_{<i} \land y_{> i} ]}{\Pr[r_{<i} \land y_{>i} ]\Pr[y_i \mid r_{<i} \land y_{>i} ]  } 
+\end{align*} 
+
+
+The first equality is due to $y_{< i}$ being a deterministic function of $r_{< i}$, $y_{\geq i}$.
+Similarly, the nominator of the final fraction is due to $y_{i}$ being a deterministic function of $r_{\leq i}$, $y_{>i}$. Moreover, 
+ $y_{i,2}$ (i.e., $\true$) can be deterministically computed from $y_{i,1}$(i.e., $\round(\sur^1_i(r))$), $r_{<i}, y_{>i}$. Therefore, the above is equal to
+\begin{equation}\label{eq:sp1_sp2}
+    \frac{\Pr[r_i \land r_{<i} \land y_{> i} ]}{\Pr[y_{i,1}  \mid r_{<i} \land y_{>i}]  \Pr[r_{<i} \land y_{>i} ]} = \frac{\Pr[r_i \mid r_{<i} \land y_{>i} ]}{\Pr[y_{1,i} \mid r_{<i} \land y_{>i} ]} =\frac{2^{-\sur^1_i(r)}}{2^{-\sur^2_i(r)}} \leq \frac{2^\delta}{n^{1.5}}.
+\end{equation}
+
+The last inequality holds since $i \in V$, 
+$\round(\sur^1_i(r)) - \round(\sur^2_i(r)) \ge 1.5\lg(n)$.
+
+\paragraph{Condition 4.}
+For $r, y, i$ as quantified in the theorem statement, we have 
+\begin{align*}
+& \left | \left \{ r_i : \Pr[R_i = r_i|R_{<i} = r_{<i}, y]] \geq 0 \right \}  \right | \\&= 
+\left | \left \{ r_i : \Pr[R_i = r_i \land R_{<i} = r_{<i} \land y ]] \geq 0 \right \}  \right |\\
+&=
+\left | \left \{ r_i : \Pr[R_i = r_i \land R_{<i} = r_{<i} \land  y_{i,1}, y_{i,2}, y_{>i} ]] \geq 0 \right \}  \right |\\
+&\leq \left | \left \{ r_i : \Pr[R_i = r_i | R_{<i} = r_{<i}, y_{i,1}, y_{i,2}, y_{>i} ]] \geq 0 \right \}  \right |
+\end{align*}
+% In the above, the inequality holds since the probability is conditioned less.
+%
+By a similar argument as above, for all 
+$r_i$ s.t. $\Pr[R_i = r_i | R_{<i} = r_{<i}, y_{i,1}, y_{i,2}, y_{>i} ]] \geq 0,$ it holds 
+\[\Pr[R_i = r_i | R_{<i} = r_{<i}, y_{i,1}, y_{i,2}, y_{>i} ]
+= \frac{\Pr[r_i \mid r_{<i} \land y_{>i} ]}{\Pr[y_{i,1} \mid r_{<i} \land y_{>i} ]} = \frac{2^{-\sur^1_i(r)}}{2^{-\sur^2_1(r)}}\geq \frac{2^{-\delta}}{n^{1.5}} \]
+where the inequality holds since $i \in W$, we know that
+$\round(\sur^1_i(r)) - \round(\sur^2_i(r)) \le 1.5\lg(n)$.
+This means that 
+$ \left | \left \{ r_i : \Pr[R_i = r_i | R_{<i} = r_{<i}, y_{\ge i} ]] \geq 0 \right \}  \right |
+\leq 2^\delta \cdot n^{1.5}. $
+
+\paragraph{Condition 5.}
+To bound $|Im(f)|$, we first upper bound $y_{i,1}$.
+Recall that $\Pr_{R}[R_i = r_i \mid R_{<i} = r_{<i}] \geq \epsilon/\ell$ for all $i \in [n]$ and $r \in \U'$. Therefore,  $\Pr_{R}[R_i = r_i \mid R_{<i} = r_{<i}, y] \geq \epsilon/\ell$ for all $i \in [n]$, and $\forall r$ such that $f(r) = y$.
+
+Therefore, for all $r\in \U', i \in [n]$, we have 
+$\sur^1_i(r) \le \lg (\ell) + \lg (1/\epsilon),$
+which implies that 
+$y_{i,1}$ has at most $2(\lg(\ell)) + \lg (1/\epsilon))/\delta$ different possibilities. 
+
+To upper bound the number of possibilities of the remaining parts, it suffices to upper bound the number of choices for set $W$ of size $m$, as well as the number of possibilities for $H_i$'s in each slot $i \in W$. Clearly, the former is $\binom{n}{m}$. For the latter part, note that each iteration appears at most once over all $m$ slots. Therefore, the problem becomes how we can assign $k_b$ different iterations into $m+1$ positions (with some positions possibly containing none) while assigning them to the $m+1$th position when they never appear in any slot of $W$. This is a well-known problem of stars and bars with $m+1$ variables and sum $k_b$, which has $\binom{m+k_b}{m}$ possibilities. Since we have $k_b!$ different orderings for $k_b$ iterations, the upper bound is $\binom{m+k_b}{m} \cdot (k_b!)$.
+We have:
+
+
+
+
+% , (or not place in any position at all). 
+
+
+% of possible sets of hashes, it suffices to upper bound the 
+
+% Then we upper bound the number of possible sets of hashes 
+% $f_i(r) = (f_{i,1}(r), w, H_i)$
+
+
+
+
+
+%
+%Also, recall that $f_{i,2}(r) \le f_{i,1}(r)$. Therefore, we can upper bound $|\mathcal{M}|$:
+%\begin{align*}
+%    |\mathcal{M}| &\leq (2(\lg|\U| + \lg (1/\epsilon))/\delta)^{2n},
+%\end{align*}
+%which suggests
+%\begin{align*}
+%    \lg |\mathcal{M}| \leq 2n \cdot (1 + \lg(1/\delta) + \lg(\lg |\U| + \lg(1/\epsilon))).
+%\end{align*}
+
+% \begin{align*}
+% |Im(f)| &\leq \left (2 (\lg|\U| + \lg (1/\epsilon)) /\delta \right )^n \left ( \sum_{m=0}^n {m + k \choose m} \cdot k! \right )\\ 
+% &= \left (2 (\lg|\U| + \lg (1/\epsilon)) /\delta \right )^n \left ( \sum_{m=0}^n \frac{(m+k)!}{m!} \right )\\ 
+% &\leq n \cdot \frac{(n+k)!}{n!} \cdot \left ( 2(\lg|\U| + \lg (1/\epsilon)) /\delta \right )^{n}.
+% \end{align*}
+
+\begin{align*}
+|Im(f)| &\leq \left (2 (\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^n \left ( \sum_{m=0}^n {n \choose m} {m + k_b \choose m} \cdot k_b! \right )\\ 
+&= \left (2 (\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^n \left ( \sum_{m=0}^n {n \choose m}\frac{(m+k_b)!}{m!} \right )\\ 
+&\leq n \cdot {n \choose n/2} \cdot \frac{(n+k_b)!}{n!} \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}\\
+&\leq n \cdot (2e)^{n/2} \cdot \frac{(n+k_b)!}{n!} \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}.
+\end{align*}
+
+\paragraph{Condition 6.}
+Finally, condition 6 follows from the definition of the clustering procedure. In particular, $H_W = \bigcup_{i \in W} H_i$ contains all the iterations that $r_W$ covers. The available set can be computed by $K_{\theta,*} \setminus H_W$. This concludes our proof. 
+
+
+\subsubsection{Generalization} 
+ \label{sec:generalization}
+It can be seen that in the above proof, the only
+properties that we used of the additional leakage $H_i$
+is that for $i \in W$, $H_i$ depends only on $R_i, y_{>i}$
+and that the number of choices for the output of the sequence of leakages $[H_i]_{i \in W}$ is bounded
+by some $B$. Theorem~\ref{thm:chain_leak_3} stated in Section~\ref{sec:strong-chain-rule} is restatement of Theorem~\ref{thm:chain_leak_2} with respect to any such leakage function.
+%
+\iffalse
+\begin{theorem} [Block structures with few bits spoiled and leakage]\label{thm:chain_leak_3}  
+Let $\mathcal{U} = U_1 \times \cdots \times U_n$ be a fixed universe
+and $R = (R_1,\dots,R_n)$ be a sequence of (possibly correlated) random variables where each $R_i$ is over $U_i$ (and all are disjoint) and $|U_i| = \ell$ for all $i$.
+Let $\rho_1, \ldots, \rho_n$ be a sequence of uniformly
+random strings over $\{0,1\}^m$
+and
+let $\ell_1(\cdot), \ldots, \ell_n(\cdot)$ be leakage functions.
+%whose inputs are defined recursively as follows:
+%$\ell_n$ receives input $R_n, \rho_n$ and outputs $\beta_n$.
+%$\ell_i$ for $i < n$ receives input $R_i, \rho_i$,
+%and $\beta_j$, $i < j \leq n$
+%and outputs $\beta_i$.
+Then, for any $\epsilon \in (0, 1)$, 
+any $\dd > 0$ and any $c \in [2^\delta, \ell/2^\delta]$, 
+there exists a spoiling 
+leakage function $f_G(R)$ that satisfies the following properties. 
+\begin{enumerate}
+\iffalse
+\item %We will omit the subscript of $f$ for brevity. 
+Let $Im(f)$ be the set of images of $f$ and $Dom(f)$ be the domain of $f$.  
+Images except $\bot$ have at least $\frac{\epsilon |Dom(f)|}{|Im(f)|}$ pre-images.   \mingyu{Domain, why do we need to lower bound the pre-images?}
+\dnote{This takes care of the partitions with low weight. We ultimately need this, along with $|Im(f)|$ to lower bound the remaining min-entropy in $X$ after revealing $y$.}
+\fi
+    \item It holds that $\Pr_{R}[f(R) = \bot] \leq \epsilon n$.
+    \item 
+    Let $Im(f)$ be the set of images of $f$. 
+    Every $y \in Im(f) \setminus \{\bot\}$ specifies two disjoint sets $V$ and $W$ such that $V \cup W = [n]$.
+    \item A sequence $\beta_1, \ldots, \beta_n$ is valid if 
+    for all $i \in [V]$, $\beta_i = \bot$ and 
+    for all $i \in [W]$, $\beta_i = \ell_i(R_i, \rho_i, [\beta_j]_{i < j \leq n})$.
+    We require that the number of valid sequences
+    $\beta_1, \ldots, \beta_n$ is at most $B$.
+    \item 
+    Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in V$, every element in distribution $R_i \mid R_{<i}$ has low probability weight, i.e.,
+    \begin{align*}
+    &\forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) = y, \forall i \in V: \\
+    &\quad 
+    \Pr\left[R_i = r_i~ \Bigg |~R_{<i} = r_{<i},~ y\right]
+    \leq  \frac{2^{\delta}}{c}.
+    \end{align*}
+    \item Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in W$, it holds that $R_i \mid R_{<i}$ has small support size, i.e.,
+    \begin{eqnarray*}
+        \forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) =  y, \forall i \in W: \\
+        \left | \left \{ r_i : \Pr[R_i = r_i|R_{<i} = r_{<i}, y]] \geq 0 \right \}  \right | \leq 2^{\delta} \cdot c.
+    \end{eqnarray*}
+    \item $|Im(f)| \leq  B \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}$.
+    \item For all $i \in W$, $\ell_i(R_i, \rho_i, [\beta_{j}]_{i < j \leq n})$  can be computed from $f(R)$, where
+    $\beta_j = \bot$ if $j \in V$
+    and $\beta_j = \ell_j(R_j, \rho_j, [\beta_k]_{j < k \leq n})$ for 
+    $j \in W$.
+    % \mingyu{This seems to overlap with property 3.}
+    % \dnote{This property says that the leakage values can be extracted from the spoiled bits. Property 3 says that the number of valid leakage sequences is small.}
+    \item For $i \in V$, $[\rho_i]_{i \in [V]}$
+    are distributed independently and uniformly at random
+    conditioned on $f(R)$.
+    % \mingyu{I still couldn't quite understand what $\rho_i$ represents, is it somehow to capture the fact that $R_i$ is not uniformly random?}
+    % \dnote{It is capturing that the leakage functions can be probabilistic instead of deterministed. In particular, the leakage functions can depend on the output of a random oracle.}
+\end{enumerate}
+\end{theorem}
+\fi
+%
+Note that the leakage functions $\ell_i$ specified above 
+can model leakage with respect to
+a random oracle $h$, by letting $\rho_i = h(R_i)$.
+
+\subsection{Proof of Lemma~\ref{lem:fail2}}
+\label{sec:tradeoff}
+For brevity, we denote $\DDD = \DDD_{2,i}$ and $\DDD_\leak = \DDD_{1,i}$ in the
+experiment $\sf IsAGoodBundle$. We show that $\DDD$ has the geometric collision
+property. 
+%
+In other words, we would like to show that when $R$ is chosen uniformly at random from universe $\U$  then the distribution of these $n_R = n_B - n_I$ elements has the geometric collision property even with the leakage. 
+
+Towards this goal, by applying Theorem~\ref{thm:chain_leak_2} to this distribution, we show that even with the leakage, there are at least $n_R/3$ elements that preserves enough min-entropy. We next show how these elements with sufficient min-entropy give the geometric collision property. 
+
+\begin{remark}[Getting rid of tiny parts]\label{rem:del_tiny_2}
+Similar to \cite[Remark 2]{skorski2019strong}, we can further require that each cluster should have a probability that is ``not too small''. Therefore, we define a new leakage function $f'$ by substituting the $\epsilon$ in the above theorem with $\epsilon/2$, 
+and additionally letting $f'(r) = \perp$ for all $r$ such that $y \in f(r)$ and $\Pr_R[f(R) =y] < \epsilon n/(2|Im(f)|)$ (their total probability is at most $\epsilon n/2$), we obtain the following: 
+%
+$f'$ satisfies all conditions in Theorem \ref{thm:chain_leak_2}. Additionally, $\forall y \in Im(f')$, we have $\Pr_R[f'(R) =y] \geq \ee n / (2 |Im(f)|)$.
+\end{remark}
+
+% We first construct a distribution $\DDD$
+% with the properties listed in Lemma~\ref{lem:distribution}.
+% In Lemma~\ref{lem:dist_collision} we then show that the properties listed
+% in Lemma~\ref{lem:distribution} imply that 
+% $\DDD$
+% has the Geometric Collision Property.
+
+
+\paragraph{Fraction of blocks with high entropy.}
+Using Theorem~\ref{thm:chain_leak_2}, with setting  $\ell \geq 4n^3$ and
+assuming sufficient min-entropy of $R$, we first show that one can ensure more than
+$1/3$ fraction of the blocks having min-entropy at least $1.5\lg(n)$, upon
+leaking the outcome of $f'$ and all previous blocks. 
+
+First notice that with all but $\ee n$ probability, $f'(R) \neq \perp$. Therefore, it suffices to let $\ee = 2^{-\kappa}$.
+% Then, let $\mathcal{\DDD} = \mathcal{D}_\leak \mid y$, where $y \in Im(f')$ is chosen to be the set in the partition $\mathcal{M}$ that contains the sequence $R$. ???
+Then, by setting $\dd = 1$, we have
+\begin{align*}
+    \lg(|Im(f)|) &\leq  n \cdot (2e)^{n/2} \cdot (n+{k_b})^{k_b} \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}\\
+    &= \bigg(\lg(n) +n/2 \cdot \lg(2e) \bigg)+ {k_b} \cdot \lg (n+{k_b})  + n \cdot (1+\lg(\lg(\ell) + \kappa))\\
+    & < 3n/2 + 2 k_b \lg n + n (2 + \lg \kappa) 
+    < 0.5 n \lg n 
+\end{align*}
+for sufficiently large $n$ with $k_b = \Omega(\kappa)$ and $n/k_b^2 = \Omega(\kappa)$. 
+%\url{https://www.desmos.com/calculator/v1baleoakw}}
+
+
+Combining the above with Remark \ref{rem:del_tiny_2},
+    we have $\Pr_{\DDD_\leak}[f'(R) =y] \geq \ee n / (2 \cdot 2^{0.5 n \lg (n)})$  and for every $y\in Im(f')\setminus\{\perp\}$.
+Moreover, for every $r$ such that $f'(r) = y$, we have 
+%\begin{equation}\label{eq:min-ent-leak_2}
+%\Pr_{\DDD}[r] = \Pr_{\DDD_\leak}[r \mid y] = \frac{\Pr_{\DDD_\leak}[r \wedge y]}{\Pr_{\DDD_\leak}[y]} \le
+%\frac{2^{-(3n\lg n+n)} }{(\ee n/2) \cdot 2^{-0.6n \lg n}} = 2^{-(2.4n\lg n + n)} \cdot (2/\ee n),
+%\end{equation}
+\begin{align}
+\Pr_{\DDD}[r] = \Pr_{\DDD_\leak}[r \mid y] = \frac{\Pr_{\DDD_\leak}[r \wedge y]}{\Pr_{\DDD_\leak}[y]} \le
+\frac{2^{-(\frac{8n}{9} \lg \ell+n)} }{(\ee n/2) \cdot 2^{-0.5n \lg n}} 
+= 2^{-(\frac{8}{9} \log \ell - 0.5 \lg n + 1) \cdot n} \cdot (2/\ee n), \label{eq:min-ent-leak_2}
+\end{align}
+which suggests $\DDD$ has min-entropy at least 
+%$2.4 n \lg(n) + n - \lg (2/\ee n)$
+$(\frac{8}{9} \log \ell - 0.5 \lg n + 1) \cdot n - \lg (2/\ee n)$.
+We show that the following holds: 
+The min-entropy of at least $n' = n/3$
+blocks, {\em conditioned on the outcome of all prior blocks} as well as $y$, 
+is at least $\lg(n^{1.5})$.
+
+Towards a contradiction, assume otherwise.
+Let $V$ be the set of blocks with min-entropy at least $\lg(n^{1.5})$
+and let $W$ be the set of blocks with min-entropy
+less than $\lg(n^{1.5})$ (as defined in Theorem \ref{thm:chain_leak_2}).
+% Let $V$ be the set of blocks with min-entropy at least $\lg(n^{1.5})$
+% and let $W$ be the set of blocks with min-entropy
+% less than $\lg(n^{1.5})$. 
+We will show that if $|V| \leq n/3$ there exists 
+a point $r$ in the support of $\mathcal{\DDD}$
+such that 
+%$\Pr_{\mathcal{\DDD}}[r] > 2^{-(2.4 n \lg n +n)} \cdot (2/\ee n)$
+$\Pr_{\mathcal{\DDD}}[r] > 2^{-(\frac{8}{9} \log \ell - 0.5 \lg n + 1) \cdot n} \cdot (2/\ee n)$, contradicting the min-entropy of $\mathcal{\DDD}$.
+
+First, find any value $r^*_V$ such that $\Pr_{\mathcal{\DDD}}[R_V =r^*_V]
+\geq \frac{1}{\ell^{|V|}}$. 
+Note that $r^*_V$ must exist since the support size
+of $R_V$ is at most $\ell^{|V|}$.
+%
+Let 
+$ \supp_W(r^*_V) = \{r: r_V = r^*_V \wedge \Pr_{\mathcal{\DDD}}[R = r] > 0 \}$. 
+Then, we have 
+$
+\Pr_{\DDD}[R \in \supp_W(r^*_V)] 
+%\sum_{r \in \supp_W(r^*_V)} \Pr_{\mathcal{\DDD}}[R_V = r_V \wedge R_W = r_W]
+= \Pr[R_V = r^*_V] 
+\geq \frac{1}{\ell^{|V|}}.
+%\geq \frac{1}{(4\cdot n^3)^{|V|}}. 
+$
+
+Second, we show that $|\supp_W(r^*_V)| \le (2 \cdot n^{1.5})^{|W|}$. 
+Consider any $r \in \supp_W(r^*_V)$. 
+Applying the fourth condition of Theorem \ref{thm:chain_leak_2} with $\dd = 1$, condition on any $y\in Im(f')\setminus\{\perp\}$, for any $i \in W$
+and any fixing of $R_{< i} = r_{< i}$, the number of 
+elements in the support of $R_i \mid r_{< i}$ is at most
+$2 \cdot n^{1.5}$,
+% since any block in $W$ has min-entropy less than $\lg (n^{1.5})$. 
+which implies that $|\supp_W(r^*_V)|$ must be at most $(2 \cdot n^{1.5})^{|W|}$, since the positions for $V$ are fixed to $r^*_V$. 
+
+Based on the above two arguments, by the averaging argument, there must be some $r^* \in \supp_W(r^*_V)$
+for which 
+%\[
+%\Pr_{\mathcal{\DDD}}[R = r^*]
+%\geq \frac{1}{(4\cdot n^3)^{|V|}} \cdot \frac{1}{(2 \cdot n^{1.5})^{|W|}}.
+%\]
+$
+\Pr_{\mathcal{\DDD}}[R = r^*]
+\geq \frac{1}{(\ell)^{|V|}} \cdot \frac{1}{(2 \cdot n^{1.5})^{|W|}}.$
+%
+Therefore, we have 
+%\begin{align*}
+%-\lg \Pr_{\DDD}[r^*] & = 
+%|V| \lg (4n^3) + |W| \lg (2 n^{1.5})  \\
+%& = 2|V| + 3 |V| \lg n + |W| + 1.5 (n-|V|) \lg n \\
+%& \leq  n + |V| + 1.5(n + |V|) \lg n. 
+%\end{align*}
+\begin{align*}
+-\lg \Pr_{\DDD}[r^*] & = 
+|V| \lg (\ell) + |W| \lg (2 n^{1.5})  
+=  |V| \lg \ell + |W| + 1.5 (n-|V|) \lg n \\
+& \leq  n + |V| \lg (\ell/n) + 1.5 n \lg n 
+\leq  n + n/3 \lg (\ell/n) + 1.5 n \lg n \\
+& = n + n/3 \lg (\ell) - 1/3 n \lg n + 1.5 n \lg n, 
+\end{align*}
+where the second to last line follows assuming
+$|V| < n/3$.
+
+To reach contradiction to (\ref{eq:min-ent-leak_2}), we require that 
+\[
+n + n/3 \lg (\ell) - 1/3 n \lg n + 1.5 n \lg n \leq 
+\left(\frac{8}{9} \lg \ell - 0.5 \lg n + 1 \right) \cdot n - \lg (2/\ee n).
+\]
+The above is implied by
+$
+5/3 n \lg n \leq 5/9 n \lg \ell - \lg (2/\ee n).$
+
+When $\ell \geq 4n^3$ the above is implied by
+$
+5/3 n \lg n \leq 5/3 n \lg n + 10/3 n - \lg (2/\ee n),
+$
+which is true for $n \geq \lg(1/\ee) = \kappa$.
+Thus we reach contradiction to (\ref{eq:min-ent-leak_2}). %since we have 
+%$n + |V| + 1.5(n + |V|) \lg n < 2.4 n \lg n + n - \lg (2/\ee n)$ when $|V| < n/3$.
+%\url{https://www.desmos.com/calculator/iwnapexlxz}
+%
+We therefore
+conclude that $|V| \geq n/3$.
+%since otherwise the element $S$ such that $S_v =s_v \wedge \supp_W = s_w$
+%has a probability weight greater than
+%$2^{-2 n \lg n}$\mingyu{$2^{-(1.9 n \lg n +n)} \cdot (2/\ee n)$}, which contradicts the min-entropy
+%of $\mathcal{D}''$.
+
+\iffalse
+This means that the support size of at least $n' = n/3$
+blocks is at least $n^{2.5}$,
+since otherwise can guess the correct value in
+the support of $\mathcal{D}''$
+with
+probability
+$(1/n^{2.5})^{2n/3} \cdot 1/{n\ell-2n/3 \choose n/3} \geq
+2^{-3 n \lg n}$, which contradicts the min entropy
+of $\mathcal{D}''$.
+\fi
+
+%We will now additionally leak the blocks with min-entropy less than
+%$n^{1.5}$.
+%Let $\mathsf{leak}$ denote the additional leaked information. 
+
+%We now have a distribution $\DDD := \mathcal{D}' \mid M, \mathsf{leak}$
+%that satisfies the requirements of the lemma.
+%\end{proof}
+
+
+\paragraph{Geometric collision property.}
+Note that we can equivalently view $R'$ in the support of $\DDD$ as a set of size $n'$, or as a stream of elements of length $n'$, where the element in the $i$-th block (for $i \in [n']$) comes from universe $U_{i}$, and $\{U_{1}, \ldots, U_{n'}\}$ are mutually disjoint.
+Taking the second view, given $R',S'$ in the support of 
+$\DDD$, we have that $|R' \cap S'| = z$ if and only if
+there exists some set $Z \subseteq [n']$ of size $z$
+such that (1) the \emph{ordered} set of elements in the blocks of $R'$ indexed by $Z$
+(denoted $R'_{Z}$)
+is equal to the \emph{ordered} set of elements in the blocks of $S'$ indexed by $Z$
+(denoted $S'_{Z}$)
+and (2) the set of elements in the blocks of $R'$ indexed by $[n'] \setminus Z$
+(denoted $R'_{ \overline{Z}}$)
+and the set of elements in the blocks of $S'$ indexed by $[n'] \setminus Z$
+(denoted $S'_{ \overline{Z}}$) are disjoint.
+
+We are now ready to analyze the probability that $|R' \cap S'| = z$
+for $R', S'$ drawn from $\DDD$,
+and for $z \in [n']$:
+\begin{align*}
+    \Pr_{R', S' \leftarrow \DDD} [|R' \cap S'| = z] 
+    &= \sum_{Z \subseteq [n'], |Z| = z} \Pr_{R', S' \leftarrow  \DDD} 
+    \left [ \left ( R'_{Z} = S'_{Z} \right ) \wedge 
+    \left ( R'_{\overline{Z}} \cap S'_{\overline{Z}}) = \emptyset \right ) \right]\\
+    &\leq \sum_{Z \subseteq [n'], |Z| = z} \Pr_{R', S' \leftarrow  \DDD} [R'_{Z} = S'_{Z}]
+    ~~\leq \sum_{Z \subseteq [n'], |Z| = z} \left ( \frac{1}{n^{1.5}} \right )^z
+\end{align*}
+%
+The second inequality holds since each element in the stream has min-entropy at least $\lg (n^{1.5})$.  
+Therefore, we have 
+$
+  \Pr_{R', S' \leftarrow \DDD} [|R' \cap S'| = z] 
+\le {{n/3} \choose z} \cdot  \left ( \frac{1}{n^{1.5}} \right )^z
+   \leq \left ( \frac{1}{n^{0.5}} \right )^z.$

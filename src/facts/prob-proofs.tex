@@ -1,0 +1,149 @@
+\subsection{Proofs for tail bound probabilistic analysis}
+\label{app:proofs}
+
+We now complete the proofs of lemmas and theorems in \cref{sec:tailbounds}.
+
+We start with the following standard way to approximate numbers near
+1 with exponentials.
+\begin{lemma}\label{lem:expapprox}
+    For any real constant $\alpha>0$, and any
+    real $x$ with $0<x\le\alpha$, we have
+    \[
+    \exp\left(-\tfrac{1}{\alpha}\ln\tfrac{1}{1-\alpha}\cdot{}x\right)
+    \le 1-x < \exp(-x).
+    \]
+\end{lemma}
+
+We also re-state this straightforward consequence of the Hoeffding/Chernoff bound on the sum of random variables:
+\begin{lemma}\label{lem:hoeff}
+    Let $X_1,\ldots,X_n$ be independent Poisson trials, and write $Y=\sum_i X_i$ for their sum. If $\Expect[Y] = \mu$, then for any $\delta>0$, each of
+    \(\Pr(Y \ge \mu + \delta)\) and  \(\Pr(Y \le \mu - \delta)\)
+    are at most \(\exp(-2\delta^2/n)\).
+\end{lemma}
+
+We now recall and prove the building-block lemmas from \cref{sec:tailbounds}.
+
+\lemmalowerp*
+
+\begin{proof}
+    From \eqref{eqn:pw}, we know this probability is exactly
+    $p_w = 1 - \frac{\falling{(s-u)}{w}}{\falling{s}{w}},$
+    where $w = v-\tau$ is the number of unfilled slots remaining.
+    Using \cref{lem:expapprox} we have
+    $\frac{\falling{(s-u)}{w}}{\falling{s}{w}}
+    \le \left(1-\frac{u}{s}\right)^w
+    \le \exp(-uw/s)$,
+    which means that
+    \[p_w \ge 1 - \exp\left(-\tfrac{u(v-\tau)}{s}\right)
+        = 1 - \exp\left(-\tfrac{u\tau}{s}\cdot{}\left(\tfrac{v}{\tau}-1\right)\right).
+    \]
+    Applying the two lower bounds on $\frac{u\tau}{s}$ and $\tfrac{v}{\tau}$
+    from the lemma statement yields the claimed result.
+\end{proof}
+
+\lemmaupperp*
+
+\begin{proof}
+    Using again \eqref{eqn:pw}, the probability is exactly
+    $p_w = 1 - \frac{\falling{(s-u)}{w}}{\falling{s}{w}},$
+    where again $w\le v$ is the number of unfilled slots for
+    item $x$. Then
+    \[
+        \tfrac{\falling{(s-u)}{w}}{\falling{s}{w}}
+        \ge \tfrac{\falling{(s-u)}{v}}{\falling{s}{v}}
+        \ge \left(\tfrac{s-u-v+1}{s-v+1}\right)^v
+        > \left(1 - \tfrac{u}{s-v}\right)^v.
+    \]
+    Using upper bounds on $\frac{v}{s}$ and $u$ from the lemma statement, we have
+    \[p_w
+        < 1 - \left(1 - \tfrac{u}{s-v}\right)^v
+        \le 1 - \left(1 - \CzeroUpper{}\tfrac{1}{v}\right)^v.\]
+    Finally, the lower bound on $v$ from the lemma statement shows $\CzeroUpper{}/v \le \CboxUpper{}$, and so we can finally use the lower exponential bound of \cref{lem:expapprox} to obtain the stated result.
+\end{proof}
+
+\lemmauppertau*
+
+\begin{proof}
+    The tipping point $\tau$ is the expected number of slots filled in the table
+    if $t$ of the $m$ total calls to \Increment{} were actually called on this
+    particular item.
+    
+    We can divide the calls to \Increment{} into two groups: the $t$ calls for
+    item $x$, and the $m-t$ calls for other items. The expected number of slots
+    within $x$'s item set filled by the first group is at most
+    $\Cphigh t$, from \cref{lem:upperp}.
+    
+    For the second group, these calls to
+    \Increment{} on unrelated items are distributed uniformly at random among
+    all table indices, and so their expected fraction within this item set
+    is the same as their overall fraction in the table. Therefore, the expected
+    number of slots filled by calls to \Increment{} on other items is at most
+    \[\frac{(m-t)v}{s} < \frac{mv}{s} 
+        \le \frac{\CmaxvOvert}{\CminsOvern} t.\]
+    
+    By linearity of expectation, we can sum these two to obtain an upper bound
+    on the total expected tipping point as given in the lemma statement.
+\end{proof}
+
+Now we can proceed to the proofs of the main theorems on the accuracy of the CCBF.
+
+\theoremfp*
+
+\begin{proof}
+    Let $\tau_t$ be the tipping point for any actual number $m\le n$ of total set
+    bits in the table $T$ and for the given threshold $t$.
+    And consider random variables $X_1,\ldots,X_v$ for the $v$ slots assigned to
+    item $x$, where each $X_1$ is 0 or 1 depending on whether the corresponding
+    slot in table $T$ is 0 or 1. We want to know the probability that the sum
+    of the $X_i$'s is at least $\tau_t$, which is what would cause $\TestCount(x,t)$
+    to produce a false positive.
+    
+    Let $k = t - \Cminfp\sqrt{\lambda t}$ be the actual number of calls to
+    \Increment{} on item $x$, and write $\tau_k$ for the tipping point at threshold
+    $k$. By definition and the exact calculations for $\tau_k$ outlined earlier,
+    we know that $\Expect[\sum X_i] = \tau_k$.
+    
+    The difference between these two tipping points $\tau_t - \tau_k$ is
+    the expected number of extra slots filled by $t-k$ calls to \Increment{},
+    which from \cref{lem:lowerp} is at least 
+    \[\Cplow(t-k) = \Cplow{}\cdot{}\Cminfp{}\sqrt{\lambda t} \ge \sqrt{\tfrac{\lambda v}{2}},\]
+    where in the last step we used the upper bound on $v$ from the assumptions
+    of the theorem.
+    
+    The variables $X_i$ are not independent, but
+    they are \emph{negatively correlated}, meaning that the whenever one slot is filled,
+    it only decreases the likelihood that another is filled; intuitively, this is
+    because there are now fewer chances to fill the other slot.
+    Therefore we can apply the Hoeffding bound in this direction
+    (\cref{lem:hoeff}) to say that
+    \[Pr\left(\sum X_i \ge \tau_k + \sqrt{\tfrac{\lambda v}{2}}\right)
+    \le \exp(-\lambda),\]
+    as required.
+\end{proof}
+
+\theoremfn*
+
+\begin{proof}
+   Writing $k$ for the actual number of complaints given in
+   \eqref{eqn:fn}, we need a tail bound on the probability that,
+   after $k$ calls to $\Increment{}$ on the same item $x$, there are still
+   fewer than $\Cfour{}t$ slots of $x$'s item set filled in, where the latter
+   constant comes from applying the upper bound on the tipping point from
+   \cref{lem:uppertau}.
+   
+   For this, we need a lower bound on the \emph{expected} number of
+   bits set after $k$ calls to \Increment{} on item $x$; from \cref{lem:lowerp}
+   this is at least $\Cplow{}k$.
+   
+   Now we can apply the Hoeffding bound (\cref{lem:hoeff}),
+   with $\mu = \Cplow{}k$ and $\mu+\delta=\Cfour{}t\ge\tau$
+   to see that the probability that less than $\tau$ bits of $x$'s user set
+   are flipped is at most
+   \begin{align*}
+    &\exp\left(-2(\Cfour{}t-\Cplow{}k)^2/k\right) \\
+    \le& \exp\left(-2\left(0.38\lambda + 0.66\sqrt{\lambda t}\right)^2/k\right)\\
+    \le& \exp\left(-\frac{.28\lambda^2 + \lambda\sqrt{\lambda t} + .87\lambda t}%
+        {.4\lambda + .7\sqrt{\lambda t} + 1.1t}\right) \\
+    \le& \exp(-.7\lambda)  \le 2^{-\lambda}.
+   \end{align*}
+\end{proof}

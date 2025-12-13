@@ -1,0 +1,142 @@
+\subsection{Preliminaries}
+A function $g$ is  {\it negligible}, denoted $\negl(\cdot)$, if for every
+positive integer $c$, there is an integer $n_c$ such that for all $n \ge n_c$ we
+have $g(n) \le 1/n^c$. Let $\secparam$ denote the security parameter. 
+
+\paragraph{Range of hash functions and the random oracle model.}
+We model each hash function as a random oracle that maps each item to a real
+value in $[0, 1]$, and the output of the hash function is long enough to ensure
+that the probability of any two different items having a hash collision is
+negligible. 
+
+\paragraph{Notation.} 
+Let $\U$ denote the universe of input elements. In this paper, we will consider two input sets $A,B \subseteq \U$.  
+Let $n_A = |A|, n_B = |B|$.  Let $I = A \cap B$, $n_{I} = |I|$. 
+We will also let $B_{+x^*} = B \cup \{x^*\}$.
+
+Let ${\sf Eq}$ be an equality function; i.e., ${\sf Eq}(a, b) = 1$ if
+$a=b$ and $0$ otherwise. 
+For a hash function $h$ and a set $A$, we let $h(A) := \{h(a): a \in A\}.$
+Let $\Bino(m,p)$ be the binomial distribution with $m$ trials and each
+trial having success probability $p$. 
+
+\paragraph{Basic min-hash functionality.} We describe the basic min-hash functionality in Figure~\ref{prot:pb}. In this work, we will consider several variants and consider privacy implications. 
+
+\protocol{The Basic Min-Hash Functionality $\Pbase$}{The Basic Min-Hash Functionality}{prot:pb}{!tbh}{
+The functionality is parameterized with a random oracle $\OOO$. \medskip
+
+\textbf{Input:} $P_1$ and $P_2$'s input vectors $A = (x^A_1, \ldots,
+x^A_{n_A})$ and $B = (x^B_1, \ldots, x^B_{n_B})$. 
+\medskip
+
+\textbf{Minhash:} 
+\begin{enumerate}
+    \item  
+    Randomly sample prefix  $\mathsf{pre}$, which
+    is used to define hash functions $h_1,h_2,\dots,h_k$, where for $i \in [k]$,
+    $h_i(\cdot) := \mathcal{O}(\mathsf{pre} || i || \cdot)$.
+ 
+    \item For input $A$, compute the min-hash vector
+    $(u^A_1,u^A_2,\dots,u^A_k)$ as follows:
+
+    \begin{enumerate} 
+    \item[] For each iteration $j \in [k]$:
+        \begin{enumerate}
+        \item For each item $x^A_i \in A$, compute $y^A_{i,j} = h_j(x^A_i)$. 
+        \item Compute the min-hash for iteration $j$; that is, $u^A_j = \min \{ y^A_{i,j} : i \in [n_A] \}. $  
+        \end{enumerate}
+    \end{enumerate} 
+     
+    \item Likewise, compute another min-hash vector $(u^B_1,u^B_2,\dots,u^B_k)$ for input $B$ similarly. 
+
+    \item Compute $c = \sum_{j=1}^k {\sf Eq}(u^A_j, u^B_j).$
+\end{enumerate}
+
+\medskip 
+
+\textbf{Output:} Return $(\mathsf{pre}, c)$ to $P_1$ and $P_2$.  }
+
+
+\paragraph{Differential privacy.} The definitions of $(\ee,\dd)$-differential privacy are given below. 
+
+\begin{definition} [$(\ee,\dd)$-indistinguishablity] 
+    Two random variables $X$ and $Y$ are $(\ee,\dd)$-indistinguishable (denoted as $X \aed Y$) if, for all events $S$, we have
+        $$\Pr[X \in S] \leq e^\ee \cdot \Pr[Y \in S] + \dd, ~~
+        \Pr[Y \in S] \leq e^\ee \cdot \Pr[X \in S] + \dd.$$
+\end{definition}
+
+\begin{definition} [Computational $(\ee,\dd)$-indistinguishablity] 
+    Two random variables $X$ and $Y$ are computationally $(\ee,\dd)$-indistinguishable (denoted as $X \caed Y$) if, for any polynomial time adversary $\A$, it holds 
+        \[\Pr[\A(X) = 1] \leq e^\ee \cdot \Pr[\A(Y) = 1] + \dd, ~~
+        \Pr[\A(Y) = 1] \leq e^\ee \cdot \Pr[\A(X) = 1] + \dd.\]
+\end{definition}
+
+\begin{definition}[(Computational) $(\ee,\dd)$-differential privacy]
+    Let $X$ be an input space and $\nb$ be a relation capturing the notion of neighboring inputs. Let $\MM: X \rightarrow Z$ be a randomized algorithm that takes input $x\in X$ and outputs a value over $Z$. We say that the mechanism $\MM$ is $(\ee, \dd)$-differentially private if the following holds: 
+    %
+   \[ \forall x, x' \in X  \st x \nb x': ~ \MM(x) \aed \MM(x').\]
+   The mechanism $\MM$ is $(\ee, \dd)$-computationally differentially private if 
+    %
+   $\forall x, x' \in X  \st x \nb x': ~ \MM(x) \caed \MM(x').$
+\end{definition}
+
+
+\begin{definition}
+  The global sensitivity of a function $f:\NN^{|\XXX|} \to \RR^k$ is:
+  $$\Delta f = \max_{X, Y \in \NN^{|\XXX|}, \Vert X - Y \Vert_1 = 1} \Vert f(X) - f(Y) \Vert_1$$
+\end{definition}
+
+\begin{definition}
+The Laplace Distribution (centered at 0) with scale $b$ is the distribution
+with probability density function:
+$Lap(x|b) = \frac 1 {2b} e^{-|x|/b}.$
+\end{definition}
+%
+We will write $Lap(b)$ to denote the Laplace distribution with scale $b$. 
+Given any function $f:\mathbb{N}^{|\XXX|} \to \mathbb{R}^k$, the Laplace mechanism that adds
+noise drawn from Laplace distribution; that is, given an input database $X$,
+the mechanism outputs $f(X) + (Y_1, \ldots , Y_k),$ where $Y_i$ are i.i.d.
+random variables drawn from $Lap(\Delta f/\ee)$. It is known that the Laplace
+mechanism achieves $(\ee, 0)$-differential privacy~\cite[Theorem 3.6]{dwork2014algorithmic}. 
+
+
+\paragraph{Distributional differential privacy (DDP).} 
+%We now define distributional differential privacy. 
+We adapt the original definition~\cite{FOCS:BGKS13} for our purpose to consider a two-party protocol that takes sets as input more explicitly. Specifically, we consider a computational indistinguishability variant for our DDP definition. 
+%We also define computational DDP for a two-party protocol against an adversary that can corrupt one of them in an honest-but-curious manner.
+
+
+\begin{definition}[View of a party in a two-party functionality]
+Given a two-party functionality $\F$ with parties $P_1$ and $P_2$, let $\view_{P_1}^\F(A, B)$ denote the view of $P_1$ for the execution of functionality $\F$ with $A$ and $B$ being the input of $P_1$ and $P_2$ respectively. In particular, $\view_{P_1}^\F(A, B)$ consists of the following (the view of $P_2$ is defined similarly): 
+\begin{itemize}
+    \item The input $A$ of $P_1$,
+    the private random coins of $P_1$, and the output of the functionality.
+    \item If the functionality is in the random oracle model,
+    we allow a semi-honest $P_1$ to make a polynomial number of arbitrary queries
+    to the random oracle and to add the input/output information to its view.
+\end{itemize} 
+\end{definition}
+
+\begin{definition}[DP and DDP of a two-party functionality]
+A two party functionality $\F$ is (computationally) \textbf{$(\ee,\dd)$-DP}
+against an adversary corrupting $P_1$, if for every $(A, B)$ and every $x^* \in
+\U$, it holds that $\view^\F_{P_1}(A, B)$ is (compuatationally)
+$(\ee,\dd)$-indistinguishable from $\view^\F_{P_1}(A, \Bp)$.
+
+
+Let $\XXX$ denote a random variable for two sets over universe $\U$.
+Let $\Z$ denote the random variable measuring the additional auxiliary information known to the adversary.
+A two party functionality $\F$ is (computationally) \textbf{$(\ee,\dd,\Delta)$-DDP} against an adversary corrupting $P_1$, if for every distribution $\DDD \in \Delta$ on $(\XXX,\Z)$, every $(X = (A, B), Z)$ in the support of $(\XXX, \Z)$ and every $x^* \in \U$, it holds that
+$\big(\view^\F_{P_1}(A, B), Z\big)$ is (computationally) $(\ee,\dd)$-indistinguishable from $\big(\view^\F_{P_1}(A, \Bp), Z\big)$.
+Here, $(A, B)$ and $Z$ are sampled from $\DDD$, and each party may use additional randomness. 
+
+DP and  DDP against an adversary corrupting $P_2$ is defined symmetrically. 
+\end{definition}
+%
+
+\paragraph{Tail bound for a Binomial distribution.} We will use this well-known inequality. 
+\begin{lemma}[\cite{D18}] \label{lem:bin}
+Consider a Binomial distribution $B(n,p)$. We have 
+\[ \Pr_{X \sim B(n,p)}[X \ge k] \le \binom{n}{k}  p^k. \]
+\end{lemma}
+

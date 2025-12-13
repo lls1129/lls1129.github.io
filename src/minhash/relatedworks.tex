@@ -1,0 +1,90 @@
+\subsection{Related Works}
+%\subsubsection{Differential private and MPC}
+\paragraph{Differential privacy (DP).} Differential privacy protects the privacy of individuals by limiting an adversary's ability to learn information about an individual input from the output of a computation~\cite{dwork2006differential,dwork2006calibrating}. 
+% %
+% \iffalse
+% In particular, a differentially private mechanism guarantees that the output of the mechanism on a dataset containing a private input is (almost) the same as the output of the mechanism if the private input was not included. 
+% % 
+% \fi
+For a good overview of differential privacy and many of the algorithms to achieve it, both in the standard curator setting and in distributed settings, we refer the reader to the book by Dwork and Roth~\cite{dwork2014algorithmic}.
+
+% A large body of works have developed differentially private algorithms ~\cite{dwork2014algorithmic} for a variety of computations. Most of these works focused on the standard setting with a trusted curator who has access to all users’ data and aims to respond in a differentially private manner.  
+
+% Differential privacy has also been considered in a multi-party setting. In this setting two common approaches for differential privacy are local-DP, where parties add noise to their own inputs prior to performing the computation (e.g.,~\cite{erlingsson2014rappor,kasiviswanathan2011can}) or secure computation emulating the trusted curator (e.g.,~\cite{BNO08})     
+
+
+
+\iffalse
+\linnote{What about current flow: DP -> Secure MPC -> DP computation(as a relaxion)? Some part above could be moved into the following and combined as "Relaxion versions of DP"}\mingyu{Technically speaking, I think there are two types of relaxations we are talking here: the relaxation of the notion of DP itself (for example, DDP or CDP), or using DP as a security relaxation for distributed protocols. I feel like the former should be discussed in the preliminary as we are not proposing new directions on that, and the latter should be included here, as I think the public hash (compared to the private hash) can be viewed as additional leakage that allows us to acquire more efficient secure protocol.}
+\fi
+
+%\anote{We should really have another paragraph on MPC here, but we can't do this without adding new refs}
+
+\paragraph{Optimizing secure computation using differential privacy.}
+Another direction of work has considered how to use DP to reduce the cost of secure computation, especially when we aim for DP-style guarantees from the final output.
+%In the setting of distributed computing, differential privacy has been studied to relax security for better asymptotic and concrete efficiency.
+% ~\cite{BNO08,CCS:HMFS17,CCS:MazGor18,SODA:CCMS19,PETS:GroRinRos19,Usenix:MLRG20}.  
+~\cite{BNO08} first proposed such optimization for the problem of secure summation. ~\cite{CCS:HMFS17} and ~\cite{PETS:GroRinRos19} applied the differential privacy relaxation to improve efficiency of set-intersection protocols. ~\cite{CCS:MazGor18}, and ~\cite{Usenix:MLRG20} consider graph-parallel computations and design more efficient solutions with differential private leakages. ~\cite{SODA:CCMS19} consider classic tasks like sorting, merging, and range-query data structures with differential privacy relaxation. %\anote{I don't think this next paper fits here, but if I remove it it changes the bibliography we submitted}
+~\cite{ACNS:GKLX22} consider multiparty shuffle that allows a differentially private leakage and shows that it suffices to achieve end-to-end differential privacy in the shuffle model of DP.
+
+\paragraph{Private sketching.}
+Sketching algorithms, or ``sketches'' are sublinear space algorithms for
+approximating certain properties of large inputs or data streams. The main idea
+behind sketching algorithms is to generate a compact summary data structure that
+allows for efficient storage, merging, and processing.  
+
+Some recent
+works~\cite{FOCS:BBDS12,choi2020differentially,smith2020flajolet,wang2022differentially,ICML:HehTinCor23,dickens2022order,li2019privacy,pagh2022improved,mir2011pan,melis2015efficient,bassily2015local,bassily2017practical,huang2021frequency,zhao2022differentially}
+have additionally observed that sketches can often also aid in achieving privacy as the inherent loss of information in the sketch can essentially make the sketch itself be differentially private or to only require a little additional noise. 
+
+A line of research pertinent to our work involves constructing private
+sketches for set cardinality estimations
+~\cite{stanojevic2017distributed,sparka2018p2kmv,nunez2020rrtxfm,kreuter2020privacy,pagh_et_al:LIPIcs.ICDT.2021.18}.
+%
+Recently, ~\cite{ICML:HehTinCor23}
+proposed a private mergeable sketch that can be used to estimate the size of the
+intersection and union of sets.  
+
+% We note that our noiseless version achieves reproducibility, since it adds no noise. There
+% exists earlier work trying to achieve reproducibility by using sticky noise
+% (i.e., adding noise, but deriving the noise from the
+% data)~\cite{denning1980secure,francis2017diffix}; however, simply following this
+% approach to achieve reproducibility may cause a system to be susceptible to
+% attacks~\cite{gadotti2019signal}. 
+
+\paragraph{Secure approximation.}
+Secure approximation studies what functions can be securely approximated without revealing anything beyond the true output~\cite{ICALP:FIMNSW01,STOC:HKKN01}.  
+While this notion is quite different from that of differentially private approximation that we consider here, we note that our FHE-based protocol described in Section~\ref{sec:curator} additionally achieves this.
+
+\paragraph{Adversarially robust property-preserving
+hash functions and robust sketching.} 
+Property-preserving hash (PPH) functions allow compressing large input $x$ into a short digest $h(x)$ such that some property $P(x,y)$ can be computed given only $h(x)$ and $h(y)$.  Adversarially-robust PPH~\cite{itcs:BoyLavVai19,EC:FleSim21,EC:FleLarSim22,C:HLTW22} aim to further guarantee that $P(x,y)$ is correctly computed (i.e., robust) even if the inputs $x$ and $y$ are chosen after the hash function $h$ is fixed.  A related concept of robust sketching, e.g.~\cite{ITCS:ACSS23,JACM:BJWY22} aims to construct sketches that provide good approximations even when inputs are chosen after the randomness of the sketch is fixed.  
+
+Both of these approaches are similar to our work in that they also study the consequences of making the choice of hash (or sketch) known to the adversary.  However, these works focus on robustness to adversarial inputs, while we instead focus on the privacy of the output when the adversary additionally sees the hash functions.  
+
+\paragraph{Differentially private min-hash} DP min-hash aims to make min-hash approximation differentially private by adopting standard DP mechanisms such as adding DP noises to the output to hide individual items in the input sets. 
+In particular, ~\cite{ sisap:AumBouSch20} achieves local DP (LDP) min-hash by either adding Laplacian noise, or using generalized randomized response to perturb the minhash vectors. 
+Other than this, there are also other earlier efforts. For example, ~\cite{conc:YWRLLQ19} attempts to use a flawed exponential mechanism to achieve DP. This leads to a faulty claim of $\eps$-DP, as pointed out in~\cite{ sisap:AumBouSch20}. ~\cite{arxiv:YLLHQ17} correctly applies exponential mechanism. However, this results in a large amount of noise being added to the results.\anote{I don't want to claim there is a bug.}
+
+% However, they falsely claim that only applying this mechanism to a random subset of iterations can improve the privacy and utility tradeoff. 
+
+
+%\anote{Add paragraph on secure approximation.}
+%\linnote{should we cite `sticky noise`? It is mainly for privacy-preserving database queries rather than sketching. Also it is being attacked.}
+
+
+% for secure computation on large datasets while preserving privacy. The main idea behind private sketching is to generate a compact summary of the dataset that allows for efficient storage and processing, while limiting the amount of information that can be inferred about the original data. Several sketching algorithms have been proposed for set operation ~\cite{}, cardinality estimation ~\cite{}, $L_p$ norm estimation ~\cite{}, etc. Private sketching in a distributed manner is a way of sketches in a multi-party setting to jointly summarize a compact statistical summary across multiple private datasets, while limiting the amount of information that can be inferred about the original data. ~\cite{} These works leverage the advantages of private sketching to balance the trade-offs among sketching accuracy, computation efficiency, communication and privacy on multi-party computation. 
+
+%Differential private sketching
+
+%min hash
+
+%\subsubsection{Jaccard Index and Differential Private Min-hash}
+
+\iffalse
+\paragraph{Jaccard index estimation by Min-hash} is widely used to determine the similarity between two sets of data ~\cite{real1996probabilistic,B97}, or used as a building block of a large ML algorithm ~\cite{}. Though the Jaccard index of two sets, which is defined as the ratio between the cardinality of set intersection and set union, is easy to compute the exact value in a single trusted curator setting, it is essentially useful to run an estimation instead in a distributed 2-party setting, where a super-linear communication is often a burdensome. Many works have constructed 2-party Jaccard index estimation using Min-hash protocol with sublinear communication ~\cite{wpes:CFGT12,eprint:RCSWK19,Faber:thesis}. \linnote{do we need to also say something about the single party local min-hash works? }
+
+\paragraph{Differential private min-hash} aims to output an estimation of Jaccard similarity while preserving differential privacy. Line of works constructed differential private 2-party min-hash protocols by adding DP noise ~\cite{arxiv:YLLHQ17, conc:YWRLLQ19, sisap:AumBouSch20}. 
+\linnote{check single party setting min-hash with DP}
+
+\fi

@@ -1,0 +1,104 @@
+\subsection{Introduction}
+The proliferation of fake and misleading information online has had significant impact on political discourse~\cite{NYTimes:IsaRoo18} and has resulted in violence~\cite{WAPo:Samuels20}. Large services like Facebook and YouTube have begun to remove or label content that they know to be fraudulent or misleading~\cite{Facebook:fakeNews, Youtube:fakeNews}, through a combination of a manual process of reviewing posts/videos and automated machine learning techniques.
+
+However, on end-to-end encrypted messaging services (EEMS), like Signal, WhatsApp, Telegram, etc., where so-called ``fake news'' is also shared, such review is impossible. At no point do the providers see the plain-text, unencrypted contents of messages transmitted through their systems and thus cannot identify and remove offending material.  Such platforms must instead rely on their users to identify and report malicious content.  Even then, identifying and removing \emph{users} who repeatedly post misleading and dangerous content may still be difficult because some platforms, like Signal, also hide the path the message took, so identifying and addressing the original source of the misinformation may not be possible.
+
+Tyagi et al.~\cite{CCS:TyaMieRis19} introduced a first approach for overcoming this challenge and allow EEMS to effectively \emph{traceback} an offending  message to find the originator based on a user complaint.  The traceback procedure also assures that all other messages remain private and that innocent parties cannot be blamed for originating the offending messages.
+
+While innovative, there are two notable shortcomings of Tyagi et al.'s traceback scheme. First, it requires extensive ``housekeeping'' on the part of the platform that scales as the number of messages in the system. Second, a single, possibly malicious, complaint can trigger a traceback and thus reveal the message contents as well as the history of prior recipients, which is counter to  the goals of EEMS to maintain the privacy of users communicating through this system. One malicious user (e.g., a government agent) can reveal the source of a piece of information (e.g., a leak) that they have received, violating the privacy of the sender (e.g., the leaker) by issuing a single complaint to the EEMS. While it may be possible to apply manual review to these complaints, the scale of possible complaints could make this impractical. Several follow-on papers~\cite{CCS:PeaEskBon21, eprint:IssAlhMay2021} show how to achieve \emph{source-tracking} for EEMS to identify the source of a message without relying on traceback of all intermediate recipients.  However, these systems still allow a single complainer to trigger the source-tracking. 
+
+In this paper, we aim to resolve this conflict between privacy and ability to identify misinformation in EEMSs by first observing that ``fake news'' messages are, by definition, viral and are thus received, and likely complained about, by a large number of users.  Private messages, such as leaks, on the other hand, are likely to be targeted and are thus only received by a small number of users; indeed, any message received by only a few users is inherently less impactful overall and more likely deserving of privacy protections.  This leads to a more nuanced approach for identifying fake news: apply a threshold approach to complaint management, whereby only viral fake news would overcome the threshold and trigger an audit. 
+
+Counting the number of complaints in a private manner is a non-trivial problem if the privacy of the EEMS' clients is to be maintained prior to the threshold being reached, even given available cryptographic solutions. For example, a homomorphic encryption solution (e.g.,~\cite{EC:KatMyeOst01}) would enable the checking and updating of counts for each message, but the access patterns of clients checking and updating counters could reveal how many complaints a message receives even if the threshold is not reached. Oblivious RAM  (ORAM) (e.g.~\cite{JACM:GolOst96, JACM:SDSCFRYD18}) could be used to protect the access patterns, but have high computational overheads and usually assume clients may share secrets and are not malicious.
+Pricate Information Retrieval (PIR) does not assume clients are trusted, but has different scalability challenges and does not address the problem of obliviously updating without revealing which message is being complained about.
+%but ORAMS incur a $O(\log n)$ overhead per operation where $n$ is the number of messages in the system that could be complained about, which can count in the millions. Additionally, ORAMs are single-client storage mechanisms, so using such a scheme would require 
+%communications between clients (to share state information) and offer limited or no protection against malicious clients. 
+
+We propose a different approach we call a  Fuzzy Anonymous Complaint Tally System (FACTS).  FACTS maintains an (approximate) counter of complaints for each message, while also ensuring that, until a threshold is exceeded, the status of these counters is kept private from the server and all users who have not received the message.  FACTS builds on top of any end-to-end encrypted messaging platform, incurring only small overhead for message origination and forwarding.  In particular, FACTS maintains the communication pattern of the underlying messaging system, requiring no new communication or secrets between users even for issuing complaints.   
+
+To avoid the high overheads of existing solutions, FACTS uses a novel oblivious data structure we call a \emph{collaborative counting Bloom filter} (CCBF).  This data structure allows us to obliviously increment and query approximate counters on millions of messages while only requiring 12MB of storage.  Moreover, incrementing a counter only requires flipping \emph{one bit} on the server and only uses the minimal communication of $\log{|T|}$ bits to address a single bit in the server-stored bit vector $T$.  While the resulting counters are only approximate, we show experimentally and analytically that we are able to enforce the threshold on complaints with good accuracy, namely,  below 10\% error in theory, and below 3\% in most realistic deployment scenarios.   
+
+The contributions of this paper are as follows:
+\begin{itemize}
+    \item We develop a collaborative counting Bloom filter, a new oblivious data structure for counting occurrences of a large number of distinct items.
+    \item We use this data structure to instantiate a provably-secure system, FACTS, for privacy-preserving source identification of fake news in EEMSs.
+    \item Finally, we perform experiments to show the accuracy and overhead of FACTS in realistic deployment scenarios.
+\end{itemize}
+
+\subsubsection{Setting and Goals}
+FACTS is built on top of an 
+end-to-end encrypted messaging system (EEMS).  For this work, we focus on the setting of server-based EEMSs with a server $S$ that enables (authenticated) encrypted communication between the system users.  Examples of such EEMSs include Signal and WhatsApp, among many others.  
+
+To make sure that FACTS is compatible with existing encrypted messaging systems, we make the following performance requirements:
+
+\begin{enumerate}
+    \item \textbf{Messaging costs:}  Originating and forwarding messages should incur little computational overhead for both users and the server over the standard procedure in the encrypted messaging system,
+    \item \textbf{Server storage:} The storage overhead of the server should be small (i.e., a single table not exceeding a few MBs),
+    \item \textbf{User costs and requirements:}
+    Issuing complaints requires a small amount of communication and computation from the complaining user, and no cost to other users.  Moreover, complaints can not require direct communication between users or require the users to have any apriori shared secrets that are not known to the server.
+    % \item No direct communication between clients should be required as part of the complaint process,
+    \item \textbf{Complaint throughput:}  Issuing complaints may be slower than standard forwarding of messages, but the system must be able to handle millions of complaints per day. 
+    % \item There should be no apriori shared secrets between all clients (i.e., the received message is the only secret)
+    % \item Clients should be able to issue complaints without much space or computation overhead (i.e., a mobile device can do it.)
+\end{enumerate}
+
+To ensure privacy of messages and complaints, FACTS requires that complaints remain hidden from the server (and colluding clients) until a threshold of complaints is reached.  Additionally, FACTS ensures integrity of the complaint process ensuring correctness of complaint counts and the identity of the revealed originator once the threshold is reached. Specifically, FACTS satisfies the following security guarantees:
+
+\begin{enumerate}
+    \item \textbf{Message privacy:} All messages remain end-to-end encrypted and private from the server and non-receiving clients until a threshold of complaints is reached and an audit is issued.  Moreover, even after the audit, only information about the audited message is revealed.  
+    % Finally, FACTS inherits the message privacy of the messaging system, i.e., if the messaging platform hides sender identity (e.g., by using sealed-sender in Signal) then so does FACTS.
+    % \anote{The above paragraph needs to be rewritten.  I don't think we want to highlight what happens with hiding sender identity and the claim about not revealing the path on audit is false.}
+    
+    \item \textbf{Originator integrity:}  Once a threshold of complaints is reached on a message, FACTS will only identify information about the true originator of the message.  In particular, no innocent party can be framed as the originator.
+    
+    \item \textbf{Complaint privacy:} The server and any colluding clients who have not received a message $x$ should have no information about the number of complaints on $x$.  In particular, the server should not be able to tell what message is being complained about.
+    
+    \item \textbf{Complaint integrity:}  A set of malicious clients should not be able to alter the number of complaints on any message $x$.  Specifically, they cannot block or delay complaints, and cannot (significantly) increase the number of complaints on a message $x$ except through the legitimate complaint process.
+\end{enumerate}
+
+% To add:
+% \begin{itemize}
+%     \item Inherit security of underlying messaging system.  If we start with sealed-sender, we get sealed-sender
+%     \item Don't reveal entire messaging pattern even after ``traceback''
+%     \item Don't reveal originator or content of message, just reveal $H(m)$
+%     \item If originator is revealed, there is no way to blame someone else
+%     \item Fuzzy Anonymous Complaint Tracking (FACT)
+% \end{itemize}
+
+
+\subsubsection{Building FACTS}
+Recall that our goal is to enable privacy-preserving counters to tally complaints on each message $m$.  This suggests an immediate solution where the server stores an encrypted counter for each message, and clients interact with the server to increment the counter and check the threshold.  While implementing such counters is certainly possible using homomorphic encryption~\cite{STOC:Gentry09} or standard secure computation techniques~\cite{FOCS:Yao86, STOC:GolMicWig87, STOC:BenGolWig88} , the problem is that the access pattern of clients' updates to counters leaks information to the server by revealing the complaint histogram.  
+This suggests a further modification to store the counters inside an oblivious RAM (ORAM)~\cite{JACM:GolOst96} to hide such access patterns from the client.  However, in our setting this would require a multi-client ORAM~\cite{maffei-msmcoram,concuroram,MOSE} which incurs significant performance penalties including at least $O(\log{n})$ communication overhead when there are $n$ distinct messages.  Moreover, this would require direct communication between clients to maintain their ORAM state, and additionally, no security against malicious clients.
+
+In FACTS, we take a different approach.  Instead of relying on encryption to hide the counters from the server, we hide the counters in plain sight by mixing together the counters for all the messages in a way oblivious to the server.  To make this possible, we relax the functionality of FACTS to only enforce approximate, rather than exact, thresholds.  That is, the threshold will be triggered on a message $x$ after $(1\pm \epsilon) t$ complaints for a small error $\epsilon$.
+Making this relaxation allows us to use a sketch-based approach for counting the complaints.  
+
+To achieve this functionality obliviously, we develop a collaborative counting Bloom filter (CCBD).
+This data structure consists (roughly) of a collection of Bloom filters, one for each message, where the Bloom filters corresponding to different messages are mixed together to hide them from the server. Specifically, the server stores a table of $s$ bits.  A random subset of $v$ bits ($V_x$) is assigned to each message $x$ at origination; these bits will be used for tracking complaints about this message (for intuition, one can think of these bits as forming a Bloom filter for storing the set of complaints about the message).  We stress that the server has no information about which bits correspond to which messages. 
+
+To complain about a message $x$, a user who has received $x$ can find the corresponding bit locations, and will (attempt to) flip one of the bits from 0 to 1.  However, allowing users to flip any bit they choose, would allow malicious users to significantly accelerate complaints for a message they wish to disclose.  To prevent this behavior, we restrict each client to only be able to flip (i.e., complain on) a small (of size $u$) set of locations $U_C$.  Thus, to complain about a message $m$, a client first identifies the set $V_x$ of bits corresponding to $x$.  Then, she checks how many of these bits have already been set to 1, and if this exceeds a specified threshold, notifies the server to trigger an audit.  If the threshold for $x$ is not yet exceeded, the client sees whether any of the 0 bits in $V_x$ are in her set $U_C$, and if there are any such bits, she flips one of them (chosen at random) from 0 to 1.  Otherwise, the user still flips a random bit in their set $U_x$, so the server cannot discern anything about the message being complained on. We prove in Section~\ref{sec:ccbf} that the actual number of complaints necessary to trigger an audit can be calculated with high precision allowing us to (approximately) enforce the desired threshold.
+
+\subsubsection{Limitations of FACTS}
+In order to present FACTS, it is also important to recognize what our system does \emph{not} do.
+%We leave addressing these limitations as interesting future work.  
+
+First, unlike some prior work, e.g.~\cite{ICS:Geiger16},%
+\cite{km-private-membership-usenix21}, FACTS does not attempt to automatically detect misinformation.  Instead, it relies on users reporting it when they see it.
+This reliance on users has inherent benefits and limitations.
+While our system is not subject to the kinds of machine-generated false positives
+that can arise from, e.g., hash collisions
+\cite{brandom-verge-apple-csam},
+our model is inherently vulnerable to any sufficiently large group of dishonest users, who could trigger an audit on a benign message.
+This is why we suggest the possibility of a manual human review process on message contents before the service provider would take any action on an audited message; see \cref{sect:third-party-audits}.
+
+Second, due to the approximate nature of FACTS, it works most effectively for relatively large thresholds, say in the hundreds and above.  For our application to fake news detection, this is reasonable as such messages are likely to garner a large number of complaints, and indeed this was our main motivation for this paper. We leave as interesting possible future work to implement a system supporting smaller thresholds, even as small as 2, efficiently.
+
+One additional functionality limitation is that, as is true with any application using Bloom filters, the CCBF data structure can fill up once too many complaints have been registered.  To deal with this issue it is necessary to periodically reset the counters and refresh the CCBF data structure.  We refer to each such refresh period as an \emph{epoch}, and in the remainder of the paper only present algorithms for a single epoch.
+
+Finally, on the security side, an important limitation is that FACTS reveals meta-data on who issues complaints (but not what message they complain on).  It is important to consider what is revealed by this meta-data.  By observing the timing of messages and complaints, the server can make some inferences about what messages users are sending and complaining about.  For example, suppose that the server sees that $A$ sends a message to $B$, and then $B$ issues a complaint. Then, it may be reasonable for the server to assume that $A$ has sent the message which $B$ complained about, even though this is not directly leaked by our system. Nonetheless, our definition guarantees that the server cannot be certain that this is indeed the case.  We note that the messaging meta-data is already a byproduct of the underlying EEMS platform.  FACTS only adds complaint meta-data to this leakage; see \cref{sec:altFACTS} for some further discussion.
+
+
+
+\subsubsection{Paper Layout}
+The remainder of the paper is organized as follows.  In Section~\ref{sec:prelim}, we introduce some of the notation we use throughout the paper.  Then, in Section~\ref{sec:facts} we describe the syntax and functionality of FACTS.  In Section~\ref{sec:ccbf} we present and analyze our main building block, the CCBF data structure.  Then, in Section~\ref{sec:construction}, we show how to use a CCBF to instantiate FACTS.  We demonstrate the accuracy and performance through experimental evaluation in Section~\ref{sec:experiments} and then prove the security of FACTS in Section~\ref{sec:proofs}.  Finally, we describe some variants of FACTS and directions for future work in Section~\ref{sec:altFACTS} and present related work in Section~\ref{sec:related}.
+

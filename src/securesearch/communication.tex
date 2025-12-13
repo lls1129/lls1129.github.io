@@ -1,0 +1,17 @@
+\paragraph{Communication cost}
+
+\begin{figure}
+\includegraphics[width=.99\linewidth]{expimgs/Communication_3lines.png}
+\caption{Communication cost vs.~Result set size with $n=100,000$.}
+\label{fig:communication}
+\end{figure}
+
+Figure~\ref{fig:communication} shows the network cost of our protocols as a function of the result set size $s$, while the database size is 100k. For BS-COIE and PS-COIE, we use the state-of-art SEALPIR+ by \cite{} for retrieval, which improves the regular SEALPIR from Microsoft \cite{} and achieves an overall of 80KB for uploads and downloads per PIR request comparing to the 368.6 KB per request by Regular SEALPIR. 
+
+\begin{itemize}
+    \item In both BF-COIE and PS-COIE, the network costs are dominated by the PIR network cost, which grows linear to s, the size of resulting set. Such that a nearly constant gap between the costs of the two COIE protocols is presented for different s, mainly due to extra rounds of PIR queries in BF-COIE protocol to hide the number of false positives in the Matching step. For fetching 128 data entries at the same time, the communication cost for BS-COIE is about 11.5 MB, which won't bottleneck in most of network scenarios including average 4G cellulars. 
+    \item Given that BFS-CODE does not require any fetch step for retrievals, its total communication size is simply determined by the size of its Bloom Filter and the encoding of SEAL homomorphic ciphertexts. The communication size also grows as resulting set size grows up, which causes the growth of its Bloom Filter, and BFS-CODE only requires about 1MB uploads and downloads to retrieve 128 data entries. 
+\end{itemize}
+
+
+Furthermore, a 2-server PIR by \cite{} could be used to further optimize the network cost down to around 0.9KB per PIR request. The size reduction is about 80x compared to SEALPIR+. 

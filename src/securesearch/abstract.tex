@@ -1,0 +1,72 @@
+
+\begin{abstract}
+Fully homomorphic encryption (FHE) enables a simple, attractive
+framework for secure search.  Compared to other secure search systems,
+no costly setup procedure is necessary; it is sufficient for the client
+merely to upload the encrypted database to the server. Confidentiality
+is provided because the server works only on the encrypted query and
+records. While the search functionality is enabled by the full
+homomorphism of the encryption scheme.
+
+For this reason, researchers have been paying increasing attention to
+this problem. Since Akavia et al. (CCS 2018) presented a framework for
+secure search on FHE encrypted data and gave a working implementation
+called SPiRiT, several more efficient realizations have been proposed. 
+
+In this paper, we identify the main bottlenecks of this framework and
+show how to significantly improve the performance of FHE-base secure
+search. In particular,  
+\BI
+\item To retrieve $\ell$ matching items, the existing framework needs to
+repeat the protocol $\ell$ times sequentially. In our new framework, all
+matching items are retrieved in parallel in a {\em single protocol
+execution}.
+
+\item The most recent work by Wren et al. (CCS 2020) requires $O(n)$
+multiplications to compute the first matching index. Our solution
+requires {\em no homomorphic multiplication}, instead using only
+additions and scalar multiplications to encode all matching indices.  
+
+\item 
+  Our implementation and experiments show that to fetch 16 matching
+  records, our system gives an 1800X speed-up over the state of the art
+  in fetching the query results resulting in a 26X speed-up for the full
+  search functionality.
+  
+  
+%   runs x1800 \snote{maybe tone down a bit,
+%   since that's not total search time?} faster than the state-of-art. 
+\EI
+
+%TO DO LIST:
+%\begin{enumerate}
+%\item Rewrite Intro - 
+%\begin{itemize}
+%    \item Beef up motivation, add citations
+%    \item Match/Fetch
+%    \item Remove Encode/decode from description of prior work
+%    \item Rework 1.2 to remove ``new framework'', add encoding schemes as contribution
+%    \item PIR step???
+%\end{itemize}
+%\item Prelims
+%\begin{itemize}
+%    \item Add functional definition of secure search
+%    \item Move security definition here
+%    \item Add PIR - 1 server vs. 2 server
+%    \item Fix the image
+%\end{itemize}
+%\item Constructions
+%\begin{itemize}
+%    \item Describe how to build secure search
+%    \item Prove it secure
+%\end{itemize}
+%\item Experiments
+%\begin{itemize}
+%    \item Experiments and graphs
+%    \item Write-up
+%\end{itemize}
+%\end{enumerate}
+%
+\end{abstract}
+
+

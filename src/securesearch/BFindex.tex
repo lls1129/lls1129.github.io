@@ -1,0 +1,327 @@
+\subsection{COIE Schemes }
+We assume the input index vector $v \in \zo^n$ is sparse. In particular,
+throughout the paper, we assume $s = o(n)$.
+
+\subsubsection{A Warm-up construction}
+Using an algebraic BF, we can create an $(n, s, c, f_p)$-COIE scheme
+(the parameters $c$ and $f_p$ will be worked out after the description of
+the scheme).
+
+
+\paragraph{$\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$.}
+The encoding algorithm works as follows:
+
+\BEN
+\item Initialize a BF $\lbra B \lket := (\lbra B_1 \lket, \ldots, \lbra
+B_c \lket)$ with $B_j = 0$ for all $j$. Let $\HHH = \{ h_q: \zo^* \to
+[c] \}_{q=1}^\eta$ be the associated hash functions. 
+
+\item For $i = 1, \ldots, n$:
+    \BEN
+    \item For $q = 1, \ldots, \eta$, do the following: 
+      Compute $j = h_q(i)$ and set $\lbra B_j \lket := \lbra B_j \lket +
+      \lbra v_i \lket$.
+ 
+\EEN
+\EEN
+
+
+
+Note that at step 2.a in the above, if $v_i = 0$, then $B_j$ stays the
+same. On the other hand, if $v_i = 1$, then $B_j$ will be increased by
+1.  This implies that $B$ will exactly store the results of the
+operations $\{ {\sf BF.Insert}(B, i) : i \in \idx(v)\}.$
+
+
+\paragraph{$\Decode(B_1, \ldots, B_c)$.}
+Given the algebraic BF $B$, we can recover
+the indices for the nonzero elements as follows:
+\BI
+\item Initialize $I$ to be the empty set. 
+\item For $i \in [n]$: if ${\sf BF.Check}(B, i)$ = ``yes", add $i$ to $I$.  
+\item return $I$. 
+\EI
+
+\paragraph{Parameters $c$ and $f_p$.} Since this is a warm-up
+construction, we perform only a rough estimation on the false positive parameter
+and the compactness parameter. 
+
+For reasons that will become clear later, we wish to keep the upper bound
+on the number of false positives ($f_p$) small.  In
+particular, we use a BF with false-positive rate $1/n$. Since there
+are $n$ operations of $\sf BF.Check$, the expected number of false
+positives is 1, and from the Chernoff bound, the number of false
+positives is bounded by $\Omega(\log \secparam)$ with overwhelming
+probability in $\secparam$. This implies that we have $f_p = \Omega(\log
+\secparam).$
+
+The dimension $c$ of the Bloom filter $B$ can be
+computed using the following equation of BF false positive ratio: 
+
+$$ \Big(1 - e^{-\frac{\eta s}{c}} \Big)^\eta \le \frac 1 n,$$ 
+
+Setting $c = \eta s \cdot n^{\frac 1 \eta}$ will satisfy the
+equation. This can be verified by using an equality $1 - e^{-x} \le x$
+for $x \in [0,1]$; that is, $1 - e^{-\frac{\eta s}{c}} \le \frac{\eta
+s}{c} = 1/n^{1/\eta}.$
+
+\paragraph{Efficiency.}
+\BI
+\item The encoding algorithm uses $n\eta$ homomorphic addition
+operations, and $n\eta$ hash functions.  
+
+\item The dimension $c$ of the encoding is $\eta s \cdot n^{\frac 1
+\eta}$. Usually, $\eta$ is set to between 2 and 32.
+
+\item The decoding algorithm uses $n$ operations of $\sf BF.Check$.
+\EI
+
+In summary, we have reduced the encoding size $c$ to be sub-linear in $n$ as desired. However, we still need to reduce the number $\sf
+BF.Check$ operations in Decode to be sub-linear in $n$. We show how to achieve that in our next construction.
+
+\subsubsection{BF-COIE}\label{sec:BF-COIE}
+We now show how to improve the above construction to achieve decoding in
+time $o(n)$.  The main idea of this improvement is to use Bloom filters
+to represent a binary search tree, one BF per level of the tree.  We can
+then guide the decoding algorithm to avoid decoding branches that do not contain
+non-zero entries.  As most branches can be truncated well before
+reaching the leaf-level Bloom filter, this results in sublinear total
+cost.
+
+% By improving the above warm-up scheme, we will construct a BF-cased COIE
+% scheme whose decoding algorithm performs $o(n)$ operations of $\sf
+% BF.Check$. The main idea is to {\em guide the decoding algorithm to
+% perform the binary search in parallel only for the necessary portion of
+% indices}.
+
+
+\paragraph{Example.} 
+Before presenting the formal protocol for this construction we convey our idea through an example.  Let $n =
+32$, and suppose we wish to encode the indices $I =  \{1, 15, 16\}$. 
+Denote $$I^k = \left \{ \Big \lceil \frac i {2^k} \Big \rceil : i \in
+I \right \}.$$
+
+Intuitively, an element $i$ in $I^k$ can be thought of a range of length
+$2^k$ covering $[(i-1)\cdot 2^{k}+1, i\cdot2^k]$. We have:
+\BI
+\item $I^4 = \{1\}.$
+\item $I^3 = \{1, 2\}.$
+\item $I^2 = \{1, 4\}.$
+\item $I^1 = \{1, 8\}.$
+\item $I^0 = \{1, 15, 16\}.$
+\EI
+
+Now, assume we insert each set $I^k$ into its own BF. We can traverse these BF's to decode the set $I$ as follows:
+
+\BEN
+\item Check $I^4$ for all possible indices. The only possible indices at this level are $1$ and $2$, since $n=32$ and $I^4$ divides the original indices by
+$2^4 = 16$. 
+
+In the above example, When we query the BF for $I^4$, it 
+only contains the index $1$, which means that no values greater than 16 are contained in $I$.  We can thus avoid checking any such indices at the lower levels.  
+
+Now consider the BF at the next level (i.e., the BF for $I^3$).  The
+only possible values at this level are 1,2,3,4, but since we already
+know that there are no values greater than 16 in $I$, we only need to
+check for values $1, 2$ (since $3 \cdot 8 > 16$).
+
+\item Check $I^3$ for indices $1, 2$. The BF will show that indices $1$ and $2$
+are both present, which means that we need to check indices $1,2$ and $3,4$ in $I^2$. 
+\item Check $I^2$ for indices $1, 2, 3, 4$. The BF will show that indices $1$ and $4$
+are present, which means that we only need to check indices $1, 2$ and $7, 8$ in $I^1$, all other indices can be skipped.
+
+\item Check $I^1$ for indices $1, 2, 7, 8$. The BF will show that indices $1$ and $8$
+are present, which means that we need to check indices $1, 2$ and $15, 16$.
+\item Check $I^0$ for indices $1, 2, 15, 16$, and output the
+final present indices $1, 15, 16$. 
+\EEN 
+
+Assuming, for now, that there are no false positives, observe that this approach checks at most $2 \cdot |I|$ values at each
+level, and there are $\lg n$ levels. Therefore, the decoding algorithm
+will check $O( |I| \cdot \lg n)$ indices, which is sub-linear in $n$.  
+
+\paragraph{BF-COIE.} We now describe our BF-COIE construction. As
+before, we will work out the parameters after describing our
+construction. The encoding algorithm is described in Algorithm~\ref{alg:BFCOIEE}.   
+
+\begin{algorithm}[htbp]
+
+\BEN
+\item[] \hspace{-2em} For simplicity, $n$ and $s$ are assumed to be powers of 2. 
+
+\item $t := \lg {\frac n {2s}}$ 
+\item For $k = 0, \ldots, t$: 
+
+\BEN
+\item Initialize $\lbra B^k \lket = (\lbra B^k_1 \lket, \ldots, \lbra
+B^k_\ell \lket) := (\nil, \ldots, \nil)$. 
+
+\item Choose $\HHH^k = \{ h^k_q: \zo^* \to [\ell] \}_{q=1}^\eta$ at random.
+
+\item For $i \in [n]$ and for $q \in [\eta]$: \\ 
+  \BEN
+  \item[] $i' := \lceil i/2^k \rceil$, 
+        $j := h^k_q(i')$, \\
+        If $\lbra B^k_j \lket$ is $\nil$, then $\lbra B^k_j \lket := \lbra v_{i'} \lket$ \\
+        Otherwise, $\lbra B^k_j \lket := \lbra B^k_j \lket + \lbra v_{i'} \lket$
+  \EEN
+\EEN
+
+\item Output $\lbra B^0 \lket, \ldots, \lbra B^t \lket$.
+\EEN
+
+\caption{ ${\sf BF\mbox{-}COIE}.\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$}
+\label{alg:BFCOIEE}
+\end{algorithm}
+
+Note that in steps (a) to (c) above, the warm-up construction is used to
+construct BF $B^k$ for indices $I^k$. 
+
+In order to reduce the size of the output encoding, we set $t$ to be
+$\lg {\frac n {2s}}$ instead of $\lg n$ as described previously. Note
+that when $t$ is set in this way, $I^t$ contains at most $n/2^t = 2s$
+possible values thus maintaining our invariant.
+
+
+% Note that with $B^t$, index
+% $i'$ can still be at most $i/2^k = 3s$, which is an important aspect to
+% set  the size $\ell$ of each BF below, when we work out the parameters. 
+
+The decoding algorithm is described in Algorithm~\ref{alg:BFCOIED}.   
+
+\begin{algorithm}[htbp]
+\BEN
+\item Initialize $I, I^0, \ldots, I^{t-1} := \emptyset$
+\item Initialize $I^t := \{1, \ldots, n/2^t\} = [2s]$
+\item For $k = t, t-1, \ldots, 1$, and for $i' \in I^k$: \\
+  $~~~$ If ${\sf BF.Check}(B^k, i')$ is ``yes", add $2i'-1$, $2i'$ in $I^{k-1}$  
+\item For $i \in I^0$: \\
+  $~~~$ If ${\sf BF.Check}(B^0, i)$ is ``yes", add $i$ to $I$  
+\item Output $I$ 
+\EEN
+\caption{ ${\sf BF\mbox{-}COIE}.\Decode(B^0, \ldots, B^t)$} 
+\label{alg:BFCOIED}
+\end{algorithm}
+
+\paragraph{Useful lemma.}
+The following lemma will be useful to analyze the parameters $c$ and
+$f_p$.
+
+\begin{lemma}\label{lem:4_1}
+Consider a Bloom filter with false positive rate $\frac{1}{m}$, where
+$m$ is an arbitrary positive integer. Suppose at most $m$ $\sf BF.Check$ operations
+are performed in the BF.
+%
+Then, for any $\delta > 0$, we have:
+$$\Pr [ \mbox{\rm \# false positives} \ge 1+\delta] 
+  \le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}}.$$ 
+\end{lemma}
+
+The proof, by an application of the Chernoff bound, can be found in Appendix~\ref{app:proof41}. 
+\iffalse
+\begin{proof}
+Let $\alpha_i$ be the $i$th item that is checked through $\sf
+BF.Check$. That is, we consider a sequence of $${\sf
+BF.Check}(\alpha_1), \ldots, {\sf BF.Check}(\alpha_{m}),$$
+where $\alpha_i$ is an arbitrary item. 
+Since we wish to upper bound the false positives (i.e., we don't care about true
+positives), it suffices to consider the
+case that for every $i$, 
+$\alpha_i \not \in {\sf BF}$ (i.e, $\alpha_i$ has not been inserted in the
+BF) as this maximizes the number of possible false positives.
+
+Let $X_1, \ldots, X_m$ be independent Bernoulli random variables with
+$\Pr[X_i = 1] = 1/m$. 
+%
+Since the BF false positive rate is assumed to be $1/m$, we have
+for all $i$, 
+$$\Pr[{\sf BF.Check}(\alpha_i)=1] = \Pr[\mbox{query $i$ is a false positive}] \le
+1/m.$$
+Thus, we can bound the number of false positives
+by $\sum_{i=1}^m X_i$.
+
+Now, let $\mu :=
+\Exp[\sum X_i] = m \cdot \frac 1 m = 1$.  By applying the Chernoff bound with $\mu =
+1$,  we have: 
+%
+$$ \Pr\left[\sum_{i=1}^m X_i \ge 1 + \delta \right]  
+\le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}} .$$
+\end{proof}
+\fi
+
+Regarding the above Lemma, we remark that setting $\delta =
+\Omega(\log \secparam)$, we have $$\Pr\left[\sum_{i=1}^m X_i \ge 1 +
+\delta \right]  = \negl(\secparam).$$
+
+
+\paragraph{Parameters $c$ and $f_p$.} We set the false positive
+upperbound $f_p := \Omega(\log \secparam)$ for the BF-COIE scheme. In
+our experiments, we set $f_p = 16$. 
+
+Now, let $m = \max(2s, s+2f_p)$, we set the BF false positive rate to $1/m$.
+Recall that in the BF-COIE construction, the topmost BF $B^t$ performs the $\sf
+BF.Check$ operation with $2s$ times; see line (2) in
+Algorithm~\ref{alg:BFCOIED}. Using the above Lemma, the number of false
+positives in the top level BF $B^t$ is at most $f_p$  with all but
+negligible probability in $\secparam$. Furthermore, the index $i$ in
+$B^t$ is expanded into two indices $2i-1$ and $2i$ in $B^{t-1}$. This
+means that the number of false indices to be checked in $B^{t-1}$ due to
+the false positives in $B^t$ is at most
+$2f_p$. 
+
+Now consider an index $i$ that belongs to $B^{t}$.  Algorithm~\ref{alg:BFCOIED} will 
+run ${\sf BF.Check}$ on the values $2i-1$ and $2i$ in $B^{t-1}$.  Since at least one
+of these values must actually belong to $B^{t-1}$, this leads to at most one false index
+being checked.
+%
+Thus, the maximum number of false indices that would be checked in
+$B^{t-1}$ is at most $s + 2f_p$ (i.e., $2f_p$ from false
+positives of $B^t$ and $s$ from true positives of $B^t$). 
+
+The above argument applies inductively all the way to the bottom most
+level, which means that the maximum number of false indices that would
+be checked in each level BF $B^i$ will be at most $s + 2f_p$.  In the
+end, the bottom BF will have at most $f_p$ false positives, and the
+overall BF-COIE scheme will have at most $f_p$ false positives with all
+but negligible probability in $\secparam$. 
+ 
+For the compactness parameter $c$, we must determine the dimension $\ell$
+of each BF. Recall that we set the BF false positive rate to 
+$1/m$ for $m = \max(2s, s+2f_p)$:
+
+$$ \Big(1 - e^{-\frac{\eta s}{\ell}} \Big)^\eta \le \frac 1 m.$$ 
+Setting 
+$\ell = \eta \cdot s \cdot m^{\frac 1 \eta}$ would
+satisfy the above condition, which can be  
+verified using an inequality $1 - e^{-x} \le x$ for $x \in [0,1]$; that
+is, $1 - e^{-\frac{\eta s}{\ell}} \le \frac{\eta s}{\ell} =
+(1/m)^{1/\eta}.$
+
+Since the encoding has $t+1$ BFs, the overall compactness parameter is as
+follows:
+$$c = (t + 1) \cdot \ell = O\left ( \eta \cdot s^{1 + \frac 1 \eta}
+\cdot \lg \frac n s \right ).$$
+
+\paragraph{Efficiency.}
+\BI
+\item The size $c$ of encoding is $O\left ( \eta \cdot s^{1 + \frac 1 \eta} \cdot
+\lg \frac n s \right )$. In our experiment, we choose $\eta = 2$. 
+
+\item The encoding algorithm uses $O(\eta
+\cdot n \cdot \lg \frac n s)$ homomorphic addition operations and hash
+functions. 
+
+\item The decoding algorithm uses $\sf BF.Check$ operations for $O(s \lg
+\frac n s)$ times. 
+\EI
+
+In summary, assuming $s = o(n)$, we reduced the encoding size $c$ to be
+sub-linear in $n$.  Moreover, we also reduced the number $\sf BF.Check$
+operations to be sub-linear in $n$. 
+
+\paragraph{Remark.} Although this scheme has multiple BFs, the size of
+encoding $c$ is smaller than that of the warm-up scheme! This is because
+with multiple levels of BFs, we can relax the false positive ratio for
+each BF. The encoding computation time was increased by a multiplicative
+factor of $\lg \frac n s$. 
+

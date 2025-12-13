@@ -1,0 +1,236 @@
+\subsection{Min-Hash with DP}
+\label{sec:basic}
+Since the noiseless min-hash functionality cannot achieve DP as discussed above, we consider a noisy variant that provides DP. We first consider the global sensitivity of $\Pbase$ and use the standard Laplace mechanism to provide DP. 
+
+\subsubsection{Sensitivity} \label{sec:sensitivity}
+Let $B = (x_1^B, \ldots, x_{n_B}^B)$ and $\Bp = (x_1^B, \ldots,
+x_{n_B}^B, \xs)$, and WLOG, we consider two neighboring inputs $(A, B)
+\mbox{ and } (A, \Bp)$; the case in which $\xs$ is added into $A$ can be
+shown symmetrically. 
+
+We show how changing the input sets from $B$ to
+$\Bp$ affects the final count. Let $\xs$ be the $(n_B+1)$-th element of
+$\Bp$.  Consider iteration $j$ of Step 2 in Figure~\ref{prot:pb}. Since
+we model each hash function $h_j$ as a random oracle, $(y^B_{1, j},
+\ldots, y^B_{n_B+1, j})$ will be uniformly distributed.
+%
+Now, consider how the min-hash $u_j^B$ is computed. {\it The value 
+$\xs$ from $\Bp$ can affect the min-hash $u_j^B$ (and thereby the final
+count $c$), only if $y^B_{n_B+1,j}$ is smaller than $(y^B_{1, j}, \ldots,
+y^B_{n_B, j})$.} 
+
+The probability that $y^B_{n_B+1,j}$ will be less than all $y^B_{i,j}$s is at most $1/(n_B+1)$
+by a symmetry argument. Note the final output is computed as the
+sum of $k$ of these trials.
+%
+Let $$S_\xs = \left\{j \in [k]: y^B_{n_B+1,j} < \min_{i \in [n_B]} \{y^B_{i,j}\}
+\right\}.$$ 
+Therefore, we consider a binomial distribution $|S_\xs| \sim \Bino(k,1/(n_B+1)),$
+which represents how many iterations $j$ cause $\xs$ to be the min-hash
+$u_j^B$. In other words, $|S_\xs|$ captures the sensitivity of min-hash. 
+%
+Therefore, given the failure probability $\delta$, the following measure
+can be used as the global sensitivity: 
+$$\sens(\delta, k, n_B) := \arg\min_s ~~\{s: \Pr_{h_1, \ldots, h_k}[|S_x| \ge s] \le \delta \} $$
+
+\begin{lemma}\label{lem:sen}
+   For any $\{x_{i}^B\}_{i \in [n_B]}$ and $x \in \U$, we have
+   $\sens(\delta, k, n_B) \le  \binom{k}{s} \cdot \left(\frac{1}{n_B+1}\right)^s$.  \end{lemma}
+
+\begin{proof} The result immediately follows from Lemma~\ref{lem:bin}.  \qedhere \end{proof}
+%
+According to the above lemma, Asymptotically,
+with $k = \Omega(\secparam)$, we have $\sigma(\delta = \negl(\secparam), k, n =
+\Theta(k^2)) = O(\lg\lg k)$. 
+ 
+\subsubsection{Noisy Min-Hash}
+We consider a variant $\Pbasenoisy$ of $\Pbase$ described in Figure~\ref{prot:noisy}. 
+
+\protocol{Noisy Min-Hash Functionality $\Pbasenoisy$}{Noisy Min-Hash Functionality}{prot:noisy}{!tbh}{
+
+\medskip
+\begin{enumerate}
+\item
+Run $\Pbase$ and let $(\mathsf{pre},c)$ be the output from $\Pbase$.
+
+\item Sample $\zeta^A$ and $\zeta^B$ from Laplace distributions $Lap(\frac{\sens(\delta/2,k, n_A)}{\epsilon})$ 
+and $Lap(\frac{\sens(\delta/2,k, n_B)}{\epsilon})$ respectively. 
+Let $\coins_A$ and $\coins_B$ the random coins that the functionality used to
+sample them. 
+
+\item 
+Let $\ell_A$ and $\ell_B$ be the minimum integers satisfying $\Pr[|\zeta^A| > \ell_A] \le \delta/2$ and $\Pr[|\zeta^B| > \ell_B] \le \delta /2$. 
+If $|\zeta_A| > \ell_A$, then truncate it so that it holds $|\zeta_A| = \ell_A$. Likewise, truncate $\zeta_B$ if necessary. 
+\item 
+Let $\round(\cdot)$ be a rounding function. 
+Output $({\mathsf{pre}}, \coins_A, \round(c + \zeta^B))$ to $P_1$ and $({\sf pre}, \coins_B, \round(c + \zeta^A))$ to $P_2$. 
+\end{enumerate}
+
+
+
+\medskip
+
+}
+\setcounter{theorem}{0}
+\begin{theorem}
+    $\Pbasenoisy$ is $(\ee, \dd)$-DP against an adversary corrupting either party. 
+\end{theorem}
+\begin{proof}
+Based on the definition, $\sens(\cdot)$ works as the upperbound on the
+sensitivity with probability $1-\delta/2$. For the honest party's noise (i.e., $\zeta_A$ or $\zeta_B$), truncation takes place with probability at most $\delta/2$. Therefore, using the standard Laplace
+mechanism~\cite[Theorem 3.6]{dwork2014algorithmic}, and since DP is preserved even with post-processing, $\Pbasenoisy$ provides
+$(\ee, \dd)$-DP. 
+\end{proof} 
+
+
+\paragraph{A two party protocol $\PPH$ securely realizing $\Pbasenoisy$}. 
+We construct a two party protocol that securely realizes functionality
+$\Pbasenoisy$. The protocol takes advantage of an ideal functionality $\F_{\psica}$ of private set intersection cardinality (PSI-CA)~\cite{DGT12} that computes the exact cardinality of the intersection of the two input sets, as described in Figure~\ref{func:psica}. 
+
+\protocol{Functionality of Private Set Intersection Cardinality $\F_{\psica}$}{Functionality $\F_{\psica}$}{func:psica}{!tbh}{
+
+\textbf{Input:} $P_1$ has a set $A$ and $P_2$ has a set $B$.
+
+\textbf{Output:} Return $|A \cap B|$ to $P_1$ and $\bot$ to $P_2$.  
+}
+
+In particular, in order to compute the noisy min-hash match counts, the parties
+construct two sets consisting min-hash values and additional dummy elements and
+then run $\F_{\psica}$ on these sets. To reflect the Laplace noise into elements
+of a set, the protocol uses unary encoding, which introduces some inefficiency.
+However, as the tail probability of Laplace noise decreases exponentially, the
+unary encoding length can be bounded with a small value, and the protocol's
+overall efficiency is still maintained. Detailed steps of the protocol are
+provided in Figure~\ref{pro:ph}.
+
+It is worth noting that the above task could also be implemented using a generic
+two-party computation (2PC) protocol. However, ~\cite{DGT12}
+proposed an efficient PSI-CA protocol that outperforms 2PC protocols for small
+input sizes (using the start-to-finish comparison including the 2PC preprocessing steps). See Section~\ref{sec:eval_comp} for more details of this PSI-CA protocol. Since our input sets are small, we chose to
+present protocol $\PPH$ using the PSI-CA functionality.
+
+We will prove below that protocol $\PPH$ securely realizes $\Pbasenoisy$. It implies that protocol $\PPH$ is also $(\ee,
+\dd)$-computational-DP~\cite{SCRS17}. The main benefit of the protocol is that the hash
+computations can be computed locally and the communication complexity of the
+protocol is {\em sub-linear in $n_A$ and $n_B$} even when the protocol implementing $\F_{\psica}$ has a linear communication complexity. 
+
+
+
+
+
+\protocol{Two-party Noisy Min-hash Protocol $\PPH^{\mathcal{O}}$}{A two-party min-hash protocol with noise}{pro:ph}{!tbh}{
+
+\textbf{Input:} $P_1$ and $P_2$'s input vectors $A = (x^A_1, \ldots,
+x^A_{n_A})$ and $B = (x^B_1, \ldots, x^B_{n_B})$. \\
+
+\textbf{Protocol:} 
+ \begin{enumerate}
+    \item $P_1$ samples prefix $\mathsf{pre}$ and sends it to $P_2$. This prefix is used to
+    define hash functions $h_1,h_2,\dots,h_k$, where for $i \in [k]$,
+    $h_i(\cdot) := \mathcal{O}(\mathsf{pre} || i || \cdot)$.
+    
+    \item\label{Step:public_hash} $P_1$ computes the min-hash vector $(u^A_1,u^A_2,\dots,u^A_k)$ locally exactly as described in $\Pbase$. Likewise, $P_2$ locally computes $(u^B_1,u^B_2,\dots,u^B_k)$.
+
+    \item $P_1$ (resp. $P_2$) samples $\zeta^A$ (resp. $\zeta^B$) from Laplace distribution
+    $Lap(\frac{\sens(\delta/2,k, n_A)}{\epsilon})$ (resp. 
+    $Lap(\frac{\sens(\delta/2,k, n_B)}{\epsilon})$). Let $\coins_A$ (resp. $\coins_B$) be the random coins that $P_1$ (resp. $P_2$) used in sampling the noise $\zeta^A$ (resp. $\zeta^B$). 
+    As in $\Pbasenoisy$, parties truncate $\zeta^A$ and $\zeta_B$ based on $\ell_A$ and $\ell_B$, if necessary. 
+    
+    Let $Z^B$ be a $2\ell_B$-bit vector representing the unary encoding of $\round(\zeta^B+\ell_B)$. That is, the first $\round(\zeta^B+\ell_B)$ bits are 1's and the remaining bits are 0's.  We let $Z^B_j$ denote the $j$th bit of $Z^B$. 
+
+    \item $P_1$ and $P_2$ invokes $\F_{\psica}$ with the following inputs: 
+
+        \begin{itemize}
+            \item $P_1$'s input: $\{ (i, u_i^A) : i \in [k]\} \cup \{(j+k, 1) : j \in[2\ell_B]\}$
+            \item $P_2$'s input: $\{ (i, u_i^B) : i \in [k]\} \cup \{(j+k, Z^B_j) : j \in[2\ell_B]\}$
+        \end{itemize}
+    Let $out$ be the output to $P_1$ from functionality $\F_{\psica}$.  
+    Set $c_A = out - \ell_B$. 
+    \item $P_1$ computes $c^{+} = c^A + \round(\zeta^A)$ and sends $c^+$ to $P_2$. $P_2$ computes $c^B = c^{+} - \round(\zeta^B)$. 
+\end{enumerate}
+
+\textbf{Output:}
+    $P_1$ and $P_2$ output $(\mathsf{pre}, \coins_A, c^A)$ and 
+     $(\mathsf{pre}, \coins_B, c^B)$ respectively.
+}
+
+\begin{proposition}
+Protocol $\PPH^{\mathcal{O}}$ described in Figure~\ref{pro:ph} securely realizes $\Pbasenoisy$ in the semi-honest model. 
+\end{proposition}
+\begin{proof} 
+First note that the protocol will correctly compute $c_A = \round(c + \zeta^B)$ and $c_B = \round(c + \zeta^A$) as in $\Pbasenoisy$. 
+For privacy, when $P_1$ is corrupted, the only message to simulate is $c_A$, the output from $\F_{\psica}$. Since the protocol is in the $\F_{\psica}$ hybrid, this message $c^A$ can be perfectly simulated by using the output from $\Pbasenoisy$. The simulator can also make sure that $\mathsf{pre}$ and $\zeta^A$ are correctly sampled by using $\sf pre$ and $\coins_A$ from $\Pbasenoisy$. For corrupted $P_2$, first the simulator makes sure that $\sf pre$ and $\zeta^B$ are correct by using $\sf pre$ and $\coins_B$ from $\Pbasenoisy$. The message $c^+ = c^B + \round(\zeta^B)$ can also be perfectly simulated, since the simulator can obtain $c^B$ from $\Pbasenoisy$.
+\end{proof}
+
+
+
+
+%===============================================================================================
+
+\subsection{Noiseless Protocol in the Private Hash Setting} \label{sec:curator}
+In Figure~\ref{prot:cu}, we describe the min-hash protocol $\PC$ in the private
+hash setting. We show that if $J(A, B)$ is a constant, there exist parameter
+regimes where $\PC$ without noise satisfies differential privacy. Our
+observation is that the final count $c$ follows a binomial distribution in the
+private hash setting, which can be treated as noise to obscure the sensitivity.
+
+
+
+\protocol{Min-Hash in the Private Hash Setting $\PC$}{Min-Hash in the
+Private Hash Setting}{prot:cu}{!tbh}{
+
+$\PC$ works exactly the same as $\Pbase$ except that it outputs only the
+final count $c$ (with the prefix ${\mathsf{pre}}$ hidden to the participants). 
+}
+
+
+\begin{theorem}\label{thm:PrivH}
+For any constant $\ee > 0$, if  $k = k(\ee, \kappa) \in \Omega(\kappa),
+n_A/k \in \Omega(\kappa), n_B/k \in \Omega(\kappa)$, and $J(A, B) \in
+(0, 1)$ is a constant independent of $\kappa$, then $\PC$ is
+$(\ee,\delta)$-DP with $\delta \in \negl(\kappa)$.
+\end{theorem}
+
+\begin{proof}
+WLOG, let $B = (x_1^B, \ldots, x_{n_B}^B)$ and $\Bp = (x_1^B, \ldots,
+x_{n_B}^B, \xs)$.  Let $p = J(A, B)$, $s = \sigma(\delta, k, \min(n_A,
+n_B)) = O(\lg\lg \kappa)$.  Recall the definition $S_\xs$ in Section~\ref{sec:sensitivity} and let
+$K_\xs = [k] \setminus S_\xs$.  Note that for the iterations in $K_\xs$,
+the min-hash matches (denoted as $c_{K_\xs}$) for both $(A, B)$ and $(A, \Bp)$ will be
+identically distributed.
+This match count $c_\xs$ will
+work as an additive noise. Since $h_1, \ldots, h_k$ are private, we have
+$c_{K_\xs} \sim \Bino(k-s, p).$ By applying Lemma~\ref{lem:bin-dp} below, we
+conclude that $\PC$ is differentially private. \qedhere
+\end{proof}
+
+\begin{lemma}
+\label{lem:bin-dp}
+Consider a Binomial distribution $\Bin$, where $n \in \Omega(\kappa)$
+and $p \in (0,1)$ is a constant independent of $\kappa$. Then, for any
+constant $\ee$ and $s = O(\lg\lg \kappa)$, 
+there are $a, b \in [n]$ with $a < np < b$ such that
+\begin{itemize}
+    \item For any $\ell \in [a,b], e^{-\ee} \le \frac{\Pr_{X\sim \Bin}[X
+    = \ell]}{\Pr_{X\sim \Bin}[X+s = \ell]} \le e^{\ee}.$ 
+
+    \item For any $\ell \not \in [a,b]$, $\Pr[\Bin = \ell] =
+    \negl(\kappa)$ and $\Pr[\Bin+s = \ell] = \negl(\kappa)$.
+\end{itemize}
+\end{lemma}
+%
+The proof of the lemma is found in Appendix~\ref{apx:lem:bin-dp}.
+
+
+\paragraph{Remark.} While $\PC$ could be considered as a trusted curator
+model, a two-party protocol realizing it can be constructed without
+relying on a trusted curator. In particular, the computation of $(u^A_1,
+\ldots, u^A_k)$ (including all $n$ hash evaluations) can be performed
+locally under a threshold FHE so that only the encryption of them may
+be sent to party $B$. Then, by computing the remaining steps under FHE
+and delivering the result using a threshold decryption, the protocol
+will securely realize $\PC$ in the semi-honest setting. We note that the
+resulting protocol has sublinear communication in $n$ since only the $k$
+inputs to the comparisons need to be communicated.
+
+

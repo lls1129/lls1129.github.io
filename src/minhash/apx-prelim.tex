@@ -1,0 +1,266 @@
+
+
+\subsection{Proof of Lemma~\ref{lem:bin-dp}} \label{apx:lem:bin-dp}
+
+Let $c= p/(1-p)$. 
+We need to find $a < np$ and $b > np$ satisfying the following condition.
+\begin{align*}
+    \frac{\Pr_{\Bin}[a]}{\Pr_{\Bin+s}[a]} = 
+    \frac{ \binom{n}{a} p^a (1-p)^{n-a}} 
+         {  \binom{n}{a-s} p^{a-s} (1-p)^{n-a+s}} 
+   < \left ( \frac{ n-a} {a -s} \right)^s  \cdot c^s 
+   \le e^\ee.
+\end{align*}
+\begin{align*}
+    \frac{\Pr_{\Bin}[b]}{\Pr_{\Bin+s}[b]} = 
+    \frac{ \binom{n}{b} p^{b} (1-p)^{n-b}} 
+         {  \binom{n}{b-s} p^{b-s} (1-p)^{n-b+s}}
+   > \left ( \frac{ n-b} {b} \right)^s  \cdot c^s 
+   \ge e^{-\ee}.
+\end{align*}
+
+\paragraph{Case 1: $s \ge \ee$.}
+We set $a = \frac{np + s(1-p)\cdot e^{\ee/s}}{e^{\ee/s}\cdot (1-p) + p}$ and
+$b = \frac{e^{\ee/s} \cdot np}{(1-p) + e^{\ee/s} \cdot p}$. Note these values satisfy the above inequalities. 
+
+To show the second requirement of the tail bound, it suffices to show that $\Pr_{\Bin}[X
+\le a+s] = \negl(\kappa)$; the other case holds
+similarly.
+
+Let $\mu := np \in \Theta(\kappa)$ and let $d = 1- (a+s)/\mu$. 
+By applying the Chernoff bound, we have 
+\[ \Pr_{X \from \Bin}[X \le a+s] = \Pr[ X \le (1-d) \mu ] \le
+\exp(-d^2\mu/2). \]
+%
+We will show that we have $d = \Omega(\frac{1}{\lg\lg \kappa})$, which implies that with $\mu \in \Theta(\kappa)$, the above probability is negligible in $\kappa$. 
+Let $t = s(1-p)\cdot e^{\ee/s}$ and $u  = e^{\ee/s}\cdot (1-p) + p$. Then, we have $a = \frac{\mu + t}{u}$.
+Note that we have $\ee/s \cdot (1-p) + 1 \le u \le e$. We have the following: 
+\begin{align*}
+    d = \frac{\mu - a - s}{\mu} 
+      = \left(1 - \frac{1}{u}\right) - \frac{t/u + s}{\mu}  
+      \ge \frac{\ee/s \cdot (1-p)}{e} - \frac{t/u + s}{\mu}  
+      = \Omega\left(\frac{1}{\lg\lg \kappa}\right) - \tilde O(1/\kappa).
+\end{align*}
+
+
+
+\paragraph{Case 2: $s \le \ee$.} 
+Let $a = \frac{c}{c+e} \cdot (n+e\ee) < np$ and $b = \frac{c}{c+e^{-1}}
+\cdot n > np$. Observe that $\frac{n-a} {b-s} \cdot c = e$ and
+$\frac{n-b}{b} \cdot c = e^{-1}$. Therefore, given $s \le \ee$, the above inequalities hold. The
+tail bounds specified as the second condition of the lemma can be shown using
+the Chernoff bound since $np-a \in \Theta(np) = \Theta(\secparam)$ and so does $b-np$.
+
+\subsection{Proof of Lemma~\ref{lem:good_event}} \label{apx:proof:good_event}
+Let $t = \frac{1}{n_R}$,  Let $\mathsf{low} =
+1-\left(\frac{1}{2}+\theta\right)^t$ and $\mathsf{high}
+= 1-\left(\frac{1}{2}-\theta\right)^t$. 
+Then, we have:
+\begin{align*}
+    &\Pr_{h}[\good_\theta(h, A, I, n_B)]  \\
+    & = \Pr_{h} \left[\left(\min h(I) \geq\mathsf{low}\right) \land \left(\min h(I) = \min h(A)\right)\right] \\
+    & ~~~~ - \Pr_{h} \left[\left(\min h(I) \geq \mathsf{high}\right) \land \left(\min h(I) = \min h(A)\right)\right]\\
+    & = \Pr_{h} \left[\min h(A) \geq\mathsf{low}\right] \cdot \Pr\left[ \min h(I) = \min h(A) \mid \min h(A) \geq\mathsf{low}\right] \\
+    & ~~~~ - \Pr_{h} \left[\min h(A) \geq \mathsf{high}\right] \cdot \Pr\left[ \min h(I) = \min h(A) \mid \min h(A) \geq \mathsf{high}\right] \\
+    & \ge \left(\frac{1}{2}+\theta\right)^{t \cdot n_A} \cdot
+    \frac{n_I}{n_A} - \left(\frac{1}{2}-\theta\right)^{t \cdot n_A}
+    \cdot \frac{n_I}{n_A}
+\end{align*}
+
+\subsection{Proof of Lemma~\ref{thm:good_hash}} \label{apx:proof:good_hash} 
+We can lowerbound $|K_\theta|$ with $\Bino(k-s, p_\theta)$. Recall $s \in O(\lg\lg\kappa)$. 
+Let $\mu = (k-s) p_\theta = \Omega(\secparam).$ Applying the Chernoff
+Bound, we have 
+%
+$\Pr\left[ |K_\theta| \le (1 - 1/3) \mu \right] \le \exp(-\mu/18) \le \negl(\secparam). \qedhere$
+
+
+
+
+
+\subsection{Proof of Lemma~\ref{lem:pb-dp}} \label{apx:proof:pb-dp}
+\paragraph{Hockey stick divergence.}
+We first review hockey stick divergence~\cite{SasVer15,Ost02,ICALP:BarOlm13}. 
+%
+%In this paper, we only consider discrete sample space, although many of
+%arguments naturally extend to the continuous space. 
+% 
+%\begin{definition}
+The hockey-stick divergence between two probability measures $P,Q$ over $Z$ is defined as:
+\begin{equation*}
+    \hsd{\alpha}{X}{Y} = \sup_{S \subseteq Z}(X(S) - \alpha Y(S)) = \sum_{z \in Z} [(X(z) - \alpha Y(z)]_+,
+\end{equation*}
+where $\alpha \geq 1$ and $[x]_+ = \max\{x,0\}$.
+We observe that the following holds directly from the definition of the hockey stick divergence.
+\begin{corollary}
+For any probability measures  $X,Y$ over $Z$ and for any $\ee, \dd$, it holds 
+\[ X \aed Y \mbox{ if and only if }  \hsd{e^\ee}{X}{Y} \leq \dd \mbox{ and } \hsd{e^\ee}{Y}{X} \leq \dd.\]
+\end{corollary}
+
+\iffalse
+Therefore, the hockey-stick divergence can be used to analyze the privacy loss.
+%
+\paragraph{The hockey-stick divergence as a $f$-divergence.}
+It is known that the hockey-stick divergence is a kind of $f$-divergence
+~\cite{ICALP:BarOlm13}.  Therefore, the hockey-stick divergence
+satisfies the joint convexity and data processing
+inequality~\cite{ICALP:BarOlm13,BBG18}.
+
+\begin{lemma}[Joint convexity] 
+\label{lem:convex}
+For all $0 \leq \lambda \leq 1$ and $\alpha\geq 1$, any probability
+measures $X_1,X_2,Y_1,Y_2$ satisfy 
+%
+\begin{equation*}
+    \hsd{\alpha}{\lambda X_1 + (1-\lambda)X_2}{\lambda Y_1 +
+    (1-\lambda)Y_2} \leq \lambda \hsd{\alpha}{X_1}{Y_1} +
+    (1-\lambda)\hsd{\alpha}{X_2}{Y_2}.  
+\end{equation*}
+\end{lemma}
+
+The data processing inequality property guarantees that post-processing
+cannot increase the divergence.
+\begin{lemma}[Data processing inequality.] \label{lem:dpe}
+For any probability measures $X, Y$ over $Z$ and any function $g$ with domain $Z$, we have 
+\begin{equation*}
+    \hsd{\alpha}{g(X)}{g(Y)} \le \hsd{\alpha}{X}{Y}.
+\end{equation*}
+\end{lemma}
+\fi
+
+\paragraph{Proof of Lemma 6.}
+Let $\etan = 1/2 - \theta$ and $\etap = 1/2 + \theta$. 
+For brevity, we let $C$ denote $\PB(n,p_J)$. For any distribution
+$\DDD$, let $P_\DDD$ denote the probability measure with respect to
+$\DDD$.
+We first show that for any $\ee>0$, it holds that  
+$\hsd{e^\ee}{P_{C}}{P_{C + 1}}$ is at most 
+\begin{align*}
+   \max\left(\hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+1}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+1}} \right).
+\end{align*}
+
+%To show the above, we follow a similar structure to the proof of \cite[Theorem
+%3.3]{COK22}, which analyzes the divergence of a Poisson binomial mechanism.
+ %We also rely on the joint convexity\footnote{\cite{COK22}
+%actually uses
+%joint quasi-convexity, which is implied by joint convexity but not vice
+%versa.} (Lemma \ref{lem:convex}) and data processing inequality (Lemma
+%\ref{lem:dpe}) to upper bound the hockey-stick divergence of two Poisson
+%binomial distributions with that of two binomial distributions. 
+
+We start with an upper bound of the hockey-stick divergence is reached at
+extreme points. We rely on the results in \cite{COK22}. Although they use the
+Renyi divergence, their results are general enough to be applied to any $f$-divergence.
+
+\begin{lemma} (\cite[Lemma 3.5]{COK22})
+\begin{align}
+     \hsd{e^\ee}{P_{C}}{P_{C + 1}}
+     \leq  \max_{j \in [n]} \hsd{e^\ee}{P_{\Bino(j, \eta_{-\theta}) + \Bino(n-j,\eta_{+\theta})}}{P_{\Bino(j, \eta_{-\theta}) + \Bino(n-j,\eta_{+\theta})+1}}.\label{eqa:twobinom}
+\end{align}
+\end{lemma}
+
+\iffalse
+\begin{proof}
+Note that there is $\lambda \in [0, 1]$ such that $p_{n} = \lambda\left(\eta_{-\theta}\right) + (1-\lambda)\left(\eta_{+\theta}\right)$. 
+Let $C_{-n} = \sum_{j=1}^{n-1} c_j$. 
+Denote the convolution $\conv(a, a', b) = a \cdot (1-b) + a' \cdot b.$
+Then, we have 
+\begin{align*}
+\Pr[C = \ell] & = \conv( \Pr[C_{-n} = \ell], \Pr[C_{-n} = \ell-1], p_{n}) \\
+ & = \conv\left(\Pr[C_{-n} = \ell], \Pr[C_{-n} = \ell-1], \lambda \cdot
+ \eta_{-\theta} + (1-\lambda) \cdot \eta_{+\theta}\right) \\
+ & = \lambda \conv(\Pr[C_{-n} = \ell], \Pr[C_{-n} = \ell-1], \eta_{-\theta}) \\
+ & ~~~~~ + (1-\lambda) \conv(\Pr[C_{-n} = \ell], \Pr[C_{-n} = \ell-1], \eta_{+\theta}) \\
+ & = \lambda \Pr[C_{-n} + \Ber(\eta_{-\theta}) = \ell] + 
+    (1-\lambda) \Pr[ C_{-n} + \Ber(\eta_{+\theta}) = \ell] 
+\end{align*}
+%
+In other words, we have 
+\[P_C = \lambda P_{C_{-n} + \Ber(\eta_{-\theta})} + (1-\lambda) P_{C_{-n} + \Ber(\eta_{+\theta})}.\]
+Now using Lemma~\ref{lem:convex}, we have
+\begin{align*}
+& \hsd{e^\ee}{P_{C}}{P_{C + 1}} \\
+& ~~ \leq\lambda \hsd{e^\ee}{ 
+  P_{C_{-n} + \Ber(\eta_{-\theta})}}{ 
+  P_{C_{-n} + \Ber(\eta_{-\theta}) + 1}}
+  + (1-\lambda) \hsd{e^\ee}
+    { P_{C_{-n} + \Ber(\eta_{+\theta})}}
+    { P_{C_{-n} + \Ber(\eta_{+\theta}) + 1}}\\
+& ~~ \leq \max\left\{ \hsd{e^\ee}
+    { P_{C_{-n} + \Ber(\eta_{-\theta})} }
+    { P_{C_{-n} + \Ber(\eta_{-\theta}) + 1}},
+    \hsd{e^\ee}
+    { P_{C_{-n} + \Ber(\eta_{+\theta})} }
+    { P_{C_{-n} + \Ber(\eta_{+\theta}) + 1}} \right\}
+\end{align*}
+Repetitively applying the joint convexity on the remaining $n-1$ random variables yields the following
+\begin{align*}
+     &\hsd{e^\ee}{P_{Y}}{P_{Y+ 1}} \leq \max_{j\in [n]} \hsd{e^\ee}{P_{N_j}}{P_{N_j+1}},
+\end{align*}
+where $N_j \sim \Bino(j, \eta_{-\theta}) + \Bino(n-j,\eta_{+\theta})$.
+\end{proof}
+\fi
+
+Next, we apply data processing inequality to simplify (\ref{eqa:twobinom}) from the above lemma. 
+
+\begin{lemma} (\cite[Lemma 3.6]{COK22})
+(\ref{eqa:twobinom}) is upper bounded by
+\begin{align}
+\max \left(    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+1}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+1}}\right).
+\end{align}
+\end{lemma}
+\iffalse
+\begin{proof}
+The proof is similar to \cite[Lemma 3.6]{COK22}.  We apply the data
+processing inequality. More specifically, consider two distributions $X,
+Y$ and then adding a binomial random variable $Z$ as the post-processing
+step. Then, the addition of $Z$ doesn't increase the divergence. In
+other words, \[\hsd{e^\ee}{P_X}{P_Y} \ge \hsd{e^\ee}{P_{X+Z}}{P_{Y+Z}}.\] 
+
+Now, consider (\ref{eqa:twobinom}) and let $j^*$ be the index that leads
+to the maximum. 
+\begin{itemize}
+\item If $j^* \le n/2$, we have 
+\begin{align*}
+& \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{+\theta})}}
+{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{+\theta})+1}}  \\
+& ~~~\ge \hsd{e^\ee}{P_{\Bino(j^*, \eta_{-\theta}) +
+\Bino(n-j^*,\eta_{+\theta})}}{P_{\Bino(j^*, \eta_{-\theta}) +
+\Bino(n-j^*,\eta_{+\theta})+1}}.
+\end{align*}
+This is because $n/2 \le n - j^*$. In this case, $Z = \Bino(j^*, \eta_{-\theta}) +
+\Bino(n-j^*-\lceil\frac{n}{2}\rceil,\eta_{+\theta})$.
+
+\item Likewise, if $j^* \ge n/2$, we have 
+\begin{align*}
+&  \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})}}
+{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+1}} \\
+& ~~~ \ge \hsd{e^\ee}{P_{\Bino(j^*, \eta_{-\theta}) +
+\Bino(n-j^*,\eta_{+\theta})}}{P_{\Bino(j^*, \eta_{-\theta}) +
+\Bino(n-j^*,\eta_{+\theta})+1}}.
+\end{align*}
+\end{itemize} 
+\end{proof}
+\fi
+
+
+We extend the above to upper bound the hockey-stick divergence between probability
+measures differed by an integer amount greater than 1, i.e.,  $P_{C}$
+and $P_{C+s}$ for $s>1$. 
+
+\begin{corollary}\label{col:APBM}
+For any $\ee>0$, it holds that 
+    $\hsd{e^\ee}{P_{C}}{P_{C + s}}$ is at most 
+\begin{align*}
+    \max \left( 
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+s}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+s}} \right).
+\end{align*}
+\end{corollary}
+
+Finally, to give a bound on the divergence, we can apply Lemma~\ref{lem:bin-dp} to argue that the binomial distribution hides the small sensitivity. Specifically, as $\lceil\frac{n}{2}\rceil \in \Theta(\kappa)$ and $s =\lg\lg\kappa$, we can claim $(\ee, \dd)$-DDP with $\dd = \negl(\kappa)$.
+
+Similarly, it holds that $\hsd{e^\ee}{P_{C+s}}{P_{C}} \le
+\negl(\kappa)$. \qed 

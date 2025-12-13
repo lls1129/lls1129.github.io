@@ -1,0 +1,75 @@
+\subsection{Related Work}
+%Secure search is a widely-studied problem, and there have been solutions
+%in many different settings, which we briefly review here. In the
+%discussion below, we let $n$ denote the number of data items. 
+
+\subsubsection{Techniques for Secure Search}
+\paragraph{Secure pattern matching (SPM) on FHE-encrypted data.} 
+In SPM, given an encrypted query $\lbra q \lket$ and $n$
+FHE-encrypted data items $(\lbra x_1 \lket, \ldots, \lbra x_n \lket)$, it
+returns a vector of $n$ ciphertexts $\lbra b_1 \lket, \ldots, \lbra b_n
+\lket$, where $b_i$ indicates whether the $i$th data element is a
+match~\cite{CCSW:YSKYK13,FCW:CheKimLau15,TIFS:CKK16,TDSC:KLLTW19}.
+Their works focus on optimizing the search circuits to determine whether a data item matches the query, and therefore
+the communication complexity and client’s running time are proportional
+to the number of data items. Our work focuses on the orthogonal
+problem of optimizing the retrieval of the matched data items with
+sublinear communication and client computation.  
+
+\paragraph{Searchable encryption (SE).} 
+Searchable encryption~\cite{SP:SonWagPer00,EC:BDOP04} allows highly efficient search (usually in
+$o(n)$ time) over encrypted data.  Efficient SE schemes have been proposed for a wide variety of queries including equality queries~\cite{CCS:CGKO06, AC:ChaKam10}, range queries~\cite{RSA:IKLO16, CCS:RACY16}, and conjunctive queries~\cite{SP:PKVKMC14, C:CJJKRS13}. However, to achieve sublinear query performance, SE schemes require significant preprocessing and relax security, allowing some partial information about the queries and data (e.g. access patterns) to leak to the server.  For a recent survey on SE constructions and security, see Fuller et al.~\cite{SP:FVYSHG17}.
+In contrast, our work focuses on achieving preprocessing-free secure constructions, leaking nothing about the queries or results other than their sizes. 
+
+\paragraph{Property Preserving Encryption (PPE).}
+As a different approach, property-preserving encryption~\cite{EC:PanRou12} produces ciphertexts that maintain certain relationships (e.g., equality, and order) of the underlying plaintexts.  This allows queries to be performed over ciphertexts in the same way that they can be carried out over plaintexts.  Examples of PPE include deterministic encryption~\cite{C:BelBolONe07} allowing equality queries, and order-preserving encryption~\cite{EC:BCLO09, C:BolCheONe11} allowing range queries.  However, it has been shown~\cite{NDSS:IslKuzKan12, CCS:GMNRS16,SP:GSBNR17} that such property-preserving ciphertexts leak a lot of information about the underlying plaintexts.
+%making them undesirable in many security-critical applications. 
+See~\cite{SP:FVYSHG17} for a survey of constructions and attacks.
+
+\subsubsection{General Techniques}
+\paragraph{Private information retrieval (PIR).} PIR
+allows the client to choose the index $i$ and retrieve the $i$th record
+from an untrusted server while hiding the index
+$i$~\cite{JACM:CKGS98}. However, this protocol by itself provides only a
+limited search functionality requiring the client to know the index of the data to retrieve.  In this work, we
+aim at protocols supporting any arbitrary search
+functionality. 
+
+\paragraph{Secure multi-party computation (MPC).}
+Secure two-party computation~\cite{FOCS:Yao86,STOC:GolMicWig87} allows
+players to compute any function of their private inputs without
+compromising privacy of their inputs. For example, the client and the
+server can run a protocol for secure two-party computation to solve the
+secure search problem. 
+%
+While there has been much progress in improving efficiency of MPC
+protocols, such protocols still require $\Omega(n)$ communication and $\Omega(n)$ client computation per query.  In this work, we aim to achieve protocols with sublinear communication and client work.
+
+
+% those protocols depends on preprocessing which has
+% $\Omega(n)$ communication/computation costs for each protocol
+% execution. In this work, we aim at achieving setup-free protocols. 
+
+
+% \paragraph{Private set intersection (PSI).}
+% Private set intersection (PSI) is a special case of secure two-party
+% computation where two parties, each holding a set of private items, can
+% learn the intersection of their sets~\cite{EC:FreNisPin04}. However, in
+% PSI, matching of the private items must be performed in the plaintext
+% level, which is inconsistent with our setting where the server stores
+% the encrypted data of the client. 
+
+
+\paragraph{Oblivious RAM (ORAM) and Oblivious data structure (ODS).} 
+ORAM~\cite{GO96} is a protocol which allows a client to store an array
+of $n$ items on an untrusted server and to access an item obliviously,
+that is, hiding contents and which item is accessed (i.e., the access
+pattern).  Likewise, ODS~\cite{CCS:WNLCSS14} allows the client to store
+and use a data structure obliviously. 
+%
+One could implement secure search by utilizing an ODS for a search tree.
+However, ODS constructions typically need $\Omega(\log^2 n)$ rounds for
+each operation. In this work, we aim at achieving a constant round
+protocol. 
+
+

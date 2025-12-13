@@ -1,0 +1,161 @@
+\subsection{Preliminaries}
+
+Let $\secparam$ be the security parameter. 
+%
+%For $\ell$-bit strings $a$ and $b$, let $a \vee b$ (resp., $a \wedge b$)
+%denote the bitwise-OR (resp. bitwise-AND of $a$ and $b$.
+%
+For a vector $a$, let $\idx(a)$ denote the set of all the positions $i$
+such that $a_i$ is non-zero, i.e., $$\idx(a) := \{ i: a_i \ne 0\}.$$  
+
+\paragraph{Chernoff bound.} We will use the following version of
+Chernoff bound. 
+
+\begin{theorem}
+Let $X_1, \ldots, X_n$ be independent random variables taking values in
+$\zo$ such that $\Pr[X_i = 1] = p$. Let $\mu := \Exp[\sum X_i] = np$.
+Then for any $\delta > 0$, it holds
+$$\Pr\left[ \sum_{i=1}^n X_i \ge (1 + \delta) \mu \right] \le 
+\left (\frac {e^\delta} {(1+\delta)^{(1+\delta)}} \right)^\mu.$$ 
+\end{theorem}
+
+\paragraph{FHE.} We use a standard CPA-secure (leveled) fully
+homomorphic encryption scheme $(\Gen, \Enc, \Dec)$.  We refer readers
+to~\cite{PETS:AGHL19,CCS:WYXZ20} for a formal definition.  We use $\lbra
+x \lket$ to denote an encryption of $x$. 
+
+We also use $+$ (resp. $\cdot$) to denote homomorphic addition (resp.,
+multiplication). For example, $\lbra c \lket := \lbra a \lket + \lbra b
+\lket$ means that homomorphic addition of two FHE-ciphertexts $\lbra a
+\lket$ and $\lbra b \lket$ has been applied, which results in $\lbra c
+\lket$. 
+
+\paragraph{PIR.} A PIR protocol allows the client to choose the index
+$i$ and retrieve the $i$th record from one (or more) untrusted server(s)
+while hiding the index value $i$~\cite{JACM:CKGS98}.  
+
+Assume that each of the $k$ server has $n$ records $D = (d_1, \ldots, d_n)$
+where all items $d_i$ have equal length. A single-round $k$-server PIR
+protocol consists of the following algorithms:
+\BI
+\item The query algorithms $Q_j(i, r) \to q_j$ for each server $j \in [k]$, which
+are executed by the client with input index $i$ and randomness $r$. 
+\item The answer algorithms $A_j(D, q_j) \to a_j$ for each server $j \in
+[k]$, which is executed by the $j$th server. 
+\item The reconstruction algorithm $R(i, r, (a_1, \ldots, a_k)) \to d_i$. 
+\EI
+The communication complexity of a PIR protocol is defined by the sum of
+the all query lengths and answer lengths, i.e.,  
+$$\sum_{j \in [k]} |q_j| + |a_j|.$$
+
+A PIR protocol is correct if for any $D = (d_1, \ldots, d_n)$ with $|d_1| =
+\cdots = |d_n|$, and for any $i \in [n]$, it holds that 
+    $$\Pr_r \bigg [ R \Big(i, r, \big \{ A_j(D, Q_j(i,r)) \big \}_{j=1}^k \Big ) = d_i \bigg ] = 1.$$
+%
+A PIR protocol is private if for any $j \in [k]$, for any $i_0, i_1 \in
+[n]$ with $i_0 \ne i_1$, the following distributions are computationally
+(or statistically) indistinguishable: 
+  $$\{Q_j(i_0, r)\}_r \approx \{Q_j(i_1, r)\}_r.$$
+
+   
+
+\subsubsection{Bloom Filter}
+A Bloom filter~\cite{bloom70spacetime} is a well-known space-efficient
+data structure that allows a user to insert arbitrary keywords and later
+to check whether a certain keyword in the filter. 
+
+\paragraph{$\sf BF.Init()$.}
+The filter $B$ is essentially an $\ell$-bit vector, where $\ell$ is a
+parameter, which is initialized with all zeros.
+%
+The filter is also associated with a set of $\eta$ different hash
+functions $$\HHH = \{ h_q: \zo^* \to [\ell] \}_{q=1}^\eta.$$  
+
+
+\paragraph{$\sf BF.Insert(B, \alpha)$.}
+To insert a keyword $\alpha$, the hash results are added to the
+filter. In particular, 
+  \BI
+  \item For $q \in [\eta]$ do the following:
+    \BI
+    \item[] 
+    Compute $j = h_q(\alpha)$ and set $B_j := 1$. Here $B_j$ is the $j$th bit of $B$.  
+    \EI
+  \EI
+
+\paragraph{$\sf BF.Check(B, \beta)$.}
+To check whether a keyword $\beta$ has been inserted to a BF filter
+$B$, one can just check the filter with all hash results. In particular, 
+  \BI
+  \item For $q \in [\eta]$ do the following: 
+    \BI
+    \item[] Compute  $j = h_q(\beta)$ and check if $B_j$ is set. 
+    \EI
+  \item If all checks pass output "yes". Otherwise, output "no".
+  \EI
+
+The main advantage of the filter is that it guarantees there will be no
+false negatives and allows a tunable rate of false positives: 
+$$
+\bigg(1 - \Big (1 - \frac{1}{ \ell} \Big )^{\eta s} \bigg)^\eta
+\approx 
+\Big(1 - e^{-\frac{\eta s}{ \ell}} \Big)^\eta,
+$$
+where $s$ is the number of keywords in a Bloom filter. 
+
+\paragraph{Random oracle model for hash functions.}
+We show our analysis in the random oracle model. That is, the hash
+functions are modelled as random functions. 
+
+\subsubsection{Algebraic Bloom Filter}
+\label{sec:ABF}
+In this work, we leverage a variant of the Bloom filter where, when
+inserting an item, the bit-wise OR operation is replaced by addition.
+There have been works using a similar idea of having each cell hold an
+integer instead of holding a bit~\cite{TON:FCAB00, PODC:Mitzenmacher01}. 
+
+Moreover, we consider a limited scenario {\em where the upperbound on the
+number of keywords to be inserted is known beforehand}. In particular,
+let $s$ denote such an upperbound. 
+
+As before, the filter is also associated with a set of $\eta$ different
+hash functions  $\HHH = \{ h_q: \zo^* \to [\ell] \}_{q=1}^\eta$.
+However, now the filter $B$ is not an $\ell$-bit vector but a vector
+where each element is in $[s \eta]$ (i.e., $B \in
+[s\eta]^\ell$)~\footnote{We can reduce $s \eta$ further to $\Theta( \eta \cdot
+(s/\ell) \cdot \log (s/\ell))$ using a Chernoff bound to bound the number of collisions contributing to the sum, but we will use $s\eta$ for
+the sake of simplicity of presentation.}.
+Therefore, the number of bits to encode $B$ is now blown up by
+a multiplicative factor $\lceil \lg s\eta \rceil$. 
+
+The BF operations are described below where differences are marked by
+framed boxes. 
+
+\paragraph{$\sf BF.Insert(B, \alpha)$.}
+To insert a keyword $\alpha$, the hash results are added to the
+filter. In particular, 
+  \BI
+  \item For $q \in [\eta]$ do the following:
+    \BI
+    \item[] 
+    Compute $j = h_q(\alpha)$ and set \fbox{$B_j := B_j + 1$}. 
+    \EI
+  \EI
+
+
+
+\paragraph{$\sf BF.Check(B, \beta)$.}
+To check whether a keyword $\beta$ has been inserted to a BF filter
+$B$, one can just check the filter with all hash results. In particular, 
+  \BI
+  \item For $q \in [\eta]$ do the following: 
+    \BI
+    \item[] Compute  $j = h_q(\beta)$ and check if $B_j$ is \fbox{greater than 0}. 
+    \EI
+  \item If all checks pass output "yes". Otherwise, output "no".
+  \EI
+
+It is easy to see that this variant construction enjoys the same
+properties as the original BF construction. 
+
+

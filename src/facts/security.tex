@@ -1,0 +1,240 @@
+\subsection{Security of FACTS}\label{sec:proofs}
+In this section we analyze the security of FACTS.  We provide security definitions capturing the privacy and integrity guarantees provided by FACTS and prove that our protocols described in Section~\ref{sec:construction} achieve these definitions.
+% Notation:
+% \begin{itemize}
+%     \item $\send(s,r, isNew, m)$
+%     \item $\receive(s,r, m)$
+%     \item $\complain(u, m)$
+%     \item $\audit(u,m)$
+% \end{itemize}
+
+% \subsubsection{Privacy}
+% We assume that $S$ is semi-honest and additionally colludes with some number $t$ of potentially malicious clients.
+% \begin{definition}
+% Let $\trans$ be a sequence of calls to $\send$, $\receive$, and $\complain$.  Let $\mc{L}_{E2E}$ be the leakage of the underlying encrypted messaging scheme.
+% We say that two transcripts $\trans_0$ and $\trans_1$ are \emph{equivalent} under leakage class $\mc{L}_{E2E}$  
+% if 
+% \begin{itemize}
+%     \item Messages known to $\A$ (i.e., messages received by clients in $\A$ and audited messages)
+%     \begin{enumerate}
+%         \item For any $\send(u_i,u_j,m)$ in $\trans_0$, the same exact $\send$ command must appear in $\trans_1$ \anote{This is stronger than we actually need since not the full path is revealed}
+%         \item For any $\complain(u_i,m)$ commands in $\trans_0$, the same exact $\complain$ command must appear in $\trans_1$
+%         \item For any $\audit$ command that returns 1 in $\trans_0$, the same $\audit$ command must also return 1 in $\trans_1$
+%     \end{enumerate}
+    
+%     \item Messages unknown to $\A$ (i.e., unaudited messages only received by clients not in $\A$)
+%     \begin{enumerate}
+%         \item For any $\send(u_i,u_j,m)$ in $\trans_0$, $\trans_1$ has a corresponding $\send(u'_i,u'_j,m')$ command where $u'_i=u_i$, $u'_j = u_j$, and $|m'| = |m|$.
+%         \item For any $\complain(u_i,m)$ command in $\trans_0$, $\trans_1$ has a corresponding $\complain(u'_i,m')$ command where $u'_i=u_i$
+%     \end{enumerate}
+% \end{itemize}
+% \end{definition}
+
+% \begin{definition}
+% A FACTS protocol is \emph{private} if any PPT adversary $\A$ has at most a negligible chance of winning the game with a challenger.  The challenger runs $\setup$, after which $\A$ chooses $t$ clients to corrupt.  Then $\A$ outputs two transcripts $(\trans_0, \trans_1)$.  The challenger chooses $b \gets \bool$ and plays the role of the honest party in an execution of $\trans_b$.  At the end $\A$ outputs a bit $b'$.  We say that $\A$ wins if $b'=b$. 
+% \end{definition}
+
+% \begin{theorem}
+% The FACTS system is private.
+% \end{theorem}
+
+\subsubsection{Adversary Model}
+We consider two different types of adversaries against FACTS.  The first is an honest-but-curious server $S$.  Such a server may also collude with some of the users.  However, all such users, as well as the server, will follow the protocol.  This adversary class models what the FACTS server learns in running the system, so we want to limit what the server learns.  However, we have to assume that the server acts honestly, as a malicious server can fully break the integrity and availability of FACTS.  For example, since the server produces the signatures binding originators to messages, a malicious adversary with knowledge of this key could arbitrarily assign originators by forging this signature.
+
+We also consider a second type of adversary controlling a group of malicious users who do not collude with the server.  Such users may want to violate the confidentiality of FACTS by learning extra information about messages or complaints, beyond what they learn through the messages they validly receive.  Or, they may want to break the integrity of the complaint and audit mechanism of FACTS to blame innocent parties for audited messages, or to delay or speed-up the auditing of targeted messages.  This models an external adversary, say a malicious company or government, who may want to distribute fake information without being audited or may want to block certain information or users from the system.
+
+\subsubsection{Privacy}
+We begin by looking at the privacy guarantees provided by FACTS.
+
+\paragraph{Privacy vs. Server:}
+We first give a definition for privacy against a semi-honest server who may also collude with some semi-honest users.  In this setting we aim to argue that unless a message is audited or is received by an adversarial user, the server learns no information about the message or the complaints on the message.  In particular, the server should not be able to tell whether any message is a new message or a forward and how many, if any, complaints this message may have.  In fact, the only thing that the server learns is the \emph{metadata} of who is sending messages to whom and who is issuing complaints, but not anything more.
+
+Specifically, 
+we propose a real-or-random style definition to
+capture privacy against the server.  This definition captures the fact that the view of the server (and colluding users) until a message is audited or received by a colluding user just consist of random values, and thus is independent of the messages and complaints.
+
+Concretely, we define the following game between an adversary $\A$ controlling the server (and possibly some colluding users) and a challenger.
+
+\begin{enumerate}
+    \item[] \hspace{-2em} \underline{$\GameSP$:}
+    \item The challenger runs $\setup(c)$ to set up the EEMS with $c$ users.  He hands all keys corresponding to corrupted parties to $\A$
+    \item $\A$ chooses a sequence of messages $((\mathrm{send}, A_0,B_0,\tag_{x_0}, x_0),\ldots,(\mathrm{send}, A_\ell,B_\ell,\tag_{x_\ell}, x_{\ell}))$\footnote{We note that since $S \in \A$, $\A$ can produce valid-looking tags for each of these messages by producing the necessary signatures.}, and a sequence of complaints  $((\mathrm{complain}, C_0, \tag_{x^c_0}, x^c_0), \ldots, (\mathrm{complain}, C_{\ell'}, \tag_{x^c_{\ell'}})$ and interleaves them arbitrarily. We require that none of the sending users ($A_i$), receiving users ($B_i$), or complainers ($C_i$) are controlled by $\A$.
+    \item The challenger chooses $b \gets \bool$ and does the following:
+    \begin{enumerate}
+        \item If $b=0$, Run the $\send$ and $\complain$ protocols with inputs supplied by $\A$, giving $\A$ the resulting server view.
+        \item If $b=1$, 
+        \begin{itemize}
+            \item for each $\send$ command, choose $r \gets \bool^\secparam$ and send this to $S$.  Choose $x' \gets \bool^{|x|+|\tag_x|}$ and send $x'$ from $A_i$ to $B_i$ using EEMS.$\sendee$.
+            \item The challenger maintains a set $\USED \subseteq [s]$\footnote{Recall that $s$ is the size of the CCBF bit vector $T$}.  For each $\complain$ command, the challenger chooses $ind \gets [s] \setminus \USED$, sends $ind$ from $u_i$ to $S$, and adds $ind$ to $\USED$.
+        \end{itemize}   
+    \end{enumerate}
+
+    \item $\A$ outputs a bit $b'$
+    \item We say that $\A$ has advantage $$\AdvSP = |\Pr[b=b']-1/2|.$$
+\end{enumerate}
+
+\begin{definition}[Privacy vs. Server]
+A FACTS scheme is \emph{private against a semi-honest server} if the adversary has a negligible advantage in the game above $\AdvSP \le \negl(\secparam)$
+\end{definition}
+
+\begin{theorem} FACTS is private against a semi-honest server
+\end{theorem}
+
+\begin{proofsketch}
+First, consider the server's view on a $\send$ command.  This view consists of a message $h = H(r||m)$ for $r \la \bool^\secparam$ and the leakage from EEMS.$\sendee$, i.e., the identities $A$ and $B$, as well as $|(\tag_x,x)|$.  Since the challenger uses the same sender, receiver, and message length, the only thing left to prove is that $h$ is indistinguishable from random.  Since $r$ is chosen uniformly at random, and $H$ is a random oracle, $H(r||m)$ is uniformly random to $\A$ unless $\A$ queries $H(r||m)$.  However, since $\A$ makes at most $\poly(\secparam)$ queries to $H$, the probability that he makes this query is at most $\poly(\secparam)/2^{\secparam} \le \negl(\secparam)$.
+
+Next, we consider the $\complain$ commands.  The server's view on a complaint consists of the complainer's ID $C$ and an index in the CCBF to flip to 1.  In a real execution of $\complain$, this index is chosen at random from the set $S_C \cap V_x$ where $S_C = \{i\in U_C \mid T[i] = 0\}$ and $V_x$ is the list of item locations for $x$.\footnote{Technically, the item used in the CCBF is the tag $\tagg_x$, but we use $x$ here for ease of notation.}  
+However, since $U_C$ and $V_x$ are chosen at random, we can equivalently sample a random 0-index in the bit vector $T$ and then choose $U_C$ and $V_x$ conditioned on them containing this location.  Hence the location sent to the server is uniformly random unless $\A$ makes the corresponding $H$ query, which only happens with $\negl(\secparam)$ probability.
+\end{proofsketch}
+
+The above theorem states that, beyond the meta-data of who sent a message to whom and who has sent complaints and when, FACTS reveals no information about messages and complaints to a semi-honest server until an audit occurs (or a malicious user receives a message).  Moreover, the view of the server is completely random when conditioned on the meta-data.  Now, suppose that a message $x$ is audited (or is received by an adversary-controlled user).  When this happens, the adversary learns the tag and message $(\tag_x,x)$.  This enables $\A$ to learn the identity of the originator (by decrypting it from $\tag_x$) and to learn the entire history of this message, i.e., the transmission and complaint history of $x$.  However, since the server's view of all other messages is indistinguishable from independent random strings (modulo the meta-data), the adversary does not learn anything more about these messages as a result of an audit on $x$. 
+%\anote{Is this enough?}
+
+
+% The above theorem states that for any messages that sent between honest clients and any complaints on those messages, the view of the server reveals no information (beyond meta-data) on those messages and complaints.  In particular, this means that until an audit is issued, the server has no way of knowing how many complaints a particular message has.\anote{This isn't quite true because the meta-data does reveal some information.  Not sure how to talk about this.}
+
+% Once a message $x$ is audited, or is received by an adversary controlled client, the adversary clearly learns the content of the message and the identity of the originator (since $S \in \A$).  Moreover, $\A$ can now track all the times that this message was sent and complained about since it now knows the correct value of $\tag_x$.  However, our definition above implies that the privacy of all remaining messages and complaints is still preserved.  This is true since we have argued that the view of the server on each of these messages and complaints is independent of the revealed messages. \anote{Is this convincing enough?}
+
+% We first define message privacy.  Specifically, this says that the server learns nothing about the content of the messages except for the length.
+
+% Concretely, we define the following game between an adversary controlling the server and a challenger
+
+% \begin{enumerate}
+%     \item[] \hspace{-2em} $\GameSP$:
+%     \item The challenger runs $\setup$ to set up the E2E messaging platform with $n$ clients.
+%     \item $\A$ chooses two sequences $((s_0^0,r_0^0,m_0^0),\ldots,(s_\ell^0,r_\ell^0,m_{\ell}^0))$ and $((s_0^1,r_0^1,m_0^1),\ldots,(s_\ell^1,r_\ell^1,m_{\ell}^1))$ where for all $i \in [\ell]$, $s_i^0 = s_i^1$, $r_i^0 = r_i^1$, and $|m_i^0| = |m_i^1|$ where none of $s_i$ and $r_i$ are controlled by $\A$.
+%     \item The challenger chooses $b \gets \bool$ and for $i \in [\ell]$ runs $\send(s_i^b, r_i^b, m_i^b)$ ($S$ gets the server's view in these interactions.)
+%     \item $\A$ outputs a bit $b'$
+%     \item We say that $\A$ has advantage $$\AdvSP = |\Pr[b=b']-1/2|.$$
+% \end{enumerate}
+
+% \begin{definition}[Message Privacy]
+% A FACTS scheme is \emph{message private against the server} if the adversary has a negligible advantage in the game above $\AdvSP \le \negl(\secparam)$
+% \end{definition}
+
+
+% %%%  Complaint privacy  %%%%%%%%%%
+% Next, we turn to defining privacy of complaints.  Roughly, this says that the server cannot identify which message received by an honest client that client is complaining about.
+
+% Concretely, we define the following game between an adversary controlling the server and a challenger.
+
+% \begin{enumerate}
+%     \item[] \hspace{-2em} $\GameCP$:
+%     \item The challenger runs $\setup$ to set up the E2E messaging platform with $n$ clients.
+%     \item $\A$ chooses a set of messages $(m_0,\ldots,m_\ell)$ and a client $r \notin \A$
+%     \item The challenger runs $\send(*,r,m_i)$ with the server
+%     \item $\A$ chooses two sequences of complaints $((r,m_0^0),\ldots,(r_\ell^0,m_{\ell}^0))$ and $((s_0^1,r_0^1,m_0^1),\ldots,(s_\ell^1,r_\ell^1,m_{\ell}^1))$ where for all $i \in [\ell]$, $s_i^0 = s_i^1$, $r_i^0 = r_i^1$, and $|m_i^0| = |m_i^1|$ where none of $s_i$ and $r_i$ are controlled by $\A$.
+%     \item The challenger chooses $b \gets \bool$ and for $i \in [\ell]$ runs $\send(s_i^b, r_i^b, m_i^b)$ ($S$ gets the server's view in these interactions.)
+%     \item $\A$ outputs a bit $b'$
+%     \item We say that $\A$ has advantage $$\AdvCP = |\Pr[b=b']-1/2|.$$
+% \end{enumerate}
+
+% \begin{definition}[Complaint privacy]
+% A FACTS scheme is \emph{complaint private against the server} if the adversary has a negligible advantage in the game above $\AdvCP \le \negl(\secparam)$
+% \end{definition}
+
+
+\paragraph{Privacy vs. Users}
+We now proceed to analyze security of our protocol against (possibly malicious) users that are not colluding with the server.  This models the case of a third party adversary that tries to learn information about the messages and complaints in FACTS.  Here, we no longer assume that a message $x$ is never received by a malicious user and thus we cannot use a real-or-random style definition as before.  Instead, we argue that a user cannot distinguish a new message from a forwarded message unless another corrupted user has previously seen that message.  This also shows that a malicious user cannot learn the identity of the message originator.  Since users do not receive any communication on complaints, we only consider message privacy here.
+
+Concretely, we define the following game between an adversary $\A$ controlling a set of users, and a challenger.
+
+\begin{enumerate}
+    \item[] \hspace{-2em} \underline{$\GameCP$:}
+    \item The challenger runs $\setup(c)$ to set up the EEMS with $c$ users and gives all key material for the corrupted users to $\A$. Let $B \in \A$ be a user controlled by the adversary.
+    \item $\A$ chooses messages $x, x'$ s.t. $|x|= |x'|$ and honest users $O, A \notin \A$
+    \item The challenger chooses $b \mid \bool$ and does the following:
+    \begin{enumerate}
+        \item If $b=0$, the challenger runs $\send(O,A,\perp,x')$ and $\send(A,B,\perp,x)$ with $\A$ receiving the view of $B$.
+        \item If $b=1$, the challenger runs $\send(O,A,\perp,x)$ and $\send(A,B,\tag_x, x)$ (where $\tag_x$ is the tag received by $A$ from $O$).
+    \end{enumerate}
+    \item $\A$ outputs a bit $b'$
+    \item We say that $\A$ has advantage $$\AdvCP = |\Pr[b=b']-1/2|.$$
+\end{enumerate}
+
+\begin{definition}[User privacy]
+A FACTS scheme achieves \emph{privacy against malicious users} if the adversary has a negligible advantage in the game above $\AdvCP \le \negl(\csecparam)$
+\end{definition}
+
+\begin{theorem}
+FACTS achieves privacy against malicious users.
+\end{theorem}
+
+\begin{proofsketch}
+The view of $B$ on an execution of $\send(\cdot,B,\tag_x,x)$ consists of the received message and tag $(\tag_x, x)$ where $\tag_x = (r,e,\s)$.  Since $e$ is a semantically secure encryption of the identity of the originator, $\A$ cannot distinguish between the case when $e = \Enc(A)$ (when $b=0$) and the case when $e = \Enc(O)$ (when $b=1$) except with advantage negligible in $\csecparam$.  Additionally, since $\tag_x$ is generated identically both when $b=0$ and $b=1$ except for this change in $e$, this means that $\tag_x$ does not help $\A$ distinguish between these two cases.
+\end{proofsketch}
+
+
+\subsubsection{Integrity}
+We now turn to the integrity guarantees provided by FACTS.  We aim for a few different notions of integrity to show that malicious users cannot interfere with the complaint and audit process.  First, no adversary controlling a subset of the users should be able to frame an honest user as the originator of an audited message he did not originate.  Second, an adversary controlling a subset of the users should not be able to significantly delay the audit of a malicious message.  In particular, such an adversary should not be able to prevent a malicious message sent by one of his users from being audited.  Finally, an adversary controlling a small set of users should not be able to significantly speed up the auditing of a targeted message.  In particular, such an adversary should not be able to cause an audit without complaints from some honest users.
+
+We begin by defining the following game between a challenger and an adversary $\A$ controlling a subset of the users to capture the inability of an adversary to forge a valid tag that it has not seen before.
+
+\begin{enumerate}
+    \item[] \hspace{-2em} \underline{$\GameUF$:}
+    \item The challenger runs $\setup(c)$ to set up the EEMS with $c$ users and gives all key material for the corrupted users to $\A$.
+    \item $\A$ requests $\send$ operations on messages of its choice both from honest and corrupted users. ($\A$ is given the view of corrupted users in all these executions consisting of $(\tagg_x,x)$.)
+    \item $\A$ outputs a tag, message pair $(\tagg_y, y)$
+    \item We say that $\A$ WINS if $\tagg_y$ is a valid tag for message $y$ with originator $O \notin \A$, and there has not been a prior command $\send(O,\cdot,\perp,y)$.
+\end{enumerate}
+
+\begin{definition}[No framing]
+We say that a FACTS scheme disallows \emph{framing} if for any PPT $\A$, $\A$ WINS in the above game with probability at most $\negl(\csecparam)$.
+\end{definition}
+\begin{theorem}
+The FACTS scheme is unforgeable.
+\end{theorem}
+\begin{proofsketch}
+A valid tag $\tagg_y$ with originator $O$ consists of $\tagg_y = (r,e,\s)$ where $r$ is a random seed s.t. $H(r||y) = h$, $e = \Enc_{PK_S}(O)$, and $\s = \Sig_{SK_S}(h||e)$.  Thus, to frame $O$, $\A$ needs to produce a valid signature on $h||\Enc(O)$.  $\A$ can observe tags from polynomially many messages originated by $\O$, but except with probability negligible in $\secparam$ none of them will have the same value $h$.  Thus, by the unforgeability of $\Sig$, $\A$ cannot produce the necessary signature except with probability negligible in $\csecparam$.
+\end{proofsketch}
+
+Next, we give a definition that captures the ability of an adversary controlling a subset of the users to delay the audit of a particular message.  Our goal is to show that the adversary cannot protect a malicious message from being audited.
+
+Specifically, we define the following game,
+
+\begin{enumerate}
+    \item[] \hspace{-2em} \underline{$\GameND$:}
+    \item The challenger runs $\setup$ to set up the EEMS with $c$ users and gives all key material for the corrupted users to $\A$.
+    \item $\A$ issues a single $\send(A,B,x)$ command with $A \in \A$ to produce $\tag_x$
+    \item $\A$ outputs a list of $\complain$ commands with at most $n$ total complaints, of which at least $\ell$ are complaints on $\tag_x$.
+    \item The challenger runs the specified complaint commands, and then runs $\audit(A,\tag_x,x)$
+    \item We say that $\A$ WINS if this audit is not successful (i.e., the audit threshold is not reached). 
+\end{enumerate}
+
+\begin{definition}[No delay]
+We say that a FACTS scheme is \emph{$\ell$-audit delay resilient} for integer $\ell < n$ if for any PPT $\A$, $\A$ WINS in the above game with probability at most $\negl(\secparam)$.
+\end{definition}
+
+\begin{theorem}
+The FACTS scheme is $\ell$-audit delay resilient for any $\ell \ge 1.1t+.4\secparam + .7\sqrt{\secparam t}$.
+\end{theorem}
+
+\begin{proofsketch}
+This follows immediately from Theorem~\ref{thm:fn}
+\end{proofsketch}
+
+Next, we define the following game to capture the 
+ability of a small number of malicious users to cause the audit of some message.  Importantly, this definition also captures the case where malicious users try to audit an honest message (on which there are no complaints by honest users).  Specifically, the following game is between an adversary $\A$ corrupting at most $\ell$ users and a challenger
+
+\begin{enumerate}
+    \item[] \hspace{-2em} \underline{$\GameNSU$:}
+    \item The challenger runs $\setup$ to set up the EEMS with $c$ users and gives all key material for the $\ell$ corrupted users to $\A$.
+    \item The challenger runs a single $\send(A,B,x)$ command for $A \notin \A$ and $B \in \A$.
+    \item $\A$ may issue at most $L$ $\complain$ commands per each user he controls.\footnote{Recall that FACTS enforces a limit of $L$ complaints per user per epoch.}
+    \item The challenger runs the specified $\complain$ commands, and then runs $\audit(\cdot, \tagg_x,x)$.
+    \item We say that $\A$ WINS if this audit is successful.
+\end{enumerate}
+
+\begin{definition}[No speed up]
+We say that a FACTS scheme is \emph{$\ell$-party audit speed-up resilient} if for any PPT $\A$ controlling at most $\ell$ users, $\A$ WINS in the above game with probability at most $\negl(\secparam)$.
+\end{definition}
+
+\begin{theorem}
+The FACTS scheme is $\ell$-party audit speed-up resilient for $\ell \le (t - \Cminfp\sqrt{\lambda t})/L$.
+\end{theorem}
+
+\begin{proofsketch}
+This follows immediately from Theorem~\ref{thm:fp} because each user $\in \A$ makes at most $L$ complaints.
+\end{proofsketch}
+
+

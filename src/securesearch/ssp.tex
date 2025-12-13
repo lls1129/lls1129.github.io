@@ -1,0 +1,241 @@
+\subsection{Secure Search Protocols}
+\label{sec:ssp}
+We implement secure search protocols by using compressed oblivious
+encoding schemes. We begin by defining a relaxed notion of correctness
+that allows for false positives, as is needed in some of our
+constructions.  we then define security of secure search.
+
+\subsubsection{$(\ell, f_p)$-Relaxed Secure Search} 
+
+We relax the correctness guarantee to allow the Client to retrieve  a
+superset of the matching records.  Specifically, if $\mathcal{S}$ is the
+set of indexes matching a Client's query $q$, then at the end of the
+protocol, we require the Client to obtain a set $\mathcal{S}'$ such
+that:
+\begin{itemize}
+    \item With all but negligible probability, $\mathcal{S} \subseteq \mathcal{S}'$
+    \item With all but negligible probability, $|\mathcal{S}'\setminus \mathcal{S}| \leq f_p$.
+\end{itemize}
+
+We parameterize a secure search scheme by $(\ell, f_p)$, where $\ell$ is
+the \emph{amortized} communication complexity {\em per} matching record, and $f_p$ is the
+number of ``false positives,'' as defined above.
+
+\subsubsection{Security of Setup-free Secure Search} 
+To define security of our secure search schemes, we use a game-based
+security definition similar to that of Akavia et al.~\cite{PETS:AGHL19}.
+The game is between a challenger and an adversary $\A$ with regard to a
+setup-free search scheme, $\ssp$, and an FHE scheme, $\fhe$.
+
+%\pagebreak
+
+\begin{enumerate}
+\item[] \hspace{-2em} $\Game$:
+
+\item The challenger runs a key generation algorithm (with computational security
+parameter $\kappa$) and sends the evaluation key to $\mc{A}$ so that $\mc{A}$
+can perform homomorphic additions and multiplications. 
+
+\item $\A$ chooses either:
+    \begin{itemize}
+        \item Two databases $x^0 = (x^0_1, \ldots, x^0_n)$ and $x^1 =
+        (x^1_1, \ldots, x^1_n)$ of the same length, and a query $q$, or  
+        \item A single database $x = (x_1, \ldots, x_n)$ and two queries
+        $q^0, q^1$ of the same circuit size. 
+    \end{itemize}
+    In both cases, we require that the sizes of the two result sets (denoted by $s$) are equal.
+    % and are upperbounded by the parameter $s$.\footnote{Note that $s$ can be set to $n$,
+    % which would capture a setting in which there is no restriction on the maximum number of matches.}
+    
+    \item The challenger samples $b \leftarrow \{0,1\}$.  Then, either 
+    \begin{itemize}
+        \item Runs Setup on input $x^b$ and the search protocol from $\ssp$ on input $q$, or
+        \item Runs Setup on input $x$, and the search protocol from
+        $\ssp$ on input $q^b$.
+    \end{itemize}
+    \item $\A$ outputs a bit $b'$
+    \item We say that $\A$ has advantage $$\Adv = |\Pr[b=b']-1/2|.$$
+\end{enumerate}
+
+\begin{definition}
+A setup-free $(\ell, f_p)$-secure search scheme $\ssp$ is \emph{fully
+secure} if every PPT adversary $\A$ controlling the server has a
+negligible advantage $\Adv \le \negl(\kappa)$ in the game above.
+\end{definition}
+
+\subsubsection{From COIE to Secure Search}
+
+We next present our framework for obtaining Secure Search from COIE.  
+The intuition is likely already clear from the previous descriptions:~the encrypted client query is applied 
+to the dataset, returning an encrypted bit vector indicating where index matches lie.  The server homomorphically computes the 
+hamming weight of this vector, and sends it to the client for decryption. This provides the result set size to the Server, allowing it to encode the result vector in the COIE.\footnote{We note if we don't wish to reveal this to the server, we can use a fixed, global upper bound, or, if it is appropriate to the application, the client can add noise to provide differential privacy.  It is also worth pointing out that prior work leaks the result set size as well.}  The encoding is sent to the client for decryption and decoding.  
+
+Because the COIE only encodes the indices, and not the data values, we 
+then add a PIR step to fetch the corresponding data.  Note that if 
+the COIE scheme admits false positives, it is possible that the number of false positives, and therefore the number of PIR queries, depends on the data, 
+leaking something to the Server.  To fix this problem, the client pads the number of PIR queries as follows.  It 
+fixes a bound $f_p$ on the number of false positives, and aborts if the actual number of false positives exceeds this bound.  Otherwise, the client uses enough dummy queries to pad the number of PIR queries to $s+ f_p$. 
+
+\begin{algorithm}[htbp]
+\small
+
+\begin{enumerate}
+\item Client runs the FHE key generation algorithm and encrypts database
+$x = (x_1, \ldots, x_n)$ with $x_i \in \zo^m$. It then sends $\lbra x
+\lket = (\lbra x_1 \lket, \ldots, \lbra x_n \lket)$ and the evaluation
+key to Server.
+
+\item Client sends an encrypted query $\lbra q \lket$.
+
+\item Server homomorphically evaluates the encrypted query $\lbra q
+\lket$ on each encrypted record. In particular, let $\lbra b \lket =
+(\lbra b_1 \lket, \ldots, \lbra b_n \lket)$ where $\lbra b_i \lket =
+\lbra q(x_i) \lket$.  Note that $q(x_i) = 1$ if record $i$ is a
+match and is equal to $0$ otherwise.
+
+\item Server homomorphically computes $\lbra s \lket = \sum_{i=1}^n \lbra b_i \lket$, and sends to Client for decryption. 
+
+\item Client decrypts $\lbra s \lket$ to obtain $s$, and sends $s$ to Server. 
+
+\item Server calls \textsf{COIE}.$\Encode(\lbra b \lket)$ with sparsity parameter $s$, to obtain an encrypted
+encoding $\lbra C \lket$.  It sends $\lbra C \lket$ to Client. 
+
+\item  Client decrypts
+$\lbra C \lket$ into $C$ and calls \textsf{COIE}.$\Decode(C)$ to obtain a set $\mathcal{S}'$
+of size $s + e$ indexes.  If $e > f_p$, Client aborts. Otherwise,
+Client adds $f_p -e$ number of dummy indexes to $\mathcal{S}'$.
+
+\item Client runs a PIR protocol with the Server to obtain the records
+corresponding to the indexes in $\mathcal{S}'$.
+
+\end{enumerate}
+\caption{\small Secure search with a $(n, s, c, f_p)$-COIE scheme.}\label{alg:ssCOIE}
+\end{algorithm}
+
+
+\begin{theorem}
+Given an FHE scheme, a $(n, s, c, f_p)$-COIE scheme in the random oracle model, and a PIR scheme in the random oracle model with
+communication complexity $\ell_p$ for records in $\zo^m$, the construction in Algorithm \ref{alg:ssCOIE} yields a $(\ell,f_p)$-secure search scheme for records in $\zo^m$ in the Random Oracle
+Model, where $\ell = \frac{c\cdot \ell_c + (s+f_p)\cdot \ell_{p}}{s}$,
+$\ell_c$ is the length of an FHE ciphertext, and $s$ is the number of
+matching records.  
+\end{theorem}
+
+\begin{proof}
+We begin by proving that the adversary cannot distinguish between two
+different queries.  The adversary chooses a database $x$ and two
+queries $q^0$ and $q^1$, with the promise that $s = \sum_{i=1}^n q^0(x_i) =
+\sum_{i=1}^n q^1(x_i)$.
+
+The entire view of the adversary during the experiment can be
+reconstructed efficiently given (1) the encrypted database $\lbra x
+\lket$ (2) the encrypted query $\lbra q \lket$, (3) $s + f_p$ iterations
+of the PIR protocol, requesting indexes in $\mathcal{S}'_b$, where $s$
+is the number of matching records.
+
+Since the value of $s$ is the same for $q^0$ and $q^1$, the two things
+that change in the view of the adversary when switching from $b = 0$ to
+$b=1$ are (1) the encrypted query $\lbra q^b \lket$ (2) the set of
+indexes $\mathcal{S}'_b$ (but not the number) requested during the PIR
+step.  
+
+We also note that the experiment only aborts when the number of received false positives $e$ is greater than the bound $f_p$, which only happened with probability $\negl(\secparam)$ for a statistical security parameter $\secparam$.  Thus, we ignore this possibility in the following.  
+
+We can now proceed via a standard hybrid argument: 
+\BI
+\item We first consider the real experiment with $b=0$. 
+
+\item We then switch the encrypted query from $q^0$ to $q^1$, but leave
+the set of indexes in the PIR step as $\mathcal{S}'_0$.
+Indistinguishability of the adversary's view follows from the IND-CPA
+security of the FHE scheme.  
+
+\item Next, we switch the set of indexes in the PIR step from
+$\mathcal{S}'_0$ to $\mathcal{S}'_1$.  Indistinguishability of the
+adversary's view now follows from the security of the PIR scheme. This
+is now identical to the real experiment with $b=1$.  
+\EI
+
+We conclude that the probability the adversary outputs $0$ or $1$
+differs by a negligible amount when $b=0$ versus $b=1$.  Therefore, the
+advantage of the adversary in guessing $b$ is negligible.
+
+The proof that the adversary cannot distinguish between the same query
+applied to two different databases follows nearly identically.
+\end{proof}
+
+\subsubsection{From CODE to Secure Search}
+
+We next present our framework for obtaining
+Secure Search from CODE.
+
+\begin{algorithm}[htbp]
+\small
+
+\begin{enumerate}
+\item Client runs the FHE key generation algorithm and encrypts database
+$x = (x_1, \ldots, x_n)$ with $x_i \in D$. It then sends $\lbra x
+\lket = (\lbra x_1 \lket, \ldots, \lbra x_n \lket)$ and the evaluation
+key to Server.
+
+\item Client sends an encrypted query $\lbra q \lket$.
+
+\item Server homomorphically evaluates the encrypted query $\lbra q
+\lket$ on each encrypted record. In particular, let $\lbra b \lket =
+(\lbra b_i \lket, \ldots, \lbra b_n \lket)$ where $\lbra b_i \lket =
+\lbra q(x_i) \lket$.  Note that $q(x_i) = 1$ if record $i$ is a
+match and is equal to $0$ otherwise.
+
+\item Server homomorphically computes $\lbra s \lket = \sum_{i=1}^n \lbra b_i \lket$
+ and sends $\lbra s \lket$ to Client. 
+
+\item Client decrypts $\lbra s \lket$ to obtain $s$ and sends it back
+to the Server.
+  
+\item Server computes $\lbra d_i \lket = \lbra b_i \lket \cdot \lbra x_i
+\lket$ for $i \in [n]$. Then, it applies \textsf{CODE}.$\Encode(\lbra d_1 \lket,
+\ldots \lbra d_n \lket)$ with sparsity parameter $s$, to obtain an encrypted encoding $\lbra C
+\lket$.  It sends $\lbra C \lket$ to Client. 
+
+\item Client decrypts $\lbra C \lket$ to $C$ and decodes $C$ to obtain a
+set $\mathcal{S}$ of size $s$ matching records.
+
+\end{enumerate}
+\caption{\small Secure search with a $(n, s, c, f_p)$-CODE scheme.}\label{alg:ssCODE}
+\end{algorithm}
+
+
+\begin{theorem} \label{thm:ssp-code}
+Given an FHE scheme, and a $(n, s, c, f_p)$-CODE scheme over domain $D$
+in the random oracle model, the construction in Algorithm~\ref{alg:ssCODE} yields a $(\ell,
+f_p)$-secure search scheme for records in domain $D$ in the random oracle
+model, where $\ell = \frac{c(s)\cdot \ell_c}{s}$, $\ell_c$ is the length
+of an FHE ciphertext with plaintext space $D$, and $s$ is the number of
+matching records.
+\end{theorem}
+
+The proof is similar to the COIE-based scheme and can be found in
+Appendix~\ref{app:proof63}. 
+
+\paragraph{On the use of homomorphic multiplication.}
+As described, our CODE-based search scheme uses $n$ homomorphic
+multiplications to create the vector $\lbra d \lket$.  However, it may
+be the case that this vector is already produced as part of the match
+step, for example for arithmetic queries.  In this case, our CODE scheme
+requires no further homomorphic multiplications.
+
+
+\paragraph{On volume attacks.}
+In our secure search schemes, the client sends the number $s$ of matching
+records to the server so that the server can create an oblivious compress
+encoding. 
+%
+One recent line of works has developed attacks using volume leakage (e.g.,
+\cite{CCS:KKNO16,CCS:GuiJohWar19,NDSS:BlaKamMoa20}), and these types of attacks
+can be applied to our scheme in theory. 
+
+In our scheme, the volume attacks can be mitigated by hiding $s$ in
+a differentially private manner. In particular, the client can add a small
+amount of noise to $s$ before sending it to the server. A similar approach was
+used in previous work e.g.,~\cite{CCS:PPYY19}. 
+

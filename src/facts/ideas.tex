@@ -1,0 +1,779 @@
+\documentclass[letterpaper,12pt]{article}
+
+\usepackage{
+  amsmath,
+  amsthm,
+  amsfonts,
+  natbib,
+}
+
+\bibliographystyle{plainnat}
+
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+
+\usepackage{todonotes}
+%\usepackage[disable]{todonotes}
+
+\title{Traceback ideas sketch}
+\author{AA,LL,DR,AT,AY}
+
+%%% macros
+\DeclareMathOperator{\EX}{\mathbb{E}}
+\DeclareMathOperator{\Hash}{\textsf{Hash}}
+\DeclareMathOperator{\Enc}{\textsf{Enc}}
+\DeclareMathOperator{\Dec}{\textsf{Dec}}
+\DeclareMathOperator{\Sig}{\textsf{Sig}}
+\DeclareMathOperator{\Ver}{\textsf{Ver}}
+\DeclareMathOperator{\AddCount}{\textsf{AddCount}}
+\DeclareMathOperator{\GetCount}{\textsf{GetCount}}
+\newcommand{\pubkeyserv}{\textsf{pk}}
+\newcommand{\seckeyserv}{\textsf{sk}}
+\newcommand{\symkeyserv}{\textsf{key}}
+\newcommand{\softO}{\tilde{O}}
+%\newcommand{\softO}{O\tilde{~}}
+\newcommand{\anote}[1]{{\sf (\textcolor{red}{Arkady's Note: {\sl{#1}}} {\sf EON)}}}
+
+
+\begin{document}
+\maketitle
+
+Goal: Improve the ability of end-to-end encrypted messaging providers to
+limit disinformation campaigns on their services, whereby a false or
+manipulated story is shared via forwarding across the platform.
+
+Specifically, we want to extend and improve on the ideas of
+\citep{TMR-traceback-ccs19} by requiring a \emph{threshold} of $k$
+distinct users to trigger a traceback (or other action).
+
+Other possible goals are:
+\begin{enumerate}
+  \item Allow a range of \emph{actions} to include:
+  \begin{enumerate}
+    \item banning or suspending the account of the content originator
+    \item sending a notification to all who have already received the
+    content
+    \item showing a notification/warning to all who view the content
+    later (regardless of when they received it)
+    \item preventing any additional forwards of the content
+  \end{enumerate}
+  \item Disclose less information than a full tree/path traceback, for
+  example just the content of the message, or just the originator.
+  \item Support one or more independent auditors who will review reports
+  and decide on the appropriate action to take (if any)
+  \item Maintain privacy, the the extent possible, in the face of
+  collusion and possibly malicious actions by some group of users, the
+  service provider, maybe even the auditor
+\end{enumerate}
+
+\subsection{Notation and Nomenclature}
+
+\begin{description}
+  \item[Service provider (SP)] The web service communicating with users and
+    handling messages between them, e.g., WhatsApp or Signal.
+  \item[Auditor] An trusted party who reviews verified reports and
+    decides what action needs to be taken (if any).
+  \item[User] An ordinary user of the messaging system, utilizing end-to-end
+    encryption and possibly receiving or sharing misinformation.
+  \item[Message] A piece of data (text, image, whatever) sent from a
+    single user to one or more other users in encrypted form.
+    Should ordinarily be indistinguishable
+    from any other message of roughly the same length to anyone that is
+    not the sender or the recipient.
+  \item[Forward]
+  \item[Original message]
+  \item[Originator] The user who first sent an original message
+  \item[UserId] Each user has an immutable, unique, public identifier
+    number, basically a public key whose corresponding private key can
+    be used for signing or other more exotic things. The list of users
+    should be public, or at least checkable by the auditor, so that the
+    service provider can't too easily create new fake user accounts.
+  \item[MessageId] An immutable value known only to those who have
+    received a message (or a forward of it).
+    Something like a deterministic hash of (some combination of) the
+    message content, originator, and first send time, plus maybe some
+    salt.
+  \item[Report] The action a user takes to complain that a message
+    is/may be misinformation. In issuing a report, the user is willing
+    to waive the privacy of the message contents as well as (perhaps)
+    their identity, at least to the auditor.
+  \item[Threshold] The minimum number of users, written as $k$, who must
+    independently report the same message before it is sent to the
+    auditor to determine what action to take.
+\end{description}
+
+\subsection{Security goals}
+
+There are lots of competing privacy and security goals.
+
+Privacy:
+\begin{itemize}
+  \item For any message which is not reported,
+    and is not sent to any colluding user,
+    no one else (SP, other users, auditor) should be able to see the
+    contents of a message, or even if it is a forward or not.
+  \item The same should hold for any message which is reported by fewer
+    than $k$ users (the threshold)
+  \item The SP should not learn anything about which message a user
+    reports, until the threshold is reached.
+  \item The auditor \emph{should} learn the message contents and the
+    identities of the $k$ reporters, but only after the threshold has been
+    reached.
+\end{itemize}
+
+Security:
+\begin{itemize}
+  \item The auditor must approve any punitive action for disinformation.
+    That is, the SP should convince all users that experience a punitive
+    action that the auditor really approved it.
+  \item Any collusion between some users and/or SP can only trick the
+    auditor into approving an action on a
+    message which has been sent to one of those colluding users, and only
+    if the number of colluding users is at least $k$.
+  \item No user can disguise or alter the originator of a message being
+    forwarded.
+\end{itemize}
+
+Also regarding performance expectations, the users and auditor should
+have minimal long-term storage and computation requirements.
+
+\subsection{Collaborative counting Bloom filter (CCBF)}\label{sec:ctbf}
+
+Here we describe the CCBF data structure which we will use to track
+complaints. The CCBF is somewhat similar to a count-min sketch in functionality:
+it allows incrementing the count of any item, and performing a
+\emph{point query} to estimate the current count of any item.
+Unlike count-min sketches, the CCBF does not support any other
+type of query and exhibits a relatively wide two-sided error bias on the
+count estimates returned.
+
+The CCBF supports two operations:
+\begin{itemize}
+  \item $\AddCount(i,x)$: Adds identifier $i$ to the set of witnesses for item $x$
+  \item $\GetCount(x)$: Computes an estimate on the number of distinct
+    witnesses $i$ in the set of counts for item $x$
+\end{itemize}
+
+Of course, a CCBF could be instantiated by simply storing a list of
+$(i,x)$ pairs, but we want a construction which --- like all Bloom
+filter variants --- trades improved memory efficiency for decreased
+accuracy in the $\GetCount$ operation.
+
+The construction is relatively simple at a high level, parameterized by
+three values $s,u,v$ which must be fixed at instantiation time:
+\begin{itemize}
+  \item The storage is a length-$s$ table of bits $T$, initially all zeros.
+  \item Each identifier $i$ is associated with a random size-$u$ subset
+    of table indexes $\{0,1,\ldots,s-1\}$, denoted $U(i)$.
+  \item Each item $x$ is associated with a random size-$v$ subset of
+    table indices, denoted $V(x)$.
+  \item The $\AddCount(i,x)$ operation computes the intersection of the
+    identifier and item index sets, $U(i)\bigcap V(x)$, and checks these
+    locations in the table. If possible, exactly one of these locations
+    in the table is flipped from 0 to 1.
+  \item The $\GetCount(x)$ operation looks up all table locations in
+    $V(x)$ and counts how many of the $v$ locations are set to 1. This
+    is fed into a calculation, based on the total number of set bits in
+    the entire table, to produce an estimate of the current count.
+\end{itemize}
+
+\subsubsection{Elementary approximations}
+
+We begin with some standard building-block approximations.
+
+First, we can approximate the function $\exp(x)$ around the origin
+with straight lines.
+
+The following inequalities hold for any constant $\alpha\ge 0$ and any
+real $x$ with $0\le x \le \alpha$:
+\begin{eqnarray}
+  \exp\left(\frac{\ln(1+\alpha)}{\alpha} x\right)
+  \le 1 + x
+  \le \exp(x)
+  \le 1 + \left(\frac{\exp(\alpha)-1}{\alpha}\right) x
+  \label{eqn:inequal-pos}
+\\[15 pt]
+  \exp\left(-\frac{\ln\frac{1}{1-\alpha}}{\alpha} x\right)
+  \le 1 - x
+  \le \exp(-x)
+  \le 1 - \frac{1 - \exp(-\alpha)}{\alpha} x
+  \label{eqn:inequal-neg}
+\end{eqnarray}
+
+We can invert the inequalities on the ends of the lines above to
+obtain:
+\begin{eqnarray}
+%    \exp\left(\tfrac{x}{2}\right) \le 1+x
+%      & 0 \le x \le 2.5128 \\
+  \exp(x) \le 1 + 2x,\quad
+  0 \le x \le 1.2564
+  \label{eqn:bound2-exp-pos}
+\\[10 pt]
+  \exp(-2x) \le 1-x,\quad
+  0 \le x \le 0.7968
+  \label{eqn:bound2-exp-neg}
+%   \exp(-x) \le 1 - \tfrac{x}{2},\quad
+%   0 \le x \le 1.5936
+\end{eqnarray}
+
+We also need approximations for (partial) harmonic series of the form
+\(\frac{1}{a} + \frac{1}{a+1} + \cdots + \frac{1}{b}\). Basic left and
+right Riemann sums give, for two integers \(a \le b\),
+\[\sum_{i=a+1}^{b} \frac{1}{i} \le \ln b - \ln a \le
+\sum_{i=a}^{b-1}\frac{1}{i},\]\anote{Why do the indices differ in the sums on the left and right?}
+which is inverted on both sides to obtain
+\begin{equation}\label{eq:harm-bound}
+\ln\frac{b+1}{a} \le \sum_{i=a}^b \frac{1}{i} \le \ln\frac{b}{a-1}.
+\end{equation}
+
+\subsubsection{Calculation of $\GetCount$}
+
+Recall that $s$ is the total table size, $u$ is the number of slots per
+identifier, and $v$ is the number of slots per item.
+
+\paragraph{Probability to fill in table during $\AddCount$.}
+
+Suppose $\AddCount(i,x)$ is called at a time when
+$v_0$ out of the $V(x)$ indexed bits are set to
+1. We want to know the probability that this call to $\AddCount$ sets
+one more bit out of $V(x)$.
+
+Consider the intersection of the $(v-v_0)$ unset indices of $V(x)$, with
+all $u$ identifier indices $U(i)$. Assuming $\AddCount(i,x)$ has not
+been called already, we can consider these as two independent subsets of
+an $s$-element set. The exact probability that they do \emph{not}
+intersect is
+\[\frac{\binom{s-v+v_0}{u}}{\binom{s}{u}}
+  = \frac{(s-v+v_0)! (s-u)!}{s! (s-u-v+v_0)!}
+  = \prod_{j=0}^{v-v_0+1} \frac{s-u-j}{s-j}.\]
+Note that this probability can be computed exactly in $\softO(s)$ time.
+
+An unconditional upper bound is obtained from \eqref{eqn:inequal-neg}:
+\[ \prod_{j=0}^{v-v_0+1} \frac{s-u-j}{s-j}
+  \le \left(1 - \frac{u}{s}\right)^{v-v_0}
+  \le \exp\left(-\frac{u(v-v_0)}{s}\right)
+\]
+
+% XXX: This is the derivation, replaced with explicit ratios below.
+% Let $c_1\ge v/s$ and $c_2 \ge u/s$. Then, provided $c_1,c_2$ are
+% sufficiently small,
+% we can apply \eqref{eqn:inequal-neg} to obtain a lower bound as
+% well:
+% \begin{eqnarray*}
+%   \prod_{j=0}^{v-v_0+1} \frac{s-u-j}{s-j}
+%     &\ge& \left(1 - \frac{u}{s-v+v_0+1}\right)^{v-v_0} \\
+%     &>& \left(1 - \frac{u}{s-v}\right)^{v-v_0} \\
+%     &\ge& \left(1 - \frac{u}{(1-c_1)s}\right)^{v-v_0} \\
+%     &\ge& \exp\left(- \frac{\ln\left(1 + \frac{c2}{1-c_1-c_2}\right)}{c_2}
+%       \frac{u(v-v_0)}{s}\right)
+% \end{eqnarray*}
+
+Provided that $u \le 0.5s$ and $v \le 0.2s$,
+we can apply \eqref{eqn:inequal-neg} to obtain a lower bound as
+well:
+\begin{eqnarray*}
+  \prod_{j=0}^{v-v_0+1} \frac{s-u-j}{s-j}
+    &\ge& \left(1 - \frac{u}{s-v+v_0+1}\right)^{v-v_0} \\
+    &>& \left(1 - \frac{u}{s-v}\right)^{v-v_0} \\
+    &\ge& \left(1 - \frac{u}{0.8 s}\right)^{v-v_0} \\
+    &\ge& \exp\left(-2 \frac{u(v-v_0)}{s}\right)
+\end{eqnarray*}
+
+In summary, whenever $u\le 0.5s$ and $v \le 0.2s$, we have
+\begin{equation}\label{eqn:prob-no-inter}
+  \exp(-2u(v-v_0)/s) < \Pr[\text{no intersection}] < \exp(-u(v-v_0)/s).
+\end{equation}
+
+\paragraph{Expected time to fill $k$ slots for item $x$.}
+
+Following from the previous estimate,
+the expected number of calls to $\AddCount(\cdot,x)$ before the next
+entry of $V(x)$ is actually filled follows a geometric distribution,
+with expected value $1/(1 - \Pr[\text{no intersection}])$. Again, this
+expected value can be computed exactly.
+
+Using the bounds above, under the more restrictive conditions that
+$8 \le u \le 0.5s$ and $uv \le 1.59s$, we can approximate this expected
+value as
+\begin{equation}\label{eq:exptries}
+  0.5\frac{s}{u(v-v_0)} < \EX[\text{tries until next set bit}] <
+  2\frac{s}{u(v-v_0)}.
+\end{equation}
+
+Now we want to ask, what is the total \emph{expected} number of calls to
+$\AddCount(\cdot,x)$ that occur before some $k$ out of the $v$ total
+indices in $V(x)$ are set to 1? By linearity of expectation, we can
+simply sum up the expected number of tries to set each individual bit,
+starting with the amount of bits set by \emph{other} calls to
+$\AddCount(\cdot,y)$ with $y\ne x$.
+
+Considering only the previous calls to $\AddCount(\cdot,y)$ with $y\ne
+x$, suppose the resulting table has $s_0$ total bits set to 1. Then,
+because the index set $V(x)$ is chosen independently at random, the
+expected number of bits within $V(x)$ set by other calls to $\AddCount$
+is exactly $vs_0/s$.
+
+The total expected number of calls to $\AddCount(\cdot,x)$ needed to
+have $k$ total bits set is therefore
+\begin{equation}\label{eq:totalexp}
+  \sum_{i=vs_0/s}^{k-1} \EX[\text{tries to set the $i+1$'st bit}],
+\end{equation}
+which again can be computed exactly.
+
+We can approximate \eqref{eq:totalexp} using \eqref{eq:exptries}. First,
+for an upper bound, the exact value of \eqref{eq:totalexp} is at most
+\[\sum_{i=vs_0/s}^{k-1} \frac{2s}{u(v-i)}
+  = \frac{2s}{u}\sum_{j=v-k+1}^{v-vs_0/s} \frac{1}{j}.\]
+
+Using the upper bound in \eqref{eq:harm-bound} and the fact that
+$s_0\ge 0$, we can approximate this
+summation as
+
+\[\sum_{j=v-k+1}^{v-vs_0/s}\frac{1}{j}
+  \le \ln \frac{v - vs_0/s}{v-k} \le \ln\left(1 +
+  \frac{k}{v-k}\right)\]
+
+Finally, since \(\ln(1+x) \le x\) for any $x\ge 0$, incorporating this
+into the previous inequality, the expected number of calls to
+$\AddCount(\cdot,x)$ to have $k$ total bits set is at most
+\begin{equation}
+  \frac{2s}{u\left(\tfrac{v}{k}-1\right)}
+\end{equation}
+
+For a lower bound, we need to assume that the number of bits set $k/v$
+is significantly larger than the ``background noise'' corresponding to
+$s_0/s$. Specifically, assuming $\frac{k}{v}\ge 2\frac{s_0}{s}$, and
+using the same inequalities as before we can derive a lower bound on
+\eqref{eq:totalexp} of
+
+\begin{eqnarray*}
+\frac{s}{2u}\sum_{j=v-k+1}^{v-vs_0/s} \frac{1}{j}
+  &\ge& \frac{s}{2u}\ln\frac{v-vs_0/s+1}{v-k+1} \\
+  &\ge& \frac{s}{2u}\ln\frac{v+1-k/2}{v+1-k} \\
+  &\ge& \frac{s}{2u}\ln\left(1 + \frac{k/2}{v+1-k}\right)
+\end{eqnarray*}
+
+%TODO check w.r.t. previous bounds
+Now assuming \(0 \le \frac{k/2}{v+1-k} \le 2.5128\) and
+\(v+1-k \ge 5\),
+we can apply \eqref{eqn:bound2-exp-pos}
+to further simplify the lower bound on the number of valid complaints
+needed to fill in $k$ slots for the message:
+
+\begin{eqnarray*}
+\frac{s}{2u}\ln\left(1 + \frac{k/2}{v+1-k}\right)
+  &\ge& \frac{s}{2u} \cdot \frac{k/4}{v+1-k} \\
+  &\ge& \frac{s}{2u} \cdot \frac{k/5}{v-k} \\
+  &=& \frac{s}{10u(\tfrac{v}{k}-1)}
+\end{eqnarray*}
+
+Putting this together with the upper bound, we have
+\begin{equation}\label{eq:exp-fill}
+  0.1 \frac{s}{u(\tfrac{v}{k}-1)}
+  \le \EX[\text{valid complaints to fill $k$ bits}]
+  \le 2 \frac{s}{u(\tfrac{v}{k}-1)}
+\end{equation}
+
+\subsubsection{Tail bounds}
+
+Let $\lambda$ be a (statistical) security parameter. We need tail bounds
+relative to $\exp(-\lambda)$ on the probability that:
+\begin{itemize}
+  \item Many valid complaints do \emph{not} trigger an audit; or
+  \item Few valid complaints \emph{do} trigger any audit.
+\end{itemize}
+
+For both of these, we can consider a sequence of $c$ attempted
+complaints by different users on the same message. By the principle of
+deferred decisions, we can consider the probability each attempted complaint does
+not succeed in writing to one of the message's $v$ slots, to be the
+probability that a random size-$u$ subset
+does not intersect with a given size-$(v-v_0)$ subset of all $s$ positions.
+Recall from \eqref{eqn:prob-no-inter} that this is given by
+\[
+  \exp(-2u(v-v_0)/s) < \Pr[\text{no intersection}] < \exp(-u(v-v_0)/s).
+\]
+
+Now define indicator random variables $X_i$ to be $1$ if the $i$th
+attempted complaint does not succeed, and $0$ otherwise. We are
+interested in the total number $\bar{X}$ of failures among $c$
+complaints:
+\[
+  \bar{X} = X_1 + X_2 + \cdots + X_c
+\]
+
+Each $X_i$ is in fact a Bernoulli distribution with probability $p_i$
+bounded by \eqref{eqn:prob-no-inter}. These random variables are
+\emph{not} independent, as the parameter $v_0$ is changing
+depending on prior events when some message slots get filled in, and
+this affects the probability $p_i$.
+
+However, we can bound the probabilities $p_i$ and therefore the sum
+$\bar{X}$ by the sum of i.i.d. Bernoulli random variables, and then use
+Hoeffding's inequality to derive the required tail bounds.
+
+First for the upper bound, we want to show that, for sufficiently many
+attempted complaints $c$, the probability that no more than $k-1$ of
+them succeed is very small. That is, we want to show that
+\[\Pr[\bar{X} \ge c-k+1] \le \exp(-\lambda).\]
+
+For this, we start with the following assumptions:
+\begin{enumerate}
+  \item \label{ass:kv}
+    \(2\frac{s_0}{s} \le \frac{k}{v} \le 0.5\)
+  \item \label{ass:k}
+    \(k \ge 5\)
+  \item \label{ass:u}
+    \(8 \le u \le 0.5s\)
+  \item \label{ass:uv}
+    \(\frac{s}{uv} \ge 0.629\)
+\end{enumerate}
+
+In that case that fewer than $k$ of the $v$ message slots are filled
+after the entire sequence of $c$ complaints, the probability of failure
+for each attempted complaint is maximized when $k-1$ slots have been
+filled. From \eqref{eqn:prob-no-inter}, this gives an upper bound on the
+probability of each failure of
+\[p_i \le \exp({-u(v-k+1)/s}).\]
+
+Call this bound $q$, and define a new sequence of i.i.d. Bernoulli random variables
+$Y_1,\ldots,Y_c$, which equal 1 with probability $q$ and 0 otherwise,
+and $\bar{Y} = \sum_{i=1}^c Y_i$ as their sum. Because the probability
+$p_i$ of each Bernoulli r.v. $X_i$ is bounded above by $q$, we conclude
+that
+\[\Pr[\bar{X} \ge c-k+1] \le \Pr[\bar{Y} \ge c-k+1]\]
+and turn our attention to the latter probability.
+
+Now let
+\begin{equation}\label{eqn:c-upper-tail}
+  c \ge 9\lambda\left(\frac{s}{uv}\right)^2 + 6\frac{ks}{uv}.
+\end{equation}
+
+We first claim that $3\frac{s}{uv} \ge \frac{1}{1-q}$, where
+$q=\exp(-u(v-k+1)/s)$ is the upper bound on each $p_i$ as derived above.
+By Assumption~\ref{ass:kv}, we have $v-k+1 > v-k \ge 0.5 v$, and
+therefore $q \le \exp(-0.5 \frac{uv}{s})$. Because of
+Assumption~\ref{ass:uv}, we know that $0.5\frac{uv}{s} < 0.795$, which
+means we can apply the bound of \eqref{eqn:inequal-neg}
+(with $\alpha\approx 0.5484$) to derive
+\[q \le \exp(-0.5 \frac{uv}{s}) < 1 - \frac{1}{3} \frac{uv}{s},\]
+and therefore $\frac{1}{1-q} < 3\frac{s}{uv}$ as claimed.
+
+Applying this to \eqref{eqn:c-upper-tail}, we have
+\begin{eqnarray*}
+  c &>& \frac{\lambda}{(1-q)^2} + \frac{2(k-1)}{1-q} \\
+  &=& 2\left(\frac{\sqrt{\lambda/2}}{1-q}\right)^2
+    + 2\left(\frac{\sqrt{k-1}}{\sqrt{1-q}}\right)^2.
+\end{eqnarray*}
+
+Next, because \((a+b)^2 \le 2a^2 + 2b^2\) for any real numbers $a,b$, we
+know that
+\[\sqrt{c} > \frac{\sqrt{\lambda/2} + \sqrt{(k-1)(1-q)}}{1-q},\]
+and therefore
+\begin{eqnarray*}
+(1-q)c
+  &>& \left(\sqrt{\lambda/2} + \sqrt{(k-1)(1-q)}\right)\sqrt{c} \\
+  &>& \sqrt{\lambda c/2} + k - 1.
+\end{eqnarray*}
+
+Rearranging gives $c-k+1 \ge \left(q + \sqrt{\lambda/(2c)}\right)c$,
+which means we can finally apply Hoeffding's inequality over the sum of
+i.i.d. Bernoulli r.v.'s $\bar{Y}$ to conclude that
+\[\Pr[\bar{Y} \ge c-k+1] \le \exp(-\lambda).\]
+
+From the discussion above, this proves that, except with negligible
+probability, any $c$ attempted complaints on the same message will
+always trigger an audit, with $c$ as in \eqref{eqn:c-upper-tail}.
+
+
+\subsubsection{Oblivious CCBF}
+
+A \emph{write-oblivious} data structure is one for which an adversary
+who can see all updates to underlying memory storage cannot learn
+anything more than the number of data structure (write) operations which
+were issued (in our context the number of times $\AddCount$ was called).
+
+The CCBF described above is already \emph{nearly} write-oblivious: In
+the generic case, a call to $\AddCount$ results in exactly one bit in
+the table being set to 1. No other $\AddCount$ operation will touch this
+same bit, and it is indistinguishable from random. However, if the
+index set intersection $U(i)\bigcap V(i)$ is empty, or if all indices in
+this set are already 1, then no write occurs. This difference violates
+write-obliviousness.
+
+To avoid it, we need a cap $c$ on the total number of times $\AddCount$
+will be called, a limit $q$ on how many times $\AddCount(i,\cdot)$
+will be called for any identifier $i$, and a security parameter
+$\lambda$.
+
+Then the $\AddCount$ algorithm checks not only the table indices in
+$U(i)\bigcap V(x)$, but also up to $(\lambda+q-1)$ additional indices from
+$U(i)$. If the bit for any index in the actual intersection is 0, it is
+set to 1 as usual. But otherwise, one of the bits from the additional
+indices is changed from 0 to 1.
+
+If this algorithm always succeeds, then it is write-oblivious since
+every $\AddCount$ operation sets exactly 1 bit, which is never again
+written to, and the index of this bit is indistinguishable from random.
+
+However, catastrophic failure occurs if all of the bits at selected
+indices are all 1. To ensure this happens with negligible probability,
+we need only ensure the table size $s$ is at least $2c$, and the
+identifier index set size $u$ is at least $(\lambda + q-1)$. In this case,
+during any call to $\AddCount(i,\cdot)$, the set $U(i)$ will have at
+most $q-1$ bits set from previous calls to $\AddCount(i,\cdot)$, and the
+chance that any additional bit is 1 is at most $c/s$. Therefore the
+chance that all $(\lambda+q-1)$ selected ``extra'' indices from $U(i)$
+are 1, in any call to $\AddCount$, is at most $2^{-\lambda}$.
+
+The CCBF can be further made \emph{completely} (read- and write-)
+oblivious by replacing the table lookups with private information
+retrieval (PIR). Note that the size of the table lookups (number of bits
+checked) is at most $v+q+\lambda-1$ in any call to $\AddCount$ or
+$\GetCount$, so the efficiency of the PIR operation depends only on
+these parameters and the table size $s$.
+
+\subsection{Solution based on CTBF}
+
+Here we describe a solution to the message-reporting problem with
+desired threshold $t$, using the oblivious CTBF data structure described
+in the previous section.
+
+\begin{itemize}
+  \item The server stores a CTBF table (i.e., a length-$s$ bit array).
+
+  \item Each user has an identifier $i$ and is assigned a random subset $U(i)$
+    of table indices. This subset $U(i)$ should be known only to the
+    user and the server. It could be chosen randomly by the server and
+    sent to the user, or computed from some PRG from a key shared with
+    each user and the server.
+
+  \item On origination, each message $x$ is assigned a random size-$v$
+    $V(x)$. In this case, the choice of subset must be random (even if
+    the user is malicious), but the server cannot learn the subset. This
+    can be achieved by having the originator commit to a random value
+    $r_u$, the server write a second random value $r_s$ while signing
+    the message hash, and then use their xor $r_u\oplus r_s$ as seed for
+    a PRG that determines the subset. See \cref{sec:unforgeable} for
+    details on how to construct the message.
+
+  \item Forwarding a message just means sending the (signed, originated)
+    message through the E2E messaging channel. If this channel is
+    visible to the server, the forwarding user can first originate a
+    dummy message in order to not reveal whether the nature of the
+    message.
+
+  \item Any honest user receiving a message should first check that it
+    has a valid construction and that the signature verifies with the
+    server's public key. If not, the message is discarded (and optionally,
+    the server may be notified).
+
+  \item To issue a complaint on message $x$, user $i$ first performs
+    the $\AddCount(i,x)$ operation obliviously, using PIR for the
+    lookups. Note, this is done authenticated with the server, so the
+    server can check that user $i$ has not yet reached their quota $q$
+    of complaints.
+
+    The user then computes $\GetCount(x)$ (having already done
+    the necessary lookups), and if the value exceeds the desired
+    threshold $t$, the user reveals the plaintext message value, along
+    with signed commitment to $V(x)$, to the auditor.
+
+    The auditor (who may be the same as the server)
+    can then examine the message contents, do fact-checking etc., and
+    flag the message, ban the originator, etc.
+\end{itemize}
+
+Security and efficiency come from the signature/unforgeability
+properties as outlined in \cref{sec:unforgeable}, and the CTBF
+construction from \cref{sec:ctbf}.
+
+\subsubsection{Parameters}
+
+We assume this process is conducted over some fixed \emph{time window},
+say 1 day. For that day, the system designer must choose values for:
+\begin{itemize}
+  \item $N$: Upper bound on total number of distinct users
+  \item $m$: Upper bound on number of messages sent in the time window
+  \item $c$: Upper bound on total number of attempted complaints within
+    the time window
+  \item $t$: \emph{Desired} threshold; this will be the expected number
+    of honest complaints to trigger an audit.
+  \item $q$: Quota on maximum number of writes (i.e., complaints)
+    allowed per user within the time window
+  \item $\lambda$: Security parameter
+\end{itemize}
+
+Based on these values and some performance and security criteria, the
+scheme will determine values for:
+\begin{itemize}
+  \item $s$: Size of the table, in bits
+  \item $u$: Number of slots each user is allowed to write
+  \item $v$: Number of slots for each message
+\end{itemize}
+
+The server keeps track of a value $s_0\le c$ for how many table bits are
+currently set to 1, and this value is shared with all users before they
+issue a complaint; that is, $s_0$ is public information.
+
+\subsection{Building block ideas}
+
+\subsubsection{Probabilistic threshold}\label{sec:prob-thresh}
+
+Each \emph{attempted} report may succeed or fail, depending on a
+deterministic function of the MessageId and UserId. This deterministic
+function should have a known probability distribution, so that each user
+has a fixed probability $p$ of \emph{successfully} reporting a given
+message.
+
+For example, to achieve a probability $\tfrac{1}{4}$, the function could
+be checking that the last two bits of the MessageId and UserId are the
+same.
+
+But ideally the function should know be known to the users or they could
+maybe do some brute-force checks themselves. So either the MessageId
+should be collaboratively chosen at message creation time, or the
+reporting success function will be computed with some input from the
+service provider.
+
+The advantage is that, by setting $p=1/k$, then the \emph{expected}
+number of attempted reports before a single successful report is $k$.
+Unfortunately the \emph{variance} is also quite high; see Wikipedia page
+on the geometric distribution.
+
+\subsubsection{PIR and Bloom Filters}\label{sec:pir-bloom}
+
+The SP maintains a Bloom Filter. (It would have to be cleared and
+refreshed periodically to avoid too many false positives.)
+
+Each MessageId deterministically maps to a set of $k-1$ Bloom filter
+locations; these are where the signed (successful) reports will be
+stored.
+
+To issue a report:
+\begin{enumerate}
+  \item User computes the list of all $k-1$ locations for that
+  MessageId.
+  \item User prepares their own report, which is their UserId signature
+  over the MessageId, encrypted with the Auditor's public key.
+  \item User queries all $k-1$ locations via PIR with SP. This way, the
+  service provider does not learn anything about which message is being
+  looked up. Furthermore, a user only knows the locations for messages
+  they have actually received, so can't learn extra information from
+  ther results.
+  \item If all $k-1$ locations are full, then the list of locations,
+  plus this user's own report, are sent to the SP. The SP sends all
+  these to the auditor to check the report and determine any action.
+  \item If any of the $k-1$ locations is empty, the user inerts their
+  own report at that location. Note that this does not reveal anything
+  to SP, because that location has not been used previously.
+\end{enumerate}
+
+Note, this can be combined with the probabilistic threshold technique
+(\cref{sec:prob-thresh}), to achive a smaller variance.
+
+\textbf{Problems}: Handling overlap between the location sets in the
+Bloom filter. The probability of overlap can be made small, but this
+will also make the total size larger. Alternatively, somehow allow the
+user to check whether each location holds a report \emph{for the same
+MessageId}, and the SP holds a linked list of reports on each location;
+but this might make the PIR too expensive or cause some other leakage.
+
+\subsubsection{Unforgeable message payload}\label{sec:unforgeable}
+
+Goals:
+\begin{itemize}
+  \item
+    Every message has an author, the \emph{originator} who sent this
+    message the first time.
+  \item
+    Every message sent (original or forward) should contain some
+    ciphertext that stores the originator's identity. Either the server
+    or the (honest) receiving client should be able to detect and
+    discard any improperly-structured message that doesn't contain this.
+  \item
+    The originator \emph{must} include her own identity with a message
+    she writes, and no one else can attach someone else's identity to
+    a different message.
+\end{itemize}
+
+We can achieve this by using a normal cryptographic hash $\Hash$, a
+symmetric encryption scheme $(\Enc,\Dec)$, and a signature scheme
+$(\Sig,\Ver)$.
+
+Each message has some plaintext
+contents $m$, which will include the actual message that a client sees,
+plus any other information (maybe stuff related to secret sharing, or
+something else) that will be revealed to every client who receives the
+message, but not by the server.
+
+The server has an asymmetric key pair $(\pubkeyserv,\seckeyserv)$
+for signing, and every client knows $\pubkeyserv$.
+The server also has a secret symmetric key $\symkeyserv$.
+
+(Note, the clients likely also have asymmetric key pairs for sending
+messages, but we assume this is part of the existing E2EE messaging
+system that we are building on top of.)
+
+The protocol to create a new message
+is as follows:
+
+\begin{enumerate}
+  \item Client $i$ chooses random salt $s$, computes a salted hash $h \gets \Hash(s,m)$,
+    and sends $h$ to the server over an authenticated channel.
+  \item Server computes a (randomized) encryption of client $i$'s
+    identity, $e \gets \Enc_\symkeyserv(i)$, a signature
+    $g \gets \Sig(h, e)$,
+    and sends the tuple $(e, g)$ to the client.
+  \item Client $i$ computes the tuple $c \gets (s,m,e,g)$, which will be
+    the contents of the E2EE message actually sent to some other client
+    $j$.
+\end{enumerate}
+
+Upon receiving an E2EE message $(s,m,e,g)$, client $j$ must check
+$\Ver_\pubkeyserv(g,(\Hash(s,m),e))$ to ensure that this is an
+unmodified message attached to the originator's identity.
+
+A valid complaint (above the threshold\ldots) should reveal $(s,m,e)$ to
+the server, from which the server can compute $\Dec_\symkeyserv(e)$ and
+discover the identity of the message's originator. Note, the encryption
+$e$ could also contain some other information that the server wants to
+learn on a traceback, such as a timestamp.
+
+To flag a message, the server can broadcast the hash $h=\Hash(s,m)$ to
+all clients; any honest client who later receives this message will know
+to display it with a warning.
+
+\subsection{Discared ideas?}
+
+\subsubsection{Multiple ORAMs}
+
+Each user has an ORAM, all stored by the service provider. Each ORAM
+contains a list of signed MessageId's, corresponding to previous
+successful reports.
+
+To check a message, a user looks through their ORAM for all messages
+matching the current MessageId.
+
+To issue a report, the user adds their signature on the MessageId to
+every other ORAM (with help from Service Provider). Note that adding can
+be done with a simple ``append'' operation on the ORAM stash.
+
+When issuing, a user will see if the number of reports has reached the
+threshold. In this case, the user sends all signatures to the Service
+Provider and/or Auditor to take action.
+
+Note, this can be combined with the probabilistic threshold technique
+(\cref{sec:prob-thresh}), to achive a smaller variance.
+
+\textbf{Problems}: Lots of storage for the SP (\# of users times \# of
+reports). How to check against fake reports (maybe need some more
+crypto).
+
+\include{checkPoly}
+
+
+\bibliography{bib}
+
+\end{document}

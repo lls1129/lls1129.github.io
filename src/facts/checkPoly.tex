@@ -1,0 +1,49 @@
+% !TEX root = ideas.tex
+%\newcommand{\anote}[1]{\todo[inline, size=\small, author=Arkady]{#1}}
+\newcommand{\tuple}[2]{\langle #1, #2 \rangle }
+\newcommand{\tup}[1]{\langle #1, #1 \rangle}
+\subsubsection{Server-Checked Complaints}
+\paragraph{A fatal flaw?}
+In the process of writing this section, I realized that my approach has a fatal flaw.  The problem is with reusing the same check poly, $cp$, for all messages.  Now, when a party $u_i$ receives any two messages, he can compute two ciphertexts with the same value of $cp(i)$.  He can then subtract these homomorphically, to get a ciphertext with a 0 in the $cp$ slot.  This enables him to change the $p(i)$ value in any subsequent complaint without violating correctness of the check poly.  
+
+\paragraph{Original Scheme:}
+One problem that we have is clients submitting invalid complaints.  Ideally, we would like to allow the Server to check whether a complaint is valid without learning what message the complaint corresponds to.
+
+Below is a proposed solution for this, though many details in particular, the originating procedure needs to be optimized.
+
+\paragraph{Crypto Tools:}
+We use a secret-key homomorphic encryption (HE) scheme that operates on tuples of values $(x_1,x_2)$.  The HE scheme needs to be able to compute additive homomorphism and one level of multiplications.
+We need the following security properties (satisfied by many HE schemes)
+\begin{itemize}
+\item It is hard for someone not knowing $sk$ to produce a valid ciphertext from scratch
+\item When given Enc(f(x)) produced by homomorphism, it is not possible to tell what $f$ was.  A stronger form of this, known as circuit privacy, requires that one (even with $sk$) cannot tell the difference between a freshly encrypted $ct$ and one produced via homomorphism.
+\end{itemize}
+\paragraph{Setup:}
+\begin{enumerate}
+\item $S$ generates $sk$ for HE.
+\item $S$ picks a random degree $t$ check poly, $cp(x)$.  Let $cp_0,\ldots,cp_t$ be the coefficients of $cp$.
+\item When a user $u_i$ joins, $S$ computes $Enc_{sk}(\tup{i} ,Enc_{sk}(\tup{i^2}),\ldots,Enc_{sk}(\tup{i^t})$ and gives these to $u_i$.
+\end{enumerate}
+
+\paragraph{Originating a message: $S$ and $u_j$ where $j$ is the originator's ID}
+\begin{enumerate}
+\item $S$ picks a random degree $t$ poly $p_S(x)$ s.t. $p_S(0)=j$
+\item $u_j$ picks a random degree $t$ poly $p_O(x)$ s.t. $p_O(0)=0$
+\item $S$ and $u_j$ run a maliciously secure 2-PC where.  I am fairly confident that a generic 2-PC is not needed here, but haven't come up with something better. 
+\begin{itemize}
+\item $S$ inputs $sk$, $\seckeyserv$, $p_S$, $cp$
+\item $u_j$ inputs $p_O$
+\item The computation checks that $p_O$ is indeed a poly of degree $t$ with $p_O(0)=0$.  Then, computes $p(x)=p_S(x)+p_O(x)$ by adding the coefficients and then returns to $u_j$ encrypted coefficients of $p(x)$ together with a signature by the server authenticating them.\\
+Output (to $u_j$):  \\$c = (Enc_{sk}(\tuple{p_0}{cp_0}), \ldots, Enc_{sk}(\tuple{p_t}{cp_t})), \sigma=Sig_{\seckeyserv}(c)$ 
+\end{itemize}
+\item $u_j$ includes $(c,\sigma)$ with every copy of the message he sends out.
+\end{enumerate}
+
+\paragraph{Complaint:}
+To complain about a received message $m$, a party $u_i$ does the following:
+\begin{enumerate}
+\item $u_i$ first checks that $(c,\sigma)$ included in the message is a valid signature.  If not, he sends the invalid message to $S$.  \anote{May need to include the message in $\sigma$ to prevent replay attack?}
+\item $u_i$ uses $Enc_{sk}(\tup{i} ,Enc_{sk}(\tup{i^2}),\ldots,Enc_{sk}(\tup{i^t})$ received from $S$ and $Enc_{sk}(\tuple{p_0}{cp_0}), \ldots, Enc_{sk}(\tuple{p_t}{cp_t})$ received in the message to compute $Enc_{sk}(\tuple{p(i)}{cp(i)})$.
+\item $u_i$ sends $Enc_{sk}(\tuple{p(0)}{cp(0)})$ to $S$ who decrypts it and checks that $cp(i)$ is correct.  (Recall that $S$ knows $cp$).
+\item If this check passes, $u_i$ does the PIR and write to new location trick to write this complaint to a random location (Note that $S$ will see if he write something other than what he checked in the prior step).  
+\end{enumerate}

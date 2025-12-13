@@ -1,0 +1,20 @@
+\subsection{Related Work}\label{sec:related}
+\paragraph{Message Franking:}
+The most common approach today for reporting malicious messages in encrypted messaging systems is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}.  Message franking allows a recipient to prove the identity of the sender of a malicious message.  However, message franking is focused on identifying the last sender of a message, whereas we are interested in identifying the originator.  Moreover, message franking does not provide any threshold-type guarantees to prevent unmasking of senders given only one (or a few) complaints.
+
+\paragraph{Oblivious RAM (ORAM):}
+Oblivious Random-Access Memory (ORAM)~\cite{STOC:Goldreich87, STOC:Ostrovsky90, JACM:GolOst96} allows a client to obliviously access encrypted memory stored on a server without leaking the access pattern to the server.
+The standard ORAM definition assumes a single user with full control over the database.
+While some important progress has been made on multi-client ORAM protocols
+\cite{maffei-msmcoram,concuroram,MOSE},
+these solutions are still not scalable to millions of malicious users as would be needed
+for our application.
+
+\paragraph{Oblivious Counters and Oblivious Data-Structures:}
+Like CCBF, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} build counters that can be stored and incremented without revealing the value of the counter.  However, these techniques focus on exact counting, and do not provide efficient ways for storing large numbers of counters, as needed for our applications.  More generally, oblivious data-structures, e.g.~\cite{CCS:WNLCSS14, AC:KelSch14, SP:Shi20} 
+construct higher-level data structures such as heaps, trees, etc. to enable oblivious operations over encrypted data.  However, these largely focus on higher-level applications and do not provide the compression achieved by CCBF.
+
+
+
+\paragraph{Privacy-Preserving Sketching:}
+CCBF can be viewed as a small data structure (a \emph{sketch}) for storing the counts of complaints on a large set of messages.  There has indeed been a lot of recent interest (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19, NDSS:MelDanDec16, CCS:JanJoh16, CCS:FMJS17, AM14, FGJ+15}) in private sketching algorithms for cardinality estimation, frequency measurement, and other approximations.  However, these works generally focus on a multi-party setting, with multiple parties running secure computation to evaluate the statistic in question.  Since our goal was to restrict ourselves to user-server communication only, such techniques do not seem applicable to our setting.
