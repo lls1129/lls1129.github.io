@@ -165,7 +165,8 @@
     }
   </style>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="/usr/share/javascript/mathjax/MathJax.js"
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
   type="text/javascript"></script>
 </head>
 <body>
@@ -177,189 +178,244 @@
 <nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#abstract" id="toc-abstract">Abstract</a></li>
-<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<li><a href="#introduction" id="toc-introduction"><span
+class="toc-section-number">1</span> Introduction</a>
 <ul>
 <li><a href="#the-linear-bottleneck-in-secure-computation"
-id="toc-the-linear-bottleneck-in-secure-computation">The Linear
-Bottleneck in Secure Computation</a></li>
+id="toc-the-linear-bottleneck-in-secure-computation"><span
+class="toc-section-number">1.1</span> The Linear Bottleneck in Secure
+Computation</a></li>
 <li><a href="#group-1-primitives-for-sublinear-privacy"
-id="toc-group-1-primitives-for-sublinear-privacy">Group 1: Primitives
-for Sublinear Privacy</a></li>
+id="toc-group-1-primitives-for-sublinear-privacy"><span
+class="toc-section-number">1.2</span> Group 1: Primitives for Sublinear
+Privacy</a></li>
 <li><a href="#group-2-accountability-via-probabilistic-structures"
-id="toc-group-2-accountability-via-probabilistic-structures">Group 2:
-Accountability via Probabilistic Structures</a></li>
+id="toc-group-2-accountability-via-probabilistic-structures"><span
+class="toc-section-number">1.3</span> Group 2: Accountability via
+Probabilistic Structures</a></li>
 </ul></li>
 <li><a
 href="#group-1-privacy-preserving-accountability-in-encrypted-messaging"
-id="toc-group-1-privacy-preserving-accountability-in-encrypted-messaging">Group
-1: Privacy-Preserving Accountability in Encrypted Messaging</a>
+id="toc-group-1-privacy-preserving-accountability-in-encrypted-messaging"><span
+class="toc-section-number">2</span> Group 1: Privacy-Preserving
+Accountability in Encrypted Messaging</a>
 <ul>
 <li><a href="#the-operational-context-and-problem-space"
-id="toc-the-operational-context-and-problem-space">The Operational
-Context and Problem Space</a></li>
+id="toc-the-operational-context-and-problem-space"><span
+class="toc-section-number">2.1</span> The Operational Context and
+Problem Space</a></li>
 <li><a href="#system-architecture-and-protocols"
-id="toc-system-architecture-and-protocols">System Architecture and
+id="toc-system-architecture-and-protocols"><span
+class="toc-section-number">2.2</span> System Architecture and
 Protocols</a>
 <ul>
 <li><a href="#message-origination-and-tagging"
-id="toc-message-origination-and-tagging">Message Origination and
+id="toc-message-origination-and-tagging"><span
+class="toc-section-number">2.2.1</span> Message Origination and
 Tagging</a></li>
 <li><a href="#the-complaint-mechanism"
-id="toc-the-complaint-mechanism">The Complaint Mechanism</a></li>
+id="toc-the-complaint-mechanism"><span
+class="toc-section-number">2.2.2</span> The Complaint Mechanism</a></li>
 </ul></li>
 <li><a href="#the-collaborative-counting-bloom-filter-ccbf"
-id="toc-the-collaborative-counting-bloom-filter-ccbf">The Collaborative
-Counting Bloom Filter (CCBF)</a>
+id="toc-the-collaborative-counting-bloom-filter-ccbf"><span
+class="toc-section-number">2.3</span> The Collaborative Counting Bloom
+Filter (CCBF)</a>
 <ul>
 <li><a href="#data-structure-and-hiding-in-plain-sight"
-id="toc-data-structure-and-hiding-in-plain-sight">Data Structure and
-“Hiding in Plain Sight”</a></li>
-<li><a href="#the-complaint-logic" id="toc-the-complaint-logic">The
-Complaint Logic</a></li>
+id="toc-data-structure-and-hiding-in-plain-sight"><span
+class="toc-section-number">2.3.1</span> Data Structure and “Hiding in
+Plain Sight”</a></li>
+<li><a href="#the-complaint-logic" id="toc-the-complaint-logic"><span
+class="toc-section-number">2.3.2</span> The Complaint Logic</a></li>
 <li><a href="#the-tipping-point-and-threshold-enforcement"
-id="toc-the-tipping-point-and-threshold-enforcement">The Tipping Point
-and Threshold Enforcement</a></li>
+id="toc-the-tipping-point-and-threshold-enforcement"><span
+class="toc-section-number">2.3.3</span> The Tipping Point and Threshold
+Enforcement</a></li>
 </ul></li>
 <li><a href="#security-guarantees-and-integrity"
-id="toc-security-guarantees-and-integrity">Security Guarantees and
+id="toc-security-guarantees-and-integrity"><span
+class="toc-section-number">2.4</span> Security Guarantees and
 Integrity</a>
 <ul>
-<li><a href="#privacy-guarantees" id="toc-privacy-guarantees">Privacy
-Guarantees</a></li>
-<li><a href="#integrity-guarantees"
-id="toc-integrity-guarantees">Integrity Guarantees</a></li>
+<li><a href="#privacy-guarantees" id="toc-privacy-guarantees"><span
+class="toc-section-number">2.4.1</span> Privacy Guarantees</a></li>
+<li><a href="#integrity-guarantees" id="toc-integrity-guarantees"><span
+class="toc-section-number">2.4.2</span> Integrity Guarantees</a></li>
 </ul></li>
 <li><a href="#scalability-and-deployment-considerations"
-id="toc-scalability-and-deployment-considerations">Scalability and
-Deployment Considerations</a></li>
+id="toc-scalability-and-deployment-considerations"><span
+class="toc-section-number">2.5</span> Scalability and Deployment
+Considerations</a></li>
 </ul></li>
 <li><a href="#group-2-sublinear-algorithms-for-secure-computation"
-id="toc-group-2-sublinear-algorithms-for-secure-computation">Group 2:
-Sublinear Algorithms for Secure Computation</a>
+id="toc-group-2-sublinear-algorithms-for-secure-computation"><span
+class="toc-section-number">3</span> Group 2: Sublinear Algorithms for
+Secure Computation</a>
 <ul>
 <li><a
 href="#on-the-privacy-of-sublinear-communication-jaccard-index-estimation"
-id="toc-on-the-privacy-of-sublinear-communication-jaccard-index-estimation">On
-the Privacy of Sublinear-Communication Jaccard Index Estimation</a>
+id="toc-on-the-privacy-of-sublinear-communication-jaccard-index-estimation"><span
+class="toc-section-number">3.1</span> On the Privacy of
+Sublinear-Communication Jaccard Index Estimation</a>
 <ul>
-<li><a href="#the-privacy-folklore" id="toc-the-privacy-folklore">The
-Privacy “Folklore”</a></li>
+<li><a href="#the-privacy-folklore" id="toc-the-privacy-folklore"><span
+class="toc-section-number">3.1.1</span> The Privacy “Folklore”</a></li>
 <li><a href="#formalizing-sketch-privacy"
-id="toc-formalizing-sketch-privacy">Formalizing Sketch Privacy</a></li>
+id="toc-formalizing-sketch-privacy"><span
+class="toc-section-number">3.1.2</span> Formalizing Sketch
+Privacy</a></li>
 <li><a href="#distributional-differential-privacy-ddp"
-id="toc-distributional-differential-privacy-ddp">Distributional
-Differential Privacy (DDP)</a></li>
+id="toc-distributional-differential-privacy-ddp"><span
+class="toc-section-number">3.1.3</span> Distributional Differential
+Privacy (DDP)</a></li>
 <li><a href="#the-noisy-min-hash-protocol"
-id="toc-the-noisy-min-hash-protocol">The Noisy Min-Hash
+id="toc-the-noisy-min-hash-protocol"><span
+class="toc-section-number">3.1.4</span> The Noisy Min-Hash
 Protocol</a></li>
 </ul></li>
 <li><a href="#secure-sampling-with-sublinear-communication"
-id="toc-secure-sampling-with-sublinear-communication">Secure Sampling
-with Sublinear Communication</a>
+id="toc-secure-sampling-with-sublinear-communication"><span
+class="toc-section-number">3.2</span> Secure Sampling with Sublinear
+Communication</a>
 <ul>
 <li><a href="#the-problem-of-distributed-sampling"
-id="toc-the-problem-of-distributed-sampling">The Problem of Distributed
+id="toc-the-problem-of-distributed-sampling"><span
+class="toc-section-number">3.2.1</span> The Problem of Distributed
 Sampling</a></li>
 <li><a href="#l_1-sampling-via-oblivious-selection"
 id="toc-l_1-sampling-via-oblivious-selection"><span
+class="toc-section-number">3.2.2</span> <span
 class="math inline">\(L_1\)</span> Sampling via Oblivious
 Selection</a></li>
 <li><a href="#l_2-sampling-and-corrective-sampling"
 id="toc-l_2-sampling-and-corrective-sampling"><span
+class="toc-section-number">3.2.3</span> <span
 class="math inline">\(L_2\)</span> Sampling and Corrective
 Sampling</a></li>
 <li><a href="#product-sampling-and-impossibility"
-id="toc-product-sampling-and-impossibility">Product Sampling and
+id="toc-product-sampling-and-impossibility"><span
+class="toc-section-number">3.2.4</span> Product Sampling and
 Impossibility</a></li>
 <li><a href="#application-the-exponential-mechanism"
-id="toc-application-the-exponential-mechanism">Application: The
-Exponential Mechanism</a></li>
+id="toc-application-the-exponential-mechanism"><span
+class="toc-section-number">3.2.5</span> Application: The Exponential
+Mechanism</a></li>
 </ul></li>
 <li><a
 href="#compressed-oblivious-encoding-for-homomorphically-encrypted-search"
-id="toc-compressed-oblivious-encoding-for-homomorphically-encrypted-search">Compressed
-Oblivious Encoding for Homomorphically Encrypted Search</a>
+id="toc-compressed-oblivious-encoding-for-homomorphically-encrypted-search"><span
+class="toc-section-number">3.3</span> Compressed Oblivious Encoding for
+Homomorphically Encrypted Search</a>
 <ul>
 <li><a href="#the-sequential-bottleneck"
-id="toc-the-sequential-bottleneck">The Sequential Bottleneck</a></li>
+id="toc-the-sequential-bottleneck"><span
+class="toc-section-number">3.3.1</span> The Sequential
+Bottleneck</a></li>
 <li><a href="#parallel-retrieval-via-coe"
-id="toc-parallel-retrieval-via-coe">Parallel Retrieval via COE</a></li>
+id="toc-parallel-retrieval-via-coe"><span
+class="toc-section-number">3.3.2</span> Parallel Retrieval via
+COE</a></li>
 <li><a href="#algorithmic-innovations"
-id="toc-algorithmic-innovations">Algorithmic Innovations</a></li>
+id="toc-algorithmic-innovations"><span
+class="toc-section-number">3.3.3</span> Algorithmic Innovations</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#conclusion" id="toc-conclusion">Conclusion</a></li>
-<li><a href="#literature-review" id="toc-literature-review">Literature
-Review</a></li>
-<li><a href="#secure-search" id="toc-secure-search">Secure
-Search</a></li>
-<li><a href="#secure-sampling" id="toc-secure-sampling">Secure
-Sampling</a>
+<li><a href="#literature-review" id="toc-literature-review"><span
+class="toc-section-number">4</span> Literature Review</a></li>
+<li><a href="#secure-search" id="toc-secure-search"><span
+class="toc-section-number">5</span> Secure Search</a></li>
+<li><a href="#secure-sampling" id="toc-secure-sampling"><span
+class="toc-section-number">6</span> Secure Sampling</a>
 <ul>
-<li><a href="#introduction-1" id="toc-introduction-1">Introduction</a>
+<li><a href="#introduction-1" id="toc-introduction-1"><span
+class="toc-section-number">6.1</span> Introduction</a>
 <ul>
-<li><a href="#our-work" id="toc-our-work">Our Work</a></li>
-<li><a href="#technical-overview" id="toc-technical-overview">Technical
-Overview</a></li>
-<li><a href="#related-work" id="toc-related-work">Related Work</a></li>
+<li><a href="#our-work" id="toc-our-work"><span
+class="toc-section-number">6.1.1</span> Our Work</a></li>
+<li><a href="#technical-overview" id="toc-technical-overview"><span
+class="toc-section-number">6.1.2</span> Technical Overview</a></li>
+<li><a href="#related-work" id="toc-related-work"><span
+class="toc-section-number">6.1.3</span> Related Work</a></li>
 </ul></li>
-<li><a href="#sec:l1" id="toc-sec:l1">Two-party <span
+<li><a href="#sec:l1" id="toc-sec:l1"><span
+class="toc-section-number">6.2</span> Two-party <span
 class="math inline">\(L_1\)</span> Sampling</a>
 <ul>
 <li><a href="#a-toy-protocol-towards-securely-realizing-mathcalf_l_1"
-id="toc-a-toy-protocol-towards-securely-realizing-mathcalf_l_1">A toy
-protocol towards securely realizing <span
+id="toc-a-toy-protocol-towards-securely-realizing-mathcalf_l_1"><span
+class="toc-section-number">6.2.1</span> A toy protocol towards securely
+realizing <span
 class="math inline">\(\mathcal{F}_{L_1}\)</span></a></li>
-<li><a href="#sec:L1prot" id="toc-sec:L1prot">Secure <span
+<li><a href="#sec:L1prot" id="toc-sec:L1prot"><span
+class="toc-section-number">6.2.2</span> Secure <span
 class="math inline">\(L_1\)</span> sampling protocol</a></li>
 </ul></li>
-<li><a href="#sec:l2" id="toc-sec:l2">Two Party <span
+<li><a href="#sec:l2" id="toc-sec:l2"><span
+class="toc-section-number">6.3</span> Two Party <span
 class="math inline">\(L_2\)</span> Sampling</a>
 <ul>
-<li><a href="#sec:insecure" id="toc-sec:insecure">A non-private <span
+<li><a href="#sec:insecure" id="toc-sec:insecure"><span
+class="toc-section-number">6.3.1</span> A non-private <span
 class="math inline">\(L_2\)</span> sampling protocol with <span
 class="math inline">\(\tilde{O}(1)\)</span> communication</a></li>
-<li><a href="#sec:secure" id="toc-sec:secure">Secure <span
+<li><a href="#sec:secure" id="toc-sec:secure"><span
+class="toc-section-number">6.3.2</span> Secure <span
 class="math inline">\(L_2\)</span> Sampling From FHE</a></li>
-<li><a href="#sec:insecureLp" id="toc-sec:insecureLp">A non-private
-<span class="math inline">\(L_p\)</span> sampling protocol with <span
+<li><a href="#sec:insecureLp" id="toc-sec:insecureLp"><span
+class="toc-section-number">6.3.3</span> A non-private <span
+class="math inline">\(L_p\)</span> sampling protocol with <span
 class="math inline">\(\tilde{O}(1)\)</span> communication</a></li>
 </ul></li>
-<li><a href="#sec:prod" id="toc-sec:prod">Two-party Product Sampling</a>
+<li><a href="#sec:prod" id="toc-sec:prod"><span
+class="toc-section-number">6.4</span> Two-party Product Sampling</a>
 <ul>
-<li><a href="#sec:prodLB" id="toc-sec:prodLB">Impossibility of sublinear
+<li><a href="#sec:prodLB" id="toc-sec:prodLB"><span
+class="toc-section-number">6.4.1</span> Impossibility of sublinear
 product sampling</a></li>
-<li><a href="#sec:prodip" id="toc-sec:prodip">Product sampling while
-leaking at most the inner product</a></li>
+<li><a href="#sec:prodip" id="toc-sec:prodip"><span
+class="toc-section-number">6.4.2</span> Product sampling while leaking
+at most the inner product</a></li>
 </ul></li>
-<li><a href="#sec:rounds" id="toc-sec:rounds">Product Sampling in
-Constant Rounds</a>
+<li><a href="#sec:rounds" id="toc-sec:rounds"><span
+class="toc-section-number">6.5</span> Product Sampling in Constant
+Rounds</a>
 <ul>
-<li><a href="#sec:jlt" id="toc-sec:jlt">Secure approximation of the
+<li><a href="#sec:jlt" id="toc-sec:jlt"><span
+class="toc-section-number">6.5.1</span> Secure approximation of the
 inner product</a></li>
-<li><a href="#sec:const" id="toc-sec:const">Constant-round protocol for
+<li><a href="#sec:const" id="toc-sec:const"><span
+class="toc-section-number">6.5.2</span> Constant-round protocol for
 product sampling</a></li>
 </ul></li>
-<li><a href="#sec:dp" id="toc-sec:dp">Two-party Exponential
+<li><a href="#sec:dp" id="toc-sec:dp"><span
+class="toc-section-number">6.6</span> Two-party Exponential
 Mechanism</a>
 <ul>
-<li><a href="#sec:example" id="toc-sec:example">A concrete
-example</a></li>
+<li><a href="#sec:example" id="toc-sec:example"><span
+class="toc-section-number">6.6.1</span> A concrete example</a></li>
 <li><a
 href="#differentially-private-inner-product-for-the-exponential-mechanism"
-id="toc-differentially-private-inner-product-for-the-exponential-mechanism">Differentially-Private
-Inner Product for the Exponential Mechanism</a></li>
+id="toc-differentially-private-inner-product-for-the-exponential-mechanism"><span
+class="toc-section-number">6.6.2</span> Differentially-Private Inner
+Product for the Exponential Mechanism</a></li>
 <li><a href="#instantiating-the-exponential-mechanism"
-id="toc-instantiating-the-exponential-mechanism">Instantiating the
-Exponential Mechanism</a></li>
+id="toc-instantiating-the-exponential-mechanism"><span
+class="toc-section-number">6.6.3</span> Instantiating the Exponential
+Mechanism</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#minhash" id="toc-minhash">MinHash</a></li>
-<li><a href="#facts" id="toc-facts">FACTs</a></li>
-<li><a href="#preliminary-results"
-id="toc-preliminary-results">Preliminary Results</a></li>
-<li><a href="#timeline" id="toc-timeline">Timeline</a></li>
-<li><a href="#conclusion-1" id="toc-conclusion-1">Conclusion</a></li>
+<li><a href="#minhash" id="toc-minhash"><span
+class="toc-section-number">7</span> MinHash</a></li>
+<li><a href="#facts" id="toc-facts"><span
+class="toc-section-number">8</span> FACTs</a></li>
+<li><a href="#preliminary-results" id="toc-preliminary-results"><span
+class="toc-section-number">9</span> Preliminary Results</a></li>
+<li><a href="#timeline" id="toc-timeline"><span
+class="toc-section-number">10</span> Timeline</a></li>
+<li><a href="#conclusion-1" id="toc-conclusion-1"><span
+class="toc-section-number">11</span> Conclusion</a></li>
 </ul>
 </nav>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
@@ -377,7 +433,8 @@ privacy reinforce each other across modern cryptographic and
 data-analytic settings, and extend to practical systems such as the
 FACTS framework for privacy-preserving accountability in encrypted
 messaging</p>
-<h1 id="introduction">Introduction</h1>
+<h1 data-number="1" id="introduction"><span
+class="header-section-number">1</span> Introduction</h1>
 <p>The contemporary digital landscape is defined by a fundamental
 tension between the exponential growth of data and the imperative to
 protect the privacy of the individuals generating it. As datasets scale
@@ -425,8 +482,10 @@ demonstrate that controlled relaxation of exactness is the key to
 unlocking sublinear performance. This introduction delineates the
 theoretical underpinnings and practical implications of these
 advancements, setting the stage for a detailed technical analysis.</p>
-<h2 id="the-linear-bottleneck-in-secure-computation">The Linear
-Bottleneck in Secure Computation</h2>
+<h2 data-number="1.1"
+id="the-linear-bottleneck-in-secure-computation"><span
+class="header-section-number">1.1</span> The Linear Bottleneck in Secure
+Computation</h2>
 <p>To understand the necessity of the contributions discussed herein,
 one must first appreciate the “Linearity Wall.” In standard secure
 computation, if Party A holds a vector <span
@@ -446,8 +505,10 @@ targets scenarios where even these overheads are unacceptable, aiming
 for protocols where communication depends on the <em>output size</em> or
 the <em>security parameter</em>, rather than the input database
 size.</p>
-<h2 id="group-1-primitives-for-sublinear-privacy">Group 1: Primitives
-for Sublinear Privacy</h2>
+<h2 data-number="1.2"
+id="group-1-primitives-for-sublinear-privacy"><span
+class="header-section-number">1.2</span> Group 1: Primitives for
+Sublinear Privacy</h2>
 <p>The second group explores the building blocks of sublinear
 privacy.</p>
 <ul>
@@ -481,8 +542,10 @@ making FHE search viable for real-time applications.[1]</p></li>
 technologies lies in the domain of sublinear algorithms, where
 mathematical approximation provides the necessary slack to achieve
 scalability.</p>
-<h2 id="group-2-accountability-via-probabilistic-structures">Group 2:
-Accountability via Probabilistic Structures</h2>
+<h2 data-number="1.3"
+id="group-2-accountability-via-probabilistic-structures"><span
+class="header-section-number">1.3</span> Group 2: Accountability via
+Probabilistic Structures</h2>
 <p>The first group focuses on the application of “fighting fake
 news”.[1] EEMS platforms like WhatsApp and Signal utilize encryption
 that hides message content from the service provider. This prevents the
@@ -499,9 +562,10 @@ requires no linear scan of the database, and registering a complaint
 requires flipping a single bit. This work exemplifies how probabilistic
 data structures—traditionally used for efficiency in networking—can be
 repurposed as privacy primitives.</p>
-<h1
-id="group-1-privacy-preserving-accountability-in-encrypted-messaging">Group
-1: Privacy-Preserving Accountability in Encrypted Messaging</h1>
+<h1 data-number="2"
+id="group-1-privacy-preserving-accountability-in-encrypted-messaging"><span
+class="header-section-number">2</span> Group 1: Privacy-Preserving
+Accountability in Encrypted Messaging</h1>
 <p>The proliferation of end-to-end encrypted messaging systems (EEMS)
 has created a significant dilemma for digital governance. While these
 platforms provide essential protection for user privacy, shielding
@@ -510,8 +574,10 @@ they simultaneously create opaque channels for the viral dissemination
 of misinformation. The “Fighting Fake News” research [1] proposes a
 technical resolution to this dilemma through the Fuzzy Anonymous
 Complaint Tally System (FACTS).</p>
-<h2 id="the-operational-context-and-problem-space">The Operational
-Context and Problem Space</h2>
+<h2 data-number="2.1"
+id="the-operational-context-and-problem-space"><span
+class="header-section-number">2.1</span> The Operational Context and
+Problem Space</h2>
 <p>EEMS platforms such as Signal, Telegram, and WhatsApp guarantee that
 the service provider cannot access the plaintext of messages. This
 architectural feature renders traditional server-side content moderation
@@ -542,7 +608,8 @@ whistleblowing—are typically targeted and low-volume.[1] Therefore, the
 privacy of a message should only be revoked if a significant number of
 independent users (e.g., <span class="math inline">\(&gt;1000\)</span>)
 complain about it.</p>
-<h2 id="system-architecture-and-protocols">System Architecture and
+<h2 data-number="2.2" id="system-architecture-and-protocols"><span
+class="header-section-number">2.2</span> System Architecture and
 Protocols</h2>
 <p>FACTS operates as an overlay on existing EEMS infrastructure. It
 introduces a suite of protocols—<code>Originate</code>,
@@ -550,7 +617,8 @@ introduces a suite of protocols—<code>Originate</code>,
 <code>Audit</code>—that manage the lifecycle of a message’s
 accountability metadata without breaking the underlying encryption until
 the threshold conditions are met.[1]</p>
-<h3 id="message-origination-and-tagging">Message Origination and
+<h3 data-number="2.2.1" id="message-origination-and-tagging"><span
+class="header-section-number">2.2.1</span> Message Origination and
 Tagging</h3>
 <p>When a user <span class="math inline">\(A\)</span> originates a
 message <span class="math inline">\(\mathfrak{m}\)</span>, they engage
@@ -576,7 +644,8 @@ forwards the message to User <span class="math inline">\(C\)</span>, the
 original tag is preserved (or re-wrapped), ensuring that the complaint
 trail always points back to the original source, not the intermediate
 forwarder.</p>
-<h3 id="the-complaint-mechanism">The Complaint Mechanism</h3>
+<h3 data-number="2.2.2" id="the-complaint-mechanism"><span
+class="header-section-number">2.2.2</span> The Complaint Mechanism</h3>
 <p>The <code>Complain</code> protocol is the core of the privacy
 architecture. A user <span class="math inline">\(C\)</span> who receives
 a message can issue a complaint to the server. The critical requirement
@@ -594,15 +663,19 @@ build a histogram of viral messages.</p>
 <p>To solve this, FACTS utilizes the <strong>Collaborative Counting
 Bloom Filter (CCBF)</strong>, a probabilistic data structure that allows
 for oblivious counting.</p>
-<h2 id="the-collaborative-counting-bloom-filter-ccbf">The Collaborative
-Counting Bloom Filter (CCBF)</h2>
+<h2 data-number="2.3"
+id="the-collaborative-counting-bloom-filter-ccbf"><span
+class="header-section-number">2.3</span> The Collaborative Counting
+Bloom Filter (CCBF)</h2>
 <p>The CCBF is a novel contribution that enables “fuzzy” counting by
 hiding individual message counters within a shared, global state. This
 structure avoids the heavy communication overhead of Oblivious RAM
 (ORAM) while providing sufficient privacy against a semi-honest
 server.[1]</p>
-<h3 id="data-structure-and-hiding-in-plain-sight">Data Structure and
-“Hiding in Plain Sight”</h3>
+<h3 data-number="2.3.1"
+id="data-structure-and-hiding-in-plain-sight"><span
+class="header-section-number">2.3.1</span> Data Structure and “Hiding in
+Plain Sight”</h3>
 <p>The server maintains a single bit vector <span
 class="math inline">\(T\)</span> of size <span
 class="math inline">\(s\)</span> (e.g., 12 MB). This vector represents
@@ -629,7 +702,8 @@ simply flip all bits in <span
 class="math inline">\(V_{\mathfrak{m}}\)</span> to trigger an audit
 because they only have write-access to <span
 class="math inline">\(U_C\)</span>.</p>
-<h3 id="the-complaint-logic">The Complaint Logic</h3>
+<h3 data-number="2.3.2" id="the-complaint-logic"><span
+class="header-section-number">2.3.2</span> The Complaint Logic</h3>
 <p>When User <span class="math inline">\(C\)</span> wishes to complain
 about message <span class="math inline">\(\mathfrak{m}\)</span>:</p>
 <ol>
@@ -655,8 +729,10 @@ class="math inline">\(k\)</span> is statistically likely to belong to
 the Item Sets of thousands of other messages, the server gains
 negligible information about which message was targeted.[1]</p></li>
 </ol>
-<h3 id="the-tipping-point-and-threshold-enforcement">The Tipping Point
-and Threshold Enforcement</h3>
+<h3 data-number="2.3.3"
+id="the-tipping-point-and-threshold-enforcement"><span
+class="header-section-number">2.3.3</span> The Tipping Point and
+Threshold Enforcement</h3>
 <p>Counting in the CCBF is approximate. As more users complain about
 various messages, the bit vector <span class="math inline">\(T\)</span>
 fills up (bloom filter collisions). A message is considered to have
@@ -679,11 +755,13 @@ this background noise level by a margin corresponding to the threshold
 mechanism allows for the enforcement of thresholds with high accuracy.
 The error rate (auditing too early or too late) is typically below 10%
 in theory and below 3% in realistic deployment scenarios.[1]</p>
-<h2 id="security-guarantees-and-integrity">Security Guarantees and
+<h2 data-number="2.4" id="security-guarantees-and-integrity"><span
+class="header-section-number">2.4</span> Security Guarantees and
 Integrity</h2>
 <p>FACTS provides a robust set of security properties that protect
 against both server surveillance and user malice.</p>
-<h3 id="privacy-guarantees">Privacy Guarantees</h3>
+<h3 data-number="2.4.1" id="privacy-guarantees"><span
+class="header-section-number">2.4.1</span> Privacy Guarantees</h3>
 <ul>
 <li><p><strong>Message Privacy:</strong> The content of the message
 remains encrypted from the server. The server only obtains the
@@ -698,7 +776,8 @@ class="math inline">\(U_C\)</span>) to mask their activity, ensuring
 that the act of complaining itself does not leak sensitive timing
 information.[1]</p></li>
 </ul>
-<h3 id="integrity-guarantees">Integrity Guarantees</h3>
+<h3 data-number="2.4.2" id="integrity-guarantees"><span
+class="header-section-number">2.4.2</span> Integrity Guarantees</h3>
 <ul>
 <li><p><strong>Originator Integrity:</strong> The cryptographic binding
 in <span class="math inline">\(tag_{\mathfrak{m}}\)</span> prevents
@@ -715,8 +794,10 @@ To force an audit, an adversary would need to control a massive number
 of colluding users, scaling linearly with the threshold <span
 class="math inline">\(t\)</span>.[1]</p></li>
 </ul>
-<h2 id="scalability-and-deployment-considerations">Scalability and
-Deployment Considerations</h2>
+<h2 data-number="2.5"
+id="scalability-and-deployment-considerations"><span
+class="header-section-number">2.5</span> Scalability and Deployment
+Considerations</h2>
 <p>The system is designed for scale.</p>
 <ul>
 <li><p><strong>Storage:</strong> A 12 MB CCBF table can track complaints
@@ -736,8 +817,10 @@ the system must be refreshed. Additionally, FACTS is most effective for
 large thresholds (hundreds or thousands). For small thresholds (e.g.,
 <span class="math inline">\(t=5\)</span>), the statistical noise of the
 CCBF makes accurate discrimination difficult.[1]</p>
-<h1 id="group-2-sublinear-algorithms-for-secure-computation">Group 2:
-Sublinear Algorithms for Secure Computation</h1>
+<h1 data-number="3"
+id="group-2-sublinear-algorithms-for-secure-computation"><span
+class="header-section-number">3</span> Group 2: Sublinear Algorithms for
+Secure Computation</h1>
 <p>The second group of research papers pivots from the specific
 application of misinformation to the foundational algorithmic challenges
 of privacy-preserving computation. These works attack the “Linearity
@@ -748,9 +831,10 @@ sublinear complexity (<span class="math inline">\(\tilde{O}(1)\)</span>
 or <span class="math inline">\(\tilde{O}(\log n)\)</span>), these
 contributions lay the groundwork for privacy at the scale of big
 data.</p>
-<h2
-id="on-the-privacy-of-sublinear-communication-jaccard-index-estimation">On
-the Privacy of Sublinear-Communication Jaccard Index Estimation</h2>
+<h2 data-number="3.1"
+id="on-the-privacy-of-sublinear-communication-jaccard-index-estimation"><span
+class="header-section-number">3.1</span> On the Privacy of
+Sublinear-Communication Jaccard Index Estimation</h2>
 <p>The first paper in this group, “On the Privacy of
 Sublinear-Communication Jaccard Index Estimation via Min-hash,” examines
 the privacy properties of <strong>sketching algorithms</strong>.[1]
@@ -761,7 +845,8 @@ class="math inline">\(A\)</span> and <span
 class="math inline">\(B\)</span> (<span class="math inline">\(J(A,B) =
 |A \cap B| / |A \cup B|\)</span>), is widely estimated using the
 <strong>Min-hash</strong> sketch.</p>
-<h3 id="the-privacy-folklore">The Privacy “Folklore”</h3>
+<h3 data-number="3.1.1" id="the-privacy-folklore"><span
+class="header-section-number">3.1.1</span> The Privacy “Folklore”</h3>
 <p>There has long been a “folklore belief” in the data mining community
 that sketches are inherently privacy-preserving. Since a sketch
 compresses a massive set into a few kilobytes, it is
@@ -776,7 +861,9 @@ can hash a target element <span class="math inline">\(x\)</span> and
 check if the resulting hash value appears in the sketch. If it does,
 they learn with high probability that <span class="math inline">\(x \in
 A\)</span>.</p>
-<h3 id="formalizing-sketch-privacy">Formalizing Sketch Privacy</h3>
+<h3 data-number="3.1.2" id="formalizing-sketch-privacy"><span
+class="header-section-number">3.1.2</span> Formalizing Sketch
+Privacy</h3>
 <p>The authors categorize the privacy of Min-hash into three
 functionalities:</p>
 <ol>
@@ -796,8 +883,10 @@ class="math inline">\(\mathcal{F}_{noisy-minH}\)</span> (Noisy Public
 Hash):</strong> To restore privacy in the public setting, the authors
 propose adding calibrated Laplacian noise to the sketch output.</p></li>
 </ol>
-<h3 id="distributional-differential-privacy-ddp">Distributional
-Differential Privacy (DDP)</h3>
+<h3 data-number="3.1.3"
+id="distributional-differential-privacy-ddp"><span
+class="header-section-number">3.1.3</span> Distributional Differential
+Privacy (DDP)</h3>
 <p>A major theoretical contribution is the handling of the Public Hash
 setting using <strong>Distributional Differential Privacy
 (DDP)</strong>. The authors argue that while Min-hash is not private for
@@ -810,7 +899,9 @@ for min-entropy. This mathematical tool proves that applying hash
 functions to a high-entropy source acts as a randomness extractor,
 ensuring that the output sketch looks uniform and leaks negligible
 information about specific elements.[1]</p>
-<h3 id="the-noisy-min-hash-protocol">The Noisy Min-Hash Protocol</h3>
+<h3 data-number="3.1.4" id="the-noisy-min-hash-protocol"><span
+class="header-section-number">3.1.4</span> The Noisy Min-Hash
+Protocol</h3>
 <p>For scenarios where input entropy cannot be guaranteed, the paper
 presents a secure two-party protocol for <span
 class="math inline">\(\mathcal{F}_{noisy-minH}\)</span>. This protocol
@@ -820,12 +911,15 @@ adds Laplacian noise to these counts <em>before</em> revealing them.
 This method achieves standard <span class="math inline">\((\epsilon,
 \delta)\)</span>-DP while maintaining higher accuracy than competing
 approaches like the “Sketch-Flip-Merge” estimator.[1]</p>
-<h2 id="secure-sampling-with-sublinear-communication">Secure Sampling
-with Sublinear Communication</h2>
+<h2 data-number="3.2"
+id="secure-sampling-with-sublinear-communication"><span
+class="header-section-number">3.2</span> Secure Sampling with Sublinear
+Communication</h2>
 <p>The second paper, “Secure Sampling with Sublinear Communication,”
 addresses the problem of sampling from a joint probability distribution
 defined by data partitioned across two parties.[1]</p>
-<h3 id="the-problem-of-distributed-sampling">The Problem of Distributed
+<h3 data-number="3.2.1" id="the-problem-of-distributed-sampling"><span
+class="header-section-number">3.2.1</span> The Problem of Distributed
 Sampling</h3>
 <p>Consider Party <span class="math inline">\(P_1\)</span> holding
 vector <span class="math inline">\(w_1\)</span> and Party <span
@@ -845,7 +939,8 @@ achieve this sampling with communication complexity that is
 <strong>sublinear</strong> in <span class="math inline">\(n\)</span>
 (e.g., <span class="math inline">\(\tilde{O}(1)\)</span> or <span
 class="math inline">\(\tilde{O}(\log n)\)</span>).</p>
-<h3 id="l_1-sampling-via-oblivious-selection"><span
+<h3 data-number="3.2.2" id="l_1-sampling-via-oblivious-selection"><span
+class="header-section-number">3.2.2</span> <span
 class="math inline">\(L_1\)</span> Sampling via Oblivious Selection</h3>
 <p>For the <span class="math inline">\(L_1\)</span> distribution
 (sampling <span class="math inline">\(\propto w_{1,i} +
@@ -872,7 +967,8 @@ weights or the unselected index. This protocol achieves sublinear
 communication because it only transmits the encrypted indices and the
 aggregated weight scalars, not the full vectors.[1]</p></li>
 </ol>
-<h3 id="l_2-sampling-and-corrective-sampling"><span
+<h3 data-number="3.2.3" id="l_2-sampling-and-corrective-sampling"><span
+class="header-section-number">3.2.3</span> <span
 class="math inline">\(L_2\)</span> Sampling and Corrective Sampling</h3>
 <p>The <span class="math inline">\(L_2\)</span> distribution (sampling
 <span class="math inline">\(\propto (w_{1,i} + w_{2,i})^2\)</span>) is
@@ -906,7 +1002,8 @@ terminates in a constant number of rounds.[1]</p></li>
 <p>This technique demonstrates that global normalization constants are
 not strictly necessary for sampling if one can perform local corrections
 efficiently.</p>
-<h3 id="product-sampling-and-impossibility">Product Sampling and
+<h3 data-number="3.2.4" id="product-sampling-and-impossibility"><span
+class="header-section-number">3.2.4</span> Product Sampling and
 Impossibility</h3>
 <p>For Product Sampling (sampling <span class="math inline">\(\propto
 w_{1,i} \cdot w_{2,i}\)</span>), the paper proves a stark negative
@@ -920,8 +1017,9 @@ class="math inline">\(\langle w_1, w_2 \rangle = \omega(\log n /
 n)\)</span>), sublinear sampling becomes feasible.[1] They provide a
 protocol that succeeds under this promise, leaking only the inner
 product of the vectors.</p>
-<h3 id="application-the-exponential-mechanism">Application: The
-Exponential Mechanism</h3>
+<h3 data-number="3.2.5" id="application-the-exponential-mechanism"><span
+class="header-section-number">3.2.5</span> Application: The Exponential
+Mechanism</h3>
 <p>The practical impact of this work is demonstrated by implementing the
 <strong>Distributed Exponential Mechanism</strong> for Differential
 Privacy. This mechanism selects outputs with probability exponential in
@@ -930,14 +1028,17 @@ sampling. By using the sublinear product sampling protocol (modified
 with a differentially private approximation of the inner product using
 Johnson-Lindenstrauss transforms), the authors provide the first
 sublinear secure implementation of this fundamental DP mechanism.[1]</p>
-<h2
-id="compressed-oblivious-encoding-for-homomorphically-encrypted-search">Compressed
-Oblivious Encoding for Homomorphically Encrypted Search</h2>
+<h2 data-number="3.3"
+id="compressed-oblivious-encoding-for-homomorphically-encrypted-search"><span
+class="header-section-number">3.3</span> Compressed Oblivious Encoding
+for Homomorphically Encrypted Search</h2>
 <p>The final paper addresses the efficiency of searching encrypted
 databases. “Compressed Oblivious Encoding for Homomorphically Encrypted
 Search” identifies and resolves a critical bottleneck in FHE-based
 search systems.[1]</p>
-<h3 id="the-sequential-bottleneck">The Sequential Bottleneck</h3>
+<h3 data-number="3.3.1" id="the-sequential-bottleneck"><span
+class="header-section-number">3.3.1</span> The Sequential
+Bottleneck</h3>
 <p>Existing FHE search schemes (like LEAF) allow a server to identify
 matching records but struggle to return them to the client efficiently.
 To retrieve <span class="math inline">\(k\)</span> matches, previous
@@ -948,7 +1049,9 @@ for “the next match after <span class="math inline">\(i\)</span>.” This
 serialization, combined with <span class="math inline">\(O(n)\)</span>
 homomorphic multiplications per fetch, made retrieval prohibitively
 slow.[1]</p>
-<h3 id="parallel-retrieval-via-coe">Parallel Retrieval via COE</h3>
+<h3 data-number="3.3.2" id="parallel-retrieval-via-coe"><span
+class="header-section-number">3.3.2</span> Parallel Retrieval via
+COE</h3>
 <p>The authors introduce <strong>Compressed Oblivious Encoding
 (COE)</strong>, a framework that separates the “Match” phase from the
 “Fetch” phase.</p>
@@ -965,7 +1068,8 @@ it, and locally extracts all result indices or data.</p></li>
 results in a single round of communication with <span
 class="math inline">\(\tilde{O}(1)\)</span> complexity relative to the
 database size.[1]</p>
-<h3 id="algorithmic-innovations">Algorithmic Innovations</h3>
+<h3 data-number="3.3.3" id="algorithmic-innovations"><span
+class="header-section-number">3.3.3</span> Algorithmic Innovations</h3>
 <p>The authors propose two COE variants:</p>
 <ul>
 <li><p><strong>Compressed Oblivious Index Encoding (COIE):</strong>
@@ -1006,10 +1110,14 @@ build such systems efficiently. Together, they define a new standard for
 privacy-preserving computation: one that is rigorous in its security
 definitions but pragmatic in its resource utilization, capable of
 operating at the speed and scale of the modern internet.</p>
-<h1 id="literature-review">Literature Review</h1>
-<h1 id="secure-search">Secure Search</h1>
-<h1 id="secure-sampling">Secure Sampling</h1>
-<h2 id="introduction-1">Introduction</h2>
+<h1 data-number="4" id="literature-review"><span
+class="header-section-number">4</span> Literature Review</h1>
+<h1 data-number="5" id="secure-search"><span
+class="header-section-number">5</span> Secure Search</h1>
+<h1 data-number="6" id="secure-sampling"><span
+class="header-section-number">6</span> Secure Sampling</h1>
+<h2 data-number="6.1" id="introduction-1"><span
+class="header-section-number">6.1</span> Introduction</h2>
 <p>Random sampling is an important tool when computing over massive data
 sets. It has wide application in generating small summaries of data, and
 serves as a key building block in the design of many algorithms and
@@ -1083,7 +1191,8 @@ this new notion:  product sampling can be used to implement a
 distributed version of the well-known exponential mechanism for
 differentially-private data release <span class="citation"
 data-cites="FOCS:McSTal07"></span>.</p>
-<h3 id="our-work">Our Work</h3>
+<h3 data-number="6.1.1" id="our-work"><span
+class="header-section-number">6.1.1</span> Our Work</h3>
 <p>We explore the problems described above, providing multiple two-party
 protocols, all with sub-linear communication, in the semi-honest
 security model. We note that our protocol for product sampling has
@@ -1167,7 +1276,8 @@ privacy. To overcome this issue, we construct a new,
 differentially-private approximation for inner product, and show how to
 use this for building a sub-linear communication secure computation of
 the exponential mechanism.</p>
-<h3 id="technical-overview">Technical Overview</h3>
+<h3 data-number="6.1.2" id="technical-overview"><span
+class="header-section-number">6.1.2</span> Technical Overview</h3>
 <p>In the following, we overload notation and let <span
 class="math inline">\(\mathcal{D}\)</span> denote a distribution as well
 as its probability mass function. As discussed previously, we consider
@@ -1570,7 +1680,8 @@ parties to execute the exponential mechanism when the cost function is
 additively distributed across the two parties, with sublinear
 communication, in the case that <span class="math inline">\(\langle
 \mathbf{w}_1, \mathbf{w}_2 \rangle \in \omega(\log n/n)\)</span>.</p>
-<h3 id="related-work">Related Work</h3>
+<h3 data-number="6.1.3" id="related-work"><span
+class="header-section-number">6.1.3</span> Related Work</h3>
 <p><strong>Sampling from streaming data.</strong> Many prior papers
 (e.g. <span class="citation"
 data-cites="cormode2019p ganguly2007counting jowhari2011tight MW10 woodruff2016distributed"></span>)
@@ -1610,8 +1721,9 @@ statistics of Tor usage, web traffic, and other applications. These
 works focus on building sublinear communication and computation
 protocols for computing specific statistics such as unique count,
 median, etc.</p>
-<h2 id="sec:l1">Two-party <span class="math inline">\(L_1\)</span>
-Sampling</h2>
+<h2 data-number="6.2" id="sec:l1"><span
+class="header-section-number">6.2</span> Two-party <span
+class="math inline">\(L_1\)</span> Sampling</h2>
 <p>In this section, we describe a secure two-party <span
 class="math inline">\(L_1\)</span> sampling protocol. Given two <span
 class="math inline">\(n\)</span>-dimensional vectors <span
@@ -1655,8 +1767,10 @@ class="math inline">\(\mathcal{F}_{L_1}\)</span> in the figure below. In
 Section <a href="#sec:L1prot" data-reference-type="ref"
 data-reference="sec:L1prot">6.2.2</a>, we present a protocol that
 securely realizes this functionality.</p>
-<h3 id="a-toy-protocol-towards-securely-realizing-mathcalf_l_1">A toy
-protocol towards securely realizing <span
+<h3 data-number="6.2.1"
+id="a-toy-protocol-towards-securely-realizing-mathcalf_l_1"><span
+class="header-section-number">6.2.1</span> A toy protocol towards
+securely realizing <span
 class="math inline">\(\mathcal{F}_{L_1}\)</span></h3>
 <p>We describe our first attempt, which is insecure, but provides good
 intuition on how we construct a secure protocol. In fact, the attack on
@@ -1743,8 +1857,9 @@ which depends on the value <span class="math inline">\(w_{2,
 i_1}\)</span> thereby leaking information about <span
 class="math inline">\(P_2\)</span>’s input to <span
 class="math inline">\(P_1\)</span>.</p>
-<h3 id="sec:L1prot">Secure <span class="math inline">\(L_1\)</span>
-sampling protocol</h3>
+<h3 data-number="6.2.2" id="sec:L1prot"><span
+class="header-section-number">6.2.2</span> Secure <span
+class="math inline">\(L_1\)</span> sampling protocol</h3>
 <p><strong>Oblivious sampling.</strong> We address the insecurity of the
 toy protocol by having the parties sample <em>obliviously</em> from
 <span class="math inline">\(\mathbf{w}_1\)</span>, <span
@@ -1918,8 +2033,9 @@ class="math inline">\(\mathcal{F}_{\mathsf{biasCoin}}\)</span> is
 straightforward and can be found in Appendix <a href="#apx:bcoin"
 data-reference-type="ref"
 data-reference="apx:bcoin">[apx:bcoin]</a>.</p>
-<h2 id="sec:l2">Two Party <span class="math inline">\(L_2\)</span>
-Sampling</h2>
+<h2 data-number="6.3" id="sec:l2"><span
+class="header-section-number">6.3</span> Two Party <span
+class="math inline">\(L_2\)</span> Sampling</h2>
 <p>In this section we consider the two-party <span
 class="math inline">\(L_2\)</span> sampling functionality. Given input
 vectors <span class="math inline">\(\mathbf{w}_1, \mathbf{w}_2\)</span>,
@@ -1940,7 +2056,8 @@ Protocol <a href="#fig:l2approx" data-reference-type="ref"
 data-reference="fig:l2approx">[fig:l2approx]</a>. We then show how to
 implement the protocol securely in Section <a href="#sec:secure"
 data-reference-type="ref" data-reference="sec:secure">6.3.2</a>.</p>
-<h3 id="sec:insecure">A non-private <span
+<h3 data-number="6.3.1" id="sec:insecure"><span
+class="header-section-number">6.3.1</span> A non-private <span
 class="math inline">\(L_2\)</span> sampling protocol with <span
 class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
 <p>We begin by defining and showing how to sample from a helper
@@ -2122,8 +2239,9 @@ class="math inline">\(||\mathbf{w}_1||_1\)</span> or <span
 class="math inline">\(||\mathbf{w}_2||_1\)</span> are equal to <span
 class="math inline">\(1\)</span> or to each other.</p>
 </div>
-<h3 id="sec:secure">Secure <span class="math inline">\(L_2\)</span>
-Sampling From FHE</h3>
+<h3 data-number="6.3.2" id="sec:secure"><span
+class="header-section-number">6.3.2</span> Secure <span
+class="math inline">\(L_2\)</span> Sampling From FHE</h3>
 <div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
@@ -2238,7 +2356,8 @@ class="math inline">\(\{\mathcal{F}_{L_1}^{ss},
 <p>We provide the proof in Appendix <a href="#apx:pfTheorem3"
 data-reference-type="ref"
 data-reference="apx:pfTheorem3">[apx:pfTheorem3]</a>.</p>
-<h3 id="sec:insecureLp">A non-private <span
+<h3 data-number="6.3.3" id="sec:insecureLp"><span
+class="header-section-number">6.3.3</span> A non-private <span
 class="math inline">\(L_p\)</span> sampling protocol with <span
 class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
 <div class="algorithm">
@@ -2383,7 +2502,8 @@ data-reference="lem:insecure_L2_prot">[lem:insecure_L2_prot]</a>. In
 particular, setting <span class="math inline">\(p=2\)</span> in the
 above protocol yields a protocol with exactly the same parameters as the
 <span class="math inline">\(L_2\)</span> sampling protocol.</p>
-<h2 id="sec:prod">Two-party Product Sampling</h2>
+<h2 data-number="6.4" id="sec:prod"><span
+class="header-section-number">6.4</span> Two-party Product Sampling</h2>
 <p>We next consider the problem of two-party sampling from a product
 distribution. Specifically, given <span
 class="math inline">\(n\)</span>-dimensional vectors <span
@@ -2413,7 +2533,9 @@ class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span> for two-party
 product sampling. This functionality is parametrized by a function <span
 class="math inline">\(f_{\mathsf{Leak}}\)</span> capturing the leakage
 that the functionality gives to the adversary.</p>
-<h3 id="sec:prodLB">Impossibility of sublinear product sampling</h3>
+<h3 data-number="6.4.1" id="sec:prodLB"><span
+class="header-section-number">6.4.1</span> Impossibility of sublinear
+product sampling</h3>
 <p>Our goal is to find a protocol for two-party sampling with sublinear
 (in <span class="math inline">\(n\)</span>) communication. However,
 unlike the case for <span class="math inline">\(L_1\)</span> sampling,
@@ -2714,8 +2836,9 @@ class="math display">\[\begin{aligned}
 &amp;\ge \frac{1}{1 + n \cdot \gamma}.
 \end{aligned}\]</span> 0◻ ◻</p>
 </div>
-<h3 id="sec:prodip">Product sampling while leaking at most the inner
-product</h3>
+<h3 data-number="6.4.2" id="sec:prodip"><span
+class="header-section-number">6.4.2</span> Product sampling while
+leaking at most the inner product</h3>
 <p><strong>Assumptions.</strong> As before, we assume that all weights
 in <span class="math inline">\(\mathbf{w}_1\)</span> and <span
 class="math inline">\(\mathbf{w}_2\)</span> are non-negative. As
@@ -3004,7 +3127,9 @@ certain set of input vectors, observing the communication of the
 sampling protocol gives you a bound on the inner product of the inputs.
 The less communication observed, the tighter that bound, and the greater
 the leakage.</p>
-<h2 id="sec:rounds">Product Sampling in Constant Rounds</h2>
+<h2 data-number="6.5" id="sec:rounds"><span
+class="header-section-number">6.5</span> Product Sampling in Constant
+Rounds</h2>
 <p><strong>Achieving constant rounds through parallel
 repetition.</strong> In Sections <a href="#sec:prod"
 data-reference-type="ref" data-reference="sec:prod">6.4</a>, we showed a
@@ -3042,7 +3167,9 @@ communication (see Section <a href="#sec:jlt" data-reference-type="ref"
 data-reference="sec:jlt">6.5.1</a>). Using this approximation, we can
 then realize our sublinear communication, constant round protocol for
 product sampling as follows in the next subsection.</p>
-<h3 id="sec:jlt">Secure approximation of the inner product</h3>
+<h3 data-number="6.5.1" id="sec:jlt"><span
+class="header-section-number">6.5.1</span> Secure approximation of the
+inner product</h3>
 <p>We achieve a protocol that securely approximates the inner product
 with sublinear communication. In particular, we take advantage of the
 well known Johnson–Lindenstrauss Transform (JLT) <span class="citation"
@@ -3180,7 +3307,9 @@ functionality is <span class="math inline">\(\langle \mathbf{w}_1,
 \mathbf{w}_2, \mathbf{w}_2 \rangle\)</span>, and <span
 class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>.</p>
-<h3 id="sec:const">Constant-round protocol for product sampling</h3>
+<h3 data-number="6.5.2" id="sec:const"><span
+class="header-section-number">6.5.2</span> Constant-round protocol for
+product sampling</h3>
 <p>Note that the Protocol <a href="#prot:prodsampapx"
 data-reference-type="ref"
 data-reference="prot:prodsampapx">[prot:prodsampapx]</a> has the
@@ -3212,7 +3341,9 @@ protocols for product sampling with negligible failure probability. The
 final protocol should perform extra steps to hide from which trial the
 output comes from, and these changes can made in a straightforward
 way.</p>
-<h2 id="sec:dp">Two-party Exponential Mechanism</h2>
+<h2 data-number="6.6" id="sec:dp"><span
+class="header-section-number">6.6</span> Two-party Exponential
+Mechanism</h2>
 <p>Recall that one of our main motivations for this work is to
 instantiate a two-party version of the exponential mechanism to achieve
 differential privacy. We observe that for many natural loss functions
@@ -3221,7 +3352,8 @@ exponential mechanism on two parties is essentially equivalent to
 product sampling. We explain this further with a concrete example in
 Section <a href="#sec:example" data-reference-type="ref"
 data-reference="sec:example">6.6.1</a>.</p>
-<h3 id="sec:example">A concrete example</h3>
+<h3 data-number="6.6.1" id="sec:example"><span
+class="header-section-number">6.6.1</span> A concrete example</h3>
 <p>Suppose we want to choose a classifier minimizing the <span
 class="math inline">\(L_2\)</span> error over a test dataset while
 preserving differential privacy of the labeled examples. Suppose there
@@ -3356,9 +3488,10 @@ class="math inline">\(D\)</span> accordingly.</p>
 <p>Jumping ahead, we use this larger <span class="math inline">\(\Delta
 u\)</span> in order to achieve differential privacy of the approximate
 inner product evaluation to be described in the next section.</p>
-<h3
-id="differentially-private-inner-product-for-the-exponential-mechanism">Differentially-Private
-Inner Product for the Exponential Mechanism</h3>
+<h3 data-number="6.6.2"
+id="differentially-private-inner-product-for-the-exponential-mechanism"><span
+class="header-section-number">6.6.2</span> Differentially-Private Inner
+Product for the Exponential Mechanism</h3>
 <p><strong>Issue: DP is broken due to leakage <span
 class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>.</strong> Based on the result of the previous
@@ -3497,8 +3630,10 @@ algorithm.</p>
 approximation protocol as being run by a trusted curator. As is
 standard, we can replace this curator with a secure 2-PC evaluating the
 mechanism to achieve computational DP.</p>
-<h3 id="instantiating-the-exponential-mechanism">Instantiating the
-Exponential Mechanism</h3>
+<h3 data-number="6.6.3"
+id="instantiating-the-exponential-mechanism"><span
+class="header-section-number">6.6.3</span> Instantiating the Exponential
+Mechanism</h3>
 <p>We now have all the necessary pieces to instantiate a sublinear
 communication protocol to evaluate the exponential mechanism for a
 database <span class="math inline">\(D\)</span> held jointly by two
@@ -3643,11 +3778,16 @@ mechanism.</p>
 <p>The case when <span class="math inline">\(P_2\)</span> is corrupted
 can be proved similarly. 0◻ ◻</p>
 </div>
-<h1 id="minhash">MinHash</h1>
-<h1 id="facts">FACTs</h1>
-<h1 id="preliminary-results">Preliminary Results</h1>
-<h1 id="timeline">Timeline</h1>
-<h1 id="conclusion-1">Conclusion</h1>
+<h1 data-number="7" id="minhash"><span
+class="header-section-number">7</span> MinHash</h1>
+<h1 data-number="8" id="facts"><span
+class="header-section-number">8</span> FACTs</h1>
+<h1 data-number="9" id="preliminary-results"><span
+class="header-section-number">9</span> Preliminary Results</h1>
+<h1 data-number="10" id="timeline"><span
+class="header-section-number">10</span> Timeline</h1>
+<h1 data-number="11" id="conclusion-1"><span
+class="header-section-number">11</span> Conclusion</h1>
 <aside id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
