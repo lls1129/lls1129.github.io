@@ -27,7 +27,7 @@ jobs:
       - name: Convert LaTeX to HTML
         run: |
           cd src
-          pandoc src/main.tex -o index.html --standalone --toc --mathjax
+          pandoc main.tex -o index.html --standalone --toc --mathjax
 
       # 3. Commit the new index.html back to the repo
       - name: Commit and Push changes
