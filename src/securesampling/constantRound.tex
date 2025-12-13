@@ -2,24 +2,29 @@
 
 \paragraph{Achieving constant rounds through parallel repetition.}
 In Sections~\ref{sec:prod}, we showed a sublinear communication protocol
-for product sampling when $\ipw$ is sufficiently large.  Moreover, this
+for product sampling when $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle$ is sufficiently large.  Moreover, this
 protocol provably leaked no more information than the inner product.
-However, this protocol required $O(1/\ipw)$ rounds of communication.
+However, this protocol required $O(1/\langle \vec{{w}_1},
+{\vec{w}_2} \rangle)$ rounds of communication.
 This raises the question of whether constant-round sublinear product
 sampling is possible under the same restrictions on the inputs.
 
 Our protocol to achieve this takes a relatively standard approach.
-Suppose that we are given the value of $\ipw$.  Then, since the expected
-number of samples until a collision is a function of $\ipw$, we can just
-run the inner loop of protocol $\Pp$ in parallel sufficiently many times
+Suppose that we are given the value of $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle$.  Then, since the expected
+number of samples until a collision is a function of $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle$, we can just
+run the inner loop of protocol $\Pi_{\mathsf{prod}}$ in parallel sufficiently many times
 to guarantee that the protocol would terminate with all but negligible
 probability.  
 
 \paragraph{How many times to repeat?} However, there is one catch.  It
-is not actually possible to compute $\ipw$ in sublinear communication!
+is not actually possible to compute $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle$ in sublinear communication!
 One simple solution is to use our promise on the input:~we could run the
 inner loop enough times to guarantee termination for any inputs
-satisfying the promise (e.g.~$\omega(\frac{n}{\log n}$) times).
+satisfying the promise (e.g.~$\omega(\frac{n}{\log n})$ times).
 However, this forces us to adopt the worst-case communication cost,
 which might be undesirable.  (Recall, it also offers the least leakage,
 which might be desirable.) 
@@ -40,18 +45,20 @@ sketch.
 
 \paragraph{Additional assumptions about $\vec{w_1}$ and $\vec{w_2}$}. 
 We assumed that $\vec{w_1}$ and $\vec{w_2}$ are normalized and correlated such
-that $\langle \vec{{w}_1},{\vec{w}_2} \rangle = \omega(\log n/n)$. In a similar vein, we assume that the
+that $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle = \omega(\log n/n)$. In a similar vein, we assume that the
 cosine similarity of the two vectors $\w_1$ and $\w_2$ is not small,
 e.g., $\omega(1/\log n)$. 
 
 Recall the cosine similarity between the two vectors $\vec{w}_1$ and
 $\vec{w}_2$ is defined as %
-$\cos(\w_1, \w_2) = \frac{\langle \vec{w}_1, \vec{w}_2 \rangle}{ \|
+$\cos(\vec{w}_1, \vec{w}_2) = \frac{\langle \vec{w}_1, \vec{w}_2 \rangle}{ \|
 \vec{w}_1 \|_2 \cdot \| \vec{w}_2 \|_2}$.
 % 
 Since the $L_1$ norm of each vector is equal to 1, their $L_2$ norms
 will typically much smaller than 1, which implies that the cosine
-similarity is usually much larger than $\ipw$. 
+similarity is usually much larger than $\langle \vec{{w}_1},
+{\vec{w}_2} \rangle$. 
 
 
 \paragraph{Approximating the inner product using JLT sketches.}
@@ -60,19 +67,19 @@ random $k \times n$ matrix with $k \ll n$. More specifically, the inner product
 of the two vectors is approximated as follows:
 
 \BEN
-\item[] \hspace{-2em} ${\sf approxIP}(\w_1, \w_2)$: 
-	~~~ $\rhd$ $\w_1$ and $\w_1$ are $n$ dimensional vectors. 
+\item[] \hspace{-2em} ${\sf approxIP}(\vec{w}_1, \vec{w}_2)$: 
+	~~~ $\rhd$ $\vec{w}_1$ and $\vec{w}_1$ are $n$ dimensional vectors. 
 \item Choose $k \times n$ matrix $\vec{M}$ such that each entry $M_{i,j}$ is chosen from an
 independent Gaussian distribution of mean $0$ and variance $1$.
 
 \item Output $\frac 1 k \cdot \langle \vec{M}\vec{w}_1, \vec{M}\vec{w}_2 \rangle$. (Here, we
-slightly abuse the notation and treat the vectors $\w_1$ and $\w_2$ as column vectors.)
+slightly abuse the notation and treat the vectors $\vec{w}_1$ and $\vec{w}_2$ as column vectors.)
 \EEN
 
 \begin{lemma} {\rm (cf.~\cite[Corollary 3.1]{Kaban15})}
 \label{lem:jlt_k}
-For all $\w_1, \w_2$ such that $\cos(\w_1, \w_2)\geq t$, the
-procedure ${\sf approxIP}(\w_1, \w_2)$ approximates $\langle \vec{w}_1,
+For all $\vec{w}_1, \vec{w}_2$ such that $\cos(\vec{w}_1, \vec{w}_2)\geq t$, the
+procedure ${\sf approxIP}(\vec{w}_1, \vec{w}_2)$ approximates $\langle \vec{w}_1,
 \vec{w}_2 \rangle$ up to a $1\pm \epsilon$ approximation factor with all but
 negligible probability (over the choice of the JLT matrix), using JLT dimension
 $k = \omega\left(\frac{\log(n)}{t^2 \cdot \epsilon^2}\right)$. 
@@ -114,7 +121,7 @@ threshold FHE (e.g., ~\cite{popets:MTBH21}).
 
 
 
-\paragraph{Inputs:} Parties $P_1$ and $P_2$ has inputs $\w_1$ and $\w_2$
+\paragraph{Inputs:} Parties $P_1$ and $P_2$ has inputs $\vec{w}_1$ and $\vec{w}_2$
 respectively. 
 
 \medskip
@@ -124,22 +131,22 @@ The protocol proceeds as follows:
     \item Parties set up a threshold FHE scheme.  \item They securely
     sample $k \times n$ matrix $\vec M$ described in the above with in
     the threshold FHE. In particular, they jointly generate an encrypted
-    random seed $\lbra s \lket$. Using this randomness, parties
-    homomorphically evaluates $\lbra PRG(s) \lket$, where $PRG$ is a
-    pseudorandom generator, to obtain the JLT matrix $\lbra \vec M
-    \lket$.
+    random seed $\llbracket s \rrbracket$. Using this randomness, parties
+    homomorphically evaluates $\llbracket PRG(s) \rrbracket$, where $PRG$ is a
+    pseudorandom generator, to obtain the JLT matrix $\llbracket \vec M
+    \rrbracket$.
     
-    \item Each party  $P_b$ homomorphically evaluates $\lbra \tilde \w_b \lket =
-    \lbra \vec M \w_b \lket$.
+    \item Each party  $P_b$ homomorphically evaluates $\llbracket \tilde \vec{w}_b \rrbracket =
+    \llbracket \vec M \vec{w}_b \rrbracket$.
 
-    \item Party $P_1$ sends $\lbra \tilde \w_1 \lket$ to $P_2$.  
+    \item Party $P_1$ sends $\llbracket \tilde \vec{w}_1 \rrbracket$ to $P_2$.  
     
-    \item Party $P_2$ homomorphically evaluates $\lbra \langle \tilde
-    \w_1, \tilde \w_2 \rangle \lket$ and sends it to  $P_1$. 
+    \item Party $P_2$ homomorphically evaluates $\llbracket \langle \tilde
+    \w_1, \tilde \w_2 \rangle \rrbracket$ and sends it to  $P_1$. 
 
     \item Parties execute threshold decryption to obtain and output
     $\frac 1 k \cdot \langle \tilde
-    \w_1, \tilde \w_2 \rangle$.
+    \vec{w}_1, \tilde \vec{w}_2 \rangle$.
 \EEN
 \caption{Private protocol for computing approximate inner product}
 \label{fig:ip-fhe}
