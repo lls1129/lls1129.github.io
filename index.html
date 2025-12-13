@@ -177,72 +177,157 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#abstract" id="toc-abstract"><span
+class="toc-section-number">1</span> Abstract</a></li>
 <li><a href="#introduction" id="toc-introduction"><span
-class="toc-section-number">1</span> Introduction</a>
+class="toc-section-number">2</span> Introduction</a>
 <ul>
 <li><a href="#the-linear-bottleneck-in-secure-computation"
 id="toc-the-linear-bottleneck-in-secure-computation"><span
-class="toc-section-number">1.1</span> The Linear Bottleneck in Secure
+class="toc-section-number">2.1</span> The Linear Bottleneck in Secure
 Computation</a></li>
 <li><a
 href="#sublinear-secure-protocols-primitives-for-sublinear-privacy"
 id="toc-sublinear-secure-protocols-primitives-for-sublinear-privacy"><span
-class="toc-section-number">1.2</span> Sublinear Secure Protocols:
+class="toc-section-number">2.2</span> Sublinear Secure Protocols:
 Primitives for Sublinear Privacy</a></li>
 <li><a href="#facts-accountability-via-probabilistic-structures"
 id="toc-facts-accountability-via-probabilistic-structures"><span
-class="toc-section-number">1.3</span> FACTs: Accountability via
+class="toc-section-number">2.3</span> FACTs: Accountability via
 Probabilistic Structures</a></li>
 </ul></li>
 <li><a href="#literature-review" id="toc-literature-review"><span
-class="toc-section-number">2</span> Literature Review</a>
+class="toc-section-number">3</span> Literature Review</a>
 <ul>
 <li><a href="#line-1-secure-search-sampling-and-similarity"
 id="toc-line-1-secure-search-sampling-and-similarity"><span
-class="toc-section-number">2.1</span> Line 1: Secure Search, Sampling,
+class="toc-section-number">3.1</span> Line 1: Secure Search, Sampling,
 and Similarity</a>
 <ul>
 <li><a href="#secure-search" id="toc-secure-search"><span
-class="toc-section-number">2.1.1</span> Secure Search</a></li>
+class="toc-section-number">3.1.1</span> Secure Search</a></li>
 <li><a href="#secure-sampling" id="toc-secure-sampling"><span
-class="toc-section-number">2.1.2</span> Secure Sampling</a></li>
+class="toc-section-number">3.1.2</span> Secure Sampling</a></li>
 <li><a href="#set-similarity-via-min-hash"
 id="toc-set-similarity-via-min-hash"><span
-class="toc-section-number">2.1.3</span> Set Similarity via
+class="toc-section-number">3.1.3</span> Set Similarity via
 Min-Hash</a></li>
 </ul></li>
 <li><a
 href="#line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"
 id="toc-line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"><span
-class="toc-section-number">2.2</span> Line 2: FACTs (Forwarding
+class="toc-section-number">3.2</span> Line 2: FACTs (Forwarding
 Accountability in End-to-End Encrypted Messaging Platform)</a></li>
 </ul></li>
 <li><a href="#secure-search-1" id="toc-secure-search-1"><span
-class="toc-section-number">3</span> Secure Search</a></li>
+class="toc-section-number">4</span> Secure Search</a></li>
+<li><a href="#secure-sampling-1" id="toc-secure-sampling-1"><span
+class="toc-section-number">5</span> Secure Sampling</a>
+<ul>
+<li><a href="#introduction-1" id="toc-introduction-1"><span
+class="toc-section-number">5.1</span> Introduction</a>
+<ul>
+<li><a href="#our-work" id="toc-our-work"><span
+class="toc-section-number">5.1.1</span> Our Work</a></li>
+<li><a href="#technical-overview" id="toc-technical-overview"><span
+class="toc-section-number">5.1.2</span> Technical Overview</a></li>
+<li><a href="#related-work" id="toc-related-work"><span
+class="toc-section-number">5.1.3</span> Related Work</a></li>
+</ul></li>
+<li><a href="#sec:l1" id="toc-sec:l1"><span
+class="toc-section-number">5.2</span> Two-party <span
+class="math inline">\(L_1\)</span> Sampling</a>
+<ul>
+<li><a href="#a-toy-protocol-towards-securely-realizing-f_l_1"
+id="toc-a-toy-protocol-towards-securely-realizing-f_l_1"><span
+class="toc-section-number">5.2.1</span> A toy protocol towards securely
+realizing <span class="math inline">\(\F_{L_1}\)</span></a></li>
+<li><a href="#sec:L1prot" id="toc-sec:L1prot"><span
+class="toc-section-number">5.2.2</span> Secure <span
+class="math inline">\(L_1\)</span> sampling protocol</a></li>
+</ul></li>
+<li><a href="#sec:l2" id="toc-sec:l2"><span
+class="toc-section-number">5.3</span> Two Party <span
+class="math inline">\(L_2\)</span> Sampling</a>
+<ul>
+<li><a href="#sec:insecure" id="toc-sec:insecure"><span
+class="toc-section-number">5.3.1</span> A non-private <span
+class="math inline">\(L_2\)</span> sampling protocol with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication</a></li>
+<li><a href="#sec:secure" id="toc-sec:secure"><span
+class="toc-section-number">5.3.2</span> Secure <span
+class="math inline">\(L_2\)</span> Sampling From FHE</a></li>
+<li><a href="#sec:insecureLp" id="toc-sec:insecureLp"><span
+class="toc-section-number">5.3.3</span> A non-private <span
+class="math inline">\(L_p\)</span> sampling protocol with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication</a></li>
+</ul></li>
+<li><a href="#sec:prod" id="toc-sec:prod"><span
+class="toc-section-number">5.4</span> Two-party Product Sampling</a>
+<ul>
+<li><a href="#sec:prodLB" id="toc-sec:prodLB"><span
+class="toc-section-number">5.4.1</span> Impossibility of sublinear
+product sampling</a></li>
+<li><a href="#sec:prodip" id="toc-sec:prodip"><span
+class="toc-section-number">5.4.2</span> Product sampling while leaking
+at most the inner product</a></li>
+</ul></li>
+<li><a href="#sec:rounds" id="toc-sec:rounds"><span
+class="toc-section-number">5.5</span> Product Sampling in Constant
+Rounds</a>
+<ul>
+<li><a href="#sec:jlt" id="toc-sec:jlt"><span
+class="toc-section-number">5.5.1</span> Secure approximation of the
+inner product</a></li>
+<li><a href="#sec:const" id="toc-sec:const"><span
+class="toc-section-number">5.5.2</span> Constant-round protocol for
+product sampling</a></li>
+</ul></li>
+<li><a href="#sec:dp" id="toc-sec:dp"><span
+class="toc-section-number">5.6</span> Two-party Exponential
+Mechanism</a>
+<ul>
+<li><a href="#sec:example" id="toc-sec:example"><span
+class="toc-section-number">5.6.1</span> A concrete example</a></li>
+<li><a
+href="#differentially-private-inner-product-for-the-exponential-mechanism"
+id="toc-differentially-private-inner-product-for-the-exponential-mechanism"><span
+class="toc-section-number">5.6.2</span> Differentially-Private Inner
+Product for the Exponential Mechanism</a></li>
+<li><a href="#instantiating-the-exponential-mechanism"
+id="toc-instantiating-the-exponential-mechanism"><span
+class="toc-section-number">5.6.3</span> Instantiating the Exponential
+Mechanism</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#minhash" id="toc-minhash"><span
+class="toc-section-number">6</span> MinHash</a></li>
+<li><a href="#facts" id="toc-facts"><span
+class="toc-section-number">7</span> FACTs</a></li>
 <li><a href="#timeline" id="toc-timeline"><span
-class="toc-section-number">4</span> Timeline</a></li>
+class="toc-section-number">8</span> Timeline</a></li>
 <li><a href="#preliminary-results" id="toc-preliminary-results"><span
-class="toc-section-number">5</span> Preliminary Results</a>
+class="toc-section-number">9</span> Preliminary Results</a>
 <ul>
 <li><a href="#microbenchmarks-of-new-toolprimitive"
 id="toc-microbenchmarks-of-new-toolprimitive"><span
-class="toc-section-number">5.1</span> Microbenchmarks of [New
+class="toc-section-number">9.1</span> Microbenchmarks of [New
 Tool/Primitive]</a></li>
 <li><a href="#bandwidth-overhead-analysis"
 id="toc-bandwidth-overhead-analysis"><span
-class="toc-section-number">5.2</span> Bandwidth Overhead
+class="toc-section-number">9.2</span> Bandwidth Overhead
 Analysis</a></li>
 <li><a href="#conclusion-of-preliminary-data"
 id="toc-conclusion-of-preliminary-data"><span
-class="toc-section-number">5.3</span> Conclusion of Preliminary
+class="toc-section-number">9.3</span> Conclusion of Preliminary
 Data</a></li>
 </ul></li>
 <li><a href="#conclusion" id="toc-conclusion"><span
-class="toc-section-number">6</span> Conclusion</a></li>
+class="toc-section-number">10</span> Conclusion</a></li>
 </ul>
 </nav>
-<h1 class="unnumbered" id="abstract">Abstract</h1>
+<h1 data-number="1" id="abstract"><span
+class="header-section-number">1</span> Abstract</h1>
 <p>This dissertation investigates how to reduce communication overhead
 in privacy-preserving applications. It develops two complementary
 directions toward this goal. The first studies how sublinear
@@ -257,8 +342,8 @@ privacy reinforce each other across modern cryptographic and
 data-analytic settings, and extend to practical systems such as the
 FACTS framework for privacy-preserving accountability in encrypted
 messaging</p>
-<h1 data-number="1" id="introduction"><span
-class="header-section-number">1</span> Introduction</h1>
+<h1 data-number="2" id="introduction"><span
+class="header-section-number">2</span> Introduction</h1>
 <p>The modern digital landscape is defined by a fundamental tension
 between the exponential growth of data and the imperative to protect the
 privacy of the individuals generating it. As datasets scale into the
@@ -308,9 +393,9 @@ demonstrate that controlled relaxation of exactness is the key to
 unlocking sublinear performance. This introduction delineates the
 theoretical underpinnings and practical implications of these
 advancements, setting the stage for a detailed technical analysis.</p>
-<h2 data-number="1.1"
+<h2 data-number="2.1"
 id="the-linear-bottleneck-in-secure-computation"><span
-class="header-section-number">1.1</span> The Linear Bottleneck in Secure
+class="header-section-number">2.1</span> The Linear Bottleneck in Secure
 Computation</h2>
 <p>To understand the necessity of the contributions discussed herein,
 one must first appreciate the “Linearity Wall.” In standard secure
@@ -331,9 +416,9 @@ Protocols specifically targets scenarios where even these overheads are
 unacceptable, aiming for protocols where communication depends on the
 <em>output size</em> or the <em>security parameter</em>, rather than the
 input database size.</p>
-<h2 data-number="1.2"
+<h2 data-number="2.2"
 id="sublinear-secure-protocols-primitives-for-sublinear-privacy"><span
-class="header-section-number">1.2</span> Sublinear Secure Protocols:
+class="header-section-number">2.2</span> Sublinear Secure Protocols:
 Primitives for Sublinear Privacy</h2>
 <p>This line of research explores the building blocks of sublinear
 privacy.</p>
@@ -368,9 +453,9 @@ guarantees.</p></li>
 technologies lies in the domain of sublinear algorithms, where
 mathematical approximation provides the necessary slack to achieve
 scalability.</p>
-<h2 data-number="1.3"
+<h2 data-number="2.3"
 id="facts-accountability-via-probabilistic-structures"><span
-class="header-section-number">1.3</span> FACTs: Accountability via
+class="header-section-number">2.3</span> FACTs: Accountability via
 Probabilistic Structures</h2>
 <p>This line of research focuses on the application of “fighting fake
 news”. EEMS platforms like WhatsApp and Signal utilize encryption that
@@ -389,8 +474,8 @@ requires no linear scan of the database, and registering a complaint
 requires flipping a single bit. This work exemplifies how probabilistic
 data structures—traditionally used for efficiency in networking-can be
 repurposed as privacy primitives.</p>
-<h1 data-number="2" id="literature-review"><span
-class="header-section-number">2</span> Literature Review</h1>
+<h1 data-number="3" id="literature-review"><span
+class="header-section-number">3</span> Literature Review</h1>
 <p>This section surveys existing literature relevant to the two primary
 lines of work. First, we discuss the foundational cryptographic
 primitives and protocols for <strong>Secure Search, Secure Sampling, and
@@ -398,22 +483,22 @@ Privacy-Preserving Set Similarity</strong>. Second, we review the
 literature relevant to our specific application in accountability
 systems of End-to-End Encrypted Messaging System,
 <strong>FACTs</strong>.</p>
-<h2 data-number="2.1"
+<h2 data-number="3.1"
 id="line-1-secure-search-sampling-and-similarity"><span
-class="header-section-number">2.1</span> Line 1: Secure Search,
+class="header-section-number">3.1</span> Line 1: Secure Search,
 Sampling, and Similarity</h2>
 <p>This line of work focuses on optimizing privacy-preserving protocols
 for retrieving and analyzing data. We divide the literature into three
 interconnected domains: secure search, secure sampling, and set
 similarity.</p>
-<h3 data-number="2.1.1" id="secure-search"><span
-class="header-section-number">2.1.1</span> Secure Search</h3>
+<h3 data-number="3.1.1" id="secure-search"><span
+class="header-section-number">3.1.1</span> Secure Search</h3>
 <p>Secure search is a widely-studied problem with solutions spanning
 various cryptographic settings. In the discussion below, let <span
 class="math inline">\(n\)</span> denote the number of data items.</p>
-<h4 data-number="2.1.1.1"
+<h4 data-number="3.1.1.1"
 id="secure-pattern-matching-spm-on-fhe-encrypted-data."><span
-class="header-section-number">2.1.1.1</span> Secure pattern matching
+class="header-section-number">3.1.1.1</span> Secure pattern matching
 (SPM) on FHE-encrypted data.</h4>
 <p>In SPM, given an encrypted query <span class="math inline">\(\lbra q
 \lket\)</span> and <span class="math inline">\(n\)</span> FHE-encrypted
@@ -431,8 +516,8 @@ client’s running time remain proportional to the number of data items.
 In contrast, our work focuses on the orthogonal problem of optimizing
 the <em>retrieval</em> of matched data items, aiming for sublinear
 communication and client computation.</p>
-<h4 data-number="2.1.1.2" id="searchable-encryption-se."><span
-class="header-section-number">2.1.1.2</span> Searchable encryption
+<h4 data-number="3.1.1.2" id="searchable-encryption-se."><span
+class="header-section-number">3.1.1.2</span> Searchable encryption
 (SE).</h4>
 <p>Searchable encryption <span class="citation"
 data-cites="SP:SonWagPer00 EC:BDOP04"></span> enables highly efficient
@@ -449,8 +534,8 @@ information (such as access patterns) to leak to the server <span
 class="citation" data-cites="SP:FVYSHG17"></span>. Unlike standard SE,
 our work focuses on achieving preprocessing-free constructions that leak
 nothing about the queries or results beyond their sizes.</p>
-<h4 data-number="2.1.1.3" id="property-preserving-encryption-ppe."><span
-class="header-section-number">2.1.1.3</span> Property Preserving
+<h4 data-number="3.1.1.3" id="property-preserving-encryption-ppe."><span
+class="header-section-number">3.1.1.3</span> Property Preserving
 Encryption (PPE).</h4>
 <p>PPE <span class="citation" data-cites="EC:PanRou12"></span> produces
 ciphertexts that maintain certain relationships (e.g., equality or
@@ -462,8 +547,8 @@ demonstrated <span class="citation"
 data-cites="NDSS:IslKuzKan12 CCS:GMNRS16 SP:GSBNR17"></span> that such
 ciphertexts leak significant information, rendering them undesirable for
 many security-critical applications.</p>
-<h4 data-number="2.1.1.4" id="general-techniques-pir-mpc-oram."><span
-class="header-section-number">2.1.1.4</span> General Techniques (PIR,
+<h4 data-number="3.1.1.4" id="general-techniques-pir-mpc-oram."><span
+class="header-section-number">3.1.1.4</span> General Techniques (PIR,
 MPC, ORAM).</h4>
 <p>Private Information Retrieval (PIR) <span class="citation"
 data-cites="JACM:CKGS98"></span> allows retrieval while hiding the
@@ -474,10 +559,10 @@ solve secure search, but generic constructions typically incur high
 communication (<span class="math inline">\(\Omega(n)\)</span> for MPC)
 or round complexity (<span class="math inline">\(\Omega(\log^2
 n)\)</span> for ODS), which we aim to improve upon.</p>
-<h3 data-number="2.1.2" id="secure-sampling"><span
-class="header-section-number">2.1.2</span> Secure Sampling</h3>
-<h4 data-number="2.1.2.1" id="sampling-from-streaming-data."><span
-class="header-section-number">2.1.2.1</span> Sampling from streaming
+<h3 data-number="3.1.2" id="secure-sampling"><span
+class="header-section-number">3.1.2</span> Secure Sampling</h3>
+<h4 data-number="3.1.2.1" id="sampling-from-streaming-data."><span
+class="header-section-number">3.1.2.1</span> Sampling from streaming
 data.</h4>
 <p>Non-private sampling from data streams has been studied
 extensively <span class="citation"
@@ -485,8 +570,8 @@ data-cites="cormode2019p ganguly2007counting jowhari2011tight MW10 woodruff2016d
 typically achieving <span class="math inline">\(\ell_p\)</span> sampling
 with sublinear computation. These works generally operate in a
 single-party setting and do not consider privacy.</p>
-<h4 data-number="2.1.2.2" id="secure-multiparty-sampling."><span
-class="header-section-number">2.1.2.2</span> Secure multiparty
+<h4 data-number="3.1.2.2" id="secure-multiparty-sampling."><span
+class="header-section-number">3.1.2.2</span> Secure multiparty
 sampling.</h4>
 <p>In the privacy domain, works like <span class="citation"
 data-cites="prabhakaran2012secure prabhakaran2014assisted"></span>
@@ -496,9 +581,9 @@ data-cites="CCS:ChasheUll19"></span> consider the computational setting
 for publicly-known distributions. Our work is distinct in focusing on
 sampling from a <em>private</em> distribution in the computational
 setting, with a specific emphasis on reducing communication.</p>
-<h4 data-number="2.1.2.3"
+<h4 data-number="3.1.2.3"
 id="secure-mpc-of-differentially-private-functionalities."><span
-class="header-section-number">2.1.2.3</span> Secure MPC of
+class="header-section-number">3.1.2.3</span> Secure MPC of
 differentially private functionalities.</h4>
 <p>Since Dwork et al. <span class="citation"
 data-cites="dwork2006our"></span>, significant work has focused on using
@@ -507,18 +592,18 @@ data-cites="acar2017achieving clifton2013challenges eriguchi2021efficient"></spa
 While these works address machine learning and aggregation, we focus
 specifically on optimizing the communication complexity for sampling
 functionalities.</p>
-<h3 data-number="2.1.3" id="set-similarity-via-min-hash"><span
-class="header-section-number">2.1.3</span> Set Similarity via
+<h3 data-number="3.1.3" id="set-similarity-via-min-hash"><span
+class="header-section-number">3.1.3</span> Set Similarity via
 Min-Hash</h3>
-<h4 data-number="2.1.3.1" id="jaccard-index-and-min-hash."><span
-class="header-section-number">2.1.3.1</span> Jaccard Index and
+<h4 data-number="3.1.3.1" id="jaccard-index-and-min-hash."><span
+class="header-section-number">3.1.3.1</span> Jaccard Index and
 Min-Hash.</h4>
 <p>Many works have constructed 2-party Jaccard index estimation
 protocols using Min-hash with sublinear communication to avoid the high
 cost of exact computation <span class="citation"
 data-cites="wpes:CFGT12 eprint:RCSWK19 Faber:thesis"></span>.</p>
-<h4 data-number="2.1.3.2" id="differentially-private-dp-min-hash."><span
-class="header-section-number">2.1.3.2</span> Differentially Private (DP)
+<h4 data-number="3.1.3.2" id="differentially-private-dp-min-hash."><span
+class="header-section-number">3.1.3.2</span> Differentially Private (DP)
 Min-Hash.</h4>
 <p>Recent research aims to output Jaccard similarity estimates while
 preserving differential privacy. Aum<span>ü</span>ller et al. <span
@@ -528,9 +613,9 @@ challenges; for example, <span class="citation"
 data-cites="conc:YWRLLQ19"></span> was shown to have flaws in its
 privacy claim, while <span class="citation"
 data-cites="arxiv:YLLHQ17"></span> incurs high noise overhead.</p>
-<h4 data-number="2.1.3.3"
+<h4 data-number="3.1.3.3"
 id="optimizing-secure-computation-using-dp."><span
-class="header-section-number">2.1.3.3</span> Optimizing Secure
+class="header-section-number">3.1.3.3</span> Optimizing Secure
 Computation using DP.</h4>
 <p>Our work sits at the intersection of DP and MPC. A specific line of
 research relevant to our goals is <em>optimizing secure computation
@@ -542,14 +627,14 @@ computations <span class="citation" data-cites="CCS:MazGor18"></span>,
 and shuffling <span class="citation" data-cites="ACNS:GKLX22"></span>.
 We similarly leverage DP to improve the efficiency of our similarity
 protocols.</p>
-<h2 data-number="2.2"
+<h2 data-number="3.2"
 id="line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"><span
-class="header-section-number">2.2</span> Line 2: FACTs (Forwarding
+class="header-section-number">3.2</span> Line 2: FACTs (Forwarding
 Accountability in End-to-End Encrypted Messaging Platform)</h2>
 <p>Our second line of work shifts focus to a specific application:
 enabling accountability in end-to-end encrypted messaging systems.</p>
-<h4 data-number="2.2.0.1" id="message-franking."><span
-class="header-section-number">2.2.0.1</span> Message Franking.</h4>
+<h4 data-number="3.2.0.1" id="message-franking."><span
+class="header-section-number">3.2.0.1</span> Message Franking.</h4>
 <p>The prevailing approach for reporting malicious messages is
 <em>message franking</em> <span class="citation"
 data-cites="C:DGRW18 C:TGLMR19 C:GruLuRis17"></span>. This technique
@@ -558,8 +643,8 @@ sender. However, message franking is limited to identifying the
 <em>immediate</em> sender and cannot trace the original source in a
 forwarding chain. Furthermore, it does not provide threshold guarantees
 to prevent unmasking users based on a single complaint.</p>
-<h4 data-number="2.2.0.2" id="scalable-oblivious-data-structures."><span
-class="header-section-number">2.2.0.2</span> Scalable Oblivious Data
+<h4 data-number="3.2.0.2" id="scalable-oblivious-data-structures."><span
+class="header-section-number">3.2.0.2</span> Scalable Oblivious Data
 Structures.</h4>
 <p>FACTs requires scalable oblivious storage to track complaints. While
 multi-client ORAM protocols exist <span class="citation"
@@ -569,9 +654,9 @@ Similarly, oblivious counters <span class="citation"
 data-cites="EC:KatMyeOst01 FC:GohGol05"></span> generally focus on exact
 counting or complex operations, lacking the specific compression traits
 of the Compact Count-Min Bloom Filter (CCBF) we utilize.</p>
-<h4 data-number="2.2.0.3"
+<h4 data-number="3.2.0.3"
 id="private-sketching-for-user-server-settings."><span
-class="header-section-number">2.2.0.3</span> Private Sketching for
+class="header-section-number">3.2.0.3</span> Private Sketching for
 User-Server Settings.</h4>
 <p>While CCBF resembles a private sketch, existing private sketching
 literature (e.g., <span class="citation"
@@ -579,10 +664,2718 @@ data-cites="PoPETS:CDKY20 CCS:WJSYG19"></span>) predominantly focuses on
 the multi-party setting with multiple servers. These techniques are not
 directly applicable to the FACTs setting, which restricts communication
 strictly to the user-server model.</p>
-<h1 data-number="3" id="secure-search-1"><span
-class="header-section-number">3</span> Secure Search</h1>
-<h1 data-number="4" id="timeline"><span
-class="header-section-number">4</span> Timeline</h1>
+<h1 data-number="4" id="secure-search-1"><span
+class="header-section-number">4</span> Secure Search</h1>
+<h1 data-number="5" id="secure-sampling-1"><span
+class="header-section-number">5</span> Secure Sampling</h1>
+<h2 data-number="5.1" id="introduction-1"><span
+class="header-section-number">5.1</span> Introduction</h2>
+<p>Random sampling is an important tool when computing over massive data
+sets. It has wide application in generating small summaries of data, and
+serves as a key building block in the design of many algorithms and
+estimation procedures. In particular, <span
+class="math inline">\(L_p\)</span> sampling has been used to develop
+important streaming algorithms such as the heavy hitters, <span
+class="math inline">\(L_p\)</span> norm estimation, cascaded norm
+estimation, and finding duplicates in data streams <span
+class="citation" data-cites="AKO11 MW10 JST11 BOZ12"></span>.</p>
+<p>In this work, we introduce and explore the problem of private
+two-party sampling. We consider a setting in which two parties would
+like to sample from a distribution whose probability mass function is
+distributed across the two parties. Specifically, we assume parties
+<span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> each hold <span
+class="math inline">\(n\)</span>-dimensional vectors <span
+class="math inline">\(\vec{w}_1 = (w_{1,1},
+\ldots, w_{1,n})\)</span> and <span class="math inline">\(\vec{w}_2 =
+(w_{2,1}, \ldots, w_{2,n})\)</span> respectively where every <span
+class="math inline">\(w_{b,j}\)</span> is non-negative. These vectors
+each represent a (possibly non-normalized) probability mass function of
+a distribution. Specifically, for <span class="math inline">\(b \in
+\{1,2\}\)</span>, <span class="math inline">\(i
+\in [n]\)</span>, the non-negative value <span
+class="math inline">\(\frac{w_{b,i}}{||\vec{w}_b||_1}\)</span>
+represents the probability mass placed by distribution <span
+class="math inline">\(\mathcal{D}_b\)</span> on element <span
+class="math inline">\(i\)</span>. We assume that the dimension <span
+class="math inline">\(n\)</span> is very large, and our goal is to
+obtain secure sampling protocols with communication that is
+<em>sub-linear</em> in <span class="math inline">\(n\)</span>.</p>
+<p>We consider various ways of deriving the probability mass function
+<span class="math inline">\(\mathcal{D}\)</span> of the joint
+distribution from the two individual probability mass functions.
+Specifically, we consider:</p>
+<p><span class="math inline">\(L_1\)</span> distribution: Sample item
+<span class="math inline">\(i\)</span> with probability <span
+class="math inline">\(\frac
+{w_{1,i} + w_{2,i}} {||\vec{w}_1 + \vec{w}_2||_1} = \frac{w_{1,i} +
+w_{2,i}} {\sum_j (w_{1,j} + w_{2,j})}\)</span>.</p>
+<p><span class="math inline">\(L_2\)</span> distribution: Sample item
+<span class="math inline">\(i\)</span> with probability <span
+class="math inline">\(\frac
+{(w_{1,i} + w_{2,i})^2} {||\vec{w}_1+\vec{w}_2||_2^2}
+= \frac{(w_{1,i} + w_{2,i})^2} {\sum_j (w_{1,j} +
+w_{2,j})^2}\)</span>.</p>
+<p>Product distribution: Sample item <span
+class="math inline">\(i\)</span> with probability <span
+class="math inline">\(\frac{w_{1,i} \cdot w_{2,i}}{\langle \vec{w}_1,
+\vec{w}_2 \rangle}  =
+\frac{w_{1,i} \cdot w_{2,i}} {\sum_j (w_{1,j} \cdot w_{2,j})}\)</span><a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Realizing these sampling functionalities securely is immediate via
+generic 2PC techniques, but the resulting protocols will require
+communication that is linear in the input length. With
+<em>sublinear</em> communication, however, it is unclear how to perform
+some of these tasks (or whether it is even possible to do so), even with
+an <em>insecure</em> protocol. We give a (partial) characterization of
+when such sublinear sampling is possible, and give secure protocols for
+realizing these functionalities where possible.</p>
+<h4 data-number="5.1.0.1"
+id="product-sampling-and-the-exponential-mechanism."><span
+class="header-section-number">5.1.0.1</span> Product sampling and the
+exponential mechanism.</h4>
+<p>While <span class="math inline">\(L_1\)</span> and <span
+class="math inline">\(L_2\)</span> sampling are well-studied, to the
+best of our knowledge, we are the first to consider the notion of
+product sampling. We describe a concrete, independent application for
+this new notion:  product sampling can be used to implement a
+distributed version of the well-known exponential mechanism for
+differentially-private data release <span class="citation"
+data-cites="FOCS:McSTal07"></span>.</p>
+<h3 data-number="5.1.1" id="our-work"><span
+class="header-section-number">5.1.1</span> Our Work</h3>
+<p>We explore the problems described above, providing multiple two-party
+protocols, all with sub-linear communication, in the semi-honest
+security model. We note that our protocol for product sampling has
+additional leakage, beyond what is revealed by the sampling
+functionality. We characterize exactly what this leakage is, and provide
+evidence that similar leakage is necessary to achieve sublinear
+communication. Specifically, we show the following.</p>
+<h4 data-number="5.1.1.1" id="l_1-sampling."><span
+class="header-section-number">5.1.1.1</span> <span
+class="math inline">\(L_1\)</span> sampling.</h4>
+<p>We begin by constructing a two-party protocol for <span
+class="math inline">\(L_1\)</span> sampling that relies on fully
+homomorphic encryption (FHE). The main idea behind the protocol is to
+obliviously sample from each of the two parties inputs independently,
+and then to securely choose one of the two samples using an
+appropriately biased coin toss. The results are described in Section <a
+href="#sec:l1" data-reference-type="ref"
+data-reference="sec:l1">5.2</a>.</p>
+<h4 data-number="5.1.1.2" id="l_2-sampling."><span
+class="header-section-number">5.1.1.2</span> <span
+class="math inline">\(L_2\)</span> sampling.</h4>
+<p>We also provide a protocol for secure <span
+class="math inline">\(L_2\)</span> sampling that relies on fully
+homomorphic encryption (see Section <a href="#sec:l2"
+data-reference-type="ref" data-reference="sec:l2">5.3</a>). In this
+case, however, achieving <span class="math inline">\(L_2\)</span>
+sampling is non-trivial. In fact, even relying on FHE, it is not
+immediately clear how to compute <span class="math inline">\(\|\w_1 +
+\w_2\|^2_2\)</span> with sublinear communication.</p>
+<p>Surprisingly, our <span class="math inline">\(L_2\)</span> sampling
+protocol runs in constant rounds and with <span
+class="math inline">\(\tilde O(1)\)</span> communication<a href="#fn2"
+class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.
+Interestingly, it does not require us to compute <span
+class="math inline">\(\|\w_1 +
+\w_2\|^2_2\)</span>. To achieve this, we developed a novel technique
+called “corrective sampling”, which we overview in the next subsection.
+We note that our techniques straightforwardly extend to <span
+class="math inline">\(L_p\)</span> sampling, for constant <span
+class="math inline">\(p\)</span>.</p>
+<h4 data-number="5.1.1.3" id="product-sampling."><span
+class="header-section-number">5.1.1.3</span> Product sampling.</h4>
+<p>We then turn to product sampling. We assume, without loss of
+generality, that the vectors <span
+class="math inline">\(\vec{w}_b\)</span> are normalized (see Section <a
+href="#sec:prod" data-reference-type="ref"
+data-reference="sec:prod">5.4</a> for justification).</p>
+<p>We first begin with a communication lowerbound, demonstrating that
+product sampling with sublinear communication is impossible, even
+without privacy guarantees, if the two input distributions are
+insufficiently correlated (i.e., <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2\rangle =
+o(\frac{1}{n^2})\)</span>). We show this through a reduction from the
+Set Disjointness problem.</p>
+<p>Knowing this lowerbound, we consider the problem under a promise that
+the input vectors are sufficiently correlated. Assuming that <span
+class="math inline">\(\langle \vec{w}_1,
+\vec{w}_2\rangle = \omega(\frac{\log n}{n})\)</span>, we provide a
+two-party protocol for secure product sampling leaking (at most) the
+inner product of the two parties’ inputs. We note that the promise
+itself leaks some information, so some leakage here is inevitable.
+Interestingly, we observe that the protocol can be modified to provide a
+trade-off between the communication cost and the leakage. We also
+discuss why this trade-off is inherent.</p>
+<h4 data-number="5.1.1.4" id="constant-round-product-sampling."><span
+class="header-section-number">5.1.1.4</span> Constant round product
+sampling.</h4>
+<p>Our product sampling protocol has a round complexity that depends on
+the inner product. In Section <a href="#sec:rounds"
+data-reference-type="ref" data-reference="sec:rounds">5.5</a>, we show
+how to make our construction constant round while incurring small
+additional leakage. Importantly, we must do this <span><em>without
+computing the exact inner product</em></span> which itself requires
+<span class="math inline">\(O(n)\)</span> communication <span
+class="citation" data-cites="STOC:BabNisSze89"></span>.</p>
+<h4 data-number="5.1.1.5" id="two-party-exponential-mechanism."><span
+class="header-section-number">5.1.1.5</span> Two party exponential
+mechanism.</h4>
+<p>As mentioned previously, one important application of product
+sampling is the exponential mechanism for providing differential
+privacy <span class="citation" data-cites="FOCS:McSTal07"></span>. In
+Section <a href="#sec:dp" data-reference-type="ref"
+data-reference="sec:dp">5.6</a>, we describe this application in
+detail.</p>
+<p>For this particular application we face an additional challenge: the
+leakage of <span class="math inline">\(\langle \vec{w}_1,
+\vec{w}_2\rangle\)</span> that we relied on for achieving sub-linear
+communication in product sampling does not preserve differential
+privacy. To overcome this issue, we construct a new,
+differentially-private approximation for inner product, and show how to
+use this for building a sub-linear communication secure computation of
+the exponential mechanism.</p>
+<h3 data-number="5.1.2" id="technical-overview"><span
+class="header-section-number">5.1.2</span> Technical Overview</h3>
+<p>In the following, we overload notation and let <span
+class="math inline">\(\mathcal{D}\)</span> denote a distribution as well
+as its probability mass function. As discussed previously, we consider
+the case where a probability mass function is distributed across two
+parties, and the parties would like to securely sample from the
+corresponding distribution. We consider several ways in which the
+probability mass function can be distributed across the two parties.</p>
+<h4 data-number="5.1.2.1"
+id="l_1-sampling-of-convex-combinations."><span
+class="header-section-number">5.1.2.1</span> <span
+class="math inline">\(L_1\)</span> sampling of convex combinations.</h4>
+<p>In this case, party 1 (resp. party 2) holds a vector <span
+class="math inline">\(\vec{w}_1\)</span> (resp. <span
+class="math inline">\(\vec{w}_2\)</span>), indexed from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>. For <span class="math inline">\(i \in
+[n]\)</span>, <span
+class="math inline">\(w_{1,i}/||\vec{w}_1||_1\)</span> (resp. <span
+class="math inline">\(w_{2,i}/||\vec{w}_2||_1\)</span>) corresponds to
+the probability mass of <span class="math inline">\(i\)</span> under
+distribution <span class="math inline">\(\mathcal{D}_1\)</span>
+(resp. <span class="math inline">\(\mathcal{D}_2\)</span>). The goal of
+the parties is to sample from the distribution <span
+class="math inline">\(\mathcal{D}\)</span>, defined as follows for <span
+class="math inline">\(i \in [n]\)</span>: <span
+class="math display">\[\begin{aligned}
+\mathcal{D}[i] &amp;:= \frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 +
+||\vec{w}_2||_1} \cdot \frac{w_{1,i}}{||\vec{w}_1||_1} +
+\frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot
+\frac{w_{2,i}}{||\vec{w}_2||_1}\\
+&amp;= \frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 + ||\vec{w}_2||_1} \cdot
+\mathcal{D}_1[i] + \frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 +
+||\vec{w}_2||_1} \cdot \mathcal{D}_2[i]
+\end{aligned}\]</span> Note that the target distribution <span
+class="math inline">\(\mathcal{D}\)</span> is a convex combination of
+the distributions <span class="math inline">\(\mathcal{D}_1\)</span> and
+<span class="math inline">\(\mathcal{D}_2\)</span> held by the two
+parties.</p>
+<p>A potentially straightforward sampling protocol is to therefore have
+party <span class="math inline">\(1\)</span> locally draw a sample <span
+class="math inline">\(i_1\)</span> from <span
+class="math inline">\(\mathcal{D}_1\)</span>, party <span
+class="math inline">\(2\)</span> locally draw a sample <span
+class="math inline">\(i_2\)</span> from <span
+class="math inline">\(\mathcal{D}_2\)</span>, and then run a secure two
+party computation that outputs <span class="math inline">\(i_1\)</span>
+with probability <span
+class="math inline">\(\frac{||\vec{w}_1||_1}{||\vec{w}_1||_1 +
+||\vec{w}_2||_1}\)</span> and <span class="math inline">\(i_2\)</span>
+with probability <span
+class="math inline">\(\frac{||\vec{w}_2||_1}{||\vec{w}_1||_1 +
+||\vec{w}_2||_1}\)</span>.</p>
+<p>This protocol clearly has sublinear communication, but it
+unfortunately does not securely realize the ideal functionality. The
+reason is as follows: conditioned on the ideal functionality outputting
+a certain index <span class="math inline">\(i^*\)</span>, the
+probability that <span class="math inline">\(i^*\)</span> was drawn by
+party <span class="math inline">\(1\)</span> (resp. party <span
+class="math inline">\(2\)</span>) is <span
+class="math inline">\(\frac{w_{1,i^*}}{w_{1,i^*} + w_{2,i^*}}\)</span>
+(resp. <span class="math inline">\(\frac{w_{2,i^*}}{w_{1,i^*} +
+w_{2,i^*}}\)</span>). Thus, if the simulator receives <span
+class="math inline">\(i^*\)</span> from the ideal functionality and has
+to simulate the view of party <span class="math inline">\(1\)</span>, it
+needs to set <span class="math inline">\(i_1 = i^*\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i^*}}{w_{1,i^*} +
+w_{2,i^*}}\)</span> and set <span class="math inline">\(i_1 \neq
+i^*\)</span> with probability <span
+class="math inline">\(\frac{w_{2,i^*}}{w_{1,i^*} + w_{2,i^*}}\)</span>.
+However, the simulator is not able to simulate these probabilities
+correctly, since it does not know <span
+class="math inline">\(w_{2,i^*}\)</span>.</p>
+<p>To get around this issue we therefore have the parties sample <span
+class="math inline">\(i_1\)</span> and <span
+class="math inline">\(i_2\)</span> <span><em>obliviously</em></span>. To
+do this with sublinear communication, we can use fully homomorphic
+encryption (FHE). Specifically, to sample <span
+class="math inline">\(i_1\)</span>, player 1 first encrypts his input
+<span class="math inline">\(\vec{w}_1\)</span> using an FHE scheme for
+which he does not know the secret key. The players then jointly choose a
+random value <span class="math inline">\(r \in
+[0,||\vec{w}_1||_1)\)</span>. Player 1 then uses the homomorphic
+operations to find the value <span class="math inline">\(i_1\)</span>
+chosen by this <span class="math inline">\(r\)</span>, and the parties
+use threshold decryption to recover a secret sharing of <span
+class="math inline">\(i_1\)</span>. The parties reverse roles to sample
+<span class="math inline">\(i_2\)</span>. Details of this construction
+are provided in Section <a href="#sec:l1" data-reference-type="ref"
+data-reference="sec:l1">5.2</a>.</p>
+<p>Additionally, an alternative construction that uses sub-linear OT for
+the oblivious sampling is provided in Appendix <a href="#apx:otl1"
+data-reference-type="ref" data-reference="apx:otl1">[apx:otl1]</a>.</p>
+<h4 data-number="5.1.2.2" id="l_2-sampling-of-component-wise-sum."><span
+class="header-section-number">5.1.2.2</span> <span
+class="math inline">\(L_2\)</span> Sampling of component-wise sum.</h4>
+<p>In this case, party 1 (resp. party 2) holds a vector <span
+class="math inline">\(\vec{w}_1\)</span> (resp. <span
+class="math inline">\(\vec{w}_2\)</span>), indexed from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>. For <span class="math inline">\(i \in
+[n]\)</span>. The goal of the parties is to sample from the distribution
+<span class="math inline">\(\mathcal{D}\)</span> defined as follows for
+<span class="math inline">\(i \in [n]\)</span>: <span
+class="math display">\[\mathcal{D}[i] := \frac{(w_{1,i} +
+w_{2,i})^2}{||\vec{w}_1 + \vec{w}_2||_2^2}.\]</span></p>
+<p>We present a protocol that samples from this distribution with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication. This protocol
+relies on a novel technique that we call “corrective sampling”, which is
+an interesting type of rejection sampling. In what follows, we describe
+an insecure version of our protocol to give the intuition behind it. To
+make it secure, we carry out the corrective sampling under FHE as
+described in Protocol <a href="#fig:l2" data-reference-type="ref"
+data-reference="fig:l2">[fig:l2]</a>.</p>
+<p>The main challenge that we face here, unlike in the case of <span
+class="math inline">\(L_1\)</span> sampling, is that it is impossible to
+compute <span class="math inline">\(||\vec{w}_1 +
+\vec{w}_2||_2^2\)</span> (and therefore impossible to compute <span
+class="math inline">\(\mathcal{D}[i]\)</span> for each <span
+class="math inline">\(i\)</span>) with sublinear communication <span
+class="citation" data-cites="STOC:BabNisSze89"></span>. Instead, we
+sample index <span class="math inline">\(i\)</span> from a different,
+related, distribution, which is easy to sample with sub-linear
+communication. We then show that we can efficiently correct this
+distribution by rejecting with the appropriate probability.
+Interestingly, we show that corrective rejection, which depends on the
+index <span class="math inline">\(i\)</span>, doesn’t require us to
+explicitly compute <span class="math inline">\(||\vec{w}_1 +
+\vec{w}_2||_2^2\)</span>. In fact, the parties never learn the
+corrective term at all!</p>
+<p>First, as in rejection sampling, corrective sampling proceeds in
+trials and in each trial, for every <span
+class="math inline">\(i\)</span>, the probability that the protocol
+successfully samples index <span class="math inline">\(i\)</span> is
+<span class="math inline">\(\alpha \cdot \DDD[i]\)</span> for some
+unknown constant <span class="math inline">\(0 &lt;
+\alpha &lt; 1\)</span>. Since the same constant <span
+class="math inline">\(\alpha\)</span> is applied to every index <span
+class="math inline">\(i\)</span>, by repeating the trials, the protocol
+samples index <span class="math inline">\(i\)</span> correctly without
+skewing the distribution <span
+class="math inline">\(\mathcal{D}\)</span>. The expected number of
+trials is <span class="math inline">\(1/\alpha\)</span>. We therefore
+need to keep <span class="math inline">\(1/\alpha \in {O}(1)\)</span> to
+reach our target communication complexity.</p>
+<p>As mentioned above, we observe that <span><em>the protocol never has
+to explicitly compute <span
+class="math inline">\(\alpha\)</span></em></span>. Towards describing
+how this is done, first note that in <span
+class="math inline">\(\DDD[i]\)</span>, the denominator, <span
+class="math inline">\(||\vec{w}_1 + \vec{w}_2||_2^2\)</span> – which we
+assume for purposes of this exposition is at least <span
+class="math inline">\(1\)</span> – is the same for every <span
+class="math inline">\(i\)</span>, so it can be pushed into <span
+class="math inline">\(\alpha\)</span> without impacting the discussion
+above: letting <span class="math inline">\(\alpha&#39; =
+\alpha/(||\vec{w}_1 + \vec{w}_2||_2^2)\)</span>, it suffices to
+implement rejection sampling with a protocol that samples index <span
+class="math inline">\(i\)</span> with probability <span
+class="math inline">\(\alpha&#39;\cdot (w_{i,1} + w_{i,2})^2\)</span> =
+<span class="math inline">\(\alpha \cdot \DDD[i]\)</span>. This protocol
+would only need to explicitly compute <span
+class="math inline">\((w_{i,1} + w_{i,2})^2\)</span> (which can be done
+efficiently given <span class="math inline">\(i\)</span>), but not <span
+class="math inline">\(\alpha&#39;\)</span>.</p>
+<p>Unfortunately, this does not quite work. <span
+class="math inline">\(||\vec{w}_1 + \vec{w}_2||_2^2\)</span> can be very
+large, which would then make <span
+class="math inline">\(1/\alpha&#39;\)</span> large. We therefore must
+combine the above with another idea to ensure that our corrective term
+introduces at most a <span class="math inline">\({O}(1)\)</span>
+overhead.</p>
+<p>We achieve this by having each trial of the protocol work as
+follows:</p>
+<p>It samples index <span class="math inline">\(i\)</span> from
+distribution <span
+class="math inline">\(\mc{D}_{\mathrm{ignore}}\)</span>, which is easy
+to sample. We note that the contribution of this distribution will be
+eventually canceled out through rejection. In particular, we choose the
+following distribution for <span
+class="math inline">\(\mc{D}_{\mathrm{ignore}}\)</span>: <span
+class="math display">\[\DDD_\ig[i] := \frac{w^2_{1,i} +
+w^2_{2,i}}{\denom},\]</span> where we set <span
+class="math inline">\(\denom = ||\vec{w}_1||_2^2 +
+||\vec{w}_2||_2^2\)</span> to make the distribution well-defined. Note
+that <span class="math inline">\(\denom\)</span> can be computed with
+<span class="math inline">\(\tilde O(1)\)</span> communication.</p>
+<p>After sampling <span class="math inline">\(i\)</span> from <span
+class="math inline">\(\DDD_\ig\)</span>, the protocol computes a
+“corrective bias” for a coin flip that is dependent on <span
+class="math inline">\((w_{1,i} + w_{2,i})^2\)</span>. We stress that
+once <span class="math inline">\(i\)</span> is determined, computing
+<span class="math inline">\((w_{1,i} + w_{2,i})^2\)</span> is easy. In
+particular, a coin is flipped with the following bias: <span
+class="math display">\[\Pr[ coin | i] := \frac{(w_{1,i} + w_{2,i})^2}{2
+\cdot \DDD_\ig[i] \cdot \denom}\]</span> Overall, this makes sure that
+the probability that each trial outputs index <span
+class="math inline">\(i\)</span> is <span
+class="math display">\[\DDD_\ig[i] \cdot \Pr[coin|i]  = \frac{(w_{1,i} +
+w_{2,i})^2}{2 \cdot \denom} = \alpha \mc{D}[i],\]</span> where <span
+class="math inline">\(\alpha = \frac{||\vec{w}_1 + \vec{w}_2||_2^2}{2
+\cdot \denom}\)</span>.</p>
+<p>To conclude that this is a valid and efficient sampling procedure, we
+need to show the following:</p>
+<p><span class="math inline">\(\alpha\)</span> must be less than <span
+class="math inline">\(1\)</span> for the procedure to be valid. This is
+implied by the fact that <span class="math inline">\(\LLw \le 2 \cdot
+\denom\)</span>.</p>
+<p><span class="math inline">\(1/\alpha\)</span> must be in <span
+class="math inline">\(\tilde{O}(1)\)</span> so that the procedure is
+efficient. We have <span class="math inline">\(2 \cdot \denom \le 2
+\LLw\)</span>, which implies that <span
+class="math inline">\(\alpha\)</span> is at least 1/2. So, the expected
+number of trials is at most 2.</p>
+<p>We extend our techniques to the setting of <span
+class="math inline">\(L_p\)</span> sampling for constant <span
+class="math inline">\(p\)</span> in Section <a href="#sec:insecureLp"
+data-reference-type="ref" data-reference="sec:insecureLp">5.3.3</a>.</p>
+<h4 data-number="5.1.2.3" id="product-sampling.-1"><span
+class="header-section-number">5.1.2.3</span> Product sampling.</h4>
+<p>In this case, party 1 (resp. party 2) holds a normalized vector <span
+class="math inline">\(\vec{w}_1\)</span> (resp. <span
+class="math inline">\(\vec{w}_2\)</span>), indexed from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>. For <span class="math inline">\(i \in
+[n]\)</span>, <span class="math inline">\(w_{1,i}\)</span> (resp. <span
+class="math inline">\(w_{2,i}\)</span>) corresponds to the probability
+mass of <span class="math inline">\(i\)</span> under distribution <span
+class="math inline">\(\mathcal{D}_1\)</span> (resp. <span
+class="math inline">\(\mathcal{D}_2\)</span>).<a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The
+goal of the parties is to sample from the distribution <span
+class="math inline">\(\mathcal{D}\)</span> defined as follows for <span
+class="math inline">\(i \in [n]\)</span>: <span
+class="math display">\[\mathcal{D}[i] := \frac{w_{1,i} \cdot
+w_{2,i}}{\langle \vec{w}_1, \vec{w}_2 \rangle}.\]</span></p>
+<p>We begin by noting (via a simple reduction from Set Disjointness)
+that it is impossible to achieve sublinear product sampling when no
+restrictions are placed on the inputs <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>. We further show
+(via a more complex reduction from Set Disjointness) that for every
+protocol <span class="math inline">\(\Pi\)</span> (parametrized by
+dimension <span class="math inline">\(n\)</span>) that correctly samples
+from <span class="math inline">\(\mathcal{D}\)</span>, there are inputs
+<span class="math inline">\(\vec{w}_1 := \vec{w}_1(n), \vec{w}_2 :=
+\vec{w}_2(n)\)</span>, with <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2 \rangle \in \Omega(1/n^2)\)</span>, that require
+linear communication complexity. See Section <a href="#sec:prodLB"
+data-reference-type="ref" data-reference="sec:prodLB">5.4.1</a> for
+details.</p>
+<p>This means that in order to achieve sublinear communication
+complexity, we would need–at the minimum–a promise on the inputs that
+guarantees that <span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle \in \omega(1/n^2)\)</span>. We then present a protocol that has
+the following properties:</p>
+<ul>
+<li><p>When <span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle \in \omega(\log
+    n/n)\)</span>, the protocol achieves <em>expected</em> communication
+<span class="math inline">\(\frac{\log n}{\langle \vec{w}_1, \vec{w}_2
+\rangle}\)</span>.</p></li>
+<li><p>The execution of the protocol leaks nothing more than the sampled
+output, and <span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle\)</span>. This is formalized via an Ideal/Real paradigm
+simulation, in which the simulator receives leakage of <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span> in
+the Ideal world.</p></li>
+</ul>
+<p>The idea for the protocol is the following. The protocol proceeds in
+rounds: in round <span class="math inline">\(j\)</span>, party 1 and 2
+obliviously sample values <span class="math inline">\(i_1, i_2\)</span>
+from <span class="math inline">\(\mathcal{D}_1, \mathcal{D}_2\)</span>,
+respectively (as described for <span class="math inline">\(L_1\)</span>
+sampling). Then the parties run a secure protocol that checks whether
+<span class="math inline">\(i_1 = i_2\)</span>. If yes, they output
+<span class="math inline">\(i_1\)</span>. Otherwise, the parties repeat
+the process in the next round.</p>
+<p>The main technical portion of our security analysis is to show that
+the number of rounds (which is the only information leaked) is
+distributed as a geometric distribution with success probability <span
+class="math inline">\(\langle \vec{w}_1,
+\vec{w}_2 \rangle\)</span>. This implies that the expected number of
+rounds is <span class="math inline">\(1/\langle \vec{w}_1, \vec{w}_2
+\rangle\)</span>, and furthermore, it implies that a simulator who knows
+<span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle\)</span> can simulate the terminating round by making a draw
+from this geometric distribution. See Section <a href="#sec:prodip"
+data-reference-type="ref" data-reference="sec:prodip">5.4.2</a> for more
+details. There, we also describe how we can pad the communication cost
+to the worst-case, which depends on the given promise, thereby removing
+the leakage of <span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle\)</span>.</p>
+<h4 data-number="5.1.2.4"
+id="product-sampling-in-constant-rounds."><span
+class="header-section-number">5.1.2.4</span> Product sampling in
+constant rounds.</h4>
+<p>The protocol presented above for product sampling required a large
+number of rounds stemming from the iterative rejection sampling
+procedure. We now consider how to parallelize this process. To do so, we
+need to compute the inner product in order to determine, a priori, how
+many samples will suffice. However, computing this value requires <span
+class="math inline">\(O(n)\)</span> communication <span class="citation"
+data-cites="STOC:BabNisSze89"></span>!</p>
+<p>The natural thing to do is therefore to use an approximation to the
+inner product that can be computed with sublinear communication.
+However, when replacing an exact computation of a function <span
+class="math inline">\(f(\vec{w}_1, \vec{w}_2)\)</span> with an
+approximation <span class="math inline">\(\tilde{f}(\vec{w}_1,
+\vec{w}_2; r)\)</span>, one needs to be careful that <em>more</em>
+information is not leaked by the output. Specifically, Ishai et
+al. <span class="citation"
+data-cites="ICALP:FIMNSW01 ATA:FIMNSW06"></span> introduced the notion
+of secure multiparty computation of approximations and, loosely
+speaking, their security definition says that the approximate
+computation is secure if its output can be simulated from the exactly
+correct output. While our result falls slightly short of that
+definition, we are still able to give a rigorous guarantee on the amount
+of additional information leaked by our approximate functionality.
+Specifically, we present an approximate functionality <span
+class="math inline">\(\tilde{f}\)</span> and prove that the output of
+<span class="math inline">\(\tilde{f}(\vec{w}_1, \vec{w}_2; r)\)</span>
+can be simulated given both the exactly correct output <span
+class="math inline">\(f(\vec{w}_1, \vec{w}_2)\)</span> (where <span
+class="math inline">\(f\)</span> is the inner product), as well as the
+<span class="math inline">\(L_2\)</span> norms of the individual
+inputs.</p>
+<p>To achieve this, we use a sublinear protocol from the
+Johnson-Lindenstrauss Transform (JLT) to approximate the dot product of
+the input vectors. This can be done with sublinear communication by
+having the parties jointly sample a <span class="math inline">\(k \times
+n\)</span> JLT matrix <span class="math inline">\(\vec{M}\)</span> for
+<span class="math inline">\(k \ll n\)</span> by choosing a short seed
+and expanding it under FHE. The rest of the computation is then done by
+communicating vectors <span
+class="math inline">\(\vec{M}\vec{w}_b\)</span>, which are of length
+<span class="math inline">\(k\)</span> rather than <span
+class="math inline">\(n\)</span>. Based on this approximation, the
+parties can obliviously pre-sample a number of inputs that is sufficient
+with all but negligible probability, and then input them into a constant
+round secure computation protocol.</p>
+<p>Our contribution here, is to show that this variant protocol only
+requires additional leakage of <span
+class="math inline">\(||\vec{w}_1||_2^2\)</span>, <span
+class="math inline">\(||\vec{w}_2||_2^2\)</span>, beyond what is already
+leaked by the original protocol (i.e., the inner product). Our analysis
+may be of independent interest, since it shows that given <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span>,
+<span class="math inline">\(||\vec{w}_1||_2^2\)</span>, <span
+class="math inline">\(||\vec{w}_2||_2^2\)</span>, the values <span
+class="math inline">\(\vec{M} \vec{w}_1\)</span> and <span
+class="math inline">\(\vec{M}\vec{w}_2\)</span> can be efficiently
+sampled from exactly the correct distribution, when <span
+class="math inline">\(\vec{M}\)</span> is a JLT matrix, and is kept
+private from both parties. We prove this result by analyzing the
+underlying joint multivariate normal distributions corresponding to
+<span class="math inline">\(\vec{M} \vec{w}_1\)</span> and <span
+class="math inline">\(\vec{M} \vec{w}_2\)</span>, and showing that the
+mean and covariance (which fully determine the distribution) depend
+<em>only</em> on the values <span class="math inline">\(||\vec{w}_1||_2,
+||\vec{w}_2||_2\)</span>, and <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span> See Section <a href="#sec:rounds"
+data-reference-type="ref" data-reference="sec:rounds">5.5</a> for more
+details.</p>
+<h4 data-number="5.1.2.5"
+id="applications-to-distributed-exponential-mechanism."><span
+class="header-section-number">5.1.2.5</span> Applications to distributed
+exponential mechanism.</h4>
+<p>We first briefly describe the connection between product sampling and
+the exponential mechanism. Ignoring many details, the joint exponential
+mechanism <span class="math inline">\(M\)</span> outputs a value <span
+class="math inline">\(i\)</span> on input <span
+class="math inline">\(X=(x_1,\ldots,x_n)\)</span> with probability
+proportional to <span class="math display">\[w_i = e^{c \cdot f(x_i)} =
+e^{c \cdot f(x_{1,i} + x_{2,i})},\]</span> where <span
+class="math inline">\(c\)</span> is some constant, <span
+class="math inline">\(f\)</span> is some scoring function, and the data
+values <span class="math inline">\(x_i\)</span> are partitioned between
+the two parties (as <span class="math inline">\(x_{1,i},
+x_{2,i}\)</span>). If the scoring function <span
+class="math inline">\(f\)</span> is linear, it holds that <span
+class="math inline">\(f(x_{1,i} + x_{2,i}) = f(x_{1,i}) +
+f(x_{2,i})\)</span>, and, letting <span class="math inline">\(w_{b,i}
+=  e^{c \cdot f(x_{b,i})}\)</span>, we can rewrite <span
+class="math inline">\(w_i\)</span> as follows: <span
+class="math display">\[w_i = w_{1,i} \cdot w_{2,i}.\]</span> Therefore,
+using product sampling, the parties can sample each item <span
+class="math inline">\(i\)</span> with probability proportional to <span
+class="math inline">\(w_i\)</span>.</p>
+<p>Based on this connection, we present an application of our
+constant-round, product sampling protocol to realize a two-party
+exponential mechanism in Section <a href="#sec:dp"
+data-reference-type="ref" data-reference="sec:dp">5.6</a>. However, to
+use our sampling protocol in this application, we must show that the
+leakage of our protocols preserves the differential privacy guarantee.
+We indeed prove that our constant-round JLT-based protocol can achieve
+differential privacy—even when the JLT matrix <span
+class="math inline">\(\vec{M}\)</span> is public—by adding correctly
+distributed noise to <span class="math inline">\(\langle \vec{M}
+\vec{w}_1, \vec{M} \vec{w}_2 \rangle\)</span>. This allows parties to
+execute the exponential mechanism when the cost function is additively
+distributed across the two parties, with sublinear communication, in the
+case that <span class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle \in \omega(\log n/n)\)</span>.</p>
+<h3 data-number="5.1.3" id="related-work"><span
+class="header-section-number">5.1.3</span> Related Work</h3>
+<h4 data-number="5.1.3.1" id="sampling-from-streaming-data.-1"><span
+class="header-section-number">5.1.3.1</span> Sampling from streaming
+data.</h4>
+<p>Many prior papers (e.g. <span class="citation"
+data-cites="cormode2019p ganguly2007counting jowhari2011tight MW10 woodruff2016distributed"></span>)
+have studied the problem of sampling data from a data stream. In this
+setting the goal is to achieve <span class="math inline">\(L_p\)</span>
+sampling for arbitrary <span class="math inline">\(p\)</span> without
+having to process or store all the streaming data, thus requiring
+sublinear computation. These works generally operate in the one-party
+setting and do not consider privacy.</p>
+<h4 data-number="5.1.3.2" id="secure-multiparty-sampling.-1"><span
+class="header-section-number">5.1.3.2</span> Secure multiparty
+sampling.</h4>
+<p>A few prior works <span class="citation"
+data-cites="prabhakaran2012secure prabhakaran2014assisted"></span> have
+investigated the problem of two and multi-party private sampling in the
+information theoretic setting. These works focus on identifying the
+necessary setup to enable sampling from various distributions. We
+instead focus on the computational setting, and focus on reducing
+communication. Recently, Champion et al. <span class="citation"
+data-cites="CCS:ChasheUll19"></span> also considered the computational
+setting, but they focus on sampling from a publicly-known distribution
+whereas we sample from a private one.</p>
+<h4 data-number="5.1.3.3"
+id="secure-multiparty-computation-of-differentially-private-functionalities."><span
+class="header-section-number">5.1.3.3</span> Secure multiparty
+computation of differentially private functionalities.</h4>
+<p>Starting with the work of Dwork et al. <span class="citation"
+data-cites="dwork2006our"></span> there has been a good amount of work
+(e.g. <span class="citation"
+data-cites="acar2017achieving clifton2013challenges eriguchi2021efficient goryczka2013secure pathak2010multiparty pentyala2022training"></span>)
+on using MPC to realize differentially private functionalities to
+protect the privacy of individual inputs given the output of the MPC.
+These works have focused on building efficient, private applications in
+machine learning and other fields, whereas we focus on reducing the
+communication necessary for the specific functionalities of
+sampling.</p>
+<h4 data-number="5.1.3.4" id="secure-sketching."><span
+class="header-section-number">5.1.3.4</span> Secure sketching.</h4>
+<p>A long line of work <span class="citation"
+data-cites="CCS:ElaDanGol14 CCS:JanJoh16 NDSS:MelDanDec16 CCS:WJSYG19 popets:CDKY20"></span>
+has investigated building secure sketches for securely estimating
+statistics of Tor usage, web traffic, and other applications. These
+works focus on building sublinear communication and computation
+protocols for computing specific statistics such as unique count,
+median, etc.</p>
+<h2 data-number="5.2" id="sec:l1"><span
+class="header-section-number">5.2</span> Two-party <span
+class="math inline">\(L_1\)</span> Sampling</h2>
+<p>In this section, we describe a secure two-party <span
+class="math inline">\(L_1\)</span> sampling protocol. Given two <span
+class="math inline">\(n\)</span>-dimensional vectors <span
+class="math inline">\(\vec{w}_1 = (w_{1,1}, \ldots,
+w_{1,n})\)</span> and <span class="math inline">\(\vec{w}_2 = (w_{2,1},
+\ldots, w_{2,n})\)</span> as the private inputs from parties <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively, the protocol samples
+from the <span class="math inline">\(L_1\)</span> distribution according
+to <span class="math inline">\(\vec{w}_1 + \vec{w}_2\)</span>.</p>
+<h4 data-number="5.2.0.1" id="notation-l_p-norm."><span
+class="header-section-number">5.2.0.1</span> Notation: <span
+class="math inline">\(L_p\)</span> norm.</h4>
+<p>Let <span class="math inline">\(\vec{w} = (w_1, \ldots, w_n) \in
+\RR^n\)</span> be a non-zero vector. <em>The <span
+class="math inline">\(L_p\)</span> norm <span
+class="math inline">\(\Vert \w \Vert_p\)</span> of <span
+class="math inline">\(\vec{w}\)</span></em> is defined as <span
+class="math inline">\(\Vert \w \Vert_p := \left ( \sum_j |w_j|^p \right
+)^{1/p} .\)</span> When there is no subscript, it means <span
+class="math inline">\(L_2\)</span> norm; that is, <span
+class="math inline">\(\Vert \w \Vert := \Vert \w \Vert_2\)</span></p>
+<h4 data-number="5.2.0.2" id="assumptions."><span
+class="header-section-number">5.2.0.2</span> Assumptions.</h4>
+<p>Throughout the paper, we assume that the values <span
+class="math inline">\(w_{b,i}\)</span> are represented by fixed-point
+precision numbers, and consider the cost of communicating such a number
+to be independent of <span class="math inline">\(n\)</span>. We assume
+all weights in vectors <span class="math inline">\(\vec{w}_1\)</span>
+and <span class="math inline">\(\vec{w}_2\)</span> are non-negative.</p>
+<h4 data-number="5.2.0.3" id="ideal-functionality."><span
+class="header-section-number">5.2.0.3</span> Ideal functionality.</h4>
+<p>We first define an ideal functionality for the two-party <span
+class="math inline">\(L_1\)</span> sampling. Slightly abusing the
+notation, let <span class="math inline">\(L_1(\vec{w}_1,
+\vec{w}_2)\)</span> be a two-input sampling procedure based on the <span
+class="math inline">\(L_1\)</span> distribution of <span
+class="math inline">\(\vec{w}_1 +
+\vec{w}_2\)</span>: <span class="math display">\[\Pr[ L_1(\vec{w}_1,
+\vec{w}_2) \mbox{ samples } i ] = \frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }.\]</span></p>
+<p>We give a more formal description of the functionality <span
+class="math inline">\(\F_{L_1}\)</span> in the figure below. In Section
+<a href="#sec:L1prot" data-reference-type="ref"
+data-reference="sec:L1prot">5.2.2</a>, we present a protocol that
+securely realizes this functionality.</p>
+<div class="center">
+<p><span class="math inline">\(\F_{L_1}\)</span>: Ideal functionality
+for two-party <span class="math inline">\(L_1\)</span> sampling</p>
+</div>
+<p>The functionality has the following parameter:</p>
+<p><span class="math inline">\(n \in \NN\)</span>. The dimension of the
+input weight vectors <span class="math inline">\(\vec{w}_1\)</span> and
+<span class="math inline">\(\vec{w}_2\)</span>.</p>
+<p>The functionality proceeds as follows:</p>
+<p>Receive inputs <span class="math inline">\(\vec w_1\)</span> and
+<span class="math inline">\(\vec w_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p>
+<p>Sample <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }\)</span></p>
+<p>Send <span class="math inline">\(i\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p>
+<h3 data-number="5.2.1"
+id="a-toy-protocol-towards-securely-realizing-f_l_1"><span
+class="header-section-number">5.2.1</span> A toy protocol towards
+securely realizing <span class="math inline">\(\F_{L_1}\)</span></h3>
+<p>We describe our first attempt, which is insecure, but provides good
+intuition on how we construct a secure protocol. In fact, the attack on
+this broken protocol, as well as the fix presented in the next
+sub-section, remain relevant when we move to product sampling and <span
+class="math inline">\(L_2\)</span> sampling as well. Since we assume
+that all the weights are non-negative, we observe that letting <span
+class="math inline">\(p = \frac{\|\vec{w}_1\|_1}{
+\|\vec{w}_1\|_1 + \|\vec{w}_2\|_1}\)</span>, the above measure can be
+re-written as follows:</p>
+<p><span class="math display">\[\label{eqn:l1}
+\Pr[ L_1(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ] =
+  \frac{w_{1,i}}{\|\vec{w}_1\|_1} \cdot p  +
+\frac{w_{2,i}}{\|\vec{w}_2\|_1} \cdot (1-p).\]</span></p>
+<p>Equation (<a href="#eqn:l1" data-reference-type="ref"
+data-reference="eqn:l1">[eqn:l1]</a>) leads us to the following natural
+approach.</p>
+<p>Party <span class="math inline">\(P_1\)</span> samples <span
+class="math inline">\(i_1\)</span> from the <span
+class="math inline">\(L_1\)</span> distribution according to <span
+class="math inline">\(\vec{w}_1\)</span>, such that <span
+class="math inline">\(\Pr[P_1 \mbox{ samples } i_1] =
+\frac{w_{1,i_1}}{\|\vec{w}_1\|_1}\)</span>.</p>
+<p>Party <span class="math inline">\(P_2\)</span> samples <span
+class="math inline">\(i_2\)</span> from the <span
+class="math inline">\(L_1\)</span> distribution according to <span
+class="math inline">\(\vec{w}_2\)</span>, such that <span
+class="math inline">\(\Pr[P_2 \mbox{ samples } i_2] =
+\frac{w_{2,{i_2}}}{\|\vec{w}_2\|_1}\)</span>.</p>
+<p>Then, <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> execute a secure protocol for the
+following procedure:</p>
+<p>Execute a coin toss protocol with bias <span
+class="math inline">\(p\)</span>. Let <span
+class="math inline">\(b\)</span> be the output of the coin-flip.</p>
+<p>If <span class="math inline">\(b=0\)</span> (resp., <span
+class="math inline">\(b=1\)</span>), output <span
+class="math inline">\(i_1\)</span> (resp., <span
+class="math inline">\(i_2\)</span>).</p>
+<p>The output of the protocol will achieve correct sampling.</p>
+<h4 data-number="5.2.1.1" id="insecurity-of-the-protocol."><span
+class="header-section-number">5.2.1.1</span> Insecurity of the
+protocol.</h4>
+<p>However, this protocol has a subtle security issue. For example, let
+<span class="math inline">\(i\)</span> be the eventual output index of
+the protocol. Then, we have the following:</p>
+<p>If the coin flip <span class="math inline">\(b\)</span> is 0, which
+happens with probability <span class="math inline">\(p\)</span>, it
+holds that <span class="math inline">\(i\)</span> is always the same as
+<span class="math inline">\(i_1\)</span>.</p>
+<p>On the other hand, if the coin flip <span
+class="math inline">\(b\)</span> is 1, then <span
+class="math inline">\(i\)</span> will be the same as <span
+class="math inline">\(i_1\)</span> if and only if <span
+class="math inline">\(i_2 = i_1\)</span>, which happens with probability
+<span class="math inline">\(\frac{w_{2, i_1}}{ \| \vec w_2 \|_1
+}\)</span>. This implies that we have <span class="math display">\[\Pr[
+i = i_1 | i_1 ] = p + (1-p) \cdot \frac{w_{2, i_1}}{ \| \vec w_2 \|_1
+}\]</span></p>
+<p>Now consider a distinguisher that corrupts <span
+class="math inline">\(P_1\)</span>, chooses inputs <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span>, and checks the above conditional
+probability, which is possible <span><em>since the distinguisher can
+also see <span class="math inline">\(i_1\)</span> through the corrupted
+<span class="math inline">\(P_1\)</span></em></span>. To prove security,
+we should be able to construct a simulator for <span
+class="math inline">\(P_1\)</span> that fools this distinguisher.
+However, a simulator for <span class="math inline">\(P_1\)</span>
+doesn’t know <span class="math inline">\(\w_2\)</span>, which causes the
+above conditional probability to be unsimulatable.</p>
+<p>In a sense, by having <span class="math inline">\(P_1\)</span> choose
+<span class="math inline">\(i_1\)</span>, the protocol allows <span
+class="math inline">\(P_1\)</span> to measure the conditional
+probability <span class="math inline">\(\Pr[ i = i_1 | i_1 ]\)</span>,
+which depends on the value <span class="math inline">\(w_{2,
+i_1}\)</span> thereby leaking information about <span
+class="math inline">\(P_2\)</span>’s input to <span
+class="math inline">\(P_1\)</span>.</p>
+<h3 data-number="5.2.2" id="sec:L1prot"><span
+class="header-section-number">5.2.2</span> Secure <span
+class="math inline">\(L_1\)</span> sampling protocol</h3>
+<h4 data-number="5.2.2.1" id="oblivious-sampling."><span
+class="header-section-number">5.2.2.1</span> Oblivious sampling.</h4>
+<p>We address the insecurity of the toy protocol by having the parties
+sample <em>obliviously</em> from <span class="math inline">\(\vec
+w_1\)</span>, <span class="math inline">\(\vec w_2\)</span>. This way,
+each party would not know whether the final output index matches the
+sample taken from its own vector, or the sample taken from the other
+party’s vector. Specifically, we will construct our protocol under the
+framework described below:</p>
+<p>The parties obliviously sample <span
+class="math inline">\(i_1\)</span> according to <span
+class="math inline">\(L_1\)</span> distribution of <span
+class="math inline">\(\vec w_1\)</span>. The output index <span
+class="math inline">\(i_1\)</span> is secret shared between the two
+parties. Let <span class="math inline">\(\langle i_1 \rangle\)</span>
+denote the secret share of <span class="math inline">\(i_1\)</span>.
+Likewise, they obliviously sample <span class="math inline">\(\langle
+i_2 \rangle\)</span> from <span class="math inline">\(L_1\)</span>
+distribution of <span class="math inline">\(\vec w_2\)</span>.</p>
+<p>Execute a secure two-party protocol to compute the following:</p>
+<p>Flip a coin <span class="math inline">\(b\)</span> with bias <span
+class="math inline">\(p\)</span>.</p>
+<p>If <span class="math inline">\(b=0\)</span>, output the decryption of
+<span class="math inline">\(i_1\)</span>; otherwise output the
+decryption of <span class="math inline">\(i_2\)</span>.</p>
+<h4 data-number="5.2.2.2" id="ideal-functionalities."><span
+class="header-section-number">5.2.2.2</span> Ideal functionalities.</h4>
+<p>Formally, we define an ideal functionality <span
+class="math inline">\(\F_{\oslone}\)</span> as follows:</p>
+<div class="center">
+<p><span class="math inline">\(\F_{\oslone}\)</span>: Ideal
+functionality for oblivious <span class="math inline">\(L_1\)</span>
+sampling.</p>
+</div>
+<p>The functionality considers two participants, the sender and the
+receiver. The functionality is parameterized with a number <span
+class="math inline">\(n\)</span>.</p>
+<p><strong>Inputs:</strong> The sender has an <span
+class="math inline">\(n\)</span>-dimensional weight vector <span
+class="math inline">\(\w\)</span>. The receiver has no input.</p>
+<p>The functionality proceeds as follows:</p>
+<p>Receive <span class="math inline">\(\vec w\)</span> from the
+sender.</p>
+<p>Sample <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w_i}{ \|\vec{w}\|_1
+}\)</span></p>
+<p>Choose a random pad <span class="math inline">\(\pi \in
+\zo^\ell\)</span>, where <span class="math inline">\(\ell = \lceil
+\log_2 n \rceil\)</span>.</p>
+<p>Send <span class="math inline">\(\pi\)</span> to the sender and <span
+class="math inline">\(i \xor \pi\)</span> to the receiver.</p>
+<p>We also give an ideal functionality <span
+class="math inline">\(\F_{\bcoin}\)</span> for the biased coin
+tossing.</p>
+<div class="center">
+<p><span class="math inline">\(\F_{\bcoin}\)</span>: Ideal functionality
+for biased coin tossing.</p>
+</div>
+<p>The functionality considers two participants <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> and proceeds as follows:</p>
+<p>Receive a number <span class="math inline">\(s_1\)</span> as input
+from <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(s_2\)</span> from <span
+class="math inline">\(P_2\)</span>.</p>
+<p>Flip a coin <span class="math inline">\(b\)</span> with bias <span
+class="math inline">\(p = \frac{s_1}{s_1 + s_2}\)</span>.</p>
+<p>Choose a random bit <span class="math inline">\(r \in
+\zo\)</span>.</p>
+<p>Send <span class="math inline">\(r\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(r
+\xor b\)</span> to the receiver.</p>
+<h4 data-number="5.2.2.3" id="l_1-sampling-protocol."><span
+class="header-section-number">5.2.2.3</span> <span
+class="math inline">\(L_1\)</span> sampling protocol.</h4>
+<p>Based on the above functionalities, we describe a protocol securely
+realizing <span class="math inline">\(\F_{L_1}\)</span> in the <span
+class="math inline">\((\F_\oslone, \F_\bcoin)\)</span>-hybrid.</p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> Party <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(\vec{w}_b\)</span>.</p>
+<p>Execute <span class="math inline">\(\F_\oslone\)</span> with <span
+class="math inline">\(P_1\)</span> as a sender with input <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(P_2\)</span> as a receiver. Let <span
+class="math inline">\(\langle i_1 \rangle\)</span> be the secret share
+of the output index.</p>
+<p>Execute <span class="math inline">\(\F_\oslone\)</span> with <span
+class="math inline">\(P_2\)</span> as a sender with input <span
+class="math inline">\(\vec{w}_2\)</span> and <span
+class="math inline">\(P_1\)</span> as a receiver. Let <span
+class="math inline">\(\langle i_2 \rangle\)</span> be the secret share
+of the output index.</p>
+<p>Execute <span class="math inline">\(\F_\bcoin\)</span> where <span
+class="math inline">\(P_1\)</span> has input <span
+class="math inline">\(\|\vec{w}_1\|_1\)</span> and <span
+class="math inline">\(P_2\)</span> has input <span
+class="math inline">\(\|\vec{w}_2\|_1\)</span>. Let <span
+class="math inline">\(\langle b \rangle\)</span> be the secret share of
+the output bit.</p>
+<p>Execute <span class="math inline">\(\F_{2PC}\)</span> for the
+following circuit:</p>
+<p>Input: <span class="math inline">\(\langle i_1 \rangle, \langle i_2
+\rangle, \langle b \rangle\)</span>.</p>
+<p>Output: <span class="math inline">\(i_1 \cdot (1-b) + i_2 \cdot
+b\)</span>.</p>
+</div>
+<div class="theorem">
+<p><span id="th:l1" label="th:l1"></span> Protocol <a href="#fig:l1"
+data-reference-type="ref" data-reference="fig:l1">[fig:l1]</a> securely
+realizes <span class="math inline">\(\F_{L_1}\)</span> with semi-honest
+security in the <span class="math inline">\((\F_\oslone,
+\F_\bcoin)\)</span>-hybrid.</p>
+</div>
+<p>The proof is found in Appendix <a href="#apx:pfTheorem1"
+data-reference-type="ref"
+data-reference="apx:pfTheorem1">[apx:pfTheorem1]</a>.</p>
+<h4 data-number="5.2.2.4"
+id="securely-realizing-f_oslone-with-threshold-fhe."><span
+class="header-section-number">5.2.2.4</span> Securely realizing <span
+class="math inline">\(\F_\oslone\)</span> with threshold FHE.</h4>
+<p>The main idea of the protocol is having the parties securely sample a
+random number <span class="math inline">\(r\)</span> from <span
+class="math inline">\([s]\)</span>, where <span class="math inline">\(s
+:= \| \vec{w} \|_1\)</span>. Our construction is found in Protocol <a
+href="#fig:os-fhe" data-reference-type="ref"
+data-reference="fig:os-fhe">[fig:os-fhe]</a>.</p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> The sender has input <span
+class="math inline">\(\vec{w} = (w_1, \ldots, w_n)\)</span>.</p>
+<p>The sender computes <span class="math inline">\(s := \| \vec{w}
+\|_1\)</span>.</p>
+<p>The sender and the receiver execute <span
+class="math inline">\(\F_{2PC}\)</span> to uniformly sample <span
+class="math inline">\(r\)</span> from the range <span
+class="math inline">\([0, s)\)</span>. This is possible, since <span
+class="math inline">\(s\)</span> has a fixed point representation. Let
+<span class="math inline">\(r_1\)</span> and <span
+class="math inline">\(r_2\)</span> be the secret share of <span
+class="math inline">\(r\)</span> given to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p>
+<p>The sender and the receiver set up a threshold FHE scheme. The
+plaintext space of the FHE is <span
+class="math inline">\(GF(2)\)</span>, which allows homomorphic
+bitwise-xor and bitwise-AND operations. Let <span
+class="math inline">\(\lbra m \lket\)</span> denote an FHE encryption of
+plaintext <span class="math inline">\(m\)</span> which can be a bit or
+bits depending on the context.</p>
+<p>The receiver sends <span class="math inline">\(\lbra r_2
+\lket\)</span> so that the sender can compute <span
+class="math inline">\(\lbra r \lket := \lbra r_1 \lket \xor \lbra r_2
+\lket\)</span>.</p>
+<p>The sender homomorphically evaluates the following circuit:</p>
+<p>Let <span class="math inline">\(cnt_0 = 0\)</span>. For <span
+class="math inline">\(j=1,...,n\)</span>, let <span
+class="math inline">\(cnt_j = cnt_{j} + w_{j}\)</span>.</p>
+<p>Output <span class="math inline">\(i \in [1,n]\)</span> such that
+<span class="math inline">\(r \in [cnt_{i-1}, cnt_{i}]\)</span>. Let
+<span class="math inline">\(\lbra i \lket\)</span> be the output
+encryption from the above homomorphic evaluation.</p>
+<p>The sender chooses a random pad <span
+class="math inline">\(\pi\)</span>, and then it sends <span
+class="math inline">\(\lbra c \lket =
+    \lbra i \lket \xor \lbra \pi \lket\)</span> to the receiver.</p>
+<p>The two parties perform threshold decryption so that <span
+class="math inline">\(c\)</span> is decrypted to the receiver.</p>
+<p>The sender outputs <span class="math inline">\(\pi\)</span> and the
+receiver outputs the decryption of <span
+class="math inline">\(c\)</span>.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:os-fhe" label="thm:os-fhe"></span> Assuming the
+existence of threshold FHE with <span
+class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
+security, Protocol <a href="#fig:os-fhe" data-reference-type="ref"
+data-reference="fig:os-fhe">[fig:os-fhe]</a> securely realizes <span
+class="math inline">\(\F_{\oslone}\)</span> in the semi-honest security
+model.</p>
+</div>
+<p>The proof is found in Appendix <a href="#apx:pfTheorem2"
+data-reference-type="ref"
+data-reference="apx:pfTheorem2">[apx:pfTheorem2]</a>.</p>
+<p>We note that we give another construction that relies on sub-linear
+1-out-of-<span class="math inline">\(m\)</span> oblivious transfer (OT),
+but requires computation that is exponential in the bit precision in
+Appendix <a href="#apx:otl1" data-reference-type="ref"
+data-reference="apx:otl1">[apx:otl1]</a>.</p>
+<h4 data-number="5.2.2.5" id="securely-realizing-f_bcoin."><span
+class="header-section-number">5.2.2.5</span> Securely realizing <span
+class="math inline">\(\F_\bcoin\)</span>.</h4>
+<p>The secure construction for <span
+class="math inline">\(\F_\bcoin\)</span> is straightforward and can be
+found in Appendix <a href="#apx:bcoin" data-reference-type="ref"
+data-reference="apx:bcoin">[apx:bcoin]</a>.</p>
+<h2 data-number="5.3" id="sec:l2"><span
+class="header-section-number">5.3</span> Two Party <span
+class="math inline">\(L_2\)</span> Sampling</h2>
+<p>In this section we consider the two-party <span
+class="math inline">\(L_2\)</span> sampling functionality. Given input
+vectors <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, this
+functionality samples from the distribution <span
+class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span> with the
+following probability mass function: <span class="math display">\[\Pr[
+D_{L_2}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ]
+= \frac{(w_{1,i} + w_{2,i})^2}{ \sum_j (w_{1,j} + w_{2,j})^2 }
+= \frac{(w_{1,i} + w_{2,i})^2}{ \| \w_1 + \w_2 \|_2^2 }.\]</span></p>
+<p>We begin by presenting a non-private protocol for two-party <span
+class="math inline">\(L_2\)</span> sampling with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication in Section <a
+href="#sec:insecure" data-reference-type="ref"
+data-reference="sec:insecure">5.3.1</a>, the construction is found in
+Protocol <a href="#fig:l2approx" data-reference-type="ref"
+data-reference="fig:l2approx">[fig:l2approx]</a>. We then show how to
+implement the protocol securely in Section <a href="#sec:secure"
+data-reference-type="ref" data-reference="sec:secure">5.3.2</a>.</p>
+<h3 data-number="5.3.1" id="sec:insecure"><span
+class="header-section-number">5.3.1</span> A non-private <span
+class="math inline">\(L_2\)</span> sampling protocol with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
+<p>We begin by defining and showing how to sample from a helper
+distribution <span
+class="math inline">\(D_{\mathsf{ignore}}\)</span>.</p>
+<div class="definition">
+<p>For input vectors <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span>, let <span
+class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
+be the distribution that “ignores” the cross term in <span
+class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>. I.e. <span
+class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
+samples index <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w^2_{1,i} +
+w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\)</span>.</p>
+</div>
+<div class="lemma">
+<p><span id="lem:ignore" label="lem:ignore"></span> There exists a
+protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
+sampling from <span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
+\vec{w}_2)\)</span> with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
+(w_{b,1}^2, \ldots, w_{b,n}^2).\)</span> The lemma follows by observing
+the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
+D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
+</div>
+<div class="definition">
+<p>For <span class="math inline">\(i \in [n]\)</span>, let the
+corrective parameter function be defined as <span
+class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{w_{1,i}^2 +
+2w_{1,i}w_{2,i} +
+w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.\]</span></p>
+</div>
+<div class="definition">
+<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
+\vec{w}_2)\)</span> is defined as <span
+class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
+\vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\]</span> This
+ensures that for every <span class="math inline">\(i\)</span>, <span
+class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
+\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+</div>
+<p>The following lemma will be useful for arguing the validity of the
+final protocol.</p>
+<div class="lemma">
+<p><span id="lem:close_dist" label="lem:close_dist"></span> For all
+<span class="math inline">\(i \in \mathsf{supp}(D_{L_2}(\vec{w}_1,
+\vec{w}_2))\)</span>, <span
+class="math inline">\(\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c
+\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math display">\[\begin{aligned}
+    \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] &amp;= \frac{w^2_{1,i} +
+2w_{1,i}w_{2,i} + w^2_{2,i}}{||\vec{w}_1||_2^2 + 2\langle \vec{w}_1,
+\vec{w}_2 \rangle + ||\vec{w}_2||_2^2}\\
+    &amp;=  \frac{w^2_{1,i} + 2w_{1,i}w_{2,i} + w^2_{2,i}}{c \cdot
+(||\vec{w}_1||_2^2  + ||\vec{w}_2||_2^2)}\\
+    &amp;\le \frac{2 \cdot (w_{1,i}^2  + w_{2,i}^2)}{c \cdot
+||\vec{w}_1||_2^2  + ||\vec{w}_2||_2^2}\\
+    &amp; = \frac{2}{c} \cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1,
+\vec{w}_2)}[i]
+\end{aligned}\]</span> The inequality holds since <span
+class="math display">\[\begin{aligned}
+2(w^2_{1,i} + w^2_{2,i}) - (w^2_{1,i} + 2w_{1,i}w_{2,i} + w^2_{2,i})
+&amp;= w^2_{1,i} -2w_{1,i}w_{2,i} + w^2_{2,i}\\
+&amp;= (w_{1,i} - w_{2,i})^2\\
+&amp;\geq 0.
+\end{aligned}\]</span> 0◻ ◻</p>
+</div>
+<p>We now present the <span class="math inline">\(L_2\)</span> sampling
+protocol <span class="math inline">\(\Pi_{L_2}\)</span>, which is
+described in Protocol <a href="#fig:l2approx" data-reference-type="ref"
+data-reference="fig:l2approx">[fig:l2approx]</a>. We show the
+correctness and efficiency of the protocol.</p>
+<section id="inputs" class="algorithm" data-number="5.3.1.1">
+<h4 data-number="5.3.1.1"><span
+class="header-section-number">5.3.1.1</span> Inputs:</h4>
+<p>Parties <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> have inputs <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> respectively.</p>
+<p>The protocol proceeds as follows:</p>
+<p>Parties run <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> with inputs <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> that samples from
+<span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
+\vec{w}_2)\)</span> and obtain output <span
+class="math inline">\(i\)</span>.</p>
+<p>For <span class="math inline">\(b \in \{1, 2\}\)</span>, <span
+class="math inline">\(P_b\)</span> sends <span
+class="math inline">\(w_{b,i}, ||\vec{w}_b||_2^2\)</span>. Both parties
+compute <span class="math display">\[\Pr_{D_{\mathsf{ignore}}(\vec{w}_1,
+\vec{w}_2)}[i] = \frac{w_{1,i}^2 + w_{2,i}^2}{||\vec{w}_1||_2^2 +
+||\vec{w}_2||_2^2}
+    \quad
+    \mbox{and}
+    \quad
+    f_c(\vec{w}_1, \vec{w}_2, i) = \frac{w_{1,i}^2 + 2w_{1,i}w_{2,i} +
+w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\]</span></p>
+<p>Parties output <span class="math inline">\(i\)</span> with
+probability <span class="math display">\[\begin{aligned}
+        \frac{f_c(\vec{w}_1, \vec{w}_2, i)}{2 \cdot
+\Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]} &amp;= \frac{c \cdot
+\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2 \cdot
+\Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]}\\
+        &amp;= \frac{\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2/c \cdot
+\Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]}
+        
+\end{aligned}\]</span> and otherwise return to step 1.</p>
+</section>
+<div class="lemma">
+<p><span id="lem:insecure_L2_prot" label="lem:insecure_L2_prot"></span>
+With all but negligible probability, on inputs <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, <span
+class="math inline">\(\Pi_{L_2}\)</span> samples exactly correctly from
+<span class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>, and
+has communication <span class="math inline">\(\tilde{O}(1)\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Note that <span
+class="math inline">\(\Pi_{L_2}\)</span> simply performs rejection
+sampling in a distributed setting where sampling from <span
+class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
+and computing the probabilities is done in a distributed manner. It is
+therefore well-known that as long as for all <span
+class="math inline">\(i \in [n]\)</span>, <span
+class="math display">\[\label{eq:rejection}
+    \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c \cdot
+\Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i],\]</span> then <span
+class="math inline">\(\Pi_{L_2}\)</span> samples from the exact correct
+distribution, and the number of samples required from <span
+class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
+in protocol <span class="math inline">\(\Pi_{L_2}\)</span> follows a
+geometric distribution with probability <span
+class="math inline">\(c/2\)</span>. Thus, if condition (<a
+href="#eq:rejection" data-reference-type="ref"
+data-reference="eq:rejection">[eq:rejection]</a>) is met, the protocol
+samples exactly correctly and completes in an expected <span
+class="math inline">\(2/c\)</span> (with <span class="math inline">\(2/c
+\leq 2\)</span>, since <span class="math inline">\(c \ge 1\)</span>)
+number of rounds. Further, it can be immediately noted that condition
+(<a href="#eq:rejection" data-reference-type="ref"
+data-reference="eq:rejection">[eq:rejection]</a>) is met due to Lemma <a
+href="#lem:close_dist" data-reference-type="ref"
+data-reference="lem:close_dist">[lem:close_dist]</a>. Finally, each
+round has <span class="math inline">\(\tilde{O}(1)\)</span>
+communication, since <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> has communication
+<span class="math inline">\(\tilde{O}(1)\)</span> (by Lemma <a
+href="#lem:ignore" data-reference-type="ref"
+data-reference="lem:ignore">[lem:ignore]</a>) and since, in addition to
+that, only a constant number of length <span
+class="math inline">\(\tilde{O}(1)\)</span> values are exchanged in each
+round. Combining the above, we have that <span
+class="math inline">\(\Pi_{L_2}\)</span> has expected communication
+<span class="math inline">\(\tilde{O}(1)\)</span> and worst case (with
+all but negligible probability) communication <span
+class="math inline">\(\tilde{O}(1)\)</span>. 0◻ ◻</p>
+</div>
+<div class="remark">
+<p>Note that the protocol and analysis above did not require that
+vectors <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> are
+normalized. I.e. we do not require that <span
+class="math inline">\(||\vec{w}_1||_1\)</span> or <span
+class="math inline">\(||\vec{w}_2||_1\)</span> are equal to <span
+class="math inline">\(1\)</span> or to each other.</p>
+</div>
+<h3 data-number="5.3.2" id="sec:secure"><span
+class="header-section-number">5.3.2</span> Secure <span
+class="math inline">\(L_2\)</span> Sampling From FHE</h3>
+<div class="algorithm">
+<p><strong>Inputs:</strong> Party <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(\vec{w}_b\)</span>.</p>
+<p>Let <span class="math inline">\(B \in \tilde{O}(1)\)</span>. The
+parties perform the following steps for <span class="math inline">\(j
+\in [B]\)</span>:</p>
+<ol>
+<li><p>Sample from <span
+class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,\vec{w}_2)\)</span>
+by doing the following: Invoke ideal functionality <span
+class="math inline">\(\F_{L_1}^{ss}\)</span> with <span
+class="math inline">\(P_1\)</span>’s input set to <span
+class="math inline">\(\vec{w}_1 \odot \vec{w}_1\)</span> and <span
+class="math inline">\(P_2\)</span>’s input set to <span
+class="math inline">\(\vec{w}_2 \odot \vec{w}_2\)</span>. Let <span
+class="math inline">\(\langle i_j \rangle\)</span> be the secret share
+of the output index.</p></li>
+<li><p>Parties compute encryptions of <span
+class="math inline">\(w_{1,i_j}, w_{2,i_j}\)</span> using a threshold
+FHE scheme as follows.</p>
+<ul>
+<li><p>Parties compute an encryption of <span
+class="math inline">\(i_j\)</span> by exchanging encryptions of their
+shares and adding them.</p></li>
+<li><p>Party <span class="math inline">\(b\)</span> encrypts <span
+class="math inline">\(\vec{w}_b\)</span> and uses FHE to locally compute
+an encryption of <span
+class="math inline">\(w_{b,i_j}\)</span>.</p></li>
+<li><p>The parties then send these ciphertexts to each other.</p></li>
+</ul></li>
+<li><p>Rejection Sampling. Compute a threshold FHE ciphertext <span
+class="math inline">\(\widehat{\mathsf{bias}}_j\)</span> that encrypts
+<span class="math display">\[\frac{f_c(\vec{w}_1, \vec{w}_2)_{i_j}}{2
+\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i_j]} =
+\frac{w_{1,i_j}^2 + 2w_{1,i_j}w_{2,i_j}+w_{2,i_j}^2}{2(w_{1,i_j}^2 +
+w_{2,i_j}^2)}.\]</span> Invoke ideal functionality <span
+class="math inline">\(\F_{2PC}\)</span> that takes encrypted bias <span
+class="math inline">\(\widehat{\mathsf{bias}}_j\)</span>, the threshold
+decryption keys, index <span class="math inline">\(i_j\)</span>, and
+random bits. The functionality executes a circuit that flips a coin with
+bias <span class="math inline">\(\widehat{\mathsf{bias}}_j\)</span> and
+returns a ciphertext <span
+class="math inline">\(\widehat{\mathsf{out}}_j\)</span>, which is an
+encryption of <span class="math inline">\(i_j\)</span> if the coin
+evaluates to <span class="math inline">\(1\)</span> and an encryption of
+<span class="math inline">\(0\)</span> otherwise.</p></li>
+</ol>
+<p>Execute <span class="math inline">\(\F_{2PC}\)</span> for the
+following circuit:</p>
+<p>Input: <span class="math inline">\((\widehat{\mathsf{out}}_1, \ldots,
+\widehat{\mathsf{out}}_B)\)</span> and threshold decryption keys.</p>
+<p>Output: <span class="math inline">\(i_j\)</span> corresponding to the
+minimum <span class="math inline">\(j\)</span> such that <span
+class="math inline">\(\widehat{\mathsf{out}}_j\)</span> decrypts to
+<span class="math inline">\(i_j \neq 0\)</span>. Or <span
+class="math inline">\(\bot\)</span> if no such <span
+class="math inline">\(j \in [B]\)</span> exists.</p>
+</div>
+<h4 data-number="5.3.2.1" id="l_2-sampling-protocol."><span
+class="header-section-number">5.3.2.1</span> <span
+class="math inline">\(L_2\)</span> sampling protocol.</h4>
+<p>We present our secure <span class="math inline">\(L_2\)</span>
+sampling protocol in Protocol <a href="#fig:l2"
+data-reference-type="ref" data-reference="fig:l2">[fig:l2]</a>. For two
+<span class="math inline">\(n\)</span>-dimensional vectors <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span>, we denote by <span
+class="math inline">\(\vec{w}_1 \odot \vec{w}_2\)</span> the <span
+class="math inline">\(n\)</span>-dimensional vector whose <span
+class="math inline">\(i\)</span>-th entry is equal to <span
+class="math inline">\(w_{1,i} \cdot w_{2,i}\)</span>.</p>
+<p>Our <span class="math inline">\(L_2\)</span> sampling protocol uses
+ideal functionality <span class="math inline">\(\F_{L_1}^{ss}\)</span>,
+which works essentially the same as <span
+class="math inline">\(\F_{L_1}\)</span> except that the output index is
+secret shared among both parties. We can securely realize this
+functionality with semi-honest security through a trivial change in the
+protocol <span class="math inline">\(\Pi_{L_1}\)</span>; for the sake of
+completeness, we provide the details in Appendix <a href="#apx:ssL1"
+data-reference-type="ref" data-reference="apx:ssL1">[apx:ssL1]</a>.</p>
+<h4 data-number="5.3.2.2" id="efficiency-and-correctness."><span
+class="header-section-number">5.3.2.2</span> Efficiency and
+correctness.</h4>
+<p>It is clear that the total communication complexity of the protocol
+is <span class="math inline">\(\tilde{O}(1)\)</span>, since each step in
+the loop has complexity <span
+class="math inline">\(\tilde{O}(1)\)</span> and the loop iterates <span
+class="math inline">\(B \in \tilde{O}(1)\)</span> number of times.
+Correctness is also immediate, since the protocol simply implements the
+<span class="math inline">\(\Pi_{L_2}\)</span> sampling procedure, which
+was proven in Section <a href="#sec:insecure" data-reference-type="ref"
+data-reference="sec:insecure">5.3.1</a> to be correct, and to require at
+most <span class="math inline">\(B \in \tilde{O}(1)\)</span> samples,
+with all but negligible probability,</p>
+<h4 data-number="5.3.2.3" id="security."><span
+class="header-section-number">5.3.2.3</span> Security.</h4>
+<p>Security of our protocol is stated through the following theorem.</p>
+<div class="theorem">
+<p><span id="th:l2" label="th:l2"></span> Assuming the existence of
+threshold FHE with <span
+class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
+security, Protocol <a href="#fig:l2" data-reference-type="ref"
+data-reference="fig:l2">[fig:l2]</a> securely realizes the <span
+class="math inline">\(L_2\)</span> sampling functionality in the <span
+class="math inline">\(\{\F_{L_1}^{ss}, \F_{2PC}\}\)</span>-hybrid model
+with semi-honest security.</p>
+</div>
+<p>We provide the proof in Appendix <a href="#apx:pfTheorem3"
+data-reference-type="ref"
+data-reference="apx:pfTheorem3">[apx:pfTheorem3]</a>.</p>
+<h3 data-number="5.3.3" id="sec:insecureLp"><span
+class="header-section-number">5.3.3</span> A non-private <span
+class="math inline">\(L_p\)</span> sampling protocol with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
+<section id="inputs-1" class="algorithm" data-number="5.3.3.1">
+<h4 data-number="5.3.3.1"><span
+class="header-section-number">5.3.3.1</span> Inputs:</h4>
+<p>Parties <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> have inputs <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> respectively.</p>
+<p>The protocol proceeds as follows:</p>
+<p>Parties run <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> with inputs <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> that samples from
+<span class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> and obtain output <span
+class="math inline">\(i\)</span>.</p>
+<p>For <span class="math inline">\(b \in \{1, 2\}\)</span>, <span
+class="math inline">\(P_b\)</span> sends <span
+class="math inline">\(w_{b,i}, ||\vec{w}_b||_p^p\)</span>. Both parties
+compute <span class="math display">\[\Pr_{D_{\mathsf{ignore},
+p}(\vec{w}_1, \vec{w}_2)}[i] = \frac{w_{1,i}^p +
+w_{2,i}^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}
+    \quad
+    \mbox{and}
+    \quad
+    f_c(\vec{w}_1, \vec{w}_2, i) = \frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}\]</span></p>
+<p>Parties output <span class="math inline">\(i\)</span> with
+probability <span class="math display">\[\begin{aligned}
+        \frac{f_c(\vec{w}_1, \vec{w}_2, i)}{2^{p-1} \cdot
+\Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]} &amp;= \frac{c
+\cdot \Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2^{p-1} \cdot
+\Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]}\\
+        &amp;= \frac{\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]}{2^{p-1}/c
+\cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i]}
+        
+\end{aligned}\]</span> and otherwise return to step 1.</p>
+</section>
+<p>In this section we present a <span
+class="math inline">\(\tilde{O}(1)\)</span> sampling protocol for <span
+class="math inline">\(L_p\)</span> sampling for constant <span
+class="math inline">\(p\)</span>. We present only the insecure version,
+extending it to a secure sampling protocol can be done entirely
+analogously to the construction for <span
+class="math inline">\(L_2\)</span> sampling given in Section <a
+href="#sec:secure" data-reference-type="ref"
+data-reference="sec:secure">5.3.2</a>.</p>
+<p>Given input vectors <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span>, <span class="math inline">\(L_p\)</span> sampling
+refers to sampling from the distribution <span
+class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span> with the
+following probability mass function: <span class="math display">\[\Pr[
+D_{L_p}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ]
+= \frac{(w_{1,i} + w_{2,i})^p}{ \sum_j (w_{1,j} + w_{2,j})^p }
+= \frac{(w_{1,i} + w_{2,i})^p}{ \| \w_1 + \w_2 \|_p^p }.\]</span></p>
+<p>We begin by defining and showing how to sample from a helper
+distribution <span class="math inline">\(D_{\mathsf{ignore},
+p}\)</span>.</p>
+<div class="definition">
+<p>For input vectors <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span>, let <span class="math inline">\(D_{\mathsf{ignore},
+p}(\vec{w}_1, \vec{w}_2)\)</span> be the distribution that “ignores” the
+cross term in <span class="math inline">\(D_{L_p}(\vec{w}_1,
+\vec{w}_2)\)</span>. I.e. <span
+class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> samples index <span class="math inline">\(i \in
+[n]\)</span> with probability <span
+class="math inline">\(\frac{w^p_{1,i} + w^p_{2,i}}{||\vec{w}_1||_p^p +
+||\vec{w}_2|_p^p}\)</span>.</p>
+</div>
+<div class="lemma">
+<p><span id="lem:ignore_2" label="lem:ignore_2"></span> There exists a
+protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
+sampling from <span class="math inline">\(D_{\mathsf{ignore},
+p}(\vec{w}_1, \vec{w}_2)\)</span> with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
+(w_{b,1}^p, \ldots, w_{b,n}^p).\)</span> The lemma follows by observing
+the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
+D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
+</div>
+<div class="definition">
+<p>For <span class="math inline">\(i \in [n]\)</span>, let the
+corrective parameter function be defined as <span
+class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.\]</span></p>
+</div>
+<div class="definition">
+<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
+\vec{w}_2)\)</span> is defined as <span
+class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
+\vec{w}_2||_p^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}\]</span> This
+ensures that for every <span class="math inline">\(i\)</span>, <span
+class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
+\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+</div>
+<p>The following lemma will be useful for arguing the validity of the
+final protocol.</p>
+<div class="lemma">
+<p><span id="lem:close_dist_2" label="lem:close_dist_2"></span> For all
+<span class="math inline">\(i \in \mathsf{supp}(D_{L_p}(\vec{w}_1,
+\vec{w}_2))\)</span>, <span
+class="math display">\[\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq
+2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)}[i].\]</span></p>
+</div>
+<p>The proof is found in Appendix <a href="#apx:pfLemma5"
+data-reference-type="ref"
+data-reference="apx:pfLemma5">[apx:pfLemma5]</a>.</p>
+<p>We now present the <span class="math inline">\(L_p\)</span> sampling
+protocol <span class="math inline">\(\Pi_{L_p}\)</span> in Protocol <a
+href="#fig:lpexact" data-reference-type="ref"
+data-reference="fig:lpexact">[fig:lpexact]</a>. We show the correctness
+and efficiency of the protocol below.</p>
+<div class="lemma">
+<p><span id="lem:lp" label="lem:lp"></span> With all but negligible
+probability, on inputs <span class="math inline">\(\vec{w}_1\)</span>
+and <span class="math inline">\(\vec{w}_2\)</span>, protocol <span
+class="math inline">\(\Pi_{L_p}\)</span> samples exactly correctly from
+<span class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span>.
+Further, for any constant <span class="math inline">\(p\)</span>, the
+protocol has communication <span
+class="math inline">\(\tilde{O}(1)\)</span>.</p>
+</div>
+<p>The proof is found in Appendix <a href="#apx:pfLemma6"
+data-reference-type="ref"
+data-reference="apx:pfLemma6">[apx:pfLemma6]</a>. We note that this
+result strictly generalizes Lemma <a href="#lem:insecure_L2_prot"
+data-reference-type="ref"
+data-reference="lem:insecure_L2_prot">[lem:insecure_L2_prot]</a>. In
+particular, setting <span class="math inline">\(p=2\)</span> in the
+above protocol yields a protocol with exactly the same parameters as the
+<span class="math inline">\(L_2\)</span> sampling protocol.</p>
+<h2 data-number="5.4" id="sec:prod"><span
+class="header-section-number">5.4</span> Two-party Product Sampling</h2>
+<p>We next consider the problem of two-party sampling from a product
+distribution. Specifically, given <span
+class="math inline">\(n\)</span>-dimensional vectors <span
+class="math inline">\(\vec{w_1}=(w_{1,1},\ldots,w_{1,n})\)</span> and
+<span class="math inline">\(\vec{w_2}=(w_{2,1},\ldots,w_{2,n})\)</span>
+as the private inputs from <span class="math inline">\(P_1\)</span> and
+<span class="math inline">\(P_2\)</span> respectively, we wish to sample
+from the distribution <span class="math inline">\(\Dp\)</span> defined
+by</p>
+<p><span class="math display">\[\Pr[\Dp(\vec{w}_1,\vec{w}_2)=i] =
+\frac{w_{1,i}\cdot w_{2,i}}{\sum_{j=1}^n w_{1,j} \cdot w_{2,j}} =
+\frac{w_{1,i} \cdot w_{2,i}}{\ipw}\]</span></p>
+<p>Of course, if <span class="math inline">\(\ipw = 0\)</span>, the
+probability space is not well-defined, and in this case, we require the
+protocol to simply output <span class="math inline">\(\bot\)</span>.</p>
+<p>As before, we assume that all weights in <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> are non-negative.</p>
+<h4 data-number="5.4.0.1" id="ideal-functionality.-1"><span
+class="header-section-number">5.4.0.1</span> Ideal functionality.</h4>
+<p>We now define an ideal functionality <span
+class="math inline">\(\Fp\)</span> for two-party product sampling. This
+functionality is parametrized by a function <span
+class="math inline">\(\flk\)</span> capturing the leakage that the
+functionality gives to the adversary.</p>
+<div class="center">
+<p><span class="math inline">\(\Fp\)</span>: Ideal functionality for
+two-party product sampling</p>
+</div>
+<p>The functionality has the following parameters:</p>
+<p><span class="math inline">\(n \in \NN\)</span>. The dimension of the
+input weight vectors <span class="math inline">\(\vec{w}_1\)</span> and
+<span class="math inline">\(\vec{w}_2\)</span>.</p>
+<p>A function <span class="math inline">\(\flk\)</span> describing the
+leakage.</p>
+<p>The functionality proceeds as follows:</p>
+<p>Receive inputs <span class="math inline">\(\vec w_1\)</span> and
+<span class="math inline">\(\vec w_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p>
+<p>Compute <span
+class="math inline">\(\mathsf{leak}=\flk(\vec{w}_1,\vec{w}_2)\)</span></p>
+<p>If <span class="math inline">\(\ipw=0\)</span>, send <span
+class="math inline">\(\mathsf{leak}\)</span> to the adversary and <span
+class="math inline">\(\bot\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p>
+<p>Otherwise, sample <span class="math inline">\(i\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i} \cdot
+w_{2,i}}{\ip{\vec{w}_1}{\vec{w}_2}}\)</span>, send <span
+class="math inline">\(\mathsf{leak}\)</span> to the adversary, and send
+<span class="math inline">\(i\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p>
+<h3 data-number="5.4.1" id="sec:prodLB"><span
+class="header-section-number">5.4.1</span> Impossibility of sublinear
+product sampling</h3>
+<p>Our goal is to find a protocol for two-party sampling with sublinear
+(in <span class="math inline">\(n\)</span>) communication. However,
+unlike the case for <span class="math inline">\(L_1\)</span> sampling,
+we show that this goal is actually impossible. Roughly speaking, if
+parties are allowed to have arbitrary input vectors, then a sublinear
+communication solution to product sampling implies a sublinear
+communication solution to the disjointness problem, which is known to be
+impossible.</p>
+<p>For our impossibility result, we first define the two-party
+disjointness problem.</p>
+<h4 data-number="5.4.1.1" id="disjointness-problem."><span
+class="header-section-number">5.4.1.1</span> Disjointness problem.</h4>
+<p>The disjointness problem checks if two input sets <span
+class="math inline">\(S\)</span> and <span
+class="math inline">\(T\)</span> are disjoint (i.e., <span
+class="math inline">\(S \cap T = \emptyset\)</span>). Specifically, we
+consider a function <span class="math inline">\(\mathsf{DISJ}^n: \zo^n
+\times \zo^n \to \zo\)</span> defined as: <span
+class="math display">\[\mathsf{DISJ}^n(v_S, v_T) = \left \{
+    \begin{array}{l} 1 \mbox{ if } \bra v_S,  v_T \ket = 0 \\
+    0 \mbox{ otherwise }
+  \end{array} \right .\]</span> In the above, <span
+class="math inline">\(v_S\)</span> and <span
+class="math inline">\(v_T\)</span> are the characteristic vectors of
+<span class="math inline">\(S\)</span> and <span
+class="math inline">\(T\)</span> respectively. The communication
+complexity of the solution to the disjointness problem is known to have
+a linear lowerbound, as shown in the following Theorem:</p>
+<div class="theorem">
+<p>For any (even non-private) two-party protocol <span
+class="math inline">\(\Pi\)</span> where each party holds <span
+class="math inline">\(v_S\)</span> and <span
+class="math inline">\(v_T\)</span> respectively, if <span
+class="math inline">\(\Pi\)</span> computes <span
+class="math inline">\(\mathsf{DISJ}^n(v_S,
+v_T)\)</span> correctly with probability at least 2/3, the communication
+complexity of <span class="math inline">\(\Pi\)</span> is <span
+class="math inline">\(\Theta(n)\)</span>.</p>
+</div>
+<h4 data-number="5.4.1.2" id="our-impossibility-result."><span
+class="header-section-number">5.4.1.2</span> Our impossibility
+result.</h4>
+<p>We first observe that a simple reduction from Disjointness gives us
+that is impossible to achieve sublinear product sampling. Specifically,
+disjointness can be directly learned from whether the product sampling
+protocol outputs <span class="math inline">\(\bot\)</span> or not.</p>
+<p>Our impossibility result is stronger. We show that it is impossible
+to achieve sublinear product sampling <em>even when the product sampling
+protocol is executed with input vectors <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> in which all coordinates are bounded
+away from <span class="math inline">\(0\)</span></em>, which in
+particular guarantees that <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span> is bounded away from <span
+class="math inline">\(0\)</span>.</p>
+<p>Before stating a formal theorem below, for <span
+class="math inline">\(0 &lt; \gamma &lt; 1\)</span>, we first define
+<span class="math inline">\(\gamma\)</span>-heaviness; we say that a
+vector <span class="math inline">\(\vec{w}\)</span> is <em><span
+class="math inline">\(\gamma\)</span>-heavy</em> when each coordinate of
+<span class="math inline">\(\vec{w}\)</span> is a number contained in
+<span class="math inline">\([\gamma,1]\)</span>.</p>
+<div class="theorem">
+<p><span id="th:lower_bound" label="th:lower_bound"></span> Let <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> be <span
+class="math inline">\(\gamma\)</span>-heavy vectors of length <span
+class="math inline">\(n\)</span>, each respectively held by <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>. Assume there exists a two-party
+protocol <span class="math inline">\(\Pp\)</span> for the product
+sampling from <span class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span>, with communication at most <span
+class="math inline">\(C
+:= C(n, \gamma)\)</span>.</p>
+<p>Then, for any <span class="math inline">\(\gamma \le 1/2n\)</span>,
+there exists a constant <span class="math inline">\(\rho\)</span> and a
+probabilistic protocol computing <span
+class="math inline">\(\mathsf{DISJ}^n\)</span> correctly with
+probability at least 2/3 that has communication at most <span
+class="math inline">\(\log(n) + 1 +
+\rho \cdot (C + 1)\)</span>.</p>
+</div>
+<p>We construct a protocol computing <span
+class="math inline">\(\mathsf{DISJ}^n\)</span> by taking advantage of
+<span class="math inline">\(\Pp\)</span> as follows:</p>
+<h4 data-number="5.4.1.3" id="the-protocol-for-mathsfdisjn"><span
+class="header-section-number">5.4.1.3</span> The protocol for <span
+class="math inline">\(\mathsf{DISJ}^n\)</span></h4>
+<p>Parties <span class="math inline">\(\mathbf{A}\)</span> and <span
+class="math inline">\(\mathbf{B}\)</span> each get as input a vector
+<span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}} \in \{0,1\}^n\)</span>. The goal
+is to output <span class="math inline">\(1\)</span> if the vectors are
+“disjoint” and <span class="math inline">\(0\)</span> otherwise.</p>
+<div class="description">
+<p><span>Edge Case:</span> If one of the parties’ inputs has Hamming
+weight <span class="math inline">\(0\)</span>, then they output <span
+class="math inline">\(1\)</span> and send <span
+class="math inline">\(1\)</span> to the other party. From now on, we
+assume that the Hamming weight of each party’s input is at least <span
+class="math inline">\(1\)</span>.</p>
+<p><span>Preamble:</span> We call the party with the lower Hamming
+weight input the <em>designated party</em>. To determine this, <span
+class="math inline">\(\mathbf{A}\)</span> sends to <span
+class="math inline">\(\mathbf{B}\)</span> the Hamming weight of its
+input vector <span class="math inline">\(\tilde{\vec{a}}\)</span>. If
+<span class="math inline">\(\mathbf{B}\)</span>’s input has higher
+Hamming weight, it sends back the bit <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(\mathbf{A}\)</span>; otherwise it sends <span
+class="math inline">\(0\)</span>.</p>
+<p><span>Input Transformation:</span> Let <span
+class="math inline">\(g_\gamma: \zo \to \RR\)</span> be a boosting
+function defined as <span class="math inline">\(g_\gamma(0) =
+\gamma\)</span> and <span class="math inline">\(g_\gamma(1) =
+1\)</span>. Each party <span class="math inline">\(\mathbf{A}\)</span>,
+<span class="math inline">\(\mathbf{B}\)</span> locally transforms their
+input vector <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> to <span
+class="math inline">\(\vec{a}\)</span>, <span
+class="math inline">\(\vec{b}\)</span> by applying the boosting function
+in order to ensure <span
+class="math inline">\(\gamma\)</span>-heaviness. That is, for <span
+class="math inline">\(i \in [n]\)</span>, set <span
+class="math inline">\(a_i = g_\gamma(\tilde{a}_i)\)</span> and <span
+class="math inline">\(b_i =
+g_\gamma(\tilde{b}_i)\)</span>.</p>
+<p><span>Sampling Protocol:</span> The parties run the sampling protocol
+<span class="math inline">\(\Pp(\vec{a},\vec{b})\)</span> and both
+receive some output <span class="math inline">\(i^*\)</span>.</p>
+<p><span>Output Computation:</span> The <em>designated party</em> checks
+the <span class="math inline">\(i^*\)</span>th bit of its input by which
+we denote <span class="math inline">\(x\)</span> (i.e., <span
+class="math inline">\(x = \tilde a_{i^*}\)</span> or <span
+class="math inline">\(x = \tilde b_{i^*}\)</span> depending on which
+party is the designated party). It sends <span
+class="math inline">\(1-x\)</span> to the other party. Both parties
+output <span class="math inline">\(1-x\)</span>.</p>
+</div>
+<p>The following lemmas give the completeness and soundness of the
+protocol.</p>
+<div class="lemma">
+<p><span id="clm:completeness" label="clm:completeness"></span> If <span
+class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, then the
+parties both output <span class="math inline">\(1\)</span> with
+probability at least <span class="math inline">\(\frac{1}{2 + n \cdot
+\gamma}\)</span>.</p>
+</div>
+<div class="lemma">
+<p><span id="clm:soundness" label="clm:soundness"></span> If <span
+class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint, then
+the parties both output <span class="math inline">\(1\)</span> with
+probability at most <span class="math inline">\(1-\frac{1}{1 + n \cdot
+\gamma}\)</span>.</p>
+</div>
+<p>Before we prove the lemmas, we briefly describe how we can use these
+lemmas to achieve a protocol that correctly computes <span
+class="math inline">\(\mathsf{DISJ}\)</span> with probability at least
+<span class="math inline">\(2/3\)</span>. Note that we can get a gap by
+setting <span class="math inline">\(\gamma = \frac{1}{2n}\)</span>. In
+other words, parties output <span class="math inline">\(1\)</span> when
+disjoint with probability at least <span
+class="math inline">\(\frac{2}{5}\)</span>. Parties output <span
+class="math inline">\(1\)</span> when not disjoint with probability at
+most <span class="math inline">\(\frac{1}{3}\)</span>. Since we have a
+constant gap between completeness and soundness, this can be amplified
+to <span class="math inline">\(2/3\)</span> and <span
+class="math inline">\(1/3\)</span> by running the protocol a constant
+number of times.</p>
+<h4 data-number="5.4.1.4" id="remarks."><span
+class="header-section-number">5.4.1.4</span> Remarks.</h4>
+<p>We would like to characterize the sublinearity condition for product
+sampling protocols using the normalized input vectors. We can do this
+since without loss of generality we can assume that input vectors to the
+product sampling protocols are normalized; in particular, for any
+(non-normalized) vectors <span class="math inline">\(\w_1\)</span> and
+<span class="math inline">\(\w_2\)</span>, we have</p>
+<p><span
+class="math display">\[\Pr\left[\Dp\left(\frac{\vec{w}_1}{\|\vec{w}_1\|_1},\frac{\vec{w}_2}{\|\vec{w}_2\|_1}\right)=i\right]
+=
+\frac{ \frac{w_{1,i}}{\|\vec{w}_1\|_1} \cdot
+\frac{w_{2,i}}{\|\vec{w}_2\|_1}}{
+  \ip{\frac{\vec{w}_1}{\|\vec{w}_1\|_1}}{\frac{\vec{w}_2}{\|\vec{w}_2\|_1}
+    }} = \Pr[\Dp(\vec{w}_1,\vec{w}_2)=i].\]</span></p>
+<p>Specifically, we show below that the impossibility theorem implies
+that in order to achieve sublinear communication complexity for product
+sampling, we would need, at the minimum, a promise on the inputs that
+guarantees that <span class="math display">\[\langle \vec{w}_1,
+\vec{w}_2 \rangle \in
+\Omega(1/n^2),\]</span> when <span class="math inline">\(\w_1,
+\w_2\)</span> are normalized vectors.</p>
+<p>To do this, first note that the theorem implies that sublinear
+communication product sampling needs to have <span
+class="math inline">\(\gamma \in \Omega(1/n)\)</span>. Now, in the
+proof, any non-disjoint binary vectors <span
+class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> to the <span
+class="math inline">\(\mathsf{DISJ}\)</span> problem has <span
+class="math inline">\(\langle
+\tilde{\vec{a}}\)</span>, <span class="math inline">\(\tilde{\vec{b}}
+\rangle \ge 1\)</span>, and these vectors are transformed to <span
+class="math inline">\(g_\gamma(\tilde{\vec{a}})\)</span> and <span
+class="math inline">\(g_\gamma(\tilde{\vec{b}})\)</span>. Let <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> be the normalized vectors <span
+class="math inline">\(g_\gamma(\tilde{\vec{a}})\)</span> and <span
+class="math inline">\(g_\gamma(\tilde{\vec{b}})\)</span>; that is, <span
+class="math inline">\(\w_1 := g_\gamma(\tilde{\vec{a}}) / \|
+g_\gamma(\tilde{\vec{a}}) \|_1\)</span> and <span
+class="math inline">\(\w_2 =  g_\gamma(\tilde{\vec{b}}) / \|
+g_\gamma(\tilde{\vec{b}})
+\|_1\)</span>. Since each entry of <span
+class="math inline">\(g_\gamma(\tilde{\vec{a}})\)</span> and <span
+class="math inline">\(g_\gamma(\tilde{\vec{a}})\)</span> is at most 1,
+we have <span class="math inline">\(\|g_\gamma(\tilde{\vec{a}})\|_1 \le
+n\)</span> and <span
+class="math inline">\(\|g_\gamma(\tilde{\vec{b}})\|_1 \le n\)</span>.
+Therefore, we have <span class="math display">\[\ipw \ge \frac {\langle
+g_\gamma(\vec{a}), g_\gamma(\vec{b}) \rangle } { n \cdot n } \ge \frac 1
+{n^2}.\]</span></p>
+<div class="proof">
+<p><em>Proof of Lemma <a href="#clm:completeness"
+data-reference-type="ref"
+data-reference="clm:completeness">[clm:completeness]</a>.</em> Assume
+that <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, and
+moreover, assume WLOG that <span
+class="math inline">\(\mathbf{A}\)</span> is the designated party, and
+its input vector has Hamming weight <span
+class="math inline">\(w\)</span>. Recall that <span
+class="math inline">\(a_i = g_\gamma(\tilde
+a_i)\)</span> and <span class="math inline">\(b_i = g_\gamma(\tilde
+b_i)\)</span>. Let <span class="math display">\[\begin{aligned}
+&amp;&amp; W_{0,0} :=  \sum_{i : \tilde{a}_i=0, \tilde{b}_i=0} a_i \cdot
+b_i,
+~~~~~~
+W_{1,0}  :=  \sum_{i : \tilde{a}_i=1, \tilde{b}_i=0} a_i \cdot b_i \\
+&amp;&amp; W_{0,1}  :=  \sum_{i : \tilde{a}_i=0, \tilde{b}_i=1} a_i
+\cdot b_i,
+~~~~~~
+W_{1,1}  :=  \sum_{i : \tilde{a}_i=1, \tilde{b}_i=1} a_i \cdot b_i \\
+\end{aligned}\]</span></p>
+<p>Note that <span class="math inline">\(W_{0,0} \leq n \cdot
+\gamma^2\)</span>. Further, <span class="math inline">\(W_{1,1} =
+0\)</span>, since the vectors are disjoint, and <span
+class="math inline">\(W_{1,0} = w \cdot \gamma\)</span> since the
+Hamming weight of <span class="math inline">\(\tilde{\vec{a}}\)</span>
+is exactly <span class="math inline">\(w\)</span>. Additionally, note
+that <span class="math inline">\(W_{0,1} \geq W_{1,0}\)</span>, since
+<span class="math inline">\(\mathbf{A}\)</span> is the designated party,
+so the Hamming weight of <span
+class="math inline">\(\tilde{\vec{a}}\)</span> is less than or equal to
+the Hamming weight of <span
+class="math inline">\(\tilde{\vec{b}}\)</span>.</p>
+<p>Note that when the designated party is <span
+class="math inline">\(\mathbf{A}\)</span>, then the output of the
+protocol is <span class="math inline">\(1 - a_{i^*}\)</span>. Using the
+above facts, the probability of outputting <span
+class="math inline">\(1\)</span> is <span
+class="math display">\[\begin{aligned}
+\frac{W_{0,0} + W_{0,1}}{W_{1,1} + W_{0,0} + W_{0,1} + W_{1,0}}
+&amp;\ge
+\frac{W_{0,1}}{W_{0,0} + W_{0,1} + W_{1,0}}\\
+&amp;\geq \frac{W_{0,1}}{n\gamma^2 + 2W_{0,1}}\\
+&amp;=\frac{w \cdot \gamma}{n\gamma^2 + 2w \cdot \gamma}\\
+&amp;=\frac{w}{n\gamma + 2w}\\
+&amp;\geq \frac{1}{n\gamma + 2},
+\end{aligned}\]</span> where the last inequality follows since <span
+class="math inline">\(w \geq 1\)</span>, due to the Edge Case step of
+the protocol. 0◻ ◻</p>
+</div>
+<div class="proof">
+<p><em>Proof of Lemma <a href="#clm:soundness" data-reference-type="ref"
+data-reference="clm:soundness">[clm:soundness]</a>.</em> Assume that
+<span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint. As
+before, consider <span class="math inline">\(W_{0,0}\)</span>, <span
+class="math inline">\(W_{1,0}\)</span>, <span
+class="math inline">\(W_{0,1}\)</span>, and <span
+class="math inline">\(W_{1,1}\)</span>. Note that <span
+class="math inline">\(W_{1,1} \geq 1\)</span> since the inputs are not
+disjoint. We also have <span class="math inline">\(W_{0,0} + W_{0,1} +
+W_{1,0} \leq n \cdot \gamma\)</span>, since <span
+class="math inline">\(a_i\)</span> or <span
+class="math inline">\(b_i\)</span> is <span
+class="math inline">\(\gamma\)</span> in these cases.</p>
+<p>Using the above facts, the probability of outputting <span
+class="math inline">\(0\)</span> is <span
+class="math display">\[\begin{aligned}
+\frac{W_{1,0} + W_{1,1}}{W_{1,1} + W_{0,0} + W_{0,1} + W_{1,0}}
+&amp;\geq
+\frac{W_{1,1}}{W_{1,1} + n \cdot \gamma}\\
+&amp;\ge \frac{1}{1 + n \cdot \gamma}.
+\end{aligned}\]</span> 0◻ ◻</p>
+</div>
+<h3 data-number="5.4.2" id="sec:prodip"><span
+class="header-section-number">5.4.2</span> Product sampling while
+leaking at most the inner product</h3>
+<h4 data-number="5.4.2.1" id="assumptions.-1"><span
+class="header-section-number">5.4.2.1</span> Assumptions.</h4>
+<p>As before, we assume that all weights in <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> are non-negative. As discussed
+in the previous subsection, we also assume, without loss of generality,
+that <span class="math display">\[\| \vec{w}_1 \|_1 = \| \vec{w}_2 \|_1
+= 1.\]</span></p>
+<h4 data-number="5.4.2.2" id="overview."><span
+class="header-section-number">5.4.2.2</span> Overview.</h4>
+<p>We now show that the impossibility result of Section <a
+href="#sec:prodLB" data-reference-type="ref"
+data-reference="sec:prodLB">5.4.1</a> can be bypassed if we make some
+assumptions on the inputs. Specifically, if we restrict ourselves to the
+case when <span class="math inline">\(\ipw=\omega\left(\frac{\log
+n}{n}\right)\)</span>, then we can achieve a sublinear communication
+protocol for product sampling on inputs <span
+class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span><a href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a>. Of course, by observing that the
+protocol uses sub-linear communication, due to our lower-bound, both
+parties will learn that such a promise on the inputs is satisfied; the
+lower bound implies that some leakage about the inputs is necessary. In
+our protocol, we show that the information leaked is at most the inner
+product <span class="math inline">\(\ipw\)</span>. (Formally, we set
+<span class="math inline">\(\flk(\w_1, \w_2) =\ipw\)</span>.)
+Interestingly, we show that this is the case even though our protocol
+does not, and cannot,<a href="#fn5" class="footnote-ref" id="fnref5"
+role="doc-noteref"><sup>5</sup></a> actually compute <span
+class="math inline">\(\ipw\)</span>.</p>
+<h4 data-number="5.4.2.3" id="product-sampling-protocol."><span
+class="header-section-number">5.4.2.3</span> Product sampling
+protocol.</h4>
+<p>Roughly, the protocol works as follows. The protocol proceeds in
+rounds where in each round <span class="math inline">\(P_1\)</span> and
+<span class="math inline">\(P_2\)</span> use the oblivious <span
+class="math inline">\(L_1\)</span> sampling with a single input vector
+(<span class="math inline">\(\F_\oslone\)</span>) to produce two
+secret-shared sampled indices, one from <span
+class="math inline">\(P_1\)</span>’s input vector, and one from <span
+class="math inline">\(P_2\)</span>’s input vector. The parties then run
+a secure 2-PC protocol to securely compare these values, and if they are
+equal, output the sampled index. If the two sampled indices are not
+equal, the parties move to the next round.</p>
+<p>We describe a private two-party protocol for product sampling leaking
+at most the inner product (see Protocol <a href="#prot:prodsampapx"
+data-reference-type="ref"
+data-reference="prot:prodsampapx">[prot:prodsampapx]</a>). This protocol
+is in the <span class="math inline">\(\{\F_\oslone, \F_{2PC}
+\}\)</span>-hybrid model.</p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> Party <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(\vec{w}_b\)</span> of length <span
+class="math inline">\(n\)</span>.</p>
+<ol>
+<li><p>Invoke the <span class="math inline">\(\F_\oslone\)</span> ideal
+functionality with <span class="math inline">\(P_1\)</span> as the
+sender with input <span class="math inline">\(\vec{w}_1\)</span> and
+<span class="math inline">\(P_2\)</span> as the receiver. Let <span
+class="math inline">\(i_{1,1}\)</span> and <span
+class="math inline">\(i_{1,2}\)</span> be the output from the ideal
+functionality to <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_\oslone\)</span> ideal
+functionality with <span class="math inline">\(P_2\)</span> as the
+sender with input <span class="math inline">\(\vec{w}_2\)</span> and
+<span class="math inline">\(P_1\)</span> as the receiver. Let <span
+class="math inline">\(i_{2,1}\)</span> and <span
+class="math inline">\(i_{2,2}\)</span> be the output from the ideal
+functionality to <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_{2PC}\)</span> ideal
+functionality with the following circuit:</p></li>
+<li><p>Input: <span class="math inline">\((i_{1,j}, i_{2,j})\)</span>
+for <span class="math inline">\(j = 1, 2\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(i_1 = i_{1,1} \xor
+i_{1,2}\)</span>, <span class="math inline">\(i_2 = i_{2,1} \xor
+i_{2,2}\)</span>.</p></li>
+<li><p>If <span class="math inline">\(i_1\)</span> is equal to <span
+class="math inline">\(i_2\)</span>, output <span
+class="math inline">\(i_1\)</span> to both <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>. Otherwise, output <span
+class="math inline">\(\bot\)</span>.</p></li>
+<li><p>If the output from the ideal functionality is <span
+class="math inline">\(\bot\)</span>, go back to Step 1. Otherwise,
+output whatever <span class="math inline">\(\F_{2PC}\)</span>
+outputs.</p></li>
+</ol>
+<p><strong>Output:</strong> Both parties output the sampled value <span
+class="math inline">\(i\)</span>.</p>
+</div>
+<h4 data-number="5.4.2.4" id="security.-1"><span
+class="header-section-number">5.4.2.4</span> Security.</h4>
+<p>We will prove the following theorem.</p>
+<div class="theorem">
+<p><span id="th:prodIP" label="th:prodIP"></span> Protocol <span
+class="math inline">\(\Pp^{IP}\)</span> securely realizes <span
+class="math inline">\(\Fp\)</span> with leakage <span
+class="math inline">\(\flk(\w_1,
+\w_2) = \ip{\vec{w}_1}{\vec{w}_2}\)</span> in the <span
+class="math inline">\(\{\F_\oslone, \F_{2PC}
+\}\)</span>-hybrid model with semi-honest security.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We describe the simulator <span
+class="math inline">\(\Sim\)</span> in the <span
+class="math inline">\(\{\F_\oslone, \F_{2PC} \}\)</span>-hybrid model
+for the case that Party 1 is corrupted. The simulator and proof of
+security are analogous in the case that Party 2 is corrupted.</p>
+<p><span class="math inline">\(\Sim\)</span> receives as input <span
+class="math inline">\(\vec{w}_1\)</span>, the output <span
+class="math inline">\(i^*\)</span>, and <span
+class="math inline">\(\ip{\vec{w}_1}{\vec{w}_2}\)</span>. <span
+class="math inline">\(\Sim\)</span> samples <span
+class="math inline">\(r^*\)</span> from a geometric distribution with
+success probability <span class="math inline">\(p = \langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span>.</p>
+<p><span class="math inline">\(\Sim\)</span> invokes Party 1 on input
+<span class="math inline">\(\vec{w}_1\)</span>. For <span
+class="math inline">\(i \in [r^*-1]\)</span>, Party 1 sends its input to
+the first invocation of <span class="math inline">\(\F_\oslone\)</span>
+and <span class="math inline">\(\Sim\)</span> returns to it a random
+value in <span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1
+sends its input to the second invocation of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it a random value in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the <span class="math inline">\(\F_{2PC}\)</span> functionality
+and <span class="math inline">\(\Sim\)</span> returns to it <span
+class="math inline">\(\bot\)</span>. For <span class="math inline">\(i =
+r^*\)</span>, Party 1 sends its input to the first invocation of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it a random value in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the second invocation of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it a random value in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the <span class="math inline">\(\F_{2PC}\)</span> functionality
+and <span class="math inline">\(\Sim\)</span> returns to it <span
+class="math inline">\(i^*\)</span>.</p>
+<p>It is clear that the view of Party 1 is identical in the ideal and
+real world, assuming that <span class="math inline">\(\Sim\)</span>
+samples the first succeeding round, <span
+class="math inline">\(r^*\)</span>, from the correct distribution. In
+the following, we argue that this is indeed the case.</p>
+<p>First, note that on any given round, we have <span
+class="math display">\[p_c := \Pr[\mbox{collision}] = \sum_i \Pr[i_i = i
+\wedge i_2 = i] = \sum_i w_{1,i} \cdot w_{2,i} = \ipw.\]</span></p>
+<p>Let <span class="math inline">\({\sf FirstSuccess}(r)\)</span> denote
+an event in which the protocol succeeds for the first time on the <span
+class="math inline">\(r\)</span>-th round. Now, for <span
+class="math inline">\(r \in
+\mathbb{N}\)</span>, we have <span
+class="math display">\[\begin{aligned}
+&amp;\Pr[{\sf FirstSuccess}(r) \mbox{ AND the output is } i^*]\\
+&amp;=
+\Pr[\mbox{no collision in first } r-1 \mbox{ rounds}] \cdot \Pr[i_1 =
+i^* \wedge i_2 = i^* \mbox{ on the $r$th round}]\\
+&amp;= (1-p_c)^{r-1} \cdot \Pr[i_1 = i^* \wedge i_2 = i^*]
+\end{aligned}\]</span> Now, the probability that the protocol eventually
+outputs <span class="math inline">\(i^*\)</span> is: <span
+class="math display">\[\begin{aligned}
+&amp;\Pr[\mbox{protocol eventually outputs } i^* \mbox{ after some
+number of rounds}]\\
+&amp;= \sum_{j=1}^\infty \Pr[{\sf FirstSuccess}(j) \mbox{ AND the output
+is } i^*] \\ &amp;= \Pr[i_1 = i^* \wedge i_2 = i^*]
+\sum_{j=1}^\infty (1-p_c)^{j-1}
+= \Pr[i_1 = i^* \wedge i_2 = i^*] \cdot \frac{1}{p_c}.
+\end{aligned}\]</span> Thus, the probability of <span
+class="math inline">\({\sf FirstSuccess}(r)\)</span> conditioned on the
+output being <span class="math inline">\(i^*\)</span> is: <span
+class="math display">\[\begin{aligned}
+&amp;\Pr[{\sf FirstSuccess}(r) | \mbox{ the output is $i^*$}]\\
+&amp;= \frac{\Pr[{\sf FirstSuccess}(r) \mbox{ AND the output is }
+i^*]}{\Pr[\mbox{protocol eventually outputs } i^* \mbox{ after some
+number of rounds}]}\\
+&amp;= \frac{(\Pr[i_1 = i^* \wedge i_2 = i^*]) \cdot
+(1-p_c)^{r-1}}{\Pr[i_1
+= i^* \wedge i_2 = i^*] \cdot \frac{1}{p_c}}\\
+&amp;= p_c \cdot (1-p_c)^{r-1}.
+\end{aligned}\]</span></p>
+<p>The above is exactly the probability of the number of Bernoulli
+trials (with probability <span class="math inline">\(p_c = \langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span>) needed to get one success.
+Sampling the number of rounds is therefore equivalent to sampling the
+random variable corresponding to the number of rounds from a geometric
+distribution with success probability <span class="math inline">\(p_c =
+\langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span>, which is exactly what <span
+class="math inline">\(\Sim\)</span> does. 0◻ ◻</p>
+</div>
+<h4 data-number="5.4.2.5" id="performance."><span
+class="header-section-number">5.4.2.5</span> Performance.</h4>
+<p>As shown above, the number of rounds <span
+class="math inline">\(r\)</span> needed by this protocol is distributed
+as the number of Bernoulli trials (with probability <span
+class="math inline">\(p =
+\ipw\)</span>) needed to get one success. Thus, the expected number of
+rounds is <span class="math inline">\(r=\frac{1}{\ipw}\)</span>. In each
+round, the communication consists of a secure 2-PC of equality on <span
+class="math inline">\(O(\log n)\)</span>-bit inputs, which can be done
+in <span class="math inline">\(O(\log n)\)</span> communication and
+<span class="math inline">\(O(1)\)</span> rounds. Thus, in total, this
+protocol has expected communication <span
+class="math inline">\(O(\frac{\log n}{\ipw})\)</span> and <span
+class="math inline">\(O(\frac{1}{\ipw})\)</span> rounds. This
+communication is sublinear in <span class="math inline">\(n\)</span>
+when <span class="math inline">\(\ipw = \omega\left(\frac{\log
+n}{n}\right)\)</span>.</p>
+<p><strong>Trading efficiency for privacy.</strong> In the proof above,
+the simulator requires the value of <span
+class="math inline">\(\ipw\)</span>, which is not revealed by the
+output. However, a slight modification to the protocol allows us to
+remove this leakage at the cost of additional, though still sub-linear,
+communication. Instead of terminating the protocol the first time there
+is a collision in the <span class="math inline">\(L_1\)</span> samples,
+we can pad the communication cost by making <span
+class="math inline">\(O(\frac{n}{\log n})\)</span> calls to <span
+class="math inline">\(\F_{\oslone}\)</span>. Under the promise of <span
+class="math inline">\(\ipw = \omega(\frac{\log n}{n})\)</span>, this
+ensures a collision in the outputs (with all but negligible
+probability). The parties can then use <span
+class="math inline">\(O(\frac{n}{\log n})\)</span> communication to
+obliviously find and output the collision, without revealing the index,
+and avoiding the leakage of <span
+class="math inline">\(\ipw\)</span>.</p>
+<p>Generalizing this idea, we arrive at a set of similar protocol
+modifications that support a continuous set of tradeoffs: instead of
+choosing between leaking <span class="math inline">\(\ipw\)</span> to
+the simulator, or padding to the maximum communication, we can choose to
+leak some lower bound on <span class="math inline">\(\ipw\)</span>, and
+modify the protocol to make a proportionate number of calls to <span
+class="math inline">\(\F_{\oslone}\)</span>, search (obliviously) for a
+collision, and repeat if necessary.</p>
+<p>Without a full proof, we provide some intuition for the fact that
+this tradeoff between leakage and communication is inherent. We can do
+that by generalizing the statement of Theorem <a href="#th:lower_bound"
+data-reference-type="ref"
+data-reference="th:lower_bound">[th:lower_bound]</a>. We first modify
+the definition of <span class="math inline">\(\gamma\)</span>-heavy
+defined previously: for any <span class="math inline">\(t(n) =
+O(n)\)</span>, we say that a vector <span
+class="math inline">\(\w\)</span> of length <span
+class="math inline">\(n\)</span> is <span
+class="math inline">\(\gamma_{t,n}\)</span>-heavy if each of the <span
+class="math inline">\(t := t(n)\)</span> coordinates of <span
+class="math inline">\(\w\)</span> is a number contained in <span
+class="math inline">\([\gamma, 1]\)</span>. In particular, we now allow
+<span class="math inline">\(t(n) = o(n)\)</span>. Then, with a small
+modification to the reduction, we can prove that if <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> are <span
+class="math inline">\(\gamma_{t,n}\)</span>-heavy, and if there exists a
+protocol <span class="math inline">\(\Pp\)</span> for product sampling
+with communication at most <span class="math inline">\(C := C(n,
+\gamma)\)</span>, then there exists a protocol for computing <span
+class="math inline">\(\mathsf{DISJ}^t\)</span> with communication <span
+class="math inline">\(\log(n) + O(C)\)</span>. In the modified
+reduction, the parties simply increase the weights of the <span
+class="math inline">\(t\)</span> input slots (as before), and append
+<span class="math inline">\(n-t\)</span> entries containing 0 at the
+end. Since we know that <span
+class="math inline">\(\mathsf{DISJ}^t\)</span> requires <span
+class="math inline">\(O(t)\)</span> communication, the implication is
+that we have increasingly weaker communication bounds as we are provided
+increasingly strong promises on the inner product. Conversely, for a
+certain set of input vectors, observing the communication of the
+sampling protocol gives you a bound on the inner product of the inputs.
+The less communication observed, the tighter that bound, and the greater
+the leakage.</p>
+<h2 data-number="5.5" id="sec:rounds"><span
+class="header-section-number">5.5</span> Product Sampling in Constant
+Rounds</h2>
+<h4 data-number="5.5.0.1"
+id="achieving-constant-rounds-through-parallel-repetition."><span
+class="header-section-number">5.5.0.1</span> Achieving constant rounds
+through parallel repetition.</h4>
+<p>In Sections <a href="#sec:prod" data-reference-type="ref"
+data-reference="sec:prod">5.4</a>, we showed a sublinear communication
+protocol for product sampling when <span class="math inline">\(\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle\)</span> is sufficiently large. Moreover, this
+protocol provably leaked no more information than the inner product.
+However, this protocol required <span class="math inline">\(O(1/\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle)\)</span> rounds of communication. This raises the
+question of whether constant-round sublinear product sampling is
+possible under the same restrictions on the inputs.</p>
+<p>Our protocol to achieve this takes a relatively standard approach.
+Suppose that we are given the value of <span
+class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>. Then, since the expected number of samples
+until a collision is a function of <span class="math inline">\(\langle
+\vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>, we can just run the inner loop of protocol
+<span class="math inline">\(\Pi_{\mathsf{prod}}\)</span> in parallel
+sufficiently many times to guarantee that the protocol would terminate
+with all but negligible probability.</p>
+<h4 data-number="5.5.0.2" id="how-many-times-to-repeat"><span
+class="header-section-number">5.5.0.2</span> How many times to
+repeat?</h4>
+<p>However, there is one catch. It is not actually possible to compute
+<span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span> in sublinear communication! One simple
+solution is to use our promise on the input: we could run the inner loop
+enough times to guarantee termination for any inputs satisfying the
+promise (e.g. <span class="math inline">\(\omega(\frac{n}{\log
+n})\)</span> times). However, this forces us to adopt the worst-case
+communication cost, which might be undesirable. (Recall, it also offers
+the least leakage, which might be desirable.) Instead, we re-establish
+the trade-off between leakage and efficiency as follows. We begin by
+computing an approximation of the inner product in sublinear
+communication (see Section <a href="#sec:jlt" data-reference-type="ref"
+data-reference="sec:jlt">5.5.1</a>). Using this approximation, we can
+then realize our sublinear communication, constant round protocol for
+product sampling as follows in the next subsection.</p>
+<h3 data-number="5.5.1" id="sec:jlt"><span
+class="header-section-number">5.5.1</span> Secure approximation of the
+inner product</h3>
+<p>We achieve a protocol that securely approximates the inner product
+with sublinear communication. In particular, we take advantage of the
+well known Johnson–Lindenstrauss Transform (JLT) <span class="citation"
+data-cites="JL84 STOC:IndMot98"></span> sketch.</p>
+<h4 data-number="5.5.1.1"
+id="additional-assumptions-about-vecw_1-and-vecw_2"><span
+class="header-section-number">5.5.1.1</span> Additional assumptions
+about <span class="math inline">\(\vec{w_1}\)</span> and <span
+class="math inline">\(\vec{w_2}\)</span></h4>
+<p>. We assumed that <span class="math inline">\(\vec{w_1}\)</span> and
+<span class="math inline">\(\vec{w_2}\)</span> are normalized and
+correlated such that <span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle = \omega(\log n/n)\)</span>. In a similar vein, we
+assume that the cosine similarity of the two vectors <span
+class="math inline">\(\w_1\)</span> and <span
+class="math inline">\(\w_2\)</span> is not small, e.g., <span
+class="math inline">\(\omega(1/\log n)\)</span>.</p>
+<p>Recall the cosine similarity between the two vectors <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> is defined as <span
+class="math inline">\(\cos(\vec{w}_1, \vec{w}_2) = \frac{\langle
+\vec{w}_1, \vec{w}_2 \rangle}{ \|
+\vec{w}_1 \|_2 \cdot \| \vec{w}_2 \|_2}\)</span>. Since the <span
+class="math inline">\(L_1\)</span> norm of each vector is equal to 1,
+their <span class="math inline">\(L_2\)</span> norms will typically much
+smaller than 1, which implies that the cosine similarity is usually much
+larger than <span class="math inline">\(\langle \vec{{w}_1},
+{\vec{w}_2} \rangle\)</span>.</p>
+<h4 data-number="5.5.1.2"
+id="approximating-the-inner-product-using-jlt-sketches."><span
+class="header-section-number">5.5.1.2</span> Approximating the inner
+product using JLT sketches.</h4>
+<p>The JLT sketch of <span class="math inline">\(\vec{x}\)</span> is
+equal to <span class="math inline">\(\vec{M} \vec{x}\)</span>, where
+<span class="math inline">\(\vec{M}\)</span> is a random <span
+class="math inline">\(k \times n\)</span> matrix with <span
+class="math inline">\(k \ll n\)</span>. More specifically, the inner
+product of the two vectors is approximated as follows:</p>
+<p><span class="math inline">\({\sf approxIP}(\vec{w}_1,
+\vec{w}_2)\)</span>:     <span class="math inline">\(\rhd\)</span> <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_1\)</span> are <span
+class="math inline">\(n\)</span> dimensional vectors.</p>
+<p>Choose <span class="math inline">\(k \times n\)</span> matrix <span
+class="math inline">\(\vec{M}\)</span> such that each entry <span
+class="math inline">\(M_{i,j}\)</span> is chosen from an independent
+Gaussian distribution of mean <span class="math inline">\(0\)</span> and
+variance <span class="math inline">\(1\)</span>.</p>
+<p>Output <span class="math inline">\(\frac 1 k \cdot \langle
+\vec{M}\vec{w}_1, \vec{M}\vec{w}_2 \rangle\)</span>. (Here, we slightly
+abuse the notation and treat the vectors <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> as column vectors.)</p>
+<div class="lemma">
+<p><span>(cf. <span class="citation"
+data-cites="Kaban15"></span>)</span> <span id="lem:jlt_k"
+label="lem:jlt_k"></span> For all <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span> such that <span class="math inline">\(\cos(\vec{w}_1,
+\vec{w}_2)\geq t\)</span>, the procedure <span
+class="math inline">\({\sf approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
+approximates <span class="math inline">\(\langle \vec{w}_1,
+\vec{w}_2 \rangle\)</span> up to a <span class="math inline">\(1\pm
+\epsilon\)</span> approximation factor with all but negligible
+probability (over the choice of the JLT matrix), using JLT dimension
+<span class="math inline">\(k = \omega\left(\frac{\log(n)}{t^2 \cdot
+\epsilon^2}\right)\)</span>.</p>
+</div>
+<h4 data-number="5.5.1.3" id="privacy-of-the-approximate-output."><span
+class="header-section-number">5.5.1.3</span> Privacy of the approximate
+output.</h4>
+<p>What is interesting is that the approximate inner product doesn’t
+reveal anything more than the inner product itself. In this sense, it
+satisfies the notion of private approximation introduced in <span
+class="citation" data-cites="FIM+06"></span>. In particular, we prove
+the following:</p>
+<div class="lemma">
+<p><span id="lem:simip" label="lem:simip"></span> The output of <span
+class="math inline">\(\mathsf{approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
+can be simulated perfectly given only <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_1 \rangle\)</span>,
+<span class="math inline">\(\langle
+\vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span>.</p>
+</div>
+<p>The proof is found in Appendix <a href="#apx:pfLemma10"
+data-reference-type="ref"
+data-reference="apx:pfLemma10">[apx:pfLemma10]</a>.</p>
+<h4 data-number="5.5.1.4" id="private-protocol-via-jlt."><span
+class="header-section-number">5.5.1.4</span> Private protocol via
+JLT.</h4>
+<p>Using the JLT sketch, we can design a private protocol approximating
+the inner product. See Protocol <a href="#fig:ip-fhe"
+data-reference-type="ref" data-reference="fig:ip-fhe">[fig:ip-fhe]</a>.
+The protocol uses threshold FHE (e.g.,  <span class="citation"
+data-cites="popets:MTBH21"></span>).</p>
+<section id="inputs-2" class="algorithm" data-number="5.5.1.5">
+<h4 data-number="5.5.1.5"><span
+class="header-section-number">5.5.1.5</span> Inputs:</h4>
+<p>Parties <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> has inputs <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> respectively.</p>
+<p>The protocol proceeds as follows:</p>
+<p>Parties set up a threshold FHE scheme.</p>
+<p>They securely sample <span class="math inline">\(k \times n\)</span>
+matrix <span class="math inline">\(\vec M\)</span> described in the
+above with in the threshold FHE. In particular, they jointly generate an
+encrypted random seed <span class="math inline">\(\llbracket s
+\rrbracket\)</span>. Using this randomness, parties homomorphically
+evaluates <span class="math inline">\(\llbracket PRG(s)
+\rrbracket\)</span>, where <span class="math inline">\(PRG\)</span> is a
+pseudorandom generator, to obtain the JLT matrix <span
+class="math inline">\(\llbracket \vec M
+    \rrbracket\)</span>.</p>
+<p>Each party <span class="math inline">\(P_b\)</span> homomorphically
+evaluates <span class="math inline">\(\llbracket \tilde{ \vec{w}}_b
+\rrbracket =
+    \llbracket \vec M \vec{w}_b \rrbracket\)</span>.</p>
+<p>Party <span class="math inline">\(P_1\)</span> sends <span
+class="math inline">\(\llbracket \tilde{\vec{w}}_1 \rrbracket\)</span>
+to <span class="math inline">\(P_2\)</span>.</p>
+<p>Party <span class="math inline">\(P_2\)</span> homomorphically
+evaluates <span class="math inline">\(\llbracket \langle \tilde
+    {\vec{w}}_1, \tilde{\vec{w}}_2 \rangle \rrbracket\)</span> and sends
+it to <span class="math inline">\(P_1\)</span>.</p>
+<p>Parties execute threshold decryption to obtain and output <span
+class="math inline">\(\frac 1 k \cdot \langle \tilde{\vec{w}}_1, \tilde
+{\vec{w}}_2 \rangle\)</span>.</p>
+</section>
+<h4 data-number="5.5.1.6" id="security.-2"><span
+class="header-section-number">5.5.1.6</span> Security.</h4>
+<p>Since every protocol message is a ciphertext, based on semantic
+security of the threshold FHE, it is easy to see that the protocol
+securely realizes a functionality for computing <span
+class="math inline">\({\sf approxIP}\)</span>. Based on Lemma <a
+href="#lem:simip" data-reference-type="ref"
+data-reference="lem:simip">[lem:simip]</a>, the leakage profile of the
+functionality is <span class="math inline">\(\langle \vec{w}_1,
+\vec{w}_1 \rangle\)</span>, <span class="math inline">\(\langle
+\vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span>.</p>
+<h3 data-number="5.5.2" id="sec:const"><span
+class="header-section-number">5.5.2</span> Constant-round protocol for
+product sampling</h3>
+<p>Note that the Protocol <a href="#prot:prodsampapx"
+data-reference-type="ref"
+data-reference="prot:prodsampapx">[prot:prodsampapx]</a> has the
+following structure. In particular:</p>
+<p>The probability that Protocol <a href="#prot:prodsampapx"
+data-reference-type="ref"
+data-reference="prot:prodsampapx">[prot:prodsampapx]</a> samples a good
+index and halts in a given trial is <span class="math inline">\(p = \bra
+\w_1, \w_2 \ket\)</span>.</p>
+<p>We need to repeat <span class="math inline">\(r\)</span> trials in
+parallel so that the probability that all <span
+class="math inline">\(r\)</span> trials fail is negligible. In other
+words, we should have <span class="math display">\[(1 - p)^{r} \le e^{-p
+\cdot r} \le e^{-\omega(\log \secparam)}.\]</span> This means that we
+should have <span class="math inline">\(r &gt; \frac {\omega(\log
+\secparam)}{p}\)</span>.</p>
+<p>Moreover, in the previous subsection, we discussed how to obtain a
+good estimate <span class="math inline">\(\tilde p = (1 \pm \e)
+p\)</span>. Therefore, we should have <span class="math display">\[r
+&gt; \frac {(1+\eps) \cdot \omega(\log \secparam) }{\tilde p}&gt; \frac
+{\omega(\log \secparam)} p .\]</span></p>
+<p>In summary, by running <span class="math inline">\(\frac {(1+\eps)
+\cdot \omega(\log \secparam)
+}{\tilde p}\)</span> instances in parallel, we achieve constant round
+protocols for product sampling with negligible failure probability. The
+final protocol should perform extra steps to hide from which trial the
+output comes from, and these changes can made in a straightforward
+way.</p>
+<h2 data-number="5.6" id="sec:dp"><span
+class="header-section-number">5.6</span> Two-party Exponential
+Mechanism</h2>
+<p>Recall that one of our main motivations for this work is to
+instantiate a two-party version of the exponential mechanism to achieve
+differential privacy. We observe that for many natural loss functions
+(i.e., when the loss function is additive across the two parties), the
+exponential mechanism on two parties is essentially equivalent to
+product sampling. We explain this further with a concrete example in
+Section <a href="#sec:example" data-reference-type="ref"
+data-reference="sec:example">5.6.1</a>.</p>
+<h3 data-number="5.6.1" id="sec:example"><span
+class="header-section-number">5.6.1</span> A concrete example</h3>
+<p>Suppose we want to choose a classifier minimizing the <span
+class="math inline">\(L_2\)</span> error over a test dataset while
+preserving differential privacy of the labeled examples. Suppose there
+are <span class="math inline">\(n\)</span> machine learning classifiers
+<span class="math inline">\((c_1, \ldots, c_n)\)</span>, and a test
+dataset <span class="math inline">\(D = (d_1, \ldots, d_{|D|})\)</span>
+consists of <span class="math inline">\(|D|\)</span> rows. Let <span
+class="math inline">\(\ell_j \in \{0,1\}\)</span> be the label of the
+<span class="math inline">\(j\)</span>-th row <span
+class="math inline">\(d_j\)</span> of the dataset. For a machine
+learning classifier <span class="math inline">\(c_i\)</span>, we define
+its <span class="math inline">\(L_2\)</span> loss function as
+follows:</p>
+<p><span class="math display">\[f^{c_i}_{\mathsf{loss}}(D) := \sum_{j
+\in |D|}(c_i(d_j) - \ell_j)^2/|D|.\]</span></p>
+<p>Now, consider a two-party federated setting in which the parties
+would like to perform computation on the aggregation of their local
+datasets. In particular, we assume party <span
+class="math inline">\(P_1\)</span> (resp., party <span
+class="math inline">\(P_2\)</span>) holds dataset <span
+class="math inline">\(D_1\)</span> (resp., <span
+class="math inline">\(D_2\)</span>) with <span
+class="math inline">\(|D_1| = |D_2|\)</span>. Let <span
+class="math inline">\(D = D_1 || D_2\)</span>.</p>
+<h4 data-number="5.6.1.1"
+id="dp-mechanism-in-the-central-curator-model."><span
+class="header-section-number">5.6.1.1</span> DP mechanism in the central
+curator model.</h4>
+<p>In our mechanism, the central curator would receive input from
+parties <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> and choose classifier <span
+class="math inline">\(c_i\)</span> with a <span
+class="math inline">\((\epsilon, 0)\)</span>-DP guarantee using the
+exponential mechanism.</p>
+<p>We observe that the <span class="math inline">\(L_2\)</span> loss
+function <span class="math inline">\(f^{c_i}_{\mathsf{loss}}(D)\)</span>
+over the entire dataset <span class="math inline">\(D\)</span> can be
+computed by each party <span class="math inline">\(P_b\)</span> <span>
+<em>first locally computing</em></span> <span
+class="math display">\[f^{c_i}_{\mathsf{loss}}(D_b) := \sum_{j \in
+|D_b|}(c_i(d_{b,j}) - \ell_{b,j})^2/|D|,\]</span> and then computing
+<span class="math inline">\(f^{c_i}_{\mathsf{loss}}(D) =
+f^{c_i}_{\mathsf{loss}}(D_1) +
+f^{c_i}_{\mathsf{loss}}(D_2).\)</span></p>
+<p>Based on the above observation, in our mechanism, each party <span
+class="math inline">\(P_b\)</span> computes a vector <span
+class="math inline">\(\vec{v}_b\)</span> as follows:</p>
+<p>For <span class="math inline">\(b \in \{1,2\}\)</span>, let <span
+class="math inline">\(\vec{v}_b = (v_{b,1}, \ldots, v_{b,
+n})\)</span>, where <span class="math inline">\(v_{b,i} = e^{-\epsilon
+\cdot \frac{
+f^{c_i}_{\mathsf{loss}}(D_b)}{2 \Delta u}}\)</span> and <span
+class="math inline">\(\Delta u =
+\frac{\e}{40(\log n + t)}\)</span>, and <span
+class="math inline">\(\secparam\)</span> is the security parameter.
+Then, each party <span class="math inline">\(P_b\)</span> computes <span
+class="math inline">\(\w_b :=
+\frac{\vec{v}_{b}}{||\vec{v}_b||_1}\)</span> (i.e., the normalization of
+<span class="math inline">\(\vec{v}_b\)</span>), and sends <span
+class="math inline">\(\w_b\)</span> to the central curator. Finally, the
+curator will choose classifier <span class="math inline">\(c_i\)</span>
+with the probability <span class="math inline">\(\frac{w_{i,i} \cdot
+w_{i,2}}{\ipw}\)</span>.</p>
+<div class="lemma">
+<p>If <span class="math inline">\(|D| \ge 40 (\log n +
+\secparam)/\epsilon\)</span>, our mechanism provides <span
+class="math inline">\((\epsilon, 0)\)</span>-DP.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(q_i(D) =
+\frac{-f^{c_i}_{\mathsf{loss}}(D)}{2 \Delta u}\)</span>. We first show
+that drawing a sample from the product distribution of <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> is identical to
+running the exponential mechanism to select classifier <span
+class="math inline">\(c_i\)</span> with probability <span
+class="math display">\[\frac{e^{\epsilon q_i(D)}
+}{\sum_{j \in [n]} e^{\epsilon q_j(D)}}.\]</span> Recall that product
+sampling on inputs <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span> returns index <span class="math inline">\(i\)</span>
+with probability <span class="math inline">\(\frac{{w}_{1,i} \cdot
+{w}_{2,i}}{\langle \vec{w}_1, \vec{w}_2\rangle}\)</span>. Since <span
+class="math inline">\({w}_{b,i} =
+\frac{{v}_{b,i}}{||\vec{v}_b||_1}\)</span>, we can rewrite the previous
+equation as <span class="math display">\[\begin{aligned}
+\frac{{w}_{1,i} \cdot {w}_{2,i}}{\langle \vec{w}_1,
+\vec{w}_2\rangle} &amp; = \frac{{v}_{1,i}
+\cdot {v}_{2,i}}{\ip{\vec{v}_1}{\vec{v}_2}}
+    &amp;= \frac{e^{\epsilon \cdot q_i(D_1)}\cdot e^{\epsilon \cdot
+q_i(D_2)}}
+    {\sum_{j \in [n]} e^{\epsilon \cdot q_j(D_1)} \cdot e^{\epsilon
+\cdot q_j(D_2)}}
+    = \frac{e^{\epsilon \cdot q_i(D)}} {\sum_{j \in [n]} e^{\epsilon
+\cdot q_j(D)}}
+\end{aligned}\]</span></p>
+<p>Note that the loss functions have global sensitivity of <span
+class="math inline">\(1/|D|\)</span> since a change to the <span
+class="math inline">\(j\)</span>-th row of <span
+class="math inline">\(D_b\)</span> can cause <span
+class="math inline">\(f^{c_i}_{\mathsf{loss}}(D_b)\)</span> to change by
+<span class="math inline">\(\pm 1/|D|\)</span>. Instead of using <span
+class="math inline">\(1/|D|\)</span>, our mechanism uses a larger value
+<span class="math inline">\(\Delta u\)</span>. Since the <span
+class="math inline">\(\Delta u\)</span> is larger than the sensitivity
+whenever <span class="math inline">\(|D| \ge 40
+(\log{n}+\secparam)/\epsilon\)</span>, and our mechanism is a simple
+exponential mechanism, <span class="math inline">\((\e, 0)\)</span>-DP
+holds. 0◻ ◻</p>
+</div>
+<h4 data-number="5.6.1.2" id="utility."><span
+class="header-section-number">5.6.1.2</span> Utility.</h4>
+<p>Although using a larger value <span class="math inline">\(\Delta
+u\)</span> deteriorates the utility of the mechanism, we show that the
+utility is still acceptable. Applying Theorem 3.11 in <span
+class="citation" data-cites="DR14"></span> to our setting, we have <span
+class="math display">\[\Pr\left[f_{\sf loss}^{c_i}(D)
+\le f_{\sf loss}^{c_{opt}}(D) - \frac{2 \Delta u}{\e} \cdot (\log n +
+\secparam)
+\right] \le e^{-\secparam}.\]</span></p>
+<p>Noting that <span class="math inline">\(\Delta u = \frac{\e}{40(\log
+n + \secparam)}\)</span>, we have <span
+class="math display">\[\Pr\left[f_{\sf loss}^{c_i}(D) \le f_{\sf
+loss}^{c_{opt}}(D) - 1/20 \right] \le e^{-\secparam}.\]</span> Viewing
+<span class="math inline">\(f_{\sf
+loss}^{c_{opt}}(D)\)</span> as the optimal accuracy for the chosen
+classifier. This implies that our mechanism returns a classifier that is
+at most 5% less accurate than the optimal classifier. We note that an
+even smaller loss in accuracy can be achieved by increasing <span
+class="math inline">\(\Delta u\)</span> and the minimum size of <span
+class="math inline">\(D\)</span> accordingly.</p>
+<p>Jumping ahead, we use this larger <span class="math inline">\(\Delta
+u\)</span> in order to achieve differential privacy of the approximate
+inner product evaluation to be described in the next section.</p>
+<h3 data-number="5.6.2"
+id="differentially-private-inner-product-for-the-exponential-mechanism"><span
+class="header-section-number">5.6.2</span> Differentially-Private Inner
+Product for the Exponential Mechanism</h3>
+<h4 data-number="5.6.2.1"
+id="issue-dp-is-broken-due-to-leakage-ipw."><span
+class="header-section-number">5.6.2.1</span> Issue: DP is broken due to
+leakage <span class="math inline">\(\ipw\)</span>.</h4>
+<p>Based on the result of the previous subsection, we can simply run the
+product sampling protocol to achieve a two-party exponential mechanism
+without the central curator. However, there is one issue we need to
+address. In particular, the leakage from the previously described
+protocols for product sampling violates the DP guarantee of the
+exponential mechanism; the leakage <span
+class="math inline">\(\ipw\)</span> is clearly not differentially
+private with respect to <span class="math inline">\(P_2\)</span>’s
+input.</p>
+<p>Thus, to instantiate the exponential mechanism, we give an
+alternative inner product approximation protocol that achieves
+differential privacy. Using this approximation, we can build a protocol
+that is able to sample from exactly the product distribution while
+additionally leaking a value <span
+class="math inline">\(\mathsf{leak}\)</span> that is
+differentially-private and thus does not violate the DP guarantee of the
+exponential mechanism. We build such a protocol based on the approximate
+inner product using the JLT given in Section <a href="#sec:jlt"
+data-reference-type="ref" data-reference="sec:jlt">5.5.1</a>.</p>
+<h4 data-number="5.6.2.2"
+id="approximating-the-inner-product-differentially-privately."><span
+class="header-section-number">5.6.2.2</span> Approximating the inner
+product differentially privately.</h4>
+<p>We now describe a mechanism, executed by a trusted curator, to
+approximate the inner product on inputs <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span> with <span
+class="math inline">\({w}_{b,i} =
+\frac{{v}_{b,i}}{||\vec{v}_b||_1}\)</span> for <span
+class="math inline">\(b \in \{1,2\}\)</span> and <span
+class="math inline">\(i \in [n]\)</span> as described above. This
+mechanism is essentially the <span> approxIP</span> algorithm described
+in Section <a href="#sec:jlt" data-reference-type="ref"
+data-reference="sec:jlt">5.5.1</a> with noise added in the exponent to
+guarantee differential privacy.</p>
+<p><span class="math inline">\(\dIP(\w_1, \w_2)\)</span>:</p>
+<p>Choose <span class="math inline">\(k \times n\)</span> matrix <span
+class="math inline">\(\vec{M}\)</span> such that each entry <span
+class="math inline">\(M_{i,j}\)</span> chosen from an independent
+Gaussian distribution of mean <span class="math inline">\(0\)</span> and
+variance <span class="math inline">\(1\)</span>. The dimension <span
+class="math inline">\(k\)</span> (with <span class="math inline">\(k \ll
+n\)</span>) is determined appropriately according to Lemma <a
+href="#lem:jlt_k" data-reference-type="ref"
+data-reference="lem:jlt_k">[lem:jlt_k]</a>.</p>
+<p>Choose a value <span class="math inline">\(x\)</span> from the
+Laplace distribution <span class="math inline">\({\sf
+Lap}(1/(\Delta u \cdot |D|))\)</span>.</p>
+<p>Output <span class="math inline">\(e^x \cdot \langle
+\vec{M}\vec{w}_1, \vec{M}\vec{w}_2
+\rangle\)</span>.</p>
+<h4 data-number="5.6.2.3" id="public-sampling-of-vec-m."><span
+class="header-section-number">5.6.2.3</span> Public sampling of <span
+class="math inline">\(\vec M\)</span>.</h4>
+<p>Contrary to Section <a href="#sec:rounds" data-reference-type="ref"
+data-reference="sec:rounds">5.5</a> where <span
+class="math inline">\(\vec M\)</span> was sampled inside the FHE, here,
+the matrix <span class="math inline">\(\vec M\)</span> can be publicly
+sampled (e.g., through a commonly chosen random PRG seed), since DP is
+achieved through adding a Laplace noise.</p>
+<h4 data-number="5.6.2.4" id="differential-privacy."><span
+class="header-section-number">5.6.2.4</span> Differential privacy.</h4>
+<p>We say that two datasets <span class="math inline">\(D\)</span> and
+<span class="math inline">\(D&#39;\)</span> are <em>neighboring</em> if
+they differ in exactly one row.</p>
+<p>Recall that, as in the application described in Section <a
+href="#sec:example" data-reference-type="ref"
+data-reference="sec:example">5.6.1</a>, the parties’ inputs to the
+product sampling are of the form <span
+class="math inline">\(\vec{w}_b\)</span> where <span
+class="math inline">\({w}_{b,i} \propto e^{-\epsilon \cdot
+\frac{f^{c_i}_{\mathsf{loss}}(D_b)}{2 \Delta u}}\)</span> for some
+additive loss functions <span
+class="math inline">\(f^{c_i}_\mathsf{loss}\)</span>.</p>
+<div class="theorem">
+<p>If <span class="math inline">\(|D| \ge 40 \cdot (\log n +
+\secparam)/\epsilon\)</span>, the mechanism <span
+class="math inline">\(\dIP\)</span> is <span
+class="math inline">\(\epsilon\)</span>-differentially private w.r.t a
+database <span class="math inline">\(D_1\)</span> (resp., <span
+class="math inline">\(D_2\)</span>) when the loss functions <span
+class="math inline">\(f^{c_i}_{\mathsf{loss}}(D)\)</span> have low
+sensitivity <span class="math inline">\(1/|D|\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We prove differential privacy with respect to <span
+class="math inline">\(D_1\)</span> (i.e., the adversary knows <span
+class="math inline">\(D_2\)</span> and the differential privacy
+guarantee holds relative to rows of <span
+class="math inline">\(D_1\)</span>). The reverse case is analogous.</p>
+<p>Note that the change of a single row in <span
+class="math inline">\(D_1\)</span> causes the values <span
+class="math inline">\({v}_{1,i}\)</span> (for <span
+class="math inline">\(i \in [n]\)</span>) and the value <span
+class="math inline">\(\|\vec{v}_1\|_1\)</span> to change by at most a
+multiplicative factor of <span class="math inline">\(\alpha := e^{\pm
+\epsilon / (2
+\Delta u \cdot |D|)}\)</span>. Thus, letting <span
+class="math inline">\(\vec{M}_\ell\)</span> be the <span
+class="math inline">\(\ell\)</span>-th row of the JLT matrix (which is
+fixed and public), for each <span class="math inline">\(\ell \in
+[k]\)</span>, the value <span class="math inline">\(\langle
+\vec{M}_\ell,  \vec{w}_b \rangle\)</span> can change by at most a
+multiplicative factor of <span class="math inline">\(\alpha^2\)</span>.
+Therefore, the dot product <span class="math inline">\(\langle \vec{M}
+\vec{w}_1, \vec{M}
+\vec{w}_2\rangle\)</span> can change by at most a multiplicative factor
+of <span class="math inline">\(\alpha^2\)</span>.</p>
+<p>Ultimately, this means that we have additive sensitivity of <span
+class="math inline">\(\epsilon/
+(\Delta u \cdot |D|)\)</span> in the <em>exponent</em>. To achieve
+differential privacy, we thus need to multiply the dot product estimate
+by <span class="math inline">\(e^x\)</span>, where <span
+class="math inline">\(x\)</span> is drawn from <span
+class="math inline">\(\mathsf{Lap}(1/ (\Delta u \cdot |D|))\)</span>.
+0◻ ◻</p>
+</div>
+<h4 data-number="5.6.2.5" id="correctness."><span
+class="header-section-number">5.6.2.5</span> Correctness.</h4>
+<p>We briefly analyze the estimation error due to the added noise. Since
+<span class="math inline">\(x\)</span> is drawn from <span
+class="math inline">\(\mathsf{Lap}(1/(\Delta u \cdot |D|))\)</span>, the
+probability that <span class="math inline">\(|x| \geq \epsilon\)</span>
+is at most <span class="math inline">\(e^{-\Delta u \cdot
+|D|}\)</span>. When <span class="math inline">\(|D| &gt; \Delta u \cdot
+\secparam /\epsilon\)</span>, this probability is at most <span
+class="math inline">\(e^{-\secparam}\)</span>, which is negligible.</p>
+<p>In other words, when <span class="math inline">\(D\)</span> is a
+sufficiently large dataset, with overwhelming probability, the incurred
+multiplicative error is <span class="math inline">\(e^{|x|}
+\le e^{\epsilon} &lt; 1+2\epsilon\)</span>. Thus, differential privacy
+adds at most a <span class="math inline">\(1 \pm 2\epsilon\)</span>
+multiplicative error on top of the error of the approximation
+algorithm.</p>
+<h4 data-number="5.6.2.6" id="removing-the-curator."><span
+class="header-section-number">5.6.2.6</span> Removing the curator.</h4>
+<p>We described the inner product approximation protocol as being run by
+a trusted curator. As is standard, we can replace this curator with a
+secure 2-PC evaluating the mechanism to achieve computational DP.</p>
+<h3 data-number="5.6.3"
+id="instantiating-the-exponential-mechanism"><span
+class="header-section-number">5.6.3</span> Instantiating the Exponential
+Mechanism</h3>
+<p>We now have all the necessary pieces to instantiate a sublinear
+communication protocol to evaluate the exponential mechanism for a
+database <span class="math inline">\(D\)</span> held jointly by two
+parties.</p>
+<h4 data-number="5.6.3.1"
+id="the-two-party-exponential-mechanism-protocol."><span
+class="header-section-number">5.6.3.1</span> The two-party exponential
+mechanism protocol.</h4>
+<p>We now describe the distributed exponential mechanism where <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(D_b\)</span> and the loss functions have low
+sensitivity. This protocol is in the <span
+class="math inline">\(\F_\oslone\)</span>-hybrid model.</p>
+<p><span id="prot:prodsampdp" label="prot:prodsampdp"></span></p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> Party <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(D_b\)</span></p>
+<ol>
+<li><p><span class="math inline">\(P_b\)</span> computes <span
+class="math inline">\(\vec{v}_b = (v_{b, 1}, \ldots, v_{b,n})\)</span>
+such that <span class="math inline">\({v}_{b,i} = e^{-\epsilon \cdot
+    \frac{f^{c_i}_{\mathsf{loss}}(D^b)}{2 \Delta u}}\)</span>, where
+<span class="math inline">\(\Delta u =
+    \frac{\e}{40(\log n + \secparam)}\)</span>. Let <span
+class="math inline">\(\vec{w}_{b}=\frac{\vec{v}_{b}}{||\vec{v}_b||_1}\)</span>.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_{2PC}\)</span> ideal
+functionality to evaluate <span class="math inline">\(\eta =
+{\dIP}(\w_1,
+    \w_2)\)</span>. Note that <span class="math inline">\(\eta\)</span>
+is an <span class="math inline">\((1+2\epsilon)\)</span>-approximation
+of the inner product.</p></li>
+<li><p>The parties execute the following steps <span
+class="math inline">\(m=\frac{(1+2\e) \cdot
+    \omega(\log{\secparam})}{\eta}\)</span> times in parallel.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_\oslone\)</span> ideal
+functionality with <span class="math inline">\(P_1\)</span> as the
+sender with input <span class="math inline">\(\vec{w}_1\)</span> and
+<span class="math inline">\(P_2\)</span> as the receiver. Let <span
+class="math inline">\(i_{1,1}^j\)</span> and <span
+class="math inline">\(i_{1,2}^j\)</span> be the output of the <span
+class="math inline">\(j\)</span>th execution to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_\oslone\)</span> ideal
+functionality with <span class="math inline">\(P_2\)</span> as the
+sender with input <span class="math inline">\(\vec{w}_2\)</span> and
+<span class="math inline">\(P_1\)</span> as the receiver. Let <span
+class="math inline">\(i_{2,1}^j\)</span> and <span
+class="math inline">\(i_{2,2}^j\)</span> be the output of the <span
+class="math inline">\(j\)</span>th execution to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p></li>
+<li><p>Invoke the <span class="math inline">\(\F_{2PC}\)</span> ideal
+functionality for the following circuit:</p></li>
+<li><p>Input: <span class="math inline">\((i_{1,1}^j, i_{2,1}^j,
+i_{1,2}^j, i_{2,2}^j)\)</span> for <span class="math inline">\(j = 1,
+\ldots, m\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(i_1^j = i_{1,1}^j \xor
+i_{1,2}^j\)</span>, <span class="math inline">\(i_2^j = i_{2,1}^j \xor
+i_{2,2}^j\)</span>.</p></li>
+<li><p>Find the smallest <span class="math inline">\(j\)</span> such
+that <span class="math inline">\(i_1^j\)</span> equals <span
+class="math inline">\(i_2^j\)</span>, and output <span
+class="math inline">\(i_1^j\)</span> to both <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>. If no such <span
+class="math inline">\(j\)</span> exists, output <span
+class="math inline">\(\mathsf{abort}\)</span>.</p></li>
+</ol>
+<p><strong>Output:</strong> Both parties output the sampled index <span
+class="math inline">\(i\)</span> or <span
+class="math inline">\(\mathsf{abort}\)</span>.</p>
+</div>
+<h4 data-number="5.6.3.2" id="security.-3"><span
+class="header-section-number">5.6.3.2</span> Security.</h4>
+<p>We will prove the following theorem.</p>
+<div class="theorem">
+<p><span id="thm:prodDP" label="thm:prodDP"></span> If <span
+class="math inline">\(|D| \ge 40 \cdot \secparam (\log n +
+\secparam)/\epsilon^2\)</span>, protocol <span
+class="math inline">\(\Pi_{\mathsf{EM}}\)</span> is <span
+class="math inline">\((2\epsilon,\negl(\secparam))\)</span>-DP.</p>
+</div>
+<p>It is easy to see that this protocol runs an enough number of product
+samplings in parallel so that it does not output <span
+class="math inline">\(\mathsf{abort}\)</span>, except with negligible
+probability (see Section <a href="#sec:const" data-reference-type="ref"
+data-reference="sec:const">5.5.2</a>). Therefore, for the proof, we
+assume that the protocol does not output <span
+class="math inline">\(\mathsf{abort}\)</span>.</p>
+<div class="proof">
+<p><em>Proof.</em> We first consider where <span
+class="math inline">\(P_1\)</span> is corrupted by the adversary <span
+class="math inline">\(A\)</span>. Let <span
+class="math inline">\(\view_A(D)\)</span> be the view of the protocol to
+<span class="math inline">\(A\)</span> (consisting of input, output and
+transcript) in the <span class="math inline">\(\{\F_{2PC}, \F_\oslone
+\}\)</span>-hybrid model. In the <span
+class="math inline">\(j\)</span>-th invocation of <span
+class="math inline">\(\F_\oslone\)</span>, the outputs <span
+class="math inline">\(\{i_{1,1}^j,
+i_{2,1}^j\}_j, i)\)</span> sent to <span
+class="math inline">\(A\)</span> by the ideal functionality are
+uniformly distributed and independent of <span
+class="math inline">\(D\)</span>. Thus, WLOG, we assume that <span
+class="math inline">\(A\)</span>’s view consists of its input,
+transcript <span class="math inline">\(\eta\)</span>, and output <span
+class="math inline">\(i\)</span>. Let <span
+class="math inline">\(\view^{\mathsf{trans}}_A(D)\)</span> (resp., <span
+class="math inline">\(\view^{\mathsf{out}}_A(D)\)</span>) be the
+transcript (resp., output) contained in <span
+class="math inline">\(A\)</span>’s view during a random execution of the
+protocol with input <span class="math inline">\(D\)</span>.</p>
+<p>For all neighboring database <span class="math inline">\(D\)</span>
+and <span class="math inline">\(D&#39;\)</span>, and for all <span
+class="math inline">\(\eta\)</span> and <span
+class="math inline">\(i\)</span>, we have: <span
+class="math display">\[\begin{aligned}
+&amp;&amp; \Pr[\view^{\mathsf{trans}}_A(D) = \eta,
+\view^{\mathsf{out}}_A(D) = i] \\
+&amp;&amp; = \Pr[\view^{\mathsf{trans}}_A(D) = \eta] \cdot
+\Pr[\view^{\mathsf{out}}_A(D) = i | \eta]  \\
+&amp;&amp; \le e^{\e} \Pr[\view^{\mathsf{trans}}_A(D&#39;) = \eta] \cdot
+\Pr[\view^{\mathsf{out}}_A(D) = i | \eta] \\
+&amp;&amp; \le e^{\e} \Pr[\view^{\mathsf{trans}}_A(D&#39;) = \eta] \cdot
+e^{\e} \Pr[\view^{\mathsf{out}}_A(D&#39;) = i | \eta] \\
+&amp;&amp; = e^{2\e} \Pr[\view^{\mathsf{trans}}_A(D&#39;) = \eta,
+\view^{\mathsf{out}}_A(D&#39;) = i],
+\end{aligned}\]</span></p>
+<p>The first inequality holds form the DP of protocol <span
+class="math inline">\(\dIP\)</span>, and the second inequality holds
+from the DP of the exponential mechanism.</p>
+<p>The case when <span class="math inline">\(P_2\)</span> is corrupted
+can be proved similarly. 0◻ ◻</p>
+</div>
+<h1 data-number="6" id="minhash"><span
+class="header-section-number">6</span> MinHash</h1>
+<h1 data-number="7" id="facts"><span
+class="header-section-number">7</span> FACTs</h1>
+<h1 data-number="8" id="timeline"><span
+class="header-section-number">8</span> Timeline</h1>
 <p>The following timeline outlines the completion of the remaining
 research items and the preparation of the final dissertation. As noted,
 Lines 1 and 2 are largely complete. The schedule focuses on the
@@ -645,8 +3438,8 @@ Defense.</em></td>
 </tbody>
 </table>
 </div>
-<h1 data-number="5" id="preliminary-results"><span
-class="header-section-number">5</span> Preliminary Results</h1>
+<h1 data-number="9" id="preliminary-results"><span
+class="header-section-number">9</span> Preliminary Results</h1>
 <p>As detailed in previous sections, the research objectives for our
 first line of work (Secure Search, Sampling, and Similarity) and the
 second line of work (the baseline FACTs architecture) have been
@@ -659,8 +3452,8 @@ Zero-Knowledge Proofs / MPC]</em>. The goal of these experiments is to
 demonstrate that utilizing these more advanced cryptographic tools—which
 offer stronger privacy properties than the original FACTs design—remains
 computationally feasible for real-time deployment.</p>
-<h2 data-number="5.1" id="microbenchmarks-of-new-toolprimitive"><span
-class="header-section-number">5.1</span> Microbenchmarks of [New
+<h2 data-number="9.1" id="microbenchmarks-of-new-toolprimitive"><span
+class="header-section-number">9.1</span> Microbenchmarks of [New
 Tool/Primitive]</h2>
 <p>Unlike the lightweight hash-based structures used in the original
 FACTs system, our proposed follow-up employs <em>[New Tool Name]</em>. A
@@ -678,8 +3471,8 @@ within the tolerance for asynchronous message delivery.</p></li>
 policy increases (x-axis), the runtime grows linearly/polynomially,
 suggesting it can handle complex policy logic.</p></li>
 </ul>
-<h2 data-number="5.2" id="bandwidth-overhead-analysis"><span
-class="header-section-number">5.2</span> Bandwidth Overhead
+<h2 data-number="9.2" id="bandwidth-overhead-analysis"><span
+class="header-section-number">9.2</span> Bandwidth Overhead
 Analysis</h2>
 <p>A key differentiator of this new angle is its focus on <em>[Insert
 Specific Angle, e.g., metadata minimization / collaborative
@@ -730,16 +3523,16 @@ Method]</strong></th>
 </tbody>
 </table>
 </div>
-<h2 data-number="5.3" id="conclusion-of-preliminary-data"><span
-class="header-section-number">5.3</span> Conclusion of Preliminary
+<h2 data-number="9.3" id="conclusion-of-preliminary-data"><span
+class="header-section-number">9.3</span> Conclusion of Preliminary
 Data</h2>
 <p>These benchmarks indicate that while the proposed tools for this
 follow-up work are computationally heavier than the original FACTs
 primitives, they operate within the safety margins of modern messaging
 infrastructure. This confirms the feasibility of exploring this new
 angle without rendering the system unusable.</p>
-<h1 data-number="6" id="conclusion"><span
-class="header-section-number">6</span> Conclusion</h1>
+<h1 data-number="10" id="conclusion"><span
+class="header-section-number">10</span> Conclusion</h1>
 <p>This proposal outlines a comprehensive research agenda addressing the
 tension between data privacy and utility, culminating in a rigorous
 examination of accountability in end-to-end encrypted systems.</p>
@@ -757,6 +3550,39 @@ moderation tools. Together, these three lines of work will contribute a
 unified framework for <strong>scalable, privacy-preserving data
 systems</strong>, providing both theoretical advancements and practical
 tools for the next generation of secure communication platforms.</p>
+<aside id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Of course, if <span class="math inline">\(\ipw =
+0\)</span>, the probability space is not well-defined, and in this case,
+we require the protocol to simply output <span
+class="math inline">\(\bot\)</span>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Throughout the paper, we will describe the round and
+communication complexities using the asymptotic notation only based on
+<span class="math inline">\(n\)</span>. That is, all other parameters
+(e.g., security parameter) independent on <span
+class="math inline">\(n\)</span> will be suppressed in the asymptotic
+expressions.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Here the assumption that <span
+class="math inline">\(\vec{w}\)</span> are normalized is without loss of
+generality.<a href="#fnref3" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Regarding <span class="math inline">\(\ipw\)</span>,
+there is a gap between the lowerbound result (i.e., <span
+class="math inline">\(\Omega(\frac{1}{n^2})\)</span>) and our
+construction (i.e., <span class="math inline">\(\omega(\frac{\log
+n}{n})\)</span>). Resolving the gap is left as an interesting open
+problem.<a href="#fnref4" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This can be shown by a simple modification of the lower
+bound proof from Section <a href="#sec:prodLB" data-reference-type="ref"
+data-reference="sec:prodLB">5.4.1</a>.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</aside>
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
 <style>
