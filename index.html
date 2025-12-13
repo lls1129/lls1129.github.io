@@ -1998,12 +1998,12 @@ following circuit:</p>
 <p>Output: <span class="math inline">\(i_1 \cdot (1-b) + i_2 \cdot
 b\)</span>.</p>
 </div>
-<div id="th:l1" class="theorem">
-<p><strong>Theorem 1</strong>. <em>Protocol <a href="#fig:l1"
+<div class="theorem">
+<p><span id="th:l1" label="th:l1"></span> Protocol <a href="#fig:l1"
 data-reference-type="ref" data-reference="fig:l1">[fig:l1]</a> securely
 realizes <span class="math inline">\(\F_{L_1}\)</span> with semi-honest
 security in the <span class="math inline">\((\F_\oslone,
-\F_\bcoin)\)</span>-hybrid.</em></p>
+\F_\bcoin)\)</span>-hybrid.</p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfTheorem1"
 data-reference-type="ref"
@@ -2062,14 +2062,14 @@ class="math inline">\(c\)</span> is decrypted to the receiver.</p>
 receiver outputs the decryption of <span
 class="math inline">\(c\)</span>.</p>
 </div>
-<div id="thm:os-fhe" class="theorem">
-<p><strong>Theorem 2</strong>. <em>Assuming the existence of threshold
-FHE with <span
+<div class="theorem">
+<p><span id="thm:os-fhe" label="thm:os-fhe"></span> Assuming the
+existence of threshold FHE with <span
 class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
 security, Protocol <a href="#fig:os-fhe" data-reference-type="ref"
 data-reference="fig:os-fhe">[fig:os-fhe]</a> securely realizes <span
 class="math inline">\(\F_{\oslone}\)</span> in the semi-honest security
-model.</em></p>
+model.</p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfTheorem2"
 data-reference-type="ref"
@@ -2115,22 +2115,22 @@ class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
 distribution <span
 class="math inline">\(D_{\mathsf{ignore}}\)</span>.</p>
 <div class="definition">
-<p><strong>Definition 3</strong>. <em>For input vectors <span
-class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, let <span
+<p>For input vectors <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span>, let <span
 class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
 be the distribution that “ignores” the cross term in <span
 class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>. I.e. <span
 class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
 samples index <span class="math inline">\(i \in [n]\)</span> with
 probability <span class="math inline">\(\frac{w^2_{1,i} +
-w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\)</span>.</em></p>
+w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\)</span>.</p>
 </div>
-<div id="lem:ignore" class="lemma">
-<p><strong>Lemma 4</strong>. <em>There exists a protocol <span
-class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for sampling from
-<span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
+<div class="lemma">
+<p><span id="lem:ignore" label="lem:ignore"></span> There exists a
+protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
+sampling from <span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
 \vec{w}_2)\)</span> with <span
-class="math inline">\(\tilde{O}(1)\)</span> communication.</em></p>
+class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
@@ -2139,30 +2139,29 @@ the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
 D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
 </div>
 <div class="definition">
-<p><strong>Definition 5</strong>. <em>For <span class="math inline">\(i
-\in [n]\)</span>, let the corrective parameter function be defined as
-<span class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) :=
-\frac{w_{1,i}^2 + 2w_{1,i}w_{2,i} +
-w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.\]</span></em></p>
+<p>For <span class="math inline">\(i \in [n]\)</span>, let the
+corrective parameter function be defined as <span
+class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{w_{1,i}^2 +
+2w_{1,i}w_{2,i} +
+w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.\]</span></p>
 </div>
 <div class="definition">
-<p><strong>Definition 6</strong>. <em>The constant <span
-class="math inline">\(c := c(\vec{w}_1, \vec{w}_2)\)</span> is defined
-as <span class="math display">\[c(\vec{w}_1, \vec{w}_2) :=
-\frac{||\vec{w}_1 + \vec{w}_2||_2^2}{||\vec{w}_1||_2^2 +
-||\vec{w}_2||_2^2}\]</span> This ensures that for every <span
-class="math inline">\(i\)</span>, <span
+<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
+\vec{w}_2)\)</span> is defined as <span
+class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
+\vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\]</span> This
+ensures that for every <span class="math inline">\(i\)</span>, <span
 class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
-\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</em></p>
+\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
 </div>
 <p>The following lemma will be useful for arguing the validity of the
 final protocol.</p>
-<div id="lem:close_dist" class="lemma">
-<p><strong>Lemma 7</strong>. <em>For all <span class="math inline">\(i
-\in \mathsf{supp}(D_{L_2}(\vec{w}_1, \vec{w}_2))\)</span>, <span
+<div class="lemma">
+<p><span id="lem:close_dist" label="lem:close_dist"></span> For all
+<span class="math inline">\(i \in \mathsf{supp}(D_{L_2}(\vec{w}_1,
+\vec{w}_2))\)</span>, <span
 class="math inline">\(\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c
-\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1,
-\vec{w}_2)}[i]\)</span>.</em></p>
+\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> <span class="math display">\[\begin{aligned}
@@ -2224,13 +2223,13 @@ probability <span class="math display">\[\begin{aligned}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
 </section>
-<div id="lem:insecure_L2_prot" class="lemma">
-<p><strong>Lemma 8</strong>. <em>With all but negligible probability, on
-inputs <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, <span
+<div class="lemma">
+<p><span id="lem:insecure_L2_prot" label="lem:insecure_L2_prot"></span>
+With all but negligible probability, on inputs <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, <span
 class="math inline">\(\Pi_{L_2}\)</span> samples exactly correctly from
 <span class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>, and
-has communication <span
-class="math inline">\(\tilde{O}(1)\)</span>.</em></p>
+has communication <span class="math inline">\(\tilde{O}(1)\)</span>.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Note that <span
@@ -2258,13 +2257,14 @@ number of rounds. Further, it can be immediately noted that condition
 (<a href="#eq:rejection" data-reference-type="ref"
 data-reference="eq:rejection">[eq:rejection]</a>) is met due to Lemma <a
 href="#lem:close_dist" data-reference-type="ref"
-data-reference="lem:close_dist">7</a>. Finally, each round has <span
-class="math inline">\(\tilde{O}(1)\)</span> communication, since <span
+data-reference="lem:close_dist">[lem:close_dist]</a>. Finally, each
+round has <span class="math inline">\(\tilde{O}(1)\)</span>
+communication, since <span
 class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> has communication
 <span class="math inline">\(\tilde{O}(1)\)</span> (by Lemma <a
 href="#lem:ignore" data-reference-type="ref"
-data-reference="lem:ignore">4</a>) and since, in addition to that, only
-a constant number of length <span
+data-reference="lem:ignore">[lem:ignore]</a>) and since, in addition to
+that, only a constant number of length <span
 class="math inline">\(\tilde{O}(1)\)</span> values are exchanged in each
 round. Combining the above, we have that <span
 class="math inline">\(\Pi_{L_2}\)</span> has expected communication
@@ -2273,13 +2273,12 @@ all but negligible probability) communication <span
 class="math inline">\(\tilde{O}(1)\)</span>. 0◻ ◻</p>
 </div>
 <div class="remark">
-<p><strong>Remark 9</strong>. <em>Note that the protocol and analysis
-above did not require that vectors <span
-class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> are normalized.
-I.e. we do not require that <span
+<p>Note that the protocol and analysis above did not require that
+vectors <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> are
+normalized. I.e. we do not require that <span
 class="math inline">\(||\vec{w}_1||_1\)</span> or <span
 class="math inline">\(||\vec{w}_2||_1\)</span> are equal to <span
-class="math inline">\(1\)</span> or to each other.</em></p>
+class="math inline">\(1\)</span> or to each other.</p>
 </div>
 <h3 data-number="6.3.2" id="sec:secure"><span
 class="header-section-number">6.3.2</span> Secure <span
@@ -2382,15 +2381,15 @@ with all but negligible probability,</p>
 <h4 data-number="6.3.2.3" id="security."><span
 class="header-section-number">6.3.2.3</span> Security.</h4>
 <p>Security of our protocol is stated through the following theorem.</p>
-<div id="th:l2" class="theorem">
-<p><strong>Theorem 10</strong>. <em>Assuming the existence of threshold
-FHE with <span
+<div class="theorem">
+<p><span id="th:l2" label="th:l2"></span> Assuming the existence of
+threshold FHE with <span
 class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
 security, Protocol <a href="#fig:l2" data-reference-type="ref"
 data-reference="fig:l2">[fig:l2]</a> securely realizes the <span
 class="math inline">\(L_2\)</span> sampling functionality in the <span
 class="math inline">\(\{\F_{L_1}^{ss}, \F_{2PC}\}\)</span>-hybrid model
-with semi-honest security.</em></p>
+with semi-honest security.</p>
 </div>
 <p>We provide the proof in Appendix <a href="#apx:pfTheorem3"
 data-reference-type="ref"
@@ -2456,23 +2455,23 @@ D_{L_p}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ]
 distribution <span class="math inline">\(D_{\mathsf{ignore},
 p}\)</span>.</p>
 <div class="definition">
-<p><strong>Definition 11</strong>. <em>For input vectors <span
-class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, let <span
+<p>For input vectors <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span>, let <span class="math inline">\(D_{\mathsf{ignore},
+p}(\vec{w}_1, \vec{w}_2)\)</span> be the distribution that “ignores” the
+cross term in <span class="math inline">\(D_{L_p}(\vec{w}_1,
+\vec{w}_2)\)</span>. I.e. <span
 class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
-\vec{w}_2)\)</span> be the distribution that “ignores” the cross term in
-<span class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span>.
-I.e. <span class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
 \vec{w}_2)\)</span> samples index <span class="math inline">\(i \in
 [n]\)</span> with probability <span
 class="math inline">\(\frac{w^p_{1,i} + w^p_{2,i}}{||\vec{w}_1||_p^p +
-||\vec{w}_2|_p^p}\)</span>.</em></p>
+||\vec{w}_2|_p^p}\)</span>.</p>
 </div>
-<div id="lem:ignore_2" class="lemma">
-<p><strong>Lemma 12</strong>. <em>There exists a protocol <span
-class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for sampling from
-<span class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
-\vec{w}_2)\)</span> with <span
-class="math inline">\(\tilde{O}(1)\)</span> communication.</em></p>
+<div class="lemma">
+<p><span id="lem:ignore_2" label="lem:ignore_2"></span> There exists a
+protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
+sampling from <span class="math inline">\(D_{\mathsf{ignore},
+p}(\vec{w}_1, \vec{w}_2)\)</span> with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
@@ -2481,30 +2480,29 @@ the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
 D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
 </div>
 <div class="definition">
-<p><strong>Definition 13</strong>. <em>For <span class="math inline">\(i
-\in [n]\)</span>, let the corrective parameter function be defined as
-<span class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) :=
-\frac{(w_{1,i} +
-w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.\]</span></em></p>
+<p>For <span class="math inline">\(i \in [n]\)</span>, let the
+corrective parameter function be defined as <span
+class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.\]</span></p>
 </div>
 <div class="definition">
-<p><strong>Definition 14</strong>. <em>The constant <span
-class="math inline">\(c := c(\vec{w}_1, \vec{w}_2)\)</span> is defined
-as <span class="math display">\[c(\vec{w}_1, \vec{w}_2) :=
-\frac{||\vec{w}_1 + \vec{w}_2||_p^p}{||\vec{w}_1||_p^p +
-||\vec{w}_2||_p^p}\]</span> This ensures that for every <span
-class="math inline">\(i\)</span>, <span
+<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
+\vec{w}_2)\)</span> is defined as <span
+class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
+\vec{w}_2||_p^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}\]</span> This
+ensures that for every <span class="math inline">\(i\)</span>, <span
 class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
-\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</em></p>
+\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
 </div>
 <p>The following lemma will be useful for arguing the validity of the
 final protocol.</p>
-<div id="lem:close_dist_2" class="lemma">
-<p><strong>Lemma 15</strong>. <em>For all <span class="math inline">\(i
-\in \mathsf{supp}(D_{L_p}(\vec{w}_1, \vec{w}_2))\)</span>, <span
+<div class="lemma">
+<p><span id="lem:close_dist_2" label="lem:close_dist_2"></span> For all
+<span class="math inline">\(i \in \mathsf{supp}(D_{L_p}(\vec{w}_1,
+\vec{w}_2))\)</span>, <span
 class="math display">\[\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq
 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1,
-\vec{w}_2)}[i].\]</span></em></p>
+\vec{w}_2)}[i].\]</span></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma5"
 data-reference-type="ref"
@@ -2514,22 +2512,23 @@ protocol <span class="math inline">\(\Pi_{L_p}\)</span> in Protocol <a
 href="#fig:lpexact" data-reference-type="ref"
 data-reference="fig:lpexact">[fig:lpexact]</a>. We show the correctness
 and efficiency of the protocol below.</p>
-<div id="lem:lp" class="lemma">
-<p><strong>Lemma 16</strong>. <em>With all but negligible probability,
-on inputs <span class="math inline">\(\vec{w}_1\)</span> and <span
-class="math inline">\(\vec{w}_2\)</span>, protocol <span
+<div class="lemma">
+<p><span id="lem:lp" label="lem:lp"></span> With all but negligible
+probability, on inputs <span class="math inline">\(\vec{w}_1\)</span>
+and <span class="math inline">\(\vec{w}_2\)</span>, protocol <span
 class="math inline">\(\Pi_{L_p}\)</span> samples exactly correctly from
 <span class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span>.
 Further, for any constant <span class="math inline">\(p\)</span>, the
 protocol has communication <span
-class="math inline">\(\tilde{O}(1)\)</span>.</em></p>
+class="math inline">\(\tilde{O}(1)\)</span>.</p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma6"
 data-reference-type="ref"
 data-reference="apx:pfLemma6">[apx:pfLemma6]</a>. We note that this
 result strictly generalizes Lemma <a href="#lem:insecure_L2_prot"
-data-reference-type="ref" data-reference="lem:insecure_L2_prot">8</a>.
-In particular, setting <span class="math inline">\(p=2\)</span> in the
+data-reference-type="ref"
+data-reference="lem:insecure_L2_prot">[lem:insecure_L2_prot]</a>. In
+particular, setting <span class="math inline">\(p=2\)</span> in the
 above protocol yields a protocol with exactly the same parameters as the
 <span class="math inline">\(L_2\)</span> sampling protocol.</p>
 <h2 data-number="6.4" id="sec:prod"><span
@@ -2620,9 +2619,7 @@ class="math inline">\(T\)</span> respectively. The communication
 complexity of the solution to the disjointness problem is known to have
 a linear lowerbound, as shown in the following Theorem:</p>
 <div class="theorem">
-<p><strong>Theorem 17</strong> (<span class="citation"
-data-cites="tcs:Razborov92 siamdm:KalSch92 jcss:BJKS04"></span>).
-<em>For any (even non-private) two-party protocol <span
+<p>For any (even non-private) two-party protocol <span
 class="math inline">\(\Pi\)</span> where each party holds <span
 class="math inline">\(v_S\)</span> and <span
 class="math inline">\(v_T\)</span> respectively, if <span
@@ -2630,7 +2627,7 @@ class="math inline">\(\Pi\)</span> computes <span
 class="math inline">\(\mathsf{DISJ}^n(v_S,
 v_T)\)</span> correctly with probability at least 2/3, the communication
 complexity of <span class="math inline">\(\Pi\)</span> is <span
-class="math inline">\(\Theta(n)\)</span>.</em></p>
+class="math inline">\(\Theta(n)\)</span>.</p>
 </div>
 <h4 data-number="6.4.1.2" id="our-impossibility-result."><span
 class="header-section-number">6.4.1.2</span> Our impossibility
@@ -2655,8 +2652,8 @@ vector <span class="math inline">\(\vec{w}\)</span> is <em><span
 class="math inline">\(\gamma\)</span>-heavy</em> when each coordinate of
 <span class="math inline">\(\vec{w}\)</span> is a number contained in
 <span class="math inline">\([\gamma,1]\)</span>.</p>
-<div id="th:lower_bound" class="theorem">
-<p><strong>Theorem 18</strong>. <em>Let <span
+<div class="theorem">
+<p><span id="th:lower_bound" label="th:lower_bound"></span> Let <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> be <span
 class="math inline">\(\gamma\)</span>-heavy vectors of length <span
@@ -2667,14 +2664,14 @@ protocol <span class="math inline">\(\Pp\)</span> for the product
 sampling from <span class="math inline">\(\w_1\)</span> and <span
 class="math inline">\(\w_2\)</span>, with communication at most <span
 class="math inline">\(C
-:= C(n, \gamma)\)</span>.</em></p>
-<p><em>Then, for any <span class="math inline">\(\gamma \le
-1/2n\)</span>, there exists a constant <span
-class="math inline">\(\rho\)</span> and a probabilistic protocol
-computing <span class="math inline">\(\mathsf{DISJ}^n\)</span> correctly
-with probability at least 2/3 that has communication at most <span
+:= C(n, \gamma)\)</span>.</p>
+<p>Then, for any <span class="math inline">\(\gamma \le 1/2n\)</span>,
+there exists a constant <span class="math inline">\(\rho\)</span> and a
+probabilistic protocol computing <span
+class="math inline">\(\mathsf{DISJ}^n\)</span> correctly with
+probability at least 2/3 that has communication at most <span
 class="math inline">\(\log(n) + 1 +
-\rho \cdot (C + 1)\)</span>.</em></p>
+\rho \cdot (C + 1)\)</span>.</p>
 </div>
 <p>We construct a protocol computing <span
 class="math inline">\(\mathsf{DISJ}^n\)</span> by taking advantage of
@@ -2735,21 +2732,21 @@ output <span class="math inline">\(1-x\)</span>.</p>
 </div>
 <p>The following lemmas give the completeness and soundness of the
 protocol.</p>
-<div id="clm:completeness" class="lemma">
-<p><strong>Lemma 19</strong>. <em>If <span
+<div class="lemma">
+<p><span id="clm:completeness" label="clm:completeness"></span> If <span
 class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, then the
 parties both output <span class="math inline">\(1\)</span> with
 probability at least <span class="math inline">\(\frac{1}{2 + n \cdot
-\gamma}\)</span>.</em></p>
+\gamma}\)</span>.</p>
 </div>
-<div id="clm:soundness" class="lemma">
-<p><strong>Lemma 20</strong>. <em>If <span
+<div class="lemma">
+<p><span id="clm:soundness" label="clm:soundness"></span> If <span
 class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint, then
 the parties both output <span class="math inline">\(1\)</span> with
 probability at most <span class="math inline">\(1-\frac{1}{1 + n \cdot
-\gamma}\)</span>.</em></p>
+\gamma}\)</span>.</p>
 </div>
 <p>Before we prove the lemmas, we briefly describe how we can use these
 lemmas to achieve a protocol that correctly computes <span
@@ -2818,8 +2815,9 @@ g_\gamma(\vec{a}), g_\gamma(\vec{b}) \rangle } { n \cdot n } \ge \frac 1
 {n^2}.\]</span></p>
 <div class="proof">
 <p><em>Proof of Lemma <a href="#clm:completeness"
-data-reference-type="ref" data-reference="clm:completeness">19</a>.</em>
-Assume that <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+data-reference-type="ref"
+data-reference="clm:completeness">[clm:completeness]</a>.</em> Assume
+that <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, and
 moreover, assume WLOG that <span
 class="math inline">\(\mathbf{A}\)</span> is the designated party, and
@@ -2868,8 +2866,8 @@ the protocol. 0◻ ◻</p>
 </div>
 <div class="proof">
 <p><em>Proof of Lemma <a href="#clm:soundness" data-reference-type="ref"
-data-reference="clm:soundness">20</a>.</em> Assume that <span
-class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+data-reference="clm:soundness">[clm:soundness]</a>.</em> Assume that
+<span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint. As
 before, consider <span class="math inline">\(W_{0,0}\)</span>, <span
 class="math inline">\(W_{1,0}\)</span>, <span
@@ -2989,14 +2987,14 @@ class="math inline">\(i\)</span>.</p>
 <h4 data-number="6.4.2.4" id="security.-1"><span
 class="header-section-number">6.4.2.4</span> Security.</h4>
 <p>We will prove the following theorem.</p>
-<div id="th:prodIP" class="theorem">
-<p><strong>Theorem 21</strong>. <em>Protocol <span
+<div class="theorem">
+<p><span id="th:prodIP" label="th:prodIP"></span> Protocol <span
 class="math inline">\(\Pp^{IP}\)</span> securely realizes <span
 class="math inline">\(\Fp\)</span> with leakage <span
 class="math inline">\(\fl(\w_1,
 \w_2) = \ip{\vec{w}_1}{\vec{w}_2}\)</span> in the <span
 class="math inline">\(\{\F_\oslone, \F_{2PC}
-\}\)</span>-hybrid model with semi-honest security.</em></p>
+\}\)</span>-hybrid model with semi-honest security.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> We describe the simulator <span
@@ -3133,11 +3131,12 @@ collision, and repeat if necessary.</p>
 <p>Without a full proof, we provide some intuition for the fact that
 this tradeoff between leakage and communication is inherent. We can do
 that by generalizing the statement of Theorem <a href="#th:lower_bound"
-data-reference-type="ref" data-reference="th:lower_bound">18</a>. We
-first modify the definition of <span
-class="math inline">\(\gamma\)</span>-heavy defined previously: for any
-<span class="math inline">\(t(n) = O(n)\)</span>, we say that a vector
-<span class="math inline">\(\w\)</span> of length <span
+data-reference-type="ref"
+data-reference="th:lower_bound">[th:lower_bound]</a>. We first modify
+the definition of <span class="math inline">\(\gamma\)</span>-heavy
+defined previously: for any <span class="math inline">\(t(n) =
+O(n)\)</span>, we say that a vector <span
+class="math inline">\(\w\)</span> of length <span
 class="math inline">\(n\)</span> is <span
 class="math inline">\(\gamma_{t,n}\)</span>-heavy if each of the <span
 class="math inline">\(t := t(n)\)</span> coordinates of <span
@@ -3267,19 +3266,19 @@ variance <span class="math inline">\(1\)</span>.</p>
 abuse the notation and treat the vectors <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> as column vectors.)</p>
-<div id="lem:jlt_k" class="lemma">
-<p><strong>Lemma 22</strong>. <em><span>(cf. <span class="citation"
-data-cites="Kaban15"></span>)</span> For all <span
-class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> such that <span
-class="math inline">\(\cos(\vec{w}_1, \vec{w}_2)\geq t\)</span>, the
-procedure <span class="math inline">\({\sf approxIP}(\vec{w}_1,
-\vec{w}_2)\)</span> approximates <span class="math inline">\(\langle
-\vec{w}_1,
+<div class="lemma">
+<p><span>(cf. <span class="citation"
+data-cites="Kaban15"></span>)</span> <span id="lem:jlt_k"
+label="lem:jlt_k"></span> For all <span class="math inline">\(\vec{w}_1,
+\vec{w}_2\)</span> such that <span class="math inline">\(\cos(\vec{w}_1,
+\vec{w}_2)\geq t\)</span>, the procedure <span
+class="math inline">\({\sf approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
+approximates <span class="math inline">\(\langle \vec{w}_1,
 \vec{w}_2 \rangle\)</span> up to a <span class="math inline">\(1\pm
 \epsilon\)</span> approximation factor with all but negligible
 probability (over the choice of the JLT matrix), using JLT dimension
 <span class="math inline">\(k = \omega\left(\frac{\log(n)}{t^2 \cdot
-\epsilon^2}\right)\)</span>.</em></p>
+\epsilon^2}\right)\)</span>.</p>
 </div>
 <h4 data-number="6.5.1.3" id="privacy-of-the-approximate-output."><span
 class="header-section-number">6.5.1.3</span> Privacy of the approximate
@@ -3289,15 +3288,14 @@ reveal anything more than the inner product itself. In this sense, it
 satisfies the notion of private approximation introduced in <span
 class="citation" data-cites="FIM+06"></span>. In particular, we prove
 the following:</p>
-<div id="lem:simip" class="lemma">
-<p><strong>Lemma 23</strong>. <em>The output of <span
+<div class="lemma">
+<p><span id="lem:simip" label="lem:simip"></span> The output of <span
 class="math inline">\(\mathsf{approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
 can be simulated perfectly given only <span
 class="math inline">\(\langle \vec{w}_1, \vec{w}_1 \rangle\)</span>,
 <span class="math inline">\(\langle
 \vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
-class="math inline">\(\langle \vec{w}_1, \vec{w}_2
-\rangle\)</span>.</em></p>
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span>.</p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma10"
 data-reference-type="ref"
@@ -3351,7 +3349,7 @@ security of the threshold FHE, it is easy to see that the protocol
 securely realizes a functionality for computing <span
 class="math inline">\({\sf approxIP}\)</span>. Based on Lemma <a
 href="#lem:simip" data-reference-type="ref"
-data-reference="lem:simip">23</a>, the leakage profile of the
+data-reference="lem:simip">[lem:simip]</a>, the leakage profile of the
 functionality is <span class="math inline">\(\langle \vec{w}_1,
 \vec{w}_1 \rangle\)</span>, <span class="math inline">\(\langle
 \vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
@@ -3464,9 +3462,9 @@ curator will choose classifier <span class="math inline">\(c_i\)</span>
 with the probability <span class="math inline">\(\frac{w_{i,i} \cdot
 w_{i,2}}{\ipw}\)</span>.</p>
 <div class="lemma">
-<p><strong>Lemma 24</strong>. <em>If <span class="math inline">\(|D| \ge
-40 (\log n + \secparam)/\epsilon\)</span>, our mechanism provides <span
-class="math inline">\((\epsilon, 0)\)</span>-DP.</em></p>
+<p>If <span class="math inline">\(|D| \ge 40 (\log n +
+\secparam)/\epsilon\)</span>, our mechanism provides <span
+class="math inline">\((\epsilon, 0)\)</span>-DP.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(q_i(D) =
@@ -3584,7 +3582,7 @@ variance <span class="math inline">\(1\)</span>. The dimension <span
 class="math inline">\(k\)</span> (with <span class="math inline">\(k \ll
 n\)</span>) is determined appropriately according to Lemma <a
 href="#lem:jlt_k" data-reference-type="ref"
-data-reference="lem:jlt_k">22</a>.</p>
+data-reference="lem:jlt_k">[lem:jlt_k]</a>.</p>
 <p>Choose a value <span class="math inline">\(x\)</span> from the
 Laplace distribution <span class="math inline">\({\sf
 Lap}(1/(\Delta u \cdot |D|))\)</span>.</p>
@@ -3615,14 +3613,14 @@ class="math inline">\({w}_{b,i} \propto e^{-\epsilon \cdot
 additive loss functions <span
 class="math inline">\(f^{c_i}_\mathsf{loss}\)</span>.</p>
 <div class="theorem">
-<p><strong>Theorem 25</strong>. <em>If <span class="math inline">\(|D|
-\ge 40 \cdot (\log n + \secparam)/\epsilon\)</span>, the mechanism <span
+<p>If <span class="math inline">\(|D| \ge 40 \cdot (\log n +
+\secparam)/\epsilon\)</span>, the mechanism <span
 class="math inline">\(\dIP\)</span> is <span
 class="math inline">\(\epsilon\)</span>-differentially private w.r.t a
 database <span class="math inline">\(D_1\)</span> (resp., <span
 class="math inline">\(D_2\)</span>) when the loss functions <span
 class="math inline">\(f^{c_i}_{\mathsf{loss}}(D)\)</span> have low
-sensitivity <span class="math inline">\(1/|D|\)</span>.</em></p>
+sensitivity <span class="math inline">\(1/|D|\)</span>.</p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> We prove differential privacy with respect to <span
@@ -3760,11 +3758,12 @@ class="math inline">\(\mathsf{abort}\)</span>.</p>
 <h4 data-number="6.6.3.2" id="security.-3"><span
 class="header-section-number">6.6.3.2</span> Security.</h4>
 <p>We will prove the following theorem.</p>
-<div id="thm:prodDP" class="theorem">
-<p><strong>Theorem 26</strong>. <em>If <span class="math inline">\(|D|
-\ge 40 \cdot \secparam (\log n + \secparam)/\epsilon^2\)</span>,
-protocol <span class="math inline">\(\Pi_{\mathsf{EM}}\)</span> is <span
-class="math inline">\((2\epsilon,\negl(\secparam))\)</span>-DP.</em></p>
+<div class="theorem">
+<p><span id="thm:prodDP" label="thm:prodDP"></span> If <span
+class="math inline">\(|D| \ge 40 \cdot \secparam (\log n +
+\secparam)/\epsilon^2\)</span>, protocol <span
+class="math inline">\(\Pi_{\mathsf{EM}}\)</span> is <span
+class="math inline">\((2\epsilon,\negl(\secparam))\)</span>-DP.</p>
 </div>
 <p>It is easy to see that this protocol runs an enough number of product
 samplings in parallel so that it does not output <span
