@@ -1,32 +1,30 @@
 % !TEX root = main.tex
-
-% 1. Load Essential Math Packages (Safe to reload)
 \usepackage{amsmath}
-\usepackage{amssymb} % Fixes the \mathfrak error
+\usepackage{amssymb}
+\usepackage{iftex} % Needed to check if we are making a PDF or Web page
 
-% 2. Define \vec Safely
-% We use \boldsymbol because it handles arguments better in MathJax
-\renewcommand{\vec}[1]{\boldsymbol{#1}}
+% ==========================================
+% 1. WEB COMPATIBILITY FIXES
+% ==========================================
+% If running in Pandoc (Web), we define brackets manually to avoid package errors.
+\ifdefined\pandoc
+  \providecommand{\llbracket}{[\![}
+  \providecommand{\rrbracket}{]\!]}
+\else
+  % If running in PDF (Overleaf), load the real packages
+  \usepackage{stmaryrd} 
+\fi
 
-% 3. Web-Safe Brackets (Logic to detect if we are on Web vs PDF)
-% We check if the "stmaryrd" package is available. If not (Web), we fake it.
-\IfFileExists{stmaryrd.sty}{
-    \usepackage{stmaryrd}
-    % Use standard definitions if package exists
-    \newcommand{\lbra}{\llbracket}
-    \newcommand{\lket}{\rrbracket}
-}{
-    % Web Fallback: Manual text characters
-    \providecommand{\llbracket}{[\![}
-    \providecommand{\rrbracket}{]\!]}
-    \newcommand{\lbra}{[\![}
-    \newcommand{\lket}{]\!]}
-}
+% ==========================================
+% 2. GENERAL MACROS (Safe for both)
+% ==========================================
 
-% 4. General Macros (Your original list, cleaned up)
+% Protocol names
 \providecommand{\flatten}{\mathsf{flatten}}
+
+% Greek letters & Variables
 \providecommand{\e}{\epsilon}
-\renewcommand{\d}{\delta} 
+\renewcommand{\d}{\delta} % Delta is common, rename carefully
 \renewcommand{\a}{\alpha}
 \renewcommand{\b}{\beta}
 \def\u{\upsilon}
@@ -38,6 +36,8 @@
 \providecommand{\dfinal}{\overline{\d}}
 \providecommand{\fmin}{\min(f)}
 
+% Math Operators
+\renewcommand{\vec}[1]{\mathbf{#1}}
 \def\NN{\mathbb{N}}
 \def\RR{\mathbb{R}}
 \def\F{\mathcal{F}}
@@ -47,7 +47,7 @@
 \def\D{\Delta}
 \def\from{\leftarrow}
 
-% Crypto commands
+% Cryptographic Primitives
 \def\ParamGen{{\sf ParamGen}}
 \def\SecKeygen{{\sf SecKeygen}}
 \def\params{{\sf Params}}
@@ -71,6 +71,10 @@
 \def\ek{\textsc{ek}}
 \def\polylog{\mathsf{polylog}}
 
+% Fix for the brackets using the logic defined at top
+\def\lbra{\llbracket}
+\def\lket{\rrbracket}
+
 \def\nil{{\mathsf{nil}}}
 \def\trunc{{\mathsf{trunc}}}
 \def\prec{{\mathsf{approx}}}
@@ -88,6 +92,7 @@
 
 % Formatting
 \renewcommand{\paragraph}[1]{\medskip \noindent\textbf{#1}}
+
 \providecommand{\negl}{\mathsf{negl}}
 \providecommand{\zo}{\{0,1\}}
 \providecommand{\bitset}{\{0,1\}}
@@ -100,6 +105,8 @@
 \newcommand{\Null}{{\sf null}}
 \newcommand{\ignore}[1]{}
 \def\ig{\mathrm{ignore}}
+
+% Font stuff
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\Left}{\mathsf{left}}
 \newcommand{\Right}{\overline{\mathsf{left}}}
@@ -108,46 +115,96 @@
 \def\ssp{\mathsf{sec\mbox{-}search}}
 \def\Game{\mathsf{Game}_\fhe^\ssp(\mc{A})}
 \def\Adv{\mathsf{Adv}_\fhe^\ssp(\mc{A})}
+
+% MPC stuff
 \newcommand{\A}{\mc{A}}
 \renewcommand{\S}{\mathsf{Sim}}
 \newcommand{\View}{\mathsf{View}}
 \newcommand{\Out}{\mathsf{Out}}
 \newcommand{\flone}{\mathsf{F}_{L_1}}
 
-% Environments (Simplified for Web Stability)
-\providecommand{\BD}{\begin{definition}} \providecommand{\ED}{\end{definition}}
-\providecommand{\BCR}{\begin{corollary}} \providecommand{\ECR}{\end{corollary}}
-\providecommand{\BEX}{\begin{example}}   \providecommand{\EEX}{\end{example}}
-\providecommand{\BL}{\begin{lemma}}       \providecommand{\EL}{\end{lemma}}
-\providecommand{\BP}{\begin{proposition}} \providecommand{\EP}{\end{proposition}}
-\providecommand{\BCM}{\begin{claim}}      \providecommand{\ECM}{\end{claim}}
-\providecommand{\BPF}{\begin{proof}}      \providecommand{\EPF}{\end{proof}}
-\providecommand{\BEN}{\begin{enumerate}}  \providecommand{\EEN}{\end{enumerate}}
-\providecommand{\BI}{\begin{itemize}}     \providecommand{\EI}{\end{itemize}}
-\providecommand{\BO}{\begin{observation}} \providecommand{\EO}{\end{observation}}
-\providecommand{\BDS}{\begin{description}}\providecommand{\EDS}{\end{description}}
+% ==========================================
+% 3. ENVIRONMENT WRAPPERS (The Trickiest Part)
+% ==========================================
+% Pandoc handles `\begin{proof}` natively if using standard packages.
+% We map your custom shortcuts to standard LaTeX environments.
 
-% Boxes (Simplified)
-\newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
-\newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
+\providecommand{\BD}{\begin{definition}}
+\providecommand{\ED}{\end{definition}}
+\providecommand{\BCR}{\begin{corollary}}
+\providecommand{\ECR}{\end{corollary}}
+\providecommand{\BEX}{\begin{example}}
+\providecommand{\EEX}{\end{example}}
+\providecommand{\BL}{\begin{lemma}}
+\providecommand{\EL}{\end{lemma}}
+\providecommand{\BP}{\begin{proposition}}
+\providecommand{\EP}{\end{proposition}}
+\providecommand{\BCM}{\begin{claim}}
+\providecommand{\ECM}{\end{claim}}
+\providecommand{\BPF}{\begin{proof}}
+\providecommand{\EPF}{\end{proof}}
+\providecommand{\BEN}{\begin{enumerate}}
+\providecommand{\EEN}{\end{enumerate}}
+\providecommand{\BI}{\begin{itemize}}
+\providecommand{\EI}{\end{itemize}}
+\providecommand{\BO}{\begin{observation}}
+\providecommand{\EO}{\end{observation}}
+\providecommand{\BDS}{\begin{description}}
+\providecommand{\EDS}{\end{description}}
+
+% ==========================================
+% 4. BOXES (Web-Unsafe)
+% ==========================================
+% These minipages break HTML layout. 
+% If on web, we just output the text without the box.
+
+\ifdefined\pandoc
+  \newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
+  \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
+\else
+  \newcommand{\bbox}[1]{
+    \medskip
+    \fbox{\hbox{\medskip
+      \begin{minipage}{0.90\textwidth}
+      \small
+      #1
+      \end{minipage}
+    \quad}
+  }} 
+  \newcommand{\tbox}[1]{
+    \medskip
+    \noindent
+    \fbox{\hbox{\medskip
+      \begin{minipage}{0.9\textwidth}
+      #1
+      \end{minipage}
+    \quad}
+    }
+    \medskip
+  } 
+\fi
 
 \newcommand{\DDD}{{\cal D}}
 \newcommand{\RRR}{{\cal R}}
+
+% sketch stuff
 \newcommand{\secparam}{\lambda}
 \newcommand{\nibf}[1]{\noindent\textbf{#1}}
+
 \newcommand{\ip}[2]{\langle #1, #2 \rangle}
 \newcommand{\eps}{\epsilon}
 \newcommand{\Fp}{\F_{\mathsf{prod}}}
 \newcommand{\Pp}{\Pi_{\mathsf{prod}}}
 \newcommand{\Dp}{D_{\mathsf{prod}}}
 \newcommand{\Fip}{\F_{\mathsf{aIP}}}
-\newcommand{\flk}{f_{\mathsf{Leak}}}
+\newcommand{\flk}{f_{\mathsf{Leak}}} % Renamed fl to flk to avoid conflict
 \newcommand{\ipw}{\ip{\vec{w}_1}{\vec{w}_2}}
 \newcommand{\LLw}{\|\w_1 + \w_2 \|_2^2}
 \def\w{\vec{w}}
 \def\take{\mathsf{Take}}
 \def\view{\mathsf{view}}
 \def\dIP{\mathsf{DP}\mbox{-}\mathsf{approxIP}}
+
 \newcommand{\aIPabort}{\mathsf{approxIPwAbort}}
 \newcommand{\Output}{\mathsf{Output}}
 \newcommand{\Success}{\mathsf{Success}}
