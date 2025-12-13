@@ -2603,8 +2603,8 @@ class="math inline">\(\mathbf{w}_2\)</span> are non-negative.</p>
 functionality <span
 class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span> for two-party
 product sampling. This functionality is parametrized by a function <span
-class="math inline">\(\fl\)</span> capturing the leakage that the
-functionality gives to the adversary.</p>
+class="math inline">\(f_{\mathsf{Leak}}\)</span> capturing the leakage
+that the functionality gives to the adversary.</p>
 <div class="center">
 <p><span class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span>:
 Ideal functionality for two-party product sampling</p>
@@ -2625,7 +2625,7 @@ and <span class="math inline">\(\mathbf{w}_2\)</span> from <span
 class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> respectively.</p></li>
 <li><p>Compute <span
-class="math inline">\(\mathsf{leak}=\fl(\mathbf{w}_1,\mathbf{w}_2)\)</span></p></li>
+class="math inline">\(\mathsf{leak}=f_{\mathsf{Leak}}(\mathbf{w}_1,\mathbf{w}_2)\)</span></p></li>
 <li><p>If <span class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle=0\)</span>, send <span
 class="math inline">\(\mathsf{leak}\)</span> to the adversary and <span
@@ -2969,10 +2969,10 @@ lower bound implies that some leakage about the inputs is necessary. In
 our protocol, we show that the information leaked is at most the inner
 product <span class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>. (Formally, we set <span
-class="math inline">\(\fl(\mathbf{w}_1, \mathbf{w}_2) =\langle
-\mathbf{w}_1, \mathbf{w}_2 \rangle\)</span>.) Interestingly, we show
-that this is the case even though our protocol does not, and cannot,<a
-href="#fn5" class="footnote-ref" id="fnref5"
+class="math inline">\(f_{\mathsf{Leak}}(\mathbf{w}_1, \mathbf{w}_2)
+=\langle \mathbf{w}_1, \mathbf{w}_2 \rangle\)</span>.) Interestingly, we
+show that this is the case even though our protocol does not, and
+cannot,<a href="#fn5" class="footnote-ref" id="fnref5"
 role="doc-noteref"><sup>5</sup></a> actually compute <span
 class="math inline">\(\langle \mathbf{w}_1, \mathbf{w}_2
 \rangle\)</span>.</p>
@@ -3049,7 +3049,7 @@ class="math inline">\(i\)</span>.</p>
 class="math inline">\(\Pi_{\mathsf{prod}}^{IP}\)</span> securely
 realizes <span
 class="math inline">\(\mathcal{F}_{\mathsf{prod}}\)</span> with leakage
-<span class="math inline">\(\fl(\mathbf{w}_1,
+<span class="math inline">\(f_{\mathsf{Leak}}(\mathbf{w}_1,
 \mathbf{w}_2) = \langle \mathbf{w}_1, \mathbf{w}_2 \rangle\)</span> in
 the <span class="math inline">\(\{\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{2PC}
