@@ -1,0 +1,8 @@
+\subsection{Conclusion}
+We have presented several new constructions of secure search based on fully homomorphic encryption.  Prior constructions were
+inherently sequential, returning only a single record from the result set, and requiring a new query from the client that depended on the index of the previous match.  We have demonstrated several new methods for 
+encoding the entire result set at one time, 
+removing the added rounds, and allowing the
+server work to be parallelized.  
+Additionally, we have shown that this can be done without homomorphic multiplication, 
+ensuring low computational cost at the server. Finally, we have implemented our constructions, and demonstrated up to three orders of magnitude speed-up over prior work.  Additionally, we introduced the notion of compressed oblivious encoding which may be of independent interest.

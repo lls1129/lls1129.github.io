@@ -1,0 +1,194 @@
+%%%%%%%%%
+%%%%%%%%%  Make changes only in ~/research/myCommands
+%%%%%%%%%
+%%%%%%%%%
+% ifs 
+\newif \ifllncs
+
+% notes
+\newcommand{\anote}[1]{{\sf (\textcolor{red}{Arkady's Note: {\sl{#1}}} {\sf EON)}}}
+\newcommand{\dan}[1]{}
+\newcommand{\reminder}[1]{\textcolor{red}{\textbf{[#1]}}}
+
+%\newcommand{\anote}[1]{}
+
+\renewcommand{\k}{\kappa}
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\halfn}{\frac{n}{2}}
+\newcommand{\thirdn}{\frac{n}{3}}
+\newcommand{\bool}{\{0,1\}}
+\newcommand{\bitset}{\{0,1\}}
+\newcommand{\bit}{\mbox{\sf bit}}
+\newcommand{\pair}{\mbox{\sf pair}}
+\newcommand{\xor}{\oplus}
+
+\ifllncs \else
+\newtheorem{definition}{Definition} 
+\newtheorem{claim}{Claim}[section]
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newcommand{\question}[1]{\begin{itemize}\item[] \vspace{2pt}\emph{#1}\vspace{4pt} \end{itemize}}
+\fi
+
+\renewcommand{\choose}[2]{\left(\vphantom{2^{n^{n^n}}}\right.\footnotesize{\hspace{-1.5ex}\begin{array}{c} {#1}\\{#2}\end{array}\hspace{-1.5ex}}\left.\vphantom{2^{n^{n^n}}}\right)}
+\newcommand{\nibf}[1]{\noindent \textbf{#1}}
+\newcommand{\niun}[1]{\noindent \underline{#1}}
+\newcommand{\F}[1]{\mathcal{F}_{\mbox {\sf #1}}}
+\newcommand{\Z}{\mathcal{Z}}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\com}{\mbox{\sf Com}}
+\newcommand{\ignore}[1]{}
+\newcommand{\bitsetn}{\{0,1\}^n}
+\newcommand{\e}{\epsilon}
+\newcommand{\s}{\sigma}
+\newcommand{\la}{\leftarrow}
+\def\blackslug
+{\hbox{\hskip 1pt\vrule width 8pt height 8pt depth 1.5pt\hskip 1pt}}
+\def\qed{\hspace*{\fill}\quad\blackslug\lower 8.5pt\null\par}
+
+\newcommand{\poly}{\sf{poly}}
+\newcommand{\polylog}{\sf{polylog}}
+\newcommand{\enc}{{\sf Enc}}
+\newcommand{\dec}{{\sf Dec}}
+\newcommand{\tdown}[2]{\lfloor #1 \rfloor_{#2}}
+\newcommand{\tup}[2]{\lceil #1 \rceil_{#2}}
+
+
+% \newenvironment{proof}{\noindent{\bf Proof:~~}}{\qed}
+\newenvironment{proofsketch}{\noindent{\em Proof sketch.~~}}{\qed}
+%\renewenvironment{theorem}{\noindent{\bf Theorem~:~~}}{\qed}
+
+
+
+\newlength{\protowidth}
+\newcommand{\pprotocol}[5]{
+{\begin{figure}[#4]
+\begin{center}
+\setlength{\protowidth}{\textwidth}
+\addtolength{\protowidth}{-3\intextsep}
+
+\fbox{
+        \small
+        \hbox{\quad
+        \begin{minipage}{\protowidth}
+    \begin{center}
+    {\bf #1}
+    \end{center}
+        #5
+        \end{minipage}
+        \quad}
+        }
+        \caption{\label{#3} #2}
+\end{center}
+\vspace{-4ex}
+\end{figure}
+} }
+\newcommand{\protocol}[4]{
+\pprotocol{#1}{#2}{#3}{tbh!}{#4} }
+\newenvironment{CompactEnumerate}{
+  \begin{list}{\arabic{enumi}.}{%
+      \usecounter{enumi} %
+      \setlength{\leftmargin}{20pt}%
+%      \setlength{\itemsep}{-2pt}
+      \setlength{\itemsep}{0pt}
+      }}
+  {\end{list}}
+\newenvironment{CompactItemize}{
+  \begin{list}{--}{%
+      \usecounter{enumi}
+      \setlength{\leftmargin}{12pt}%
+      \setlength{\itemsep}{-2pt}
+      }}
+  {\end{list}}
+  
+\newlength{\gameheight}
+\newcommand{\makegame}[8]{
+\setlength{\gameheight}{0pt}
+\addtolength{\gameheight}{#5pt}
+\begin{figure}[!htb]
+\fbox{
+\begin{minipage}[][\gameheight][t]{.47\textwidth}
+\vspace{10pt}
+\underline{Game #2:}
+#7
+\end{minipage}
+\begin{minipage}[][\gameheight][c]{.01\textwidth}
+\begin{picture}(1,1)(0,0)
+\put(0,-#4){\line(0,1){#5}}
+\end{picture}
+\end{minipage}
+\begin{minipage}[][\gameheight][t]{.47\textwidth}
+\vspace{10pt}
+\underline{Game #3:}
+#8
+\end{minipage}
+\begin{minipage}[][\gameheight][c]{.01\textwidth}
+\end{minipage}
+}
+\caption{#1}
+\label{#6}
+\end{figure}
+}
+
+%%% use \pmod{}.  Have to include amsmath package.
+\makeatletter
+\newcommand{\good}{\mathsf{Good_{i-1}}}
+\newcommand{\bad}{\mathsf{Bad}}
+\newcommand{\notgood}{\mathsf{\overline{Good}_{i-1}}}
+\newcommand{\secparam}{\lambda}
+\newcommand{\csecparam}{\kappa}
+
+\renewcommand{\paragraph}[1]{{\smallskip \noindent {\bf #1}~}}
+
+\newcommand{\negl}{{\sf negl}}
+\renewcommand{\poly}{{\sf poly}}
+
+%%%%%%% FACTS specific commands
+\newcommand{\FACTS}{\textsf{FACTS}}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\setup}{\textsf{Setup}}
+\newcommand{\sendee}{\textrm{send}}
+\newcommand{\receiveee}{\textrm{receive}}
+\newcommand{\send}{\textsf{SendMsg}}
+\newcommand{\receive}{\textsf{RcvMsg}}
+\newcommand{\complain}{\textsf{Complain}}
+\newcommand{\audit}{\textsf{Audit}}
+\newcommand{\orig}{\textsf{Originate}}
+\newcommand{\vrfyMsg}{\textsf{vrfyMsg}}
+\DeclareMathOperator{\Hash}{\textsf{Hash}}
+\DeclareMathOperator{\Enc}{\textsf{Enc}}
+\DeclareMathOperator{\Dec}{\textsf{Dec}}
+\DeclareMathOperator{\Sig}{\textsf{Sig}}
+\DeclareMathOperator{\Ver}{\textsf{Ver}}
+
+\newcommand{\trans}{\mathsf{Trans}}
+\newcommand{\leakM}{\mc{L}_{EEMS}}
+\newcommand{\eqM}{\approx_{\leakM}}
+\renewcommand{\tag}{\mathsf{tag}}
+\newcommand{\tagg}{\mathsf{tag}}
+
+\def\eem{\mathsf{EEMS}}
+\def\mp{\mathsf{msg\mbox{-}privacy}}
+\def\cp{\mathsf{user\mbox{-}privacy}}
+\def\sp{\mathsf{server\mbox{-}privacy}}
+\def\uf{\mathsf{unforgeability}}
+\def\nd{\mathsf{no-delay}}
+\def\nsu{\mathsf{no-speedup}}
+\def\GameSP{\mathsf{Game}_\eem^{\sp}(\mc{A})}
+\def\AdvSP{\mathsf{Adv}_\eem^{\sp}(\mc{A})}
+\def\GameCP{\mathsf{Game}_\eem^{\cp}(\mc{A})}
+\def\AdvCP{\mathsf{Adv}_\eem^{\cp}(\mc{A})}
+\def\GameUF{\mathsf{Game}_\eem^{\uf}(\mc{A})}
+\def\AdvUF{\mathsf{Adv}_\eem^{\uf}(\mc{A})}
+\def\GameND{\mathsf{Game}_\eem^{\nd}(\mc{A})}
+\def\AdvND{\mathsf{Adv}_\eem^{\nd}(\mc{A})}
+\def\GameNSU{\mathsf{Game}_\eem^{\nsu}(\mc{A})}
+\def\AdvNSU{\mathsf{Adv}_\eem^{\nsu}(\mc{A})}
+\def\Expect{\mathbb{E}}
+
+\def\USED{\mathrm{USED}}
+

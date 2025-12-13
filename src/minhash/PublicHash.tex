@@ -1,0 +1,50 @@
+\subsection{DDP of $\Pbase$}\label{sec:ddp1} 
+In this section, we show that there are parameter regimes where the public min-hash protocol $\Pbase$ can satisfy DDP without adding noise. 
+In Figure~\ref{fig:dist}, we first describe the family of distributions we consider in the context of our min-hash protocol. The distribution models a situation in which the adversary, having corrupted one of the two parties, has access to the view of the party and even the actual intersection. However, the adversary does not know the other party's input set (except from the intersection).  
+
+\protocol{Distribution Family $\Delta_\PH$}{The family of distributions that we consider in our min-hash protocol}{fig:dist}{!htb}{
+Parameterized with $(n_A, n_B, n_I)$, a distribution $\DDD_{A, B}$ in this family samples 
+$(A, B)$ such that
+\begin{itemize}
+    \item Letting $I = A \cap B$, it holds that $|A| = n_A, |B| = n_B$, and $|I| = n_I$
+\end{itemize}
+
+Output:
+\begin{itemize}
+    \item The inputs to the parties $P_1$ and $P_2$ are $A$ and $B$ respectively.
+    \item Give $I$ to the adversary as the auxiliary information. 
+\end{itemize}
+}
+
+Below, we show that $\Pbase$ achieves DDP under certain circumstances. 
+
+\begin{theorem}\label{thm:CDDP}
+For every constant $\epsilon > 0$, consider $\Pbase$ in the random oracle model with $k = k(\epsilon, \kappa)$, where $k \in \Omega(\kappa)$. 
+Let $R = B \setminus I$, 
+each element of which has min-entropy at least $\kappa$.  
+Let $n_A/k, n_B/k \in
+\Omega(\kappa)$, and $n_I/n_A \in (0, 1)$ is a constant independent of $\kappa$. 
+Then, $\Pbase$ is computationally $(\ee,\delta,\Delta_\PH)$-DDP against an adversary corrupting $P_1$ with $\dd \in \negl(\kappa)$. DDP against an adversary corrupting $P_2$ holds when the parameters are set symmetrically.
+\end{theorem}
+
+\begin{theorem}\label{thm:CDDP2}
+For security parameter $\kappa$, every constant $\epsilon > 0$, and every
+constant $\gamma \in (0,1)$, consider $\Pbase$ in the random oracle model with
+$k = k(\epsilon, \kappa)$, where $k \in \Omega(\kappa \cdot \lg\lg\kappa)$. Let
+$R = B \setminus I$ be a set of size $n_R$, with $n_R/k^2 \in \Omega(\kappa)$.
+Let the universe $\U$ be of size $n_R \cdot \ell$, where $\ell = \Omega(n_R^3)$.
+Assume the secret set $R$ is chosen chosen uniformly from all subsets of $\U$ of size $n_R$, conditioned on arbitrary leakage on $R$ of length $L$,
+where $n_R \lg \ell - L \ge \frac{8n_R}{9} \lg \ell + 2n_R$.  Let $|I| \in \Theta(n)$.  Then the output of $\Pbase$
+achieves computational $(\epsilon, \delta, \Delta_\PH)$-DDP with $\delta
+\in \negl(\kappa)$ against an adversary corrupting $P_1$.  DDP against
+an adversary corrupting $P_2$ holds when the parameters are set
+symmetrically.  
+\end{theorem}
+
+\paragraph{Remark.}  An easy way to realize $\Pbase$ is to have each party locally hash their inputs using the $k$ public hash functions and to locally compute the minimum for each iteration.  The parties can then run a simple two-party computation to compute the number of times these minimums match.  We note that this protocol has communication and computation that is sublinear in the input size as it only depends on the number of hash functions.  By Theorems~\ref{thm:CDDP} and~\ref{thm:CDDP2} this protocol achieves DDP when the conditions of either of the theorems are satisfied.
+
+
+
+
+
+

@@ -1,0 +1,287 @@
+\subsection{Collaborative counting Bloom filter}\label{sec:ccbf}
+
+Our system records complaints in a special data structure which we
+call a \emph{collaborative counting Bloom filter}, or CCBF. This data structure
+shares some of the same basic functionality as a counting Bloom filter~\cite{TON:FCAB00, PODC:Mitzenmacher01} or count-min sketch~\cite{JAL:CorMut05}, which is to insert elements and
+compute the (approximate) frequency of a given element.
+
+Our CCBF differs from a usual count-min sketch in that each update
+operation is accompanied by a \emph{user id}, and each user can only perform
+a single update for a given element. This can be thought of as a strict generalization
+of the normal count-min sketch operations, where the latter may be simulated by our
+CCBF by choosing a unique user id for each update.
+
+The actual data structure for the CCBF is also far simpler than the 2D array
+of integers used for a count-min sketch; instead, we store only a single length-$s$
+bit vector $T$. As a result, our CCBF will have the following desirable properties:
+
+\begin{itemize}
+    \item The bit-length of $T$ scales linearly with the total
+    number of insertions.
+    \item Each witness operation (insertion) changes exactly one bit in the underlying
+    bit vector from 0 to 1.
+    \item The CCBF is \emph{item-oblivious}, meaning that after observing
+    an interactive update protocol, the adversary learns which user id made the update,
+    but not which item was updated.
+\end{itemize}
+
+The downside to our CCBF is a far lower accuracy of the count operation in general compared to count-min sketches.
+However, we will show that, for careful parameter choices, the count operation is highly
+accurate within a certain range, which is precisely what is needed for the
+current application.
+
+\subsubsection{CCBF Construction}
+
+The CCBF consists of a single size-$s$ bit vector $T$ and two operations:
+
+\newcommand{\Increment}{\ensuremath{\mathsf{Increment}}}
+\newcommand{\TestCount}{\ensuremath{\mathsf{TestCount}}}
+
+\begin{itemize}
+    \item $\Increment(x, C)$: Increases the count by 1 for item $x$
+    according to user id $C$.
+    \item $\TestCount(x, t)$: Returns true if the number of increments performed so far for item $x$ is \emph{probably} greater than or equal to $t$.
+\end{itemize}
+
+Note that $\TestCount$ is probabilistic, in the sense that it may return false
+when the actual count is greater than $t$, or true when the actual count is less
+than $t$. Our construction guarantees the correctness probability is always at least
+$\tfrac{1}{2}$, and our tail bounds below show the correctness probability quickly
+goes towards $1$ when the actual count is much smaller or larger than $t$.
+
+The performance and accuracy of the CCBF is governed by three integer parameters
+$s$, $u$, and $v$, with $u,v\le s$,
+which must be set at construction time. The first, $s$, is the fixed size of the
+table $T$. Each user $i$ is randomly assigned a static set of exactly $u$ locations in
+the $T$; i.e., a uniformly random subset of $\{0,1,2,\ldots,s-1\}$, which we
+call the \emph{user set}.
+Similarly, each possible item $x$ is assigned a random set of exactly $v$
+bit vector locations, which we call the \emph{item set}.
+
+The two CCBF operations can be implemented by a single server and any number of clients. The protocols are simple and straightforward, save for the calculation of the \emph{tipping point} $\tau$ which we present in the next subsection.
+
+In these protocols, the size-$s$ bit vector $T$ is considered \emph{public} or \emph{world-readable}; it is known by all parties at all times. In reality, the server who actually stores $T$ may send it to the client periodically, or whenever a client initiates a \Increment{} or \TestCount{} protocol. However, the bit vector $T$ is only writable by the server.
+
+The $\Increment(x,C)$ protocol, outlined in \cref{alg:increment}, involves the User attempting to set a single bit from 0 to 1 within the item set for $x$. However, the user is only allowed to write locations within their own user set. So, if there are no 0 bits in the intersection of these two index sets, the user instead changes any other arbitrary 0 bit in its own user set in order to maintain item obliviousness.
+
+\begin{algorithm}[htp]
+    \caption{$\Increment(x,C)$\label{alg:increment}}
+\begin{enumerate}
+    \item User and server separately compute the list of $u$ user locations for user $C$, $U_C \subseteq \{0,\ldots,s-1\}$.
+    \item User computes list of $v$ item locations for item $x$,
+   $V_x \subseteq \{0,\ldots,s-1\}$
+   \item User checks each location in $U_C$ in the table $T$ to compute a list $S_C = \{i\in U_C \mid T[i] = 0\}$ of \emph{settable} locations for user $C$
+   \item If $S_C = \emptyset$, then the user cannot proceed and calls \textbf{abort}.
+   \item Else if $S_C \cap V_x \ne \emptyset$, user picks a uniformly random index $i\gets S_C \cap V_x$ and sends index $i$ to server.
+   \item Else user picks a random index $i\gets S_C$ and sends index $i$ to server.
+   \item Server checks that received index $i$ is in the user set $U_C$ and that $T[i] = 0$, then sets $T[i]$ to 1.
+\end{enumerate}
+\end{algorithm}
+
+Since the bit vector $T$ is considered world-readable, the only communication here is the single index $i$ from client to server over an authenticated channel. In reality, to avoid race conditions, the server will actually send the table entry values $T[i]$ for all $i\in U_C$ to the user first and lock the state of the global bit vector $T$ until receiving the single index response back from the user.
+
+The $\TestCount(x,t)$ protocol is not interactive as it only requires reading the entries of $T$. The precise computation of the \emph{tipping point} $\tau$ is detailed in the next section. Note that this computation depends only on the \emph{total} number of bits set in the bit vector $T$ as well as the parameters $s,u,v$; therefore the computation of $\tau$ is independent of the item $x$ and could for example be performed once by the server and saved without violating item obliviousness.
+
+This protocol is detailed in \cref{alg:testcount}.
+
+\begin{algorithm}[htp]
+    \caption{$\TestCount(x,t)$\label{alg:testcount}}
+\begin{enumerate}
+    \item Use parameters $s,u,v$ and current value of $m$ total number of bits set in $T$, to compute the tipping point $\tau$.
+    \item Compute list of $v$ item locations for item $x$, $V_x \subseteq \{0,\ldots,s-1\}$
+    \item Check how many bits of $T$ are set for indices in $V_x$. Return \textbf{true} if and only if this count is greater than or equal to $\tau$.
+\end{enumerate}
+\end{algorithm}
+
+\subsubsection{Calculating the tipping point}
+
+The key to correctness of the \TestCount{} protocol is a calculation of the \emph{tipping point} $\tau$, which is the expected number of 1 bits within any item set, if that item has been incremented $t$ times. We now derive an algorithm to compute this expected value exactly, in $O(tv)$ time and $O(v)$ space.
+
+Let $s$ be the total size of the table $T$ and $m\le s$ be the total number of calls to \Increment{} so far. That is, $m$ equals the number of 1 bits in $T$.
+Recall that $u,v \le s$ are the number of table entries per user and per item, respectively.
+
+We first derive the probability that two subsets of the $s$ slots have given-size intersection.
+Next we derive a recursive formula for $\tau$ using these intersection probabilities.
+The nearest integer to $\tau$ can then be efficiently computed using a simple dynamic
+programming strategy.
+
+\paragraph{Intersection probabilities}
+
+For the remainder, we use Knuth's notation $\falling{n}{k}$ to denote the \emph{falling factorial},
+defined by
+\[\falling{n}{k} = \frac{n!}{(n-k)!} = n\cdot(n-1)\cdot(n-2)\cdots(n-k+1).\]
+
+\begin{lemma}\label{lem:intersect}
+Let $k,a,b,s$ be non-negative integers with $k \le b \le a \le s$, and
+suppose $S$ and $T$ are two subsets of a size-$s$ set with $|S|=a$ and $|T|=b$, each
+chosen independently and uniformly over all subsets with those sizes. Then
+\begin{equation}\label{eqn:intersect}
+\Pr(|S \cap T| = k) = 
+    \frac{\falling{a}{k} \cdot{} \falling{b}{k} \cdot{} \falling{(s-a)}{b-k}}
+         {\falling{s}{b} \cdot{} k!}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+The number of ways to choose $S$ and $T$ with a size-$k$ intersection, divided
+by the total number of ways to choose two size-$a$ and size-$b$ sets, equals
+\[\frac{\binom{s}{k} \cdot{} \binom{s-k}{a-k} \cdot{} \binom{s-a}{b-k}}
+{\binom{s}{a}\cdot{}\binom{s}{b}}.\]
+This simplifies to \eqref{eqn:intersect}.
+\end{proof}
+
+Because the numerator and denominator are each products of $b+k$ single-precision integers,
+the value of \eqref{eqn:intersect} can be computed in $O(b)$ time to full accuracy in
+machine floating-point precision.
+
+Furthermore, equation \eqref{eqn:intersect} has the convenient property that, after altering any
+value $a$, $b$, or $k$ by $\pm 1$, we can update the probability with only $O(1)$ additional
+computation. So, for example, one can compute the probabilities for every $k\le b$ in the same
+total time $O(b)$.
+
+\paragraph{Recurrence for number of unfilled message slots}
+
+Fix an arbitrary item $x$, and let $w\le v$ denote the number of 0 bits of $T$ within $x$'s item set. Let $k\le m$ denote the number of \Increment{} operations performed on item $x$ performed so far.
+
+First, for convenience define $p_w$ to be the probability that an arbitrary user is able to
+write to one of the $w$ remaining unfilled slots for the message. From \cref{lem:intersect}, we have
+\begin{equation}
+    p_w = 1 - \frac{\falling{(s-u)}{w}}{\falling{s}{w}},
+    \label{eqn:pw}
+\end{equation}
+which can be computed in $O(w)$ time. In fact, we pre-compute \emph{all} possible values of $p_w$
+with $0\le w\le v$ in $O(v)$ total time.
+
+Now consider the random variable for the number of 0 bits within $x$'s item set after $k$ \Increment{}'s on $x$, if the item set originally had $w$ 0 bits.
+Define $R_{w,k}$ to be the expected value of this random variable, which can be calculated recursively as follows.
+
+If $w=0$, then the slots are all filled, and if $k=0$ then there are no more \Increment{}'s, so
+the number of unfilled slots remains at $w$. Otherwise, the first \Increment{} will fill an additional slot
+with probability $p_w$, leaving $w-1$ remaining unfilled slots, and otherwise will leave
+$w$ remaining unfilled slots. This implies the following recurrence relation:
+
+\[
+R_{w,k} = \begin{cases}
+    0,& w=0 \\
+    w,& k=0 \\
+    p_w R_{w-1,k-1} + (1 - p_w) R_{w,k-1},& w,k\ge 1
+\end{cases}
+\]
+
+All values of $R_{w,t}$ with $0\le w \le v$ can be computed in $O(tv)$ time and $O(v)$ space,
+using a straightforward dynamic programming strategy.
+
+\paragraph{Computing the tipping point}
+
+We now show how to compute the tipping point value $\tau$, which is the expected number of filled item slots
+after $t$ \Increment{}s on that item, by summing the $R_{w,t}$ values over all possible
+values of $w$ based on the number of \emph{other} calls to \Increment{} $m$.
+
+To this end, define $q_w$ to be the probability that $w\le v$ slots for a given item are unfilled
+after $m$ total calls to \Increment{} for other items. Because other calls to \Increment{} are for other
+unrelated items, each one goes to a uniformly-random unfilled slot over the entire size-$s$ table $T$.
+Therefore $q_w$ is the same as the probability of a size-$m$ set and a size-$v$ set having intersection size exactly $v-w$. From \cref{lem:intersect}, this is
+\[q_w = 
+    \frac{\falling{m}{v-w} \cdot{} \falling{v}{v-w} \cdot{} \falling{(s-m)}{w}}
+         {\falling{s}{v} \cdot{} (v-w)!}.
+\]
+We can pre-compute all values of $q_w$ for $0\le w\le v$ in total time $O(v)$.
+
+After pre-computing the values of $p_w$, $R_{w,t}$, and $q_w$, we can finally express
+the tipping point $\tau$ as a linear combination
+\begin{equation}\label{eqn:r}
+    \tau = v - \sum_{w=0}^v q_w R_{w,t},
+\end{equation}
+rounded to the nearest integer.
+
+In total, the computation requires $O(tv)$ time and $O(v)$ space.
+
+\subsubsection{Tail Bounds}\label{sec:tailbounds}
+
+\newcommand{\CminvOverk}{7.042652}
+\newcommand{\CminukOvers}{0.5184846}
+\newcommand{\Cplow}{0.956414}
+\newcommand{\CmaxvOvers}{0.00386}
+\newcommand{\CmaxuvOvers}{3.65151}
+\newcommand{\Cphigh}{0.974876}
+\newcommand{\CzeroUpper}{3.66567}
+\newcommand{\CvLower}{371}
+\newcommand{\CboxUpper}{0.00989}
+\newcommand{\CminsOvern}{96}
+\newcommand{\CmaxvOvert}{7.409}
+\newcommand{\CmaxvOvertb}{8}
+\newcommand{\Cfour}{1.0520553}
+\newcommand{\Cminfp}{2.1}
+
+Next, we prove lower and upper bounds on the probability of filling a single additional item slot during an \Increment{} operation, \cref{lem:lowerp,lem:upperp} respectively.
+The proofs, which are intricate but not especially surprising, can be found in \cref{app:proofs}.
+
+In order to make our scheme practically realizable, we state and prove explicit rather than asymptotic results, with all constants specified. These constants in themselves are not particularly meaningful; rather, they represent the tightest values which worked with our proof techniques and the parameter ranges we deemed reasonable for the application in mind.
+
+\begin{restatable}{lemma}{lemmalowerp}\label{lem:lowerp}
+    Let $x$ be an item such that at most
+    $\tau$ of $x$'s item slots are filled.
+    If the CCBF parameters $s,u,v$
+    satisfy
+    $v \ge \CminvOverk{} \tau$ and
+    $u \ge \CminukOvers{} \tfrac{s}{\tau}$,
+    then the probability that a call to $\Increment(x,C)$ fills in
+    one more of $x$'s item slots is at least
+    $\Cplow$.
+\end{restatable}
+
+\begin{restatable}{lemma}{lemmaupperp}\label{lem:upperp}
+    Let $x$ be any item.
+    If the CCBF parameters $s,u,v$ satisfy
+    $\CvLower{} \le v \le \CmaxvOvers{} s$ and
+    $u \le \CmaxuvOvers{} \tfrac{s}{v}$,
+    then the probability that a call to $\Increment(x,C)$ fills in
+    one more of $x$'s item slots is at most
+    $\Cphigh$.
+\end{restatable}
+
+Now we use the probability upper bound to prove an upper bound on the tipping point $\tau$.
+
+\begin{restatable}{lemma}{lemmauppertau}\label{lem:uppertau}
+    Let $s,u,v$ be CCBF parameters that satisfy the conditions of \cref{lem:upperp},
+    and suppose $m,t$ are integers such that
+    $s \ge \CminsOvern{} m$ and
+    $v \le \CmaxvOvert{} t$. Then the tipping point $\tau$, for threshold $t$
+    and with $m$ total set bits in the table $T$, is at most
+    $\Cfour{} t$.
+\end{restatable}
+
+We can now state our main theorems on the accuracy of the CCBF data structure. Consider a call to the predicate function $\TestCount(x,t)$, which attempts to determine whether the number of prior $\Increment{}$ calls with the same item $x$ is at least $t$. Our exact computation of the tipping point $r(t)$ shows that this function always returns the correct answer with at least 50\% probability. But of course, so would a random coin flip!
+
+Let $k$ be the \emph{actual} number of calls to $\Increment(x,C)$ that have occurred. Then two kinds of errors can occur: a \emph{false positive} if $\TestCount(x,t)$ returns true but $k<t$, and a \emph{false negative} if $\TestCount(x,t)$ returns false when $k\ge t$. Intuitively, both errors occur with higher likelihood when the true count $k$ is close to $t$. Our main theorem captures and quantifies this intuition, saying that, ignoring low-order terms, $\TestCount$ is accurate to within a 10\% margin of error with high probability.
+
+\begin{restatable}{theorem}{theoremfp}\label{thm:fp}
+    Let $n$ be an upper bound on the total number of calls to $\Increment$, and $t$ be a desired threshold for $\TestCount$. Suppose the parameters $s,u,v$ for a CCBF data structure satisfy the conditions of \cref{lem:lowerp}, and furthermore that
+    $v \le \CmaxvOvertb{} t$.
+    If the actual number of calls to $\Increment(x,C)$ is at most
+    $t - \Cminfp\sqrt{\lambda t}$, then the probability $\TestCount(x,t)$ gives
+    a false positive is at most $2^{-\lambda}$.
+\end{restatable}
+
+\begin{restatable}{theorem}{theoremfn}\label{thm:fn}
+    Let $n$ be an upper bound on the total number of calls to $\Increment$, and $t$ be a desired threshold for $\TestCount$. Suppose the parameters $s,u,v$ for a CCBF data structure satisfy the conditions 
+    of \cref{lem:lowerp,lem:uppertau}.
+    If the actual number of calls to $\Increment(x,C)$ is at least
+    \begin{equation} \label{eqn:fn}
+        1.1 t + .4 \lambda + .7\sqrt{\lambda t},
+    \end{equation}
+    then the probability $\TestCount(x,t)$ gives
+    a false negative is at most $2^{-\lambda}$.
+\end{restatable}
+
+We can easily summarize the various conditions on the parameters as follows:
+\begin{corollary}\label{cor:params}
+    Let $n$ be a limit on the total number of calls to \Increment{}, and
+    $t$ be a desired threshold satisfying 
+    $50 \le t \le \tfrac{n}{20}$.
+    Then by setting the parameters of a CCBF according to
+    $s=96n$, $v=7.409t$, and $u=47.31\tfrac{n}{t}$, any call to
+    $\TestCount(x,t)$ will satisfy the high accuracy assurances of
+    \cref{thm:fp,thm:fn}.
+\end{corollary}
+
+%\todo{something about set of malicious users to strengthen first theorem}

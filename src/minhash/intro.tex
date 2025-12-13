@@ -1,0 +1,288 @@
+\subsection{Introduction}
+
+%Papers doing 2-PC of minhash: ~\cite{wpes:CFGT12,eprint:RCSWK19,Faber:thesis}\\
+%Papers for DP minhash:  ~\cite{arxiv:YLLHQ17, conc:YWRLLQ19, sisap:AumBouSch20}
+%
+%Paragraph describing some particular application of Jaccard index
+
+%\dnote{Should say somewhere that our protocols only achieve semi-honest security. I don't think we get malicious security b/c e.g.~we don't ensure that the party hashes the same set across the $k$ iterations. Should mention something about using e.g.~SNARGs to get malicious security without increasing communication complexity?}
+
+\paragraph{Min-hash sketch.}
+The min-hash sketch is a simple and well-known technique to produce an unbiased estimate of the Jaccard index~\cite{B97,LOZ12}. 
+The Jaccard index~\cite{jaccard} is a similarity measure between two sets $A$ and $B$, denoted $J(A, B)$, defined as the fraction of the elements in the intersection of $A$ and $B$ divided by the number of elements in their union.  That is, $J(A,B)=\frac{|A \cap B|}{|A \cup B|}$.
+The Jaccard index has seen wide application for clustering of websites and documents~\cite{B97,cn:BGMZ97}, community identification~\cite{kdd:TanBerKem07}, DNA matching~\cite{wpes:CFGT12}, and machine learning~\cite{ijcai:WWTDLZ19,icip:JKWC22}. 
+
+
+Computing the Jaccard index exactly, especially when the input sets are large, can be costly.  The min-hash sketch allows communication-efficient approximation~\cite{B97}. 
+%
+The basic idea behind the min-hash sketch is to apply a random hash function $h$
+to both sets $A$ and $B$ and then compare the minimum hashes (denoted $\min
+h(A)$,  $\min h(B)$) in both sets. If $\min h(A) = \min h(B)$, it means that an element in $A \cap B$ has been hashed to the
+minimum value among elements in $A \cup B$. This occurs with probability
+$J(A,B)$. Thus, to get an unbiased approximation of the Jaccard index, it
+suffices to repeat this procedure with sufficiently many random hashes.
+
+
+\paragraph{Private Jaccard index via min-hash.}
+Due to its simplicity and efficiency, the min-hash sketch has become a popular tool to approximate the Jaccard index.  Moreover, since the min-hash sketch only needs to compare the minimum hashes, it has been a key building block when maintaining privacy of the input sets is important, e.g., if the input sets represent fingerprints, DNA, or medical records.  
+
+There are two classes of solutions for privacy-preserving min-hash.  The first class of solutions (e.g.~\cite{wpes:CFGT12,BluCriGas14,eprint:RCSWK19,Faber:thesis}) considers how to compute the min-hash and Jaccard index in a two-party setting, where the parties do not trust each other with their private inputs.  The goal of these works is to design secure two-party computation protocols for computing the min-hash sketch as efficiently as possible, but they generally do not consider the privacy implications of revealing the output.  The second line of work (e.g.~\cite{arxiv:YLLHQ17,conc:YWRLLQ19,sisap:AumBouSch20}) considers how to make the min-hash approximation privacy-preserving by adding noise to the local min-hash sketches.  
+
+
+% Specifically, these works consider adding noise to the output of the min-hash algorithm to guarantee differential privacy (DP) of individual items in the input sets.\anote{How do we compare to the second line of work now?  Before, we said we don't add noise, but now we also add noise, so are we just another paper in this line of work?  Are we better than them in any way?}
+
+\paragraph{Our work.}
+These works serve as the starting point for our study. In particular, we first
+present a protocol that addresses the privacy of min-hash-based approximations
+from two perspectives. Similar to the first class of solutions, our protocol
+ensures that no private information about the input is revealed beyond the
+Jaccard index. Additionally, in line with the second class of solutions, our
+protocol guarantees that even the Jaccard index output satisfies differential
+privacy, which is achieved through adding a small amount of noise.  
+%
+Next, we explore whether any variant of differential privacy can be achieved without adding noise to the protocol, which would improve its accuracy. Interestingly, we demonstrate that under specific constraints on the inputs, the resulting protocol still provides a certain level of privacy guarantees.
+
+%\anote{I am a bit concerned that we are being sloppy here.  I think what
+%we call minhash sketch is really the count of how many times the mins are equal.
+%But, what most people would call the min-hash sketch is the actual list of
+%hashes of the inputs.  Should we reword?}\anote{I changed this to explicitly say
+%that we are talking about the counts.}
+
+
+More formally, we define three ideal functionalities to capture flavors of min-hash.  $\Pbase$ computes the min-hash and then outputs \emph{both the min-hash count and the random hashes used}.  On the other hand, $\PC$ computes the min-hash functionality and outputs 
+\emph{only the min-hash count}.  This corresponds to a setting where the min-hash is computed by a trusted curator who does not disclose the hashes used.  Finally, we define $\Pbasenoisy$ which adds noise to the min-hash count computed by $\Pbase$.  For our first result we show that for appropriate noise levels, the $\Pbasenoisy$ functionality achieves both high accuracy and differential privacy, and design a secure two-party computation of $\Pbasenoisy$ that is both computation and communication-efficient.  For our second result, we consider a setting in which the outputs of $\Pbase$ or $\PC$ have already been released \emph{without added noise} and show that, under certain conditions on the inputs, this setting also provides privacy guarantees for individuals' inputs.
+ 
+
+
+
+% Given these, 
+% our work has two main thrusts:
+% (1) We define a third functionality 
+% $\Pbasenoisy$, which adds noise to the min-hash output computed by $\Pbase$.
+% We show that for appropriate noise levels, the $\Pbasenoisy$ functionality achieves both high accuracy and differentially privacy.
+% We further design a secure protocol for two-party secure computation of $\Pbasenoisy$ that is both computation and
+% communication-efficient.
+% (2) We consider a setting in which the outputs of $\Pbase$ or $\PC$ have already been released \emph{without added noise}. Even in this case, we provide guarantees on an individual's privacy, conditioned on the released output. Our results hold only in the case that the inputs to $\Pbase$ and $\PC$ satisfy certain constraints, which we show to be inherent.\anote{Why talk about functionalities here?  I would talk about protocols and avoid discussing functionalities until the technical section.}
+% \dnote{I think this is key. Only our first (and not very exciting) result is about protocols, and even that result we cannot even describe what we achieve without defining a noisy-min hash functionality. Our other results have nothing to do with protocols and we don't want reviewers to think that they do. The other results are simply concerned with what privacy remains after the output of FminH or FprivH is released.}
+
+\paragraph{Differentially-private and secure computation of min-hash.}
+To build a protocol for differentially-private min-hash we observe that the min-hash count has low global sensitivity.  This allows us to define a functionality $\Pbasenoisy$, parameterized by $(\epsilon, \delta)$ which adds (properly-tuned) Laplace noise to the output of the min hash (See Figure~\ref{prot:noisy} for details.)  We then prove the following theorem about this functionality.
+
+\begin{theorem}[Informal]
+    $\Pbasenoisy$ is $(\ee, \dd)$-DP against an adversary corrupting either party.
+\end{theorem}
+
+To realize a protocol for DP estimation of the Jaccard index, we now just need
+to instantiate this functionality.  We show how this can be done efficiently using a PSI-CA functionality in Section~\ref{sec:basic}. In Section~\ref{sec:eval}, we evaluate
+the performance when instantiating the PSI-CA
+protocol~\cite{DGT12,TL23} in the semi-honest setting. The resulting protocol
+has better accuracy compared to the prior work~\cite{ICML:HehTinCor23,sisap:AumBouSch20}. We recommend this protocol to
+compute differentially-private estimates of the Jaccard index.
+
+%\anote{Anything more to say here?}
+
+\paragraph{Privacy after leakage of min-hash output.}
+While ideally, parties should follow recommendations to add noise to the output of the min-hash count before releasing it (as in functionality $\Pbasenoisy$),
+in practice, this may not happen. Further, there may be historical counts that have already been released without added noise.
+We refer to settings in which such output is released as ``output leakage.''
+\dnote{Not sure if we should use this term. Can we come up with something else? ``After the fact leakage'' usually refers to leakage on a secret key after observing the ciphertext.}\anote{I changes the term to ``output leakage'', is this better?}
+We ask whether any privacy for an individual can be salvaged in this case.
+Somewhat surprisingly, we show that  under certain 
+conditions on the inputs to $\Pbase$ or $\PC$, the error of the min-hash approximation itself is sufficient to achieve (variants of) differential privacy--meaning that the presence of an individual element in one of the two input sets cannot be inferred given the output of $\Pbase$ or $\PC$.  Essentially, the error of the sketch acts as noise to protect the privacy of the inputs.
+% The reason that the min-hash protocol may be able to provide any privacy is that it inherently is an approximation algorithm and as such produces an answer with some error rather than the exact Jaccard index. 
+Similar observations that sketching algorithms inherently preserve privacy under certain input restrictions have previously been shown for the Johnson-Lindenstrauss sketch~\cite{FOCS:BBDS12}, the LogLog sketch~\cite{choi2020differentially,smith2020flajolet}, and other sketches~\cite{wang2022differentially}.  
+
+%To get an initial understanding of the inherent privacy of the min-hash protocol, 
+We first consider the simpler case of the privacy of an individual once the output of $\PC$ has been released.
+Recall that in this setting a set of private hashes is chosen by the functionality and these hashes are not returned as output of the functionality.
+% We begin by considering the standard setting for differential privacy where there is a (mutually) trusted curator that produces the output of the computation.  In this setting, both parties can give their input sets $A$ and $B$ to the curator, who will choose the random hashes, use them to compute the minimum item in the two sets, and see how often they match, outputting only the final number of matches.  
+Standard differential privacy in this setting requires that \emph{conditioned on knowledge of $A$ and all but one element of 
+$B$ (denoted by $x^*$)}, the probability that the functionality outputs any value $\mathsf{out}$
+when $x^* \in B$ versus when $x^* \notin B$ differs by a factor of at most $e^\epsilon$ with all but negligible probability.  
+
+We note that min-hash is \emph{not} differentially private in this setting if $A \cap B$ is either too large or too small.  For example, if $|A \cap B|=0$ when $x^* \notin B$ and 1 when $x^* \in B$, then min-hash always outputs 0 in the first case and outputs a count $\ge 1$ with noticeable probability in the second. We prove the following theorem showing that when this is not the case the min-hash output is differentially private:
+
+\begin{theorem}[Informal]\label{thm:dpInformal}
+If the size of the intersection 
+is a constant fraction of the size of $A$ and $B$,
+%is not too small or too large compared to $A$ and $B$,  %(i.e., $\frac{|A \cap B|}{|A|}$ and $\frac{|B \setminus A|}{|A|} \in \Theta(1)$), 
+%If $J(A, B)$ is a constant fraction (not too small or too large),
+then the output of $\PC$ is $(\epsilon,\delta)$-DP for negligible $\delta$.
+\end{theorem}
+
+We stress that this theorem crucially relies on the fact that the parties, and the adversary, do not have any information about the chosen hashes, and cannot learn the evaluation of the hashes on their own inputs.  
+Note that for this theorem to be useful in a two-party protocol, the parties must compute the hashes under a 2-PC or FHE.
+% If two parties want to obtain the min-hash output without knowing the identities of the hashes, then they must compute the hashes under an 2PC or FHE.
+This is unlikely to be done in practice.
+Thus, typically,
+the parties will locally store the hashes\footnote{As noted previously, it is sufficient to store a short seed to identify the hash.} during the computation.  To understand the privacy of this approach, we consider the case of the $\Pbase$ functionality where the output leakage includes the hash functions as well as the counts.
+
+
+% We next consider the case where the hashes are not erased from memory at the end of the computation. In this case, sketch leakage from either of the parties reveals both the output of the min-hash and also the hashes used to compute the min-hash. 
+% This corresponds to leakage of the output of the $\Pbase$ functionality.
+%However, despite this challenge, we note that using fully-homomorphic encryption~\cite{STOC:Gentry09} to evaluate the hashes and compare the minimums, it is possible to build a protocol with sublinear communication. Since it securely realizes the functionality (with semi-honest security), the protocol would achieve computational DP~\cite{C:BeiNisOmr08,EC:DKMMN06,C:MPRV09,SCRS17}.  Additionally, since the error is unbiased and from an easily sampleable distribution, this protocol is also a secure approximation~\cite{ICALP:FIMNSW01} of the Jaccard index in that it leaks no information about the input sets beyond the Jaccard index. 
+
+
+\iffalse
+\dnote{Should we say something about the assumption of $|A \cap B| / |A| \in \Theta(1)$. For example, if
+$x^* \in A$ and
+$|A \cap B| = 0$ then the output of the protocol is always $0$ so can distinguish between the case that
+$x^* \in B$ or not.}
+\anote{Hmm, not sure.  This is an interesting point, but I feel it somewhat breaks the narrative.  Maybe it makes more sense to describe this in the technical section for private hash?}\mingyu{We also need $|B \setminus A| / |A| \in \Theta(1)$.}
+\anote{I added a sentence discussing the issue with intersection size before the theorem, please see if you like it.}
+\fi
+
+
+
+Unfortunately, in this case there is a problem when trying to argue privacy. In the standard DP setting, we assume that the adversary knows all of the inputs (in this case, all entries in both sets $A$ and $B$) except for some input $x^*$ and wants to determine, from the output of the computation, whether $x^*$ was in the other party's set.  If the hashes are known, then the output of min-hash is deterministic: The adversary can exactly reconstruct the min-hash execution for the case when $x^*$ is in the set and when it is not, and then see which of these matches the output it received. 
+ Since the min-hash protocol provides a good approximation of the Jaccard index, the adversary will be able to 
+ exactly determine whether or not $x^* \in B$ with noticeable probability.%\footnote{Our discussion here focuses on the case when the adversary provides input $A$.  The case when the adversary instead controls $B$ is symmetric.}.
+
+\dnote{Not sure how accurate the following is, should we remove it?
+The above gives a counter-example against the differential privacy of min-hash in the public permutation setting. However, does it really give rise to a realistic privacy breach?
+}
+\anote{I am not sure what exactly is the problem here.}
+
+Note that the above attack works only if the adversary knows the entirety of both sets $A, B$ and just tries to distinguish whether
+$x^* \in B$ or not.
+Realistically, especially when the inputs are large, the adversary would not know the entire input of the honest party.
+%We thus need to make a further assumption on how much information the adversary knows about the other party's set.  Specifically, we argue that 
+% Indeed, parties would only want to perform a Jaccard Index computation in the first place if they did not already know what the answer would be.  In the context of min-hash, this means that the adversary does not already know a good portion of the honest party's input set. 
+More precisely, we assume that given the adversary's set (and even the intersection between the two sets), the honest party's set still has sufficiently high min-entropy.  With this assumption, we turn to the tool of distributional DP (DDP)~\cite{FOCS:BGKS13} which allows us to analyze differential privacy when the distribution of inputs has sufficient uncertainty.
+
+ We begin with a relatively strong assumption on the amount of uncertainty the adversary has about the honest set.  Specifically, we assume that every element that is not in the intersection is highly unpredictable (i.e., has a high amount of min-entropy), even conditioned on all the other set elements.  
+ Under this assumption, we prove the following theorem:
+
+ \begin{theorem}[Informal]
+     If each non-intersecting item has sufficiently high min-entropy, revealing the hash functions\footnote{We use cryptographic hash functions to instantiate the hashes in the random oracle model.} together with the min-hash counts (as in the $\Pbase$ functionality) preserves $(\epsilon,\delta)$-DDP for negligible $\delta$, as long as the size of the intersection is  a constant fraction of the size of $A$ and $B$.
+ \end{theorem}
+
+ Not surprisingly, the proof of this Theorem (given in Section~\ref{sec:ddp1}) leverages the fact that when each element has individual high min-entropy, hashing each element acts as a strong randomness extractor, thus resulting in sufficient random noise for privacy.
+
+% \dnote{Say something about: Not surprisingly, the above proof will leverage the fact that when each element has individual high min-entropy, hashing each element acts as a strong randomness extractor.}
+
+\paragraph{DDP over a polynomial-size universe.}
+ However, this assumption that every item has high min-entropy is quite strong.  For example, consider the setting where each item in $B$ is chosen from a polynomial-size universe. In this case, while individual items cannot have much min-entropy, the honest party's set may still collectively have high min-entropy as long as it is large enough.  Thus, for our third result, we analyze what happens under this weaker assumption that {\em only the full honest set, instead of each individual item, has high min-entropy}.  
+ 
+ Note that in this case, we cannot apply the hash function as randomness extractor technique. This is because in order to guarantee that the randomness extractor yields output that is negligibly close to uniform, we must lose superlogarithmic in $n$ bits of entropy from each input. However, in the case we are currently considering, each element has at most $O(\log n)$ bits of min-entropy. Further, we in fact have no guarantee that each element has individually high min-entropy (since the elements are not necessarily independent), but only that the total min-entropy of the non-intersection items is high.
+ %\dnote{above could be a segue to strong chain rules...}
+ Nevertheless, we show $\Fbase$ still achieves DDP,
+ by proving a new strong chain rule for min-entropy (see Section~\ref{sec:strong-chain-rule}).  
+ 
+ Specifically, we consider the following class of distributions
+ $\mathcal{C}$
+ over secret sets $R$ of size $n$:
+ \begin{itemize}
+ \item Let $\U$ be a universe of polynomial size $n \cdot \ell$, where $\ell = \Omega(n^3)$.
+ \item $R$ is chosen uniformly from all subsets of $\U$ of size $n$.
+ \item In general, to relax the uniformity above, we additionally allow arbitrary leakage $L = L(R)$ computed on $R$, such that
+the length of the leakage $L$ is at most
+ $|L| \leq c \cdot n \log \ell$,
+ for a fixed constant $c \in (0,1)$.
+ \item We consider the resulting conditional distribution 
+ $\mathcal{D}$ on $R$ given leakage $L$.
+ \end{itemize}
+ 
+ %We prove the following theorem:
+
+ 
+ \begin{theorem}[Informal]
+     Assume the set $R$ is drawn from a distribution $\mathcal{D} \in \mathcal{C}$.
+     Then the min-hash protocol in the random oracle model (corresponding to functionality $\Pbase$)
+     preserves $(\epsilon,\delta)$-DDP for negligible $\delta$,
+     % with an appropriate choice of how many functions to be used,
+     as long as the size of the intersection is a constant fraction of the size of $A$ and $B$.
+     %then the output of the min-hash protocol
+     %relative to a public, random oracle (RO) achieves
+     %$(\epsilon,\delta)$-DDP for negligible $\delta$, as long as the %size of the intersection is not too small or too large compared %to $A$ and $B$. 
+ \end{theorem}
+
+\iffalse
+\dnote{Informal theorem statements should also probably say something about number of hashes/communication complexity as otherwise these are all trivial.}\anote{Not sure what you mean here.  The number of hashes and communication complexity is only relevant for the 2-PC protocols, not the observations of DP.  These theorems are only of the kind Min-hash preserves DP.}
+\dnote{Yeah, but our results don't work for any number of hashes. I think we need to state the requirement on $k$. Specifically--if we could only prove it for number of hashes $O(n)$ it would not be an interesting result.}
+\anote{I see.  What should the restriction on $k$ be?  It might be easier if we could write the formal version of Theorem 3 first, then I can think of how to make it informal while keeping it correct.}
+\fi
+
+\paragraph{On spoiling bits and leakage resilience.}
+Consider a distribution over sets of $n$ elements
+$R = R_1, \ldots, R_n$, where each $R_i$ is chosen
+from a universe of size $\ell \in \Omega(n)$.
+Note that the set $R$ can have min-entropy
+$\Omega(n \lg(\ell))$ while it can still be possible
+that for every $i$, the marginal distribution
+over $R_i$ has only {\em constant} min-entropy (see Example 1.1 in~\cite{DKZ18}).
+To deal with such situations, Sk\'{o}rski~\cite{skorski2019strong} proves a theorem showing the existence of ``spoiling bits.'' Namely, given $R_1, \ldots, R_n$, some additional information
+known as spoiling bits can be released such that, conditioned on this information, for each $i \in [n]$, the distribution of $R_i$ conditioned on $R_{<i}$, where $R_{<i}$ denotes $(R_1, \ldots, R_{i-1})$, is nearly flat
+(in the sense that the min/max entropy gap is at most a small additive constant). Further, the total number of spoiling bits that are released is small.
+
+It is not hard to use Sk\'{o}rski's result to show that if $R$ starts out with sufficiently high min-entropy then for a large fraction of $i$
+(those in the set $V \subseteq [n]$), the distribution of $R_i$ conditioned on $R_{<i}$ has high min-entropy of at least $\Omega(\log(n))$, while the remaining indices 
+(those in the set $W = [n]\setminus V)$) may have low min-entropy.
+
+
+Unfortunately, this result is very brittle in the sense that the flatness conditions hold only for this particular distribution of $R$ conditioned on the spoiled bits. Specifically, despite the flatness condition being satisfied for this distribution, the random variables $R_i$ are \emph{not} independent of one another. Thus, if additional information is leaked on $R_j$ after the spoiling bits are computed, then the flatness guarantees may no longer hold for $R_i$.
+ 
+ In our setting, we require additional leakage $\{\ell_i\}_{i \in W}$ on the elements $\{R_i\}_{i \in W}$. 
+One issue is that the set $W$ (i.e., low min-entropy elements conditioned on the spoiling bits) is only known \emph{after} the spoiling bits are computed.
+This leaves us with a dilemma: 
+\begin{itemize}
+\item 
+Leaking $\{\ell_i\}_{i \in W}$ additionally {\em after} the spoiling leakage can destroy the flatness property.
+\item 
+On the other hand, 
+we cannot 
+%if we want to 
+leak $\{\ell_i\}_{i \in W}$ \emph{before} computing the spoiling bits, 
+%we are not able to do so, 
+since we don't know the set $W$ yet! We could leak from all the blocks $(R_1, \ldots, R_n)$, but this may deplete the entropy needed from the random variables $\{R_i\}_{i \in V}$.
+\end{itemize}
+
+To solve this problem, we prove a new variant of the spoiling lemma that computes the spoiling bits \emph{at the same time} as the additional leakage $\ell_i$ for $i \in W$ is computed so that the spoiling bits also contain $\{\ell_i\}_{i \in W}$, while still maintaining the flatness condition. 
+%
+The types of leakage that can be captured are essentially those such that the leakage $\ell_i$ for $i \in W$ can be expressed as a function of $R_i$ and the leakages $\{\ell_j: j > i, j \in W\}$. It turns out that the leakage we need for our result has this form.
+
+We state our theorem in general terms as we believe it may find further applications in leakage resilient cryptography. For the formal theorem statement see Theorem~\ref{thm:chain_leak_3}.
+
+\paragraph{A note on composition.} 
+One known weakness of the DDP definition is the lack of a general composition theorem~\cite{FOCS:BGKS13}.  However, for the specific setting of our min-hash protocols we can leverage the small output of min-hash to argue composition properties after leakage of several outputs.
+Specifically, suppose that the
+adversary executes a min-hash protocol with $(\ee, \dd)$-DDP security
+%. Furthermore, suppose that he executes the protocol 
+twice with the same honest party's input both times. Since each
+min-hash protocol outputs a single number between $0$ and $k$ (i.e., $\lg k$ bits long), when we apply Theorem~3, the leakage profile increases to a total of at most $L + 2 \cdot \lg k$ bits. However, according to Theorem~3, as long as $|L| + 2 \lg k \le c \cdot n \lg \ell$, each protocol execution will preserve DDP, and therefore the composition of the two protocol executions will preserve $(2 \ee, 2\dd)$-DDP. In general, assuming that the initial leakage $|L|$ is a small constant, this type of DDP composition will hold for $O(n \cdot \frac{\lg \ell}{ \lg k })$ executions. 
+
+%\paragraph{Adversary model.}
+%All of the protocols described above are secure in the random oracle model against a semi-honest adversary corrupting one of the parties.  Achieving malicious security, especially for the DDP protocol, is an interesting open question.
+
+% \anote{We may want to merge the two paragraphs below since our empirical evaluation now compares our protocol to the Sketch-Flip-Merge protocol.  Let's revisit this once the empirical results are done.  We should clean up the two sections below once we have the results.}
+% \anote{Question:  Do you thin this is enough to dissuade that negative Eurocrypt reviewer?}
+
+\paragraph{Comparison to other approaches.}
+% One naive way to achieve Differentially-private Jaccard index estimation is by adding additional noise (e.g. Laplacian noise) to the output of the min-hash protocol.\anote{Isn't this naive way exactly what we are calling our main result now?  I guess we need to rewrite this paragraph.}
+% % One naive way to attain Differential Privacy (DP) for minhash is by introducing extra noise, e.g., adding Laplace noise to the output of the minhash protocol before revealing it. 
+% % Given the simplicity of this method, we chose not to define and analyze it formally. 
+% However, we emphasize that this approach invariably leads to reduced accuracy due to the addition of input-independent noise (therefore increasing the output variance). Moreover, we believe that our analysis of the noiseless version of minhash provides a retrospective privacy assessment of existing applications of the minhash sketch.  This further justifies our efforts to understand the inherent privacy of minhash with more intriguing proof techniques.
+%
+We note that an alternative approach to get a differentially-private estimate of the Jaccard index is via mergeable cardinality estimation sketches (e.g.~\cite{ICML:HehTinCor23}) to compute (an approximation of) the set intersection cardinality and use this via the inclusion-exclusion principle to compute the Jaccard index.  
+%However, all such cardinality sketches we are aware of rely on adding independent noise to achieve DP resulting in an additional source of error.  
+We give a detailed comparison of error from our protocol vs. the best known cardinality estimator~\cite{ICML:HehTinCor23} in Section~\ref{sec:eval}.
+
+% Our results, on the other hand, show that in many cases, the min-hash sketch is already sufficient to achieve differential privacy of the inputs.  This result allows us to build low-error and sublinear communication protocols for approximating the Jaccard index without adding any additional noise to achieve privacy.  Thus, in addition to preserving privacy, results produced by our protocols are reproducible, generating the same output if run with the same inputs and the same hash functions. 
+
+% Finally, this leads to the following encouraging observation.  The min-hash has been in use for a long time, and in that time people have not really considered whether the results they were computing and storing were privacy preserving.  As we now show that the min-hash sketch itself is DP, 
+% this gives evidence that prior computation may already preserve privacy of the individual inputs. 
+
+% \paragraph{Empirical evaluation and reproducible computation.}
+% We also perform empirical evaluation of our protocols corresponding to the first two theorems to determine the proper parameter ranges for privacy.
+% %
+% While Theorem~3 obtains strictly better parameters than Theorem~2 from an asymptotic perspective, due to the constants behind the Big-O notation, the guarantees only kick in at large values of $n$.
+% On the other hand, our empirical evaluation shows that Theorem~2 can be applicable for practical settings of $n$.
+% %We note that Theorem~3 is more of theoretical interests, and the practical parameters are not competitive to the other cases. 
+% We believe that the large constants in Theorem~3 are a byproduct of our analysis but are not inherent.
+% Improving our analysis and optimizing the practical parameters are left as an open problem.
+
+% Our results show that in many cases, the min-hash sketch is already sufficient to achieve differential privacy of the inputs.  This result allows us to build low-error and sublinear communication protocols for approximating the Jaccard index.  Moreover, in addition to preserving privacy, these results are reproducible, generating the same output if run with the same inputs and the same hash functions. 
+
+% Finally, this leads to the following encouraging observation.  The min-hash has been in use for a long time, and in that time people have not really considered whether the results they were computing and storing were privacy preserving.  As we now show that the min-hash sketch itself is DP, 
+% this gives evidence that prior computation may already preserve privacy of the individual inputs. 
+

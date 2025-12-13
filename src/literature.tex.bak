@@ -1,0 +1,208 @@
+\section{Literature Review}
+
+\subsection{Secure Search}
+Secure search is a widely-studied problem, and there have been solutions in many different settings. In the discussion below, let $n$ denote the number of data items. 
+\paragraph{Secure pattern matching (SPM) on FHE-encrypted data.} 
+In SPM, given an encrypted query $\lbra q \lket$ and $n$
+FHE-encrypted data items $(\lbra x_1 \lket, \ldots, \lbra x_n \lket)$, it
+returns a vector of $n$ ciphertexts $\lbra b_1 \lket, \ldots, \lbra b_n
+\lket$, where $b_i$ indicates whether the $i$th data element is a
+match~\cite{CCSW:YSKYK13,FCW:CheKimLau15,TIFS:CKK16,TDSC:KLLTW19}.
+Their works focus on optimizing the search circuits to determine whether a data item matches the query, and therefore
+the communication complexity and client’s running time are proportional
+to the number of data items. Our work focuses on the orthogonal
+problem of optimizing the retrieval of the matched data items with
+sublinear communication and client computation.  
+
+\paragraph{Searchable encryption (SE).} 
+Searchable encryption~\cite{SP:SonWagPer00,EC:BDOP04} allows highly efficient search (usually in
+$o(n)$ time) over encrypted data.  Efficient SE schemes have been proposed for a wide variety of queries including equality queries~\cite{CCS:CGKO06, AC:ChaKam10}, range queries~\cite{RSA:IKLO16, CCS:RACY16}, and conjunctive queries~\cite{SP:PKVKMC14, C:CJJKRS13}. However, to achieve sublinear query performance, SE schemes require significant preprocessing and relax security, allowing some partial information about the queries and data (e.g. access patterns) to leak to the server.  For a recent survey on SE constructions and security, see Fuller et al.~\cite{SP:FVYSHG17}.
+In contrast, our work focuses on achieving preprocessing-free secure constructions, leaking nothing about the queries or results other than their sizes. 
+
+\paragraph{Property Preserving Encryption (PPE).}
+As a different approach, property-preserving encryption~\cite{EC:PanRou12} produces ciphertexts that maintain certain relationships (e.g., equality, and order) of the underlying plaintexts.  This allows queries to be performed over ciphertexts in the same way that they can be carried out over plaintexts.  Examples of PPE include deterministic encryption~\cite{C:BelBolONe07} allowing equality queries, and order-preserving encryption~\cite{EC:BCLO09, C:BolCheONe11} allowing range queries.  However, it has been shown~\cite{NDSS:IslKuzKan12, CCS:GMNRS16,SP:GSBNR17} that such property-preserving ciphertexts leak a lot of information about the underlying plaintexts.
+%making them undesirable in many security-critical applications. 
+See~\cite{SP:FVYSHG17} for a survey of constructions and attacks.
+
+\subsubsection{General Techniques}
+\paragraph{Private information retrieval (PIR).} PIR
+allows the client to choose the index $i$ and retrieve the $i$th record
+from an untrusted server while hiding the index
+$i$~\cite{JACM:CKGS98}. However, this protocol by itself provides only a
+limited search functionality requiring the client to know the index of the data to retrieve.  In this work, we
+aim at protocols supporting any arbitrary search
+functionality. 
+
+\paragraph{Secure multi-party computation (MPC).}
+Secure two-party computation~\cite{FOCS:Yao86,STOC:GolMicWig87} allows
+players to compute any function of their private inputs without
+compromising privacy of their inputs. For example, the client and the
+server can run a protocol for secure two-party computation to solve the
+secure search problem. 
+%
+While there has been much progress in improving efficiency of MPC
+protocols, such protocols still require $\Omega(n)$ communication and $\Omega(n)$ client computation per query.  In this work, we aim to achieve protocols with sublinear communication and client work.
+
+
+% those protocols depends on preprocessing which has
+% $\Omega(n)$ communication/computation costs for each protocol
+% execution. In this work, we aim at achieving setup-free protocols. 
+
+
+% \paragraph{Private set intersection (PSI).}
+% Private set intersection (PSI) is a special case of secure two-party
+% computation where two parties, each holding a set of private items, can
+% learn the intersection of their sets~\cite{EC:FreNisPin04}. However, in
+% PSI, matching of the private items must be performed in the plaintext
+% level, which is inconsistent with our setting where the server stores
+% the encrypted data of the client. 
+
+
+\paragraph{Oblivious RAM (ORAM) and Oblivious data structure (ODS).} 
+ORAM~\cite{GO96} is a protocol which allows a client to store an array
+of $n$ items on an untrusted server and to access an item obliviously,
+that is, hiding contents and which item is accessed (i.e., the access
+pattern).  Likewise, ODS~\cite{CCS:WNLCSS14} allows the client to store
+and use a data structure obliviously. 
+%
+One could implement secure search by utilizing an ODS for a search tree.
+However, ODS constructions typically need $\Omega(\log^2 n)$ rounds for
+each operation. In this work, we aim at achieving a constant round
+protocol. 
+
+\subsection{Secure Sampling}
+\paragraph{Sampling from streaming data.}
+Many prior papers (e.g.~\cite{cormode2019p,ganguly2007counting,jowhari2011tight,MW10,woodruff2016distributed}) have studied the problem of sampling data from a data stream.  In this setting the goal is to achieve $L_p$ sampling for arbitrary $p$ without having to process or store all the streaming data, thus requiring sublinear computation.  These works generally operate in the one-party setting and do not consider privacy.  
+
+% \paragraph{$l_p$ Sampling} In a $l_p$ sampling, given $n$ entries with non-zero frequency vector $\vec{w}$, it returns a sampled index $i$, where $\Pr[\mbox{sample } i] $ is proportional to $p_{th}$ power of its frequency, which is $w_i^p$. ~\cite{cormode2019p,ganguly2007counting,jowhari2011tight,MW10,woodruff2016distributed} Their works focus on an approximate $l_p$ sampler on data streams or massive datasets with sublinear or constant pass of data streams, while optimizing the space and time usage. 
+
+% \paragraph{Distinct Sampling in Data Stream} Distinct sampling in data stream is a special case of $l_p$ sampler for $p = 0$ which returns a uniformly random sample element in a data stream.~\cite{DBLP:journals/corr/BhattacharyaHNT15,cormode2019p,cormode2005summarizing,frahling2008sampling}  
+% Their works focus on achieving the functionality of turnstile $l_0$ sampling, which returns the uniformly random element from dynamic(one-pass) or semi-dynamic(multiple pass) data streams with sublinear or constant pass. The goal is optimizing the space and time usage while maintaining the correctness and randomness. 
+
+% \paragraph{$l_1$ Sampling in Data Stream} In a $l_1$ sampling, which is another special case of a $l_p$ sampler with $p = 1$ returns a sampled index $i$, where $\Pr[\mbox{sample } i ]$ is proportional to its frequency $w_i$. A perfect $l_1$ sampler has been proposed by the Reservoir Sampling ~\cite{knuth1981art} and has been extended by ~\cite{MW10} to allow both positive and negative updates in data streams. 
+
+% \paragraph{$l_2$ Sampling in Data Stream}
+% In a $l_2$ sampling, which is another special case of a $l_p$ sampler with $p = 2$ returns a sampled index $i$, where $\Pr[\mbox{sample } i ]$ is proportional to square of its frequency $w_i$. 
+% ~\cite{MW10} builds a $l_2$ sampler for data streams and suggests the ideas of construct $l_p$ samplers with $p > 2$. 
+% ~\cite{frieze2004fast} applies a single party sampler to solve for a low-rank matrix approximation, where the distribution for the sampling is a $l_2$ distribution. ~\cite{woodruff2016distributed} has generalized an distributed low-rank matrix approximation from distributed $l_2$ sampler for some special cases, where the sampler samples from parties where each party holds a slice of the matrix. 
+% ~\cite{clarkson2012sublinear} adapts $l_2$ sampling to achieve sublinear time optimization in machine learning models such as SVM and Minimum Enclosing Ball. 
+
+\paragraph{Secure multiparty sampling.} 
+A few prior works~\cite{prabhakaran2012secure,prabhakaran2014assisted} have investigated the problem of two and multi-party private sampling in the information theoretic setting.  These works focus on identifying the necessary setup to enable sampling from various distributions. We instead focus on the computational setting, and focus on reducing communication.
+Recently, Champion et al.~\cite{CCS:ChasheUll19} also considered the computational setting, but they focus on sampling from a publicly-known distribution whereas we sample from a private one.
+
+
+\paragraph{Secure multiparty computation of differentially private functionalities.} 
+Starting with the work of Dwork et al.~\cite{dwork2006our} there has been a good amount of work (e.g.~\cite{acar2017achieving,clifton2013challenges,eriguchi2021efficient,goryczka2013secure,pathak2010multiparty,pentyala2022training}) on using MPC to realize differentially private functionalities to protect the privacy of individual inputs given the output of the MPC.  These works have focused on building efficient, private applications in machine learning and other fields, whereas we focus on reducing the communication necessary for the specific functionalities of sampling.  
+
+% Secure Multiparty Computation (MPC) enables multiple parties to jointly perform computation over their private inputs without revealing to other parties, which draws attention to a variety of works in machine learning and data science. ~\cite{acar2017achieving,clifton2013challenges,eriguchi2021efficient,goryczka2013secure,pathak2010multiparty,pentyala2022training} has put efforts to combine differential privacy(DP) with MPC by adding noise accordingly to the distribution of inputs to further protect from the leakage of individual private data in a multiparty setting. The adding noise is done either in a centralized manner or a distributed manner by the adaption of homomorphic encryption or extra SMC protocols. 
+
+% \paragraph{Sampling biased coins with secure computation.} A bias coins sampling protocols returns a batch of coins with bias $q \in [0, 1]$, which is a fundamental building block for many secure computation protocols. Bias coin can be simulated by fair coins without secure computation, but not directly applicable to a secure computation setting. ~\cite{dwork2006our} describes a way to generate any arbitrary bias coins with finite resource and use the outputs of bias coins to generate noise from a desired distribution(Gaussian, Exponential, Poisson etc.). ~\cite{champion2019securely} constructs an efficient bias coins tossing protocol in a multiparty secure computation setting by combining the simulation of fair coins and oblivious data structure. Their work focus on achieving the amortized cost per bias coin and the applications to secure computation with differential privacy. 
+
+
+
+\paragraph{Secure sketching.}
+A long line of work~\cite{CCS:ElaDanGol14,CCS:JanJoh16,NDSS:MelDanDec16,CCS:WJSYG19,popets:CDKY20} has investigated building secure sketches for securely estimating statistics of Tor usage, web traffic, and other applications.  These works focus on building sublinear communication and computation protocols for computing specific statistics such as unique count, median, etc.
+
+\subsection{Set Similarity via Min-Hash}
+
+%\subsection{Jaccard Index and Differential Private Min-hash}
+
+\paragraph{Jaccard index estimation by Min-hash} is widely used to determine the similarity between two sets of data ~\cite{real1996probabilistic,B97}, or used as a building block of a large ML algorithm ~\cite{}. Though the Jaccard index of two sets, which is defined as the ratio between the cardinality of set intersection and set union, is easy to compute the exact value in a single trusted curator setting, it is essentially useful to run an estimation instead in a distributed 2-party setting, where a super-linear communication is often a burdensome. Many works have constructed 2-party Jaccard index estimation using Min-hash protocol with sublinear communication ~\cite{wpes:CFGT12,eprint:RCSWK19,Faber:thesis}. 
+
+% \paragraph{Differential private min-hash} aims to output an estimation of Jaccard similarity while preserving differential privacy. Line of works constructed differential private 2-party min-hash protocols by adding DP noise ~\cite{arxiv:YLLHQ17, conc:YWRLLQ19, sisap:AumBouSch20}. 
+
+%\subsection{Differential private and MPC}
+\paragraph{Differential privacy (DP).} Differential privacy protects the privacy of individuals by limiting an adversary's ability to learn information about an individual input from the output of a computation~\cite{dwork2006differential,dwork2006calibrating}. 
+% %
+% \iffalse
+% In particular, a differentially private mechanism guarantees that the output of the mechanism on a dataset containing a private input is (almost) the same as the output of the mechanism if the private input was not included. 
+% % 
+% \fi
+For a good overview of differential privacy and many of the algorithms to achieve it, both in the standard curator setting and in distributed settings, we refer the reader to the book by Dwork and Roth~\cite{dwork2014algorithmic}.
+
+% A large body of works have developed differentially private algorithms ~\cite{dwork2014algorithmic} for a variety of computations. Most of these works focused on the standard setting with a trusted curator who has access to all users’ data and aims to respond in a differentially private manner.  
+
+% Differential privacy has also been considered in a multi-party setting. In this setting two common approaches for differential privacy are local-DP, where parties add noise to their own inputs prior to performing the computation (e.g.,~\cite{erlingsson2014rappor,kasiviswanathan2011can}) or secure computation emulating the trusted curator (e.g.,~\cite{BNO08})     
+
+
+
+
+
+\paragraph{Optimizing secure computation using differential privacy.}
+Another direction of work has considered how to use DP to reduce the cost of secure computation, especially when we aim for DP-style guarantees from the final output.
+%In the setting of distributed computing, differential privacy has been studied to relax security for better asymptotic and concrete efficiency.
+% ~\cite{BNO08,CCS:HMFS17,CCS:MazGor18,SODA:CCMS19,PETS:GroRinRos19,Usenix:MLRG20}.  
+Beimel et al.~\cite{BNO08} first proposed such optimization for the problem of secure summation.  He et al.~\cite{CCS:HMFS17} and Groce et al.~\cite{PETS:GroRinRos19} applied the differential privacy relaxation to improve efficiency of set-intersection protocols.  Mazloom and Gordon \cite{CCS:MazGor18}, and Mazloom et al.~\cite{Usenix:MLRG20} consider graph-parallel computations and design more efficient solutions with differential private leakages.  Chan et al.~\cite{SODA:CCMS19} consider classic tasks like sorting, merging, and range-query data structures with differential privacy relaxation. %\anote{I don't think this next paper fits here, but if I remove it it changes the bibliography we submitted}
+Gordon et al.~\cite{ACNS:GKLX22} consider multiparty shuffle that allows a differentially private leakage and shows that it suffices to achieve end-to-end differential privacy in the shuffle model of DP.
+
+\paragraph{Private sketching.}
+Sketching algorithms, or ``sketches'' are sublinear space algorithms for
+approximating certain properties of large inputs or data streams. The main idea
+behind sketching algorithms is to generate a compact summary data structure that
+allows for efficient storage, merging, and processing.  
+
+Some recent
+works~\cite{FOCS:BBDS12,choi2020differentially,smith2020flajolet,wang2022differentially,ICML:HehTinCor23,dickens2022order,li2019privacy,pagh2022improved,mir2011pan,melis2015efficient,bassily2015local,bassily2017practical,huang2021frequency,zhao2022differentially}
+have additionally observed that sketches can often also aid in achieving privacy as the inherent loss of information in the sketch can essentially make the sketch itself be differentially private or to only require a little additional noise. 
+
+A line of research pertinent to our work involves constructing private
+sketches for set cardinality estimations
+~\cite{stanojevic2017distributed,sparka2018p2kmv,nunez2020rrtxfm,kreuter2020privacy,pagh2020efficient}.
+%
+Recently, Hehir et al.~\cite{ICML:HehTinCor23}
+proposed a private mergeable sketch that can be used to estimate the size of the
+intersection and union of sets.  
+
+% We note that our noiseless version achieves reproducibility, since it adds no noise. There
+% exists earlier work trying to achieve reproducibility by using sticky noise
+% (i.e., adding noise, but deriving the noise from the
+% data)~\cite{denning1980secure,francis2017diffix}; however, simply following this
+% approach to achieve reproducibility may cause a system to be susceptible to
+% attacks~\cite{gadotti2019signal}. 
+
+\paragraph{Secure approximation.}
+Secure approximation studies what functions can be securely approximated without revealing anything beyond the true output~\cite{ICALP:FIMNSW01,STOC:HKKN01}.  
+While this notion is quite different from that of differentially private approximation that we consider here, we note that our FHE-based protocol described in Section~\ref{sec:curator} additionally achieves this.
+
+\paragraph{Adversarially robust property-preserving
+hash functions and robust sketching.} 
+Property-preserving hash (PPH) functions allow compressing large input $x$ into a short digest $h(x)$ such that some property $P(x,y)$ can be computed given only $h(x)$ and $h(y)$.  Adversarially-robust PPH~\cite{itcs:BoyLavVai19,EC:FleSim21,EC:FleLarSim22,C:HLTW22} aim to further guarantee that $P(x,y)$ is correctly computed (i.e., robust) even if the inputs $x$ and $y$ are chosen after the hash function $h$ is fixed.  A related concept of robust sketching, e.g.~\cite{ITCS:ACSS23,JACM:BJWY22} aims to construct sketches that provide good approximations even when inputs are chosen after the randomness of the sketch is fixed.  
+
+Both of these approaches are similar to our work in that they also study the consequences of making the choice of hash (or sketch) known to the adversary.  However, these works focus on robustness to adversarial inputs, while we instead focus on the privacy of the output when the adversary additionally sees the hash functions.  
+
+\paragraph{Differentially private min-hash} DP min-hash aims to make min-hash approximation differentially private by adopting standard DP mechanisms such as adding DP noises to the output to hide individual items in the input sets. 
+In particular, ~\cite{ sisap:AumBouSch20} achieves local DP (LDP) min-hash by either adding Laplacian noise, or using generalized randomized response to perturb the minhash vectors. 
+Other than this, there are also other earlier efforts. For example, ~\cite{conc:YWRLLQ19} attempts to use a flawed exponential mechanism to achieve DP. This leads to a faulty claim of $\eps$-DP, as pointed out in~\cite{ sisap:AumBouSch20}. ~\cite{arxiv:YLLHQ17} correctly applies exponential mechanism. However, this results in a large amount of noise being added to the results.\anote{I don't want to claim there is a bug.}
+
+% However, they falsely claim that only applying this mechanism to a random subset of iterations can improve the privacy and utility tradeoff. 
+
+
+
+
+% for secure computation on large datasets while preserving privacy. The main idea behind private sketching is to generate a compact summary of the dataset that allows for efficient storage and processing, while limiting the amount of information that can be inferred about the original data. Several sketching algorithms have been proposed for set operation ~\cite{}, cardinality estimation ~\cite{}, $L_p$ norm estimation ~\cite{}, etc. Private sketching in a distributed manner is a way of sketches in a multi-party setting to jointly summarize a compact statistical summary across multiple private datasets, while limiting the amount of information that can be inferred about the original data. ~\cite{} These works leverage the advantages of private sketching to balance the trade-offs among sketching accuracy, computation efficiency, communication and privacy on multi-party computation. 
+
+%Differential private sketching
+
+%min hash
+
+\subsection{FACTs}
+\paragraph{Message Franking:}
+The most common approach today for reporting malicious messages in encrypted messaging systems is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}.  Message franking allows a recipient to prove the identity of the sender of a malicious message.  However, message franking is focused on identifying the last sender of a message, whereas we are interested in identifying the originator.  Moreover, message franking does not provide any threshold-type guarantees to prevent unmasking of senders given only one (or a few) complaints.
+
+\paragraph{Oblivious RAM (ORAM):}
+Oblivious Random-Access Memory (ORAM)~\cite{STOC:Goldreich87, STOC:Ostrovsky90, JACM:GolOst96} allows a client to obliviously access encrypted memory stored on a server without leaking the access pattern to the server.
+The standard ORAM definition assumes a single user with full control over the database.
+While some important progress has been made on multi-client ORAM protocols
+\cite{maffei-msmcoram,concuroram,MOSE},
+these solutions are still not scalable to millions of malicious users as would be needed
+for our application.
+
+\paragraph{Oblivious Counters and Oblivious Data-Structures:}
+Like CCBF, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} build counters that can be stored and incremented without revealing the value of the counter.  However, these techniques focus on exact counting, and do not provide efficient ways for storing large numbers of counters, as needed for our applications.  More generally, oblivious data-structures, e.g.~\cite{CCS:WNLCSS14, AC:KelSch14, SP:Shi20} 
+construct higher-level data structures such as heaps, trees, etc. to enable oblivious operations over encrypted data.  However, these largely focus on higher-level applications and do not provide the compression achieved by CCBF.
+
+
+
+\paragraph{Privacy-Preserving Sketching:}
+CCBF can be viewed as a small data structure (a \emph{sketch}) for storing the counts of complaints on a large set of messages.  There has indeed been a lot of recent interest (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19, NDSS:MelDanDec16, CCS:JanJoh16, CCS:FMJS17, AM14, FGJ+15}) in private sketching algorithms for cardinality estimation, frequency measurement, and other approximations.  However, these works generally focus on a multi-party setting, with multiple parties running secure computation to evaluate the statistic in question.  Since our goal was to restrict ourselves to user-server communication only, such techniques do not seem applicable to our setting.

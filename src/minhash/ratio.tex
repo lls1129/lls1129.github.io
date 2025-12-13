@@ -1,0 +1,143 @@
+
+\subsubsection{Strong Chain Rule}\label{sec:strong-chain-rule}
+\iffalse
+
+\begin{itemize}
+\item It can be computed element-by-element, starting from the last
+element of the distribution.
+
+\item Conditioned on the spoiling leakage, we can simulate the
+adversary's entire view in the protocol
+(by leaking extra information along with the spoiled bits), other than the outcome of the
+random variable $r$ over choice of $R$, where $R$ is drawn from the
+probability distribution that conditions on the spoiling leakage.
+
+\item Conditioned on the spoiling leakage, each element $R_i$ either has
+max-entropy at most $\sim 1.5 \cdot \lg(n)$ or min-entropy at least
+$\sim 1.5 \cdot \lg (n)$.
+\end{itemize}
+
+We further show that, due to the high min-entropy of the entire set $R$,
+there must be a constant fraction of blocks $R'$ with min-entropy at
+least $1.5 \cdot \lg (n)$. To reflect the fact that only a constant
+fraction of elements are guaranteed to have high min-entropy, the
+parameter $n'$ is set to $n/3$.  We now consider the marginal
+distribution over $R'$ (the elements of $R$ with high min-entropy) and
+show that the geometric collision property holds with respect to this
+distribution.
+\fi
+
+Our strong chain rule considers min-entropy where leakage functions
+$\ell_1(\cdot), \ldots, \ell_n(\cdot)$ are additionally considered. We describe
+our theorem in a general way, and we hope that it may find future applications
+in leakage-resilient cryptography.
+
+\paragraph{Sequence of random variables.}
+Recall that $R$ is the set of secret items in the min-hash protocol. Here, we
+treat $R$ as a sequence of block-by-block random variables $R = (R_1,\dots,R_n)$, associated with 
+(potentially randomized) leakage functions $\ell_1(\cdot), \ldots,
+\ell_n(\cdot)$ with randomness $\rho_1, \ldots, \rho_n$. %
+You can think of the blocks as coming in a streaming fashion in order of $R_1, R_{2}, \ldots, R_n$. 
+
+\paragraph{Leakage functions.}
+Loosely speaking, the properties we require of the leakage functions are that
+the $i$-th leakage $\ell_i$ can be computed given $(R_i, \rho_i)$, and all the
+outputs of $(\ell_{i+1}, \ell_{i+2}, \ldots, \ell_n)$. We also require that the
+total number of valid sequences of leakages from $\ell_1(\cdot), \ldots,
+\ell_n(\cdot)$ should be sufficiently small (see Property 1 in
+Theorem~\ref{thm:chain_leak_3} below).
+
+\paragraph{Spoiling functions.}
+Our theorem below states the existence of a spoiling function $f(\cdot)$ with
+certain properties, as well as properties of the random variables
+$(R_1,\dots,R_n)$ and $(\rho_1, \ldots, \rho_n)$ conditioned on the output of
+the spoiling function $f(R)$.
+
+The properties of $(R_1,\dots,R_n)$ and $(\rho_1, \ldots, \rho_n)$ are roughly the following:
+(1) There exist disjoint sets $V, W$ such that $V \cup W = [n]$ that are determined by $f(R)$.
+(2) Blocks $\{R_i\}_{i \in V}$ have high min-entropy conditioned on $f(R)$. 
+(3) Blocks $\{R_i\}_{i \in W}$ have small support size (low max-entropy) conditioned on $f(R)$.
+(4) For $i \in V$, the random strings
+$\rho_i$ are uniform random and independent conditioned on $f(R)$.
+(See Properties (5)-(8) in Theorem~\ref{thm:chain_leak_3}).
+
+The properties of $f(\cdot)$ are roughly the following:
+(1) The failure probability (outputting $\bot$) is small.
+(2) As long as the total number of valid sequences of leakages
+from $\ell_1(\cdot), \ldots, \ell_n(\cdot)$ is sufficiently small, the image size of $f$ is small.
+This property ensures that we do not lose too much of the total min-entropy of $R$ by releasing $f(R)$
+(3) The leakages $\{\ell_i(\cdot)\}_{i \in W}$ can be computed given $f(R)$.
+(See Properties (2)-(4) in Theorem~\ref{thm:chain_leak_3})
+
+\paragraph{Our theorem.}
+The main difference between our spoiling lemma and prior ones is that our min and max entropy guarantees on $R = (R_1,\dots,R_n) \mid f(R)$
+hold even with respect to additional leakage $\{\ell_i\}_{i \in W}$ which is included in the spoiled bits $f(R)$.
+
+\begin{theorem} [Block structures with few bits spoiled and leakage]\label{thm:chain_leak_3}  
+Let $\mathcal{U} = U_1 \times \cdots \times U_n$ be a fixed universe
+and $R = (R_1,\dots,R_n)$ be a sequence of (possibly correlated) random variables where each $R_i$ is over $U_i$ (and all are disjoint) and $|U_i| = \ell$ for all $i$.
+Let $\rho_1, \ldots, \rho_n$ be a sequence of uniformly
+random strings over $\{0,1\}^m$
+and
+let $\ell_1(\cdot), \ldots, \ell_n(\cdot)$ be leakage functions.
+%whose inputs are defined recursively as follows:
+%$\ell_n$ receives input $R_n, \rho_n$ and outputs $\beta_n$.
+%$\ell_i$ for $i < n$ receives input $R_i, \rho_i$,
+%and $\beta_j$, $i < j \leq n$
+%and outputs $\beta_i$.
+Then, for any $\epsilon \in (0, 1)$, 
+any $\dd > 0$ and any $c \in [2^\delta, \ell/2^\delta]$, 
+there exists a spoiling 
+leakage function $f(R)$ that satisfies the following properties. 
+\begin{enumerate}
+\iffalse
+\item %We will omit the subscript of $f$ for brevity. 
+Let $Im(f)$ be the set of images of $f$ and $Dom(f)$ be the domain of $f$.  
+Images except $\bot$ have at least $\frac{\epsilon |Dom(f)|}{|Im(f)|}$ pre-images.   \mingyu{Domain, why do we need to lower bound the pre-images?}
+\dnote{This takes care of the partitions with low weight. We ultimately need this, along with $|Im(f)|$ to lower bound the remaining min-entropy in $X$ after revealing $y$.}
+\fi
+    \item A sequence $\beta_1, \ldots, \beta_n$ is valid if 
+    for all $i \in V$, $\beta_i = \bot$ and 
+    for all $i \in W$, $\beta_i = \ell_i(R_i, \rho_i, \beta_{>i})$, where $\beta_{>i} = (\beta_{i+1}, \ldots, \beta_n)$. 
+    We require that the number of valid sequences
+    $\beta_1, \ldots, \beta_n$ is at most $B$.
+    \item It holds that $\Pr_{R}[f(R) = \bot] \leq \epsilon n$.
+    \item $|Im(f)| \leq  B \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}$.
+    \item Conditioned on any $y \in Im(f) \setminus \{\bot\}$, for all $i \in W$, the leakage 
+    $\ell_i(R_i, \rho_i, \beta_{>i})$  
+    can be computed from $y$. Here,  $\beta_j = \bot$ if $j \in V$
+    and $\beta_j = \ell_j(R_j, \rho_j, \beta_{> j})$ otherwise.
+    \item 
+    Let $Im(f)$ be the set of images of $f$. 
+    Every $y \in Im(f) \setminus \{\bot\}$ specifies two disjoint sets $V$ and $W$ such that $V \cup W = [n]$.
+    \item 
+    Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in V$, every element in distribution $R_i \mid R_{<i}$ has low probability weight, i.e.,
+    \begin{align*}
+    \forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) = y, \forall i \in V:~~ 
+    \Pr\left[R_i = r_i~ \Bigg |~R_{<i} = r_{<i},~ y\right]
+    \leq  \frac{2^{\delta}}{c}.
+    \end{align*}
+    \item Conditioned on any $y \in Im(f) \setminus \{\bot\}$, 
+    for every $i \in W$, it holds that $R_i \mid R_{<i}$ has small support size, i.e.,
+    \begin{eqnarray*}
+        \forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) =  y, \forall i \in W: \\
+        ~~\left | \left \{ r_i : \Pr[R_i = r_i|R_{<i} = r_{<i}, y]] \geq 0 \right \}  \right | \leq 2^{\delta} \cdot c.
+    \end{eqnarray*}
+    \item $\{\rho_i\}_{i \in V}$
+    are distributed independently and uniformly at random
+    conditioned on $f(R)$.
+    % \mingyu{I still couldn't quite understand what $\rho_i$ represents, is it somehow to capture the fact that $R_i$ is not uniformly random?}
+    % \dnote{It is capturing that the leakage functions can be probabilistic instead of deterministed. In particular, the leakage functions can depend on the output of a random oracle.}
+\end{enumerate}
+\end{theorem}
+The proof is found in Appendix~\ref{sec:construct-gcp2}. 
+%
+Typically, one would like to set $c$ as large as possible, while ensuring that
+the size of $V$ remains above some threshold. The achievable tradeoffs between $c$ and $|V|$ are determined by the min-entropy of $R$
+before the spoiling bits $f(R)$ are released. For our applications, we require
+$c = n^{1.5}$ and $|V| \geq n/3$. 
+In Section~\ref{sec:tradeoff},
+We show that our min-entropy assumption on $R$
+implies that this parameter setting is achievable. 
+

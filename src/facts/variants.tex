@@ -1,0 +1,123 @@
+\subsection{Alternative FACTS} \label{sec:altFACTS}
+In this section we describe several optimizations or enhancements to the basic FACTS protocol.
+
+\paragraph{Revealing even less during audits.}
+Recall that the FACTS system we presented reveals two things to the server (or an auditor) after the threshold of complaints has been reached: the user id of the message's originator, and the contents of the message itself. Indeed, one of our motivations was to avoid revealing the entire path or tree of message forwarding as in prior work \cite{CCS:TyaMieRis19}.
+
+However, in some environments, even this may be too much to release to a service provider that could be, for instance, compromised or influenced by an oppressive regime. An advantage of FACTS is that the system for tallying complaints actually does not \emph{require} this information in order to function properly. Here we briefly sketch simple modifications to the scheme to achieve this additional hiding, with a note of caution that we have not analyzed the formal security under these variants.
+
+Hiding the originator's identity entails omitting the encrypted user id from the origination protocol. To do this, the server's signature $\sigma$ of the message hash and sender identity should be replaced with a \emph{blind signature} of the message hash only. In this way, a later audit which reveals the (unblinded) signature will not reveal anything about the originator's identity. The disadvantage of course would be that there is no way for the system to identify and penalize users who regularly submit fake news to the platform.
+
+To hide the message contents, these would simply be omitted from what is sent to the auditor once the threshold is reached. In this case, the notion of ``audit'' may be understood to be simply confirming that \emph{some} message (with the given hash) has passed the threshold of complaints, and publishing the hash to all users as \emph{potentially} fake news that has received a large number of complaints. The client software could easily be configured to flag such messages as they are received afterwards, without ever revealing to the server any contents or recipients of such message. Here the disadvantage is obviously that no third-party auditing or fact-checking is possible, raising the possibility of false positives in which messages are flagged.
+
+\paragraph{Throttling complaints.}
+The FACTS system and underlying CCBF data structure assume a global limit $n$
+on the number of complaints per epoch, but do not require any per-user limit
+besides the natural limit of $u$, the size of the user set.
+
+However, there is some potential for abuse by users who issue many complaints in
+a single epoch: they may attempt to ``attack'' another known message by issuing
+multiple complaints that set bits in that message's user set;
+they may collude with others and attempt to go over the total per-epoch limit of
+$n$ complaints; or they may simply attempt a denial-of-service attack to prevent
+other complaints from being issued.
+
+An simple solution to these problems is to apply a limit $\ll u$ on the maximum
+number of complaints per user per epoch.  This is easy for the server to apply,
+since users are authenticated during the \complain{} protocol. More nuanced limits
+based on a user's reputation or longevity on the platform could also be applied.
+
+Users with a small ``quota'' of allowed complaints per epoch could even be encouraged
+to participate initially in the complaint process by forwarding questionable content
+to a trusted reputable user on the system, who would then presumably apply their
+own judgment and possible issue a complaint in turn. This idea is aligned with
+many existing content moderation settings on (unencrypted) social media platforms.
+
+\paragraph{Handling epoch rollover.}  As described, the FACTS system resets all counters at the end of a single epoch.  However, this may mean that if a ``fake news'' message is first detected towards the end of an epoch, the complaints for this message may get split between the current and next epochs and thus fail to trigger an audit in either epoch.
+
+A potential solution to this problem is to always run two epochs concurrently, where each epoch lasts for time $t$, and the epochs start times are $t/2$ apart.  Users complain in both of the epochs, and an audit occurs if the number of complaints in either epoch exceed the threshold.  This way, regardless when a ``fake news'' message is first detected, there will be an epoch with at least $t/2$ time left to accumulate complaints.  Since we assume that fake news messages are ones that are received and complained on by many users, and that users are likely to complain shortly after first receiving a message, this provides enough time for a threshold of complaints to be reached.  
+
+\paragraph{Regional complaint servers.}
+The most significant performance bottleneck in FACTS is the necessary global
+lock on the table $T$ while a single user is waiting to download their
+user set $U_C$ and reply with their complaint index. Even though the communication size
+is quite small for practical settings, the inherent latency across global communications
+networks may impose a challenge.
+
+For example, if many complaining users have a round-trip latency of more than 200ms,
+then the global complaint rate among all users cannot be higher than 5 complaints per
+second, or some 432,000 complaints per day, regardless of any parameter settings or
+chosen epoch length.
+
+One possible solution for a large-scale platform facing this issue would be to
+allow multiple local complaint servers, each with their
+own CCBF table $T$, to independently operate and accumulate complaints per messages.
+This makes sense, as most targeted misinformation content is local to a given country
+or region, and it would still be possible for each regional server to share audited
+message information with others in order to prevent spread of viral false content
+between regions.
+
+\paragraph{Third-party audits.}\label{sect:third-party-audits}
+While many messaging and social media platforms currently employ their own
+``in-house'' teams for content moderation, there have been some attempts at
+separating the role of the server from that of auditor.
+
+From a protocol standpoint, we can imagine a separate Server and Auditor: the former
+is semi-honest, handles the encrypted messaging system and maintains the public
+CCBF table $T$. The Auditor is fully honest and non-colluding,
+but computationally limited; intuitively, the third-party Auditor should only
+be involved once a messaged has passed the desired threshold of complaints.
+
+The FACTS system supports this option easily with the need for any additional
+cryptographic setup during origination. Because the CCBF table $T$ is globally shared
+among all users as well as the Auditor, any complaining user who computes
+$\TestCount{}$ on their own to see that the probabilistic threshold has been surpassed,
+can then forward their complaint (i.e., the opened message) directly to the Auditor.
+Being fully honest, the Auditor may hold a copy of the decryption key from origination
+and use this to determine what kind of action may be necessary (such as suspending
+the originating user's account, flagging the message, etc.).
+
+While it doesn't appear idea imposes any additional interesting challenges from a cryptographic
+standpoint, it could be useful for some kinds of messaging platforms.
+
+\paragraph{Hiding message metadata.}
+Our FACTS system is certainly no more private than the underlying EEMS
+which is being used to actually pass messages between users. In our analysis,
+we explicitly assumed that the EEMS leaks metadata on the sender and recipient of
+each message, but not the contents.
+
+However, some existing EEMS attempt to also obscure this metadata in transmitting
+messages, so that the server does not learn both sender and recipient of any
+message. This can trivially be accomplished by foregoing a central server and
+doing peer-to-peer communication (note that FACTS may still be useful as a central
+complaint repository); or using more sophisticated cryptography to
+hide metadata \cite{stadium,verdict,ricochet}.
+
+Of particular interest for us is the recently deployed \emph{sealed sender}
+mechanism on the popular Signal platform \cite{signal-ss}. The goal in this
+case is to obscure the sender, but not the recipient, from the server handling
+the actual message transmission. We note that this concept plays particularly
+well with FACTS, as the additional leakage in our protocol of the identity
+of each complaining user, can be presumably correlated via timings with the
+receipt of some message, but this is exactly what is revealed under sealed sender
+already! Both systems thus work to still hide message sender and originator identities
+(at least until an audit is performed).
+
+However, note that recent work \cite{signal-ndss21} has shown that some timing
+attacks are still possible under sealed sender, and the same attacks would apply
+just as well to FACTS. But the solutions proposed in \cite{signal-ndss21} might also
+be deployed alongside FACTS to prevent such leakage; we leave the investigation of
+this question for future work.
+
+% XXX nevermind
+% \paragraph{PIR for partial table fetches.}
+
+% Our FACTS protocol assumes that the CCBF table $T$ is globally shared, and this
+% makes sense from a practical standpoint for reasonable settings when the table
+% size does not exceed a few MB.
+
+% To scale to much larger sizes, asking users to download and maintain a copy of
+% the entire table $T$ may be infeasible. Really, all that a user needs in order to
+% run the \complaint{} protocol is the size-$v$ item set for that message, plus the
+% size-$u$ user set where they are allowed to write in the table. While the latter
+% can be communicated without violating message-obliviousness, it is important

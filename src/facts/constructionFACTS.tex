@@ -1,0 +1,90 @@
+\subsection{Instantiating FACTS}\label{sec:construction}
+We are now ready to present our construction of FACTS.  This construction is based on the collaborative counting Bloom filter (CCBF) data structure presented in Section~\ref{sec:ccbf} to obliviously count the number of complaints on each message.  It uses an underlying EEMS for sending end-to-end encrypted messages between users.
+
+\paragraph{Setup:}
+The setup procedure for FACTS first sets up the underlying end-to-end encrypted messaging system (EEMS).  For simplicity, we assume that there is a fixed number $c$ of users using the system.  Setup  generates all necessary keys for the server $S$ and all $c$ users and distributes the keys.  We note that if the messaging system is already setup, FACTS can simply leverage this for communication.  Additionally, the server initializes an empty CCBF data structure.
+
+\paragraph{Sending and receiving messages:}
+We now describe how FACTS originates, forwards, and verifies messages.
+We start our description with an auxiliary protocol $\orig(A,x)$ between a user $A$ and the server $S$ to originate a new message $x$.  This protocol is used to create an origination tag $\tag_x$ containing information about the message and originator.  This tag binds the originator's identity $A$  to the message $x$ to enable recovery upon an audit, while keeping $A$ private from receiving users, and keeping the message $x$ private from the server $S$.
+
+Roughly, this protocol works by having $S$ produce a signature on (a hash of) the message together with the originator's identity.  Due to the use of the hash, $S$ produces this signature without learning anything about the message, while the fact that $S$ includes the originator's identity in this signature prevents a malicious originator from including the wrong identity in the message. Moreover, since the tag is bound to the message, this prevents a replay attack where an adversary reuses tags across messages to change the identity of the originator. 
+
+\begin{algorithm}[htbp]
+\begin{enumerate}
+  \item To originate a message $x$, the originator $A$ chooses a random salt $r \gets \bool^\secparam$, computes a salted hash $h = H(r || x)$,
+    and sends $h$ to $S$.
+  \item $S$ computes an encryption of the sender's identity, $e \gets \Enc_{PK_S}(A)$, and produces signature $\s = \Sig_{SK_S}(h || e)$.  $S$ sends the tuple $(e, \s)$ to $A$.
+  \item $A$ outputs $\tagg_m = (r,e,\s)$.
+\end{enumerate}
+\caption{$\orig(A,x)$} 
+\end{algorithm}
+
+Next, we describe the $\send$ protocol which makes use of the $\orig$ protocol to send a message $x$ between clients $A$ and $B$ while preserving (encrypted) information about the originator of $x$.  $x$ can either be a newly originated message or a forward of a previously received message.  In either case, $\send$ runs the $\orig$ protocol to produce a new tag $\tag'_x$ on the message $x$.  In the case of a new message, $\tag'_x$ is sent along with the message, while in the case of a forward, it is discarded and the message is forwarded along with its original tag instead.
+
+\begin{algorithm}[htbp]
+\begin{enumerate}
+    \item If $\tagg_x=\perp$, then $x$ is a new message $A$ wants to originate.  
+    $A$ runs $\tagg_x \gets \orig(A,x)$.
+    \item If $\tagg_x\neq \perp$ $x$ is a message that $A$ wants to forward.  $A$ runs $\tagg'_x \gets \orig(A,x)$ and discards the output.
+    \item $A$ sends $(\tagg_x,x)$ to $B$ using the E2E messaging platform's $\sendee$ protocol.
+\end{enumerate}
+\caption{$\send(A,B,\tagg_x,x)$}
+\end{algorithm}
+
+$\receive$ is a non-interactive algorithm that 
+allows a receiving user to verify the tag, $\tag_x$, affiliated with a message $x$.  Specifically, the receiver $B$ verifies the server's signature included in $\tag_x$ to make sure that the tag indeed corresponds to $x$ and that the originator id has not been modified.  Importantly, $B$ can perform this verification without learning the identity of the originator since the tag contains an encryption of this identity (this ciphertext is what is verified by $B$).
+
+\begin{algorithm}
+\begin{enumerate}
+    \item Parse $\tagg_x$ as $\tagg_x=(r,e,\s)$
+    \item Compute $h=H(r||x)$
+    \item Run $\Ver_{PK_S}(\s,(h||e))$ to check that $\s$ is a valid signature by the server on $(h||e)$.  If not, then discard the received message.
+\end{enumerate}
+\caption{$\receive(A,B,\tagg_x,x)$}
+\end{algorithm}
+
+\paragraph{Complaints and Audit:}
+We now describe how FACTS allows users to complain about received messages and to trigger an audit once enough complaints are registered on a message.  For these methods we make extensive use of a CCBF data structure for (approximately) counting complaints and detecting when a threshold of complaints has been reached.
+
+The $\complain$ protocol is used by a receiving user to issue a complaint on a received message $(\tag_x, x)$.  We assume that prior to issuing a complaint the user verifies that $\tag_x$ is valid using the $\receive$ protocol, and thus will only consider the case of valid tags.  To issue a complaint on $(\tag_x,x)$, the user $C$ calls CCBF.$\Increment(\tag_x,C)$.  As described in Section~\ref{sec:ccbf}, this runs a protocol with the server in which the user (eventually) sends the location of a bit to flip to 1 to increment the CCBF count for the message $x$.  To prevent malicious adversaries from flooding FACTS with complaints, we enforce a limit of $L$ complaints per user per epoch.  Note that since the server knows the identities of complaining users, he can easily enforce this restriction. 
+
+Two important observations are in order here.  First, we use $\tag_x$ rather than the message $x$ as the item to increment in the CCBF.  The reason for this is that the tag is unpredictable to an adversary who has not received the message $x$ through FACTS (even if $\A$ knows $x$).  Second, we note that the CCBF.$\Increment$ procedure is inherently sequential.  It requires that the CCBF table $T$ be locked for the duration of the $\Increment$ call to prevent race condition and to maintain obliviousness (see Section~\ref{sec:ccbf} for discussion). This means that only one user can run this procedure at a time.  Thus, we focus on making this procedure as cheap as possible to minimize the impact of this bottleneck.  In case multiple clients call $\complain$ at overlapping times, the server can queue these complaints and process them one at a time.
+
+
+
+% To do so, the client first retrieves his user set bits from the server's database.  He then checks whether any of the bits in the message set (derived from $\tag_m$) are set to 0.  If so, he sets a random one of these bits to 1.  Otherwise, he chooses a random bit that he can write to and sets this to one. \anote{Probably need to talk about synchronization in this step.  Also, match notation from Bloom filter section.}
+
+\begin{algorithm}
+\begin{enumerate}
+    \item Parse $\tagg_x$ as $\tagg_x=(r,e,\s)$
+    \item Call CCBF.$\Increment(C,\tagg_x)$
+    % \item $u_c$ downloads his bits from the DB $DB_{u_c}$
+    % \item Compute locations for message ID $s$ by computing ${i_1,\ldots,i_n}=H(s)$
+    % \item Calculate the set $INT = H(s) \cap u_c$ and see if any of the bits in $DB_{INT}$ are 0
+    % \begin{itemize}
+    %     \item if so, choose a random such location $l$ from $DB_{INT}$ and send it to $S$
+    %     \item Otherwise, choose a random location equal to 0 in $DB_{u_c}$ and send that to $S$
+    % \end{itemize}
+    % \item Upon receiving location $l$, $S$ sets $DB_l = 1$.
+\end{enumerate}
+\caption{$\complain(C, \tagg_x,x)$}
+\end{algorithm}
+
+The $\audit$ protocol checks whether a threshold of complaints has been reached for a given message $x$ and, if so, triggers an audit of this message.  This protocol works by using the CCBF.$\TestCount$ protocol to check whether the threshold $t$ of complaints has been reached on this message.  If this returns True, then the user simply sends $(\tag_x,x)$ to the server who first checks the validity of the tag, and then if it's valid, decrypts the corresponding part of the tag to recover the identity of the message originator.
+
+An important observation is that the CCBF.$\TestCount$ operation is read-only and thus does not need to block.  Thus, unlike the $\complain$ command, many clients can execute the $\audit$ command in parallel.
+
+\begin{algorithm}
+\begin{enumerate}
+    \item Parse $\tagg_x$ as $\tagg_x=(r,e,\s)$
+    \item Call CCBF.$\TestCount(\tagg_x,t)$.
+    \item If $\TestCount$ returns True, $x$ sends $(\tagg_x,x)$ to $S$
+    \item $S$ verifies that the tag is valid by checking the $\s$ is a valid signature on $h||e$ where $h=H(r||x)$.  
+    \item If so, $S$ recovers the identity ($A$) of the originator by computing $A=\Dec_{SK_S}(e)$.
+\end{enumerate}
+\caption{$\audit(C, \tagg_x,x)$}
+\end{algorithm}
+
+We note that $\audit$ allows the server to learn the message $x$ and the originator $A$.  We do not specify what the server does upon learning this information, as that is specific to a particular use of FACTS.  One possible option is for the server to review $x$ to see if it is truly a malicious message, and if so, block the user $A$ from sending further messages.  However, this decision is orthogonal to the FACTS scheme and we do not prescribe a particular action here. 
+

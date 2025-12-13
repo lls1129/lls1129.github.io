@@ -1,0 +1,142 @@
+\subsection{Compressed Oblivious Encoding}
+As our main building block, we introduce a new tool we call Compressed Oblivious Encoding.  A compressed oblivious encoding takes as input a large, but sparse, vector and compresses it to a much smaller encoding from which the non-zero entries of the original vector can be recovered.  What makes this encoding \emph{oblivious} is that the encoding procedure is oblivious to the original data; in fact, in our constructions the original data will all be encrypted.  An efficient encoding must satisfy the following two performance requirements: 1) The size of the encoding must be sublinear in the size of the original array, and 2) constructing the encoding should be computationally cheap. Our constructions only use (homomorphic) addition and multiplication by constant (i.e. plaintext values).
+
+
+A related notion is that of compaction over encrypted data~\cite{eprint:BlaAgu11,EC:AKLNPS20} which aims to put all non-zero entries of a vector to the front of the encoding.  Our encoding can be viewed as a form of noisy compaction where, in addition to keeping all the non-zero entries, it allows a small number zero entries to be mixed in with the result.  Thus, a compressed encoding trades some inaccuracy in the output for much cheaper construction costs.
+%\anote{Should we keep the above paragraph comparing encoding to compaction?}\dov{I like it.}
+
+We define two variants of compressed oblivious encodings, one that encodes the indices of non-zero entries and one that encodes the actual entries themselves.
+
+\subsubsection{Compressed Oblivious Index Encoding}
+A compressed oblivious index encoding (COIE) encodes the indices or locations of all the non-zero entries in the input array.  We begin by defining the parameters and syntax for a COIE scheme.
+
+\paragraph{Parameters.} A COIE scheme is parametrized as follows. 
+
+  \BI 
+  \item $n$: Input size -- The dimension of the input vector $v$.
+  \item $s$: Sparsity -- Bound on the number on non-zero entries in $v$.
+  %\item $D$: The domain of each element of an input vector $v$. 
+  \item $c$: Compactness -- The dimension of the output encoding.
+  \item $f_p$: False positives -- The upperbound on the number of false
+  positives returned by the decoding algorithm.
+  \EI
+
+\paragraph{Syntax.} A $(n, s, c, f_p)$-COIE scheme has the following syntax: 
+\BI
+\item $\lbra \gamma_1 \lket, \ldots, \lbra \gamma_c \lket \from
+\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$.
+The $\Encode$ algorithm takes as input a vector of ciphertexts with $v_i \in \zo$ for all $i \in [n]$.
+It outputs an encrypted encoding $\lbra \gamma_1 \lket, \ldots, \lbra \gamma_c \lket$.
+
+\item $I \from \Decode(\gamma_1, \ldots, \gamma_c)$. 
+The $\Decode$ algorithm takes the encoding $(\gamma_1, \ldots,
+\gamma_c)$, in decrypted form, and outputs a set $I \subseteq [n]$ 
+%$I = \{i : v_i \ne 0\}$
+%from which one can recover the original input $(v_1, \ldots, v_n) \in \zo^n$. 
+\EI
+
+\paragraph{Correctness.} 
+Let $(\gamma_1, \ldots, \gamma_c) \from \Dec(\lbra \gamma_1 \lket,
+\ldots, \lbra \gamma_c \lket)$ denote a correct decryption of
+the encoding. 
+
+\BD
+A $(n, s, c, f_p)$-COIE scheme is \emph{correct}, if the following conditions
+are satisfied: 
+\BI
+\item (No false negatives) For all $v \in \zo^n$ with at most $s$
+non-zero positions, and for all $i \in \idx(v)$, it should hold 
+ $$i \in \Decode( \Dec(\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)))$$ with probability at least $1-\negl(\secparam)$
+where the random coins are taken from $\Encode$.
+%\anote{Do we need to allow for this negligible error?  Is this to account for decryption error?} 
+
+\item (Few false positives) For all $v \in D^n$ with at most $s$ non-zero positions, consider
+the set of false positives $$E = \{i \in [n]: v_i = 0\mbox{, but } i \in I
+\},$$
+where $I = \Decode(\Dec(\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket))).$
+
+We require that $|E| \le f_p$ with the overwhelming probability over the
+randomness of $\Encode$.  
+\EI
+\ED
+
+
+
+\paragraph{Efficiency.} 
+For efficiency, we look at the following three parameters of a COIE: 
+
+\BI
+\item The type and number of operations used by the $\Encode$ algorithm. 
+
+\item The size of the encoding.
+
+\item The computation cost of the $\Decode$ algorithm.
+\EI
+
+For an efficient construction, we require that the latter two of these are sublinear in the size of the input vector.
+
+% \dov{I'm not sure this is necessary} To understand why optimizing all three of these simultaneously is not trivial, consider the following ``trivial'' construction.
+
+% \BI
+% \item $\Encode(\lbra v \lket)$: output $\lbra v\lket$.
+% \item $\Decode(\gamma)$: output $\gamma$.
+% \EI
+
+% In this construction, the cost of encoding is essentially free.  However, the produced encoding and the amount of decryption necessary for decoding are both linear in $n$ thus failing the other two efficiency requirements.
+
+
+% If we use this scheme for secure search, although the server performs no
+% homomorphic operations, the size of the encoding is $O(n)$ and the
+% client should perform the decryption algorithm $n$ times. 
+
+% Rather, we would like to construct an encoding scheme where both the
+% encoding and the number of client-side decryption is sub-linear while
+% allowing more computation on the server side. 
+
+
+
+
+\subsubsection{Compressed Oblivious Data Encoding}
+A Compressed Oblivious Data Encoding (CODE) scheme is very similar to
+COIE except, rather than encoding the locations of non-zero entries, it encodes the values of these entries. We give a
+definition of CODE below where differences are marked by framed boxes. 
+
+
+\paragraph{Parameters.} A CODE scheme is parametrized by the same four
+parameters $(n,s,c,f_p)$ as a COIE.
+
+\paragraph{Syntax.} A $(n, s, c, f_p)$-CODE scheme over \fbox{domain $D$} has the following syntax: 
+\BI
+\item $\lbra \gamma_1 \lket, \ldots, \lbra \gamma_c \lket \from
+\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$.
+The $\Encode$ algorithm takes as input a vector of ciphertexts with $v_i \in \boxed{D}$ for all $i \in [n]$.
+It outputs an encrypted encoding $\lbra \gamma_1 \lket, \ldots, \lbra \gamma_c \lket$.
+
+\item $\boxed{V} \from \Decode(\gamma_1, \ldots, \gamma_c)$. 
+The $\Decode$ algorithm takes the encoding $(\gamma_1, \ldots,
+\gamma_c)$, in decrypted form, and outputs a set of values 
+\fbox{$V = \{v_i : v_i \ne 0\}$}
+% from which one can recover the original input $(v_1, \ldots, v_n) \in \boxed{D^n}$. 
+\EI
+
+\paragraph{Correctness.} 
+\BD
+A $(n, s, c, f_p)$-CODE scheme over domain $D$ is correct, if the following conditions
+are satisfied: 
+\BI
+\item (No false negatives) For all $v \in \zo^n$ with at most $s$
+non-zero positions, and for all $i \in \idx(v)$, it should hold 
+ $$  \boxed{v_i \in \Decode( \Dec(\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)))} $$ 
+ 
+ with probability $1-\negl(\secparam)$ where the random coins are taken from $\Encode$. 
+
+\item (Few false positives) For all $v \in D^n$ with at most $s$ non-zero positions, consider
+the set of false-positive values $$\boxed{E = \{ z \in V: z \ne v_i \mbox{~for any~} i \in \idx(v)\}},$$
+where $V = \Decode(\Dec(\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket))).$
+% That is, from $E$, we consider the number of false positive entries $i$.
+
+We require $|E| \le f_p$ with the overwhelming probability over the randomness of $\Encode$.
+\EI
+\ED
+
+

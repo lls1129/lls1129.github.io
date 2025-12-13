@@ -1,0 +1,78 @@
+\newcommand{\ind}{\mathsf{ind}}
+\subsubsection{COIE Scheme Based on Power Sums}
+\paragraph{Removing false positives using power sums.}
+We offer another encoding scheme using quite different techniques that can eliminate the false positives of the prior construction.  To achieve this,
+we abandon Bloom filters, and instead use a power sum encoding, as has
+been done in several works using DC-Nets for anonymous broadcast
+FHE.
+
+\paragraph{PS-COIE.} 
+We describe a COIE scheme based on power sums, which we call PS-COIE. 
+As before, we will work out the parameters after describing our
+construction. The encoding algorithm is shown below. 
+
+\begin{algorithm}[htbp]
+
+\BEN
+%\item 
+%Let $\ind^j = (1^j, 2^j, \ldots, n^j)$.  For $i = 1,\ldots, s$, compute
+%$\ind^i$. (These vectors can be pre-computed, once, offline.)
+\item For $j = 1, \ldots, s$:
+  \\ $~~~$ Compute $\lbra w_j \lket = \sum_{i=1}^n i^j \cdot \lbra v_i \lket$  
+\item Output $\lbra w_1 \lket, \ldots, \lbra w_s \lket.$
+\EEN
+\caption{ ${\sf PS\mbox{-}COIE}.\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$} 
+\end{algorithm}
+
+Note that the values of $i^j$ (modulo the underlying plaintext modulus)
+are publicly computable, so computing $i^j \cdot \lbra v_i \lket$ only requires scalar multiplication and no homomorphic multiplication. 
+
+Recall that $v_i \in \zo$. If we let $I = \{i: v_i = 1\}$ denote the
+indices of the nonzero elements, then note that $$w_j = \sum_{i=1}^n i^j
+\cdot v_i = \sum_{i \in I} i^j.$$ Therefore, this $w_j$ is the $j$th
+power sum of the indices. Using the power sums, we present the decoding
+algorithm in Algorithm~\ref{alg:pscoie}.   %\dov{placement problem}
+
+\begin{algorithm}[htbp!]
+\BEN
+\item Recall that we have $w_j = \sum_{x \in I} x^j,$ for $j = 1,
+\ldots, s$, and we would like to reconstruct all $x$'s in $I$.
+
+\item Let $f(x) = a_s x^s + a_{s-1} x^{s-1} + \cdots + a_1 x + a_0$
+denote the polynomial whose roots are the indices in $I$. 
+
+\item Use Newton's identities to compute the coefficients of this
+polynomial $f(x)$:  
+\begin{align*}
+a_s &= 1\\
+a_{s-1} &= w_1\\
+a_{s-2} &= (a_{s-1} w_1 - w_2 )/2\\
+a_{s-3} &= (a_{s-2} w_1 - a_{s-1} w_2 + w_3)/3\\
+\vdots\\
+a_{0} &= (a_{1} w_1 - a_{2} w_2 + \cdots w_s)/s
+\end{align*}
+\item Extract and output the roots of the polynomial $f(x)$. 
+\EEN
+\caption{ ${\sf PS\mbox{-}COIE}.\Decode(\lbra w_1 \lket, \ldots, \lbra w_s \lket)$} \label{alg:pscoie}
+\end{algorithm}
+
+\paragraph{Parameters $c$ and $f_p$.} This COIE scheme has no false
+positives; that is, $f_p = 0$. The compactness parameter $c$ is
+equal to $s$. 
+
+
+%\clearpage  
+\paragraph{Efficiency.}
+\BI
+\item The encoding algorithm uses $s \cdot n$ homomorphic addition
+operations and scalar multiplications\footnote{We do not count the public multiplications to produce powers of $i$}.
+
+\item The encoding consists of $s$ ciphertexts.
+
+\item The decoding algorithm computes coefficients in time $O(s^2)$.
+Roots of degree-$s$ polynomial can be found in time $O(s^3 \log p)$,
+where $p$ is the plaintext modulus of the underlying FHE, by using the
+Cantor–Zassenhaus algorithm~\cite{CanZas81}. 
+\EI
+
+

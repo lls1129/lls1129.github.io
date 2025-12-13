@@ -1,0 +1,279 @@
+\subsection{CODE Scheme}
+In the previous section, we showed two constructions of COIE schemes for encoding a vector of indices using sublinear storage.  We now turn to the construction of CODE schemes, which, instead of encoding the indices of non-zero entries, encode the actual data values.
+
+
+
+% Our COIE scheme allowed encoding the matched indices using sublinear
+% storage.  However, to actually retrieve the query results, the client
+% had to perform a PIR protocol to fetch the data items at the matched
+% indices.  
+% %
+% In this section, we present a CODE scheme that encodes the data items at
+% all matched indices allowing us to avoid having to do PIR.
+
+\paragraph{Simplified key-value store.}
+To construct our CODE scheme, we first construct an auxiliary data structure that supports the
+following operations: 
+
+\BI
+\item ${\sf Init}()$. Initialize the data structure.  
+
+\item ${\sf Insert}(key, value)$. This operation allows the user to
+insert an item based on its key and value.  
+
+\item ${\sf Values}()$. Returns all  values that have been
+inserted thus far. 
+\EI
+
+This data structure is simpler than a typical key-value store since it
+doesn't need to find an individual item by key. Note, however, that this
+is still sufficient to serve our purpose of constructing a CODE scheme. 
+
+\subsubsection{BF Set}\label{ssec:countingBloom}
+We now show how to instantiate a simplified key-value store using a data structure we
+call a Bloom filter set ({\sf BFS}) that is in turn based on the algebraic Bloom filter
+presented in Section~\ref{sec:ABF}.
+To insert a pair  $(key, value)$, the Bloom
+filter set stores the actual $value$ rather than an indicator bit.  Items are
+inserted similar to before, by adding their value to the locations
+indicated by the hashes of the $key$.
+
+
+\paragraph{Input data format.}
+For our construction we make an assumption on the format of the inserted data.  Specifically, we assume that all inserted values contain a unique checksum (e.g., a cryptographic hash of the value).  We assume that this checksum is sufficiently long that a random sum of checksums does not give a valid checksum except with negligible probability (as a function of $\secparam)$.
+
+
+% As before, we consider a limited scenario where the upperbound on the
+% number of items to be inserted is known beforehand. In particular,
+% the input $s$ denotes such an upperbound.
+
+\paragraph{Construction.}
+We first describe the construction of the data structure.  We show below
+how to choose parameters in such a way that the client can extract all the matched items from this Bloom
+filter, with
+overwhelming probability.
+
+
+\BI
+\item ${\sf BFS.Init}() \to (B, \HHH)$.
+Create an $\ell$-dimensional vector $B$ where each element can store any possible value in the domain $D$.
+Choose a set of $\eta$
+different hash functions  $\HHH = \{ h_q: \zo^* \to [\ell]
+\}_{q=1}^\eta$. Initialize $B_i := 0$ for $i \in [\ell]$. 
+
+
+\item ${\sf BFS.Insert}(B, \HHH, key, \alpha)$. 
+To add $(key, \alpha)$, we add $\alpha$ to the values
+stored at the locations indicated by the hashes of $key$. Specifically,
+  \BI
+  \item For $q \in [\eta]$:
+    \BI
+    \item[] 
+    Compute $j = h_q(key)$ and set $B_j := B_j + \alpha$. 
+    \EI
+  \EI
+
+\item ${\sf BFS.Values}(B).$
+  Initialize a set $V$ to be the empty set. 
+  For $j \in [\ell]$, if $B_j$ has a valid checksum, add $B_j$ to $V$.
+  Finally, output $V$. 
+\EI
+
+We note that, as previously proposed by Goodrich~\cite{SPAA:Goodrich11}, it is possible to avoid the checksum by maintaining a counter of the number of values inserted for each location.  Then, ${\sf BFS.Values}$ only returns values at locations with a counter of 1.
+
+%Alternatively, if one wishes to retrieve all the stored values, it is
+%sufficient to just output all the values in the Bloom filter with valid
+%checksums.  It is easy to see that with all but negligible probability,
+%only the originally inserted values will have valid checksums.\anote{Do
+%I need to prove this?}
+
+\paragraph{Parameters.}
+%It is easy to see that as long as for every key $k$ inserted into the
+%Bloom filter, it would not have been a false positive (i.e., there is
+%at least one $q \in [\eta]$, s.t. $h^{(q)}(k)$ is not contained in the
+%hash results for any other inserted item), then the Bloom filter will
+%contain the value $\alpha$.  Moreover, since we assumed that all the
+%values contain a checksum, it is easy to distinguish the correct
+%values.
+%
+We show how to set the Bloom filter parameters to guarantee that all
+values can be recovered with all but negligible probability.  We assume
+that we know the upper bound $s$ on the number of inserted values. We
+prove the following lemma.
+
+\begin{lemma}\label{lem:countingBloom}
+If at most $s$ values have been inserted in the $\sf BFS$ data
+structure, then by setting $\eta$ and $\ell$ such that $$\ell \ge 2 (s\eta - 1),$$
+we can recover all $s$ values with probability at least
+$1 - s\cdot(1/2)^\eta$.
+\end{lemma} 
+
+
+\begin{proof}
+Consider a (key, value) pair $(k_i,\alpha_i)$.  We say that this pair
+has a {\em total collision} if every hash position for the pair is also
+occupied by another inserted key, value pair.  In this case, $\alpha_i$
+cannot be recovered. On the other hand, if at least one hash position
+has no collisions, then we can recover the value. Note that the
+collision depends on the key $k_i$ but not the value $\alpha_i$. 
+
+For a given key $k_i$, we define the event \textsf{TCOL}$(k_i)$: $${\sf
+TCOL}(k_i) = 1 \textrm{ if } \forall q \in [\eta], \exists (k', q')
+\ne (k_i,q): h_q(k_i) = h_{q'}(k').$$
+Here, $k'$ can be the key of any item that has been inserted in the
+set. Since the set contains at most $s$ items, there are at most $s$
+possible keys for $k'$. Recall also that $\eta$ hash functions are applied
+for each item. 
+
+Since for each $k_i$, there are at most $\eta s - 1$ pairs of $(k',
+q')$s that are different from $(k_i,q)$, we can bound the collision
+probability as follows:
+%
+\[ \Pr[{\sf TCOL}(k_i) ] \le \left(\frac{(\eta s-1)}{\ell}\right)^\eta \]
+
+Thus, if we choose $\eta$ and $\ell$ such that $\ell \ge 2 (s\eta - 1)$,
+we have
+\[ \Pr[{\sf TCOL}(k_i) ] \le (1/2)^\eta\]
+
+Taking a union bound over all $s$ inserted values, we have
+\[\Pr[ \exists k_i : {\sf TCOL}(k_i) ] \le s \cdot (1/2)^\eta\].
+\end{proof}
+
+\subsubsection{CODE Scheme Based on BF Set}
+In this section, we construct a CODE scheme. Recall that unlike encoding
+the indices through a COIE scheme, a CODE scheme encodes data in a
+compressed manner. The main idea of our construction is simulating the
+operations of ${\sf BFS}$; we call our scheme $\sf BFS\mbox{-}CODE$.
+
+%We now briefly describe how to use the counting Bloom filter described
+%in Section~\ref{ssec:countingBloom} to retrieve matched query results.  
+
+\paragraph{Pre-processing the input data.}
+As mentioned in the description of the BF Set construction, we need to pre-process the input data so that each item is
+attached with its checksum. Although a data item $v$ is represented as a
+single number, it is assumed that $v$ can be parsed as $v.val$ for its
+actual value and $v.tag$ for its checksum. 
+Moreover, we assume that the checksum is long enough, such that a random
+linear combination of checksums is only negligibly likely to produce a
+valid checksum (i.e., $|checksum| = \omega(\lambda)$). 
+
+We stress that when our CODE scheme is used for secure search, this pre-processing can be performed locally 
+by the client prior to encrypting his data.  Moreover, computing
+checksum adds only a tiny amount of overhead. 
+
+\paragraph{BFS-CODE.}
+We now describe our $(n, s, c, f_p)$-BFS-CODE construction over domain $D$. As before,
+we will work out the parameters after describing our construction. The
+encoding algorithm is shown below. 
+
+\begin{algorithm}[htbp]
+\BEN
+\item $\eta = \secparam+\lg{s}$; $\ell = 2 (\eta s - 1)$
+\item  Initialize $\lbra B \lket = (\lbra B_1 \lket, \ldots, \lbra
+B_\ell \lket) := (\lbra 0 \lket, \ldots, \lbra 0 \lket)$. 
+\item Choose $\HHH = \{ h_q: \zo^* \to [\ell] \}_{q=1}^\eta$ at random.
+\item For $i \in [n]$ and for $q \in [\eta]$:
+    \BEN
+        \item[] $j := h_q(i)$; 
+                $\lbra B_j \lket = \lbra B_j \lket + \lbra v_i \lket$
+    \EEN
+\item Output $\lbra B \lket$.
+\EEN
+
+\caption{ ${\sf BFS\mbox{-}CODE}.\Encode(\lbra v_1 \lket, \ldots, \lbra v_n \lket)$} 
+\end{algorithm}
+
+Note that at step 4 in the above, if $v_i$ is 0, then $B_j$ stays the
+same. On the other hand, if $v_i$ is not 0, $B_j$ will be increased by
+$v_i$.  This implies that $B$ will exactly hold the result of 
+operations $\{{\sf BFS.Insert}(B, \HHH, i, v_i): i \in \idx(v) \}.$
+
+The decoding algorithm is simple, and it's described in
+Algorithm~\ref{alg:BFSD}.
+\begin{algorithm}[htbp]
+\BEN
+\item Output ${\sf BFS.Values}(B)$
+\EEN
+\caption{ ${\sf BFS\mbox{-}CODE}.\Decode(B)$} 
+\label{alg:BFSD}
+\end{algorithm}
+
+\iffalse
+%we assume that the input data has a checksum associated 
+%client adds a checksum to all inserted data items prior to encryption.  Moreover, we assume that the checksum is long enough, such that a random linear combination of checksums is only negligibly likely to produce a valid checksum (i.e., $|checksum| = \omega(\lambda)$).  Second, the input to our protocol is a vector of ciphertexts $C=(C_1,\ldots,C_n)$ where
+\[C_i=\left\{\begin{array}{cl}Enc(0)&\hbox{if } q(x_i)=0\\Enc(x_i)&\hbox{if }q(x_i)=1\end{array}\right.\]
+We note that this input can be generated as part of the query procedure, as it just requires one additional homomorphic multiplication of the query result with the original value.
+
+% Assume $s \ll n$, say $s = \polylog(n)$ and $m = \lg{z} \ll n$ (the number of bits needed to represent a value $\alpha$.  I guess technically, this will need to be the size of an HE ciphertext.) , say $m = \polylog(n)$  
+
+% \todo{Everything in this Section below here is old.}
+% \paragraph{BF Parameters.} We will use the counting BF with the following parameters:
+% \BI
+% \item False positive ratio. 
+% We set the false positive ratio to be $1/s$ to guarantee correctness. 
+
+% \item The number $\eta$ of hash functions. 
+% In our experiments, we will choose $\eta = 16.$
+
+
+% \item The length of $B$: 
+% Using the following equation, $$ \Big(1 - e^{-\frac{\eta s}{ \ell}}
+% \Big)^\eta \approx \frac 1 s.$$ We determine that $\ell \approx \eta \cdot
+% s^{1+\frac 1 \eta}$. 
+% \EI
+
+Now, we are ready to describe our construction:
+
+\paragraph{Encoding.}
+To encode the query results, we first fix the parameters of the Bloom filter as specificed in Lemma~\ref{lem:countingBloom}.  Next, the server homomorphically inserts the results into the counting Bloom filter exactly as described in Section~\ref{ssec:countingBloom}.  That is,
+\BI
+    \item Initialize the array $B$ to be an encryption of $\ell$ 0's.
+    \item 
+    For each index $i \in [\ell]$,
+    \BI
+        \item For $q \in [\eta]$, compute $j =h^{(q)}(i)$
+        \item Set $B_j = B_j + C_i$ (where $+$ is the homomorphic addition operation)
+    \EI
+\EI
+
+
+\paragraph{Decoding.}
+To decode the query results from the counting Bloom filter, the client simply decrypts all $\ell$ values $B$ and keeps any that have valid checksums.  Except with negligible probability, these contain exactly the results to the query.
+\fi
+
+\paragraph{Correctness.} This is immediate from the additive
+homomorphism of the underlying encryption scheme and the parameters for
+the $\sf BFS$. In particular, we set $\eta = \secparam+\lg{s}$ so that the
+probability of recovery error is at most $2^\secparam$. 
+
+\paragraph{Parameters $c$ and $f_p$.}
+The checksums attached to the data items ensure that we have no false
+positives with overwhelming probability, that is, $f_p = 0$. The compactness
+parameter $c$ is the dimension $\ell$ of the BF, which is $O(\eta s)$. 
+
+\paragraph{Efficiency.}
+\BI
+\item The encoding algorithm uses $\ell = O(\eta s)$ encryption
+operations, $\eta \cdot n$. 
+addition operations, and $\eta n$ hash functions. 
+\item The encoding consists of $\ell$ ciphertexts. 
+\item The decoding algorithm uses $\ell$ decryption operations.
+\EI
+
+Since by Lemma~\ref{lem:countingBloom}, the size $\ell$ of the Bloom
+filter only depends on the number of matches $s$ and the number of hash
+function $\eta$, we get that the communication complexity of the above
+protocol is independent of the database size $n$. 
+
+
+% \subsubsection{Assumptions}
+% We make the following assumptions for this scheme:  
+
+% \begin{enumerate}
+%     \item We let $\mathcal{C}$ denote the ciphertext space of the HE scheme.
+%     \item All data items are authenticated by the client prior to encryption, e.g., by computing a short authentication tag.  Moreover, all data items including this tag have length $O(\lambda)$.
+%     \item An upper bound $s$ on the number of matched records is known.
+%     \item The result of the query phase, instead of an encrypted 0-1 vector, is an encryption of either 0 or $x_i$.  We note that this can be produced with a simple modification of the query algorithm, and we do not consider its cost here.
+% \end{enumerate}
+
+

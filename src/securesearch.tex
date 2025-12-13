@@ -1,1 +1,91 @@
 \section{Secure Search}
+
+
+% packages
+%\usepackage{fullpage}
+\usepackage{amsmath}
+\let\Bbbk\relax
+\usepackage{amsthm,amsfonts,amssymb}
+\usepackage{multicol}
+\usepackage{float,graphicx}
+\usepackage{caption,subcaption}
+\usepackage{url}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[skins,breakable]{tcolorbox}
+\usepackage[utf8]{inputenc}
+\usepackage{stmaryrd}
+\usepackage{algorithm}
+\usepackage{balance}
+%\usepackage{subfigure}
+
+
+
+% macro definitions
+\input{src/securesearch/macros}
+
+% comments
+\newcommand{\dnote}[1]{{\color{red}{\bf [{\bf Dana:} #1]}}}
+\newcommand{\dana}[1]{{\color{red}{\bf [{\bf Dana:} #1]}}}
+\newcommand{\anote}[1]{{\color{green}{\bf [Arkady: #1]}}}
+\newcommand{\lins}[1]{{\color{blue}{\bf [Linsheng: #1]}}}
+\newcommand{\snote}[1]{{\color{brown}{\bf [SG: #1]}}}
+\newcommand{\dov}[1]{{\color{brown}{\bf [Dov: #1]}}}
+
+%=============================================================
+%% Rights management information. https://www.overleaf.com/project/5f524e8700251000014b33dd
+
+
+% \fancyhead{}
+
+% \input{abstract}
+
+% \keywords{secure search; encrypted database; fully homomorphic
+% encryption}
+
+% \begin{CCSXML}
+% <ccs2012>
+%    <concept>
+%        <concept_id>10003752.10003777.10003789</concept_id>
+%        <concept_desc>Theory of computation~Cryptographic protocols</concept_desc>
+%        <concept_significance>500</concept_significance>
+%        </concept>
+%    <concept>
+%        <concept_id>10002978.10003018.10003020</concept_id>
+%        <concept_desc>Security and privacy~Management and querying of encrypted data</concept_desc>
+%        <concept_significance>500</concept_significance>
+%        </concept>
+%    <concept>
+%        <concept_id>10002978.10002979</concept_id>
+%        <concept_desc>Security and privacy~Cryptography</concept_desc>
+%        <concept_significance>500</concept_significance>
+%        </concept>
+%  </ccs2012>
+% \end{CCSXML}
+
+% \ccsdesc[500]{Theory of computation~Cryptographic protocols}
+% \ccsdesc[500]{Security and privacy~Management and querying of encrypted data}
+% \ccsdesc[500]{Security and privacy~Cryptography}
+
+\maketitle
+
+\input{src/securesearch/intro}
+\input{src/securesearch/prelim}
+\input{src/securesearch/coe}
+
+\input{src/securesearch/BFindex}
+\input{src/securesearch/powerSums}
+\input{src/securesearch/countingBF} 
+
+\input{src/securesearch/ssp}
+
+\input{src/securesearch/exp}
+\input{src/securesearch/related}
+\input{src/securesearch/conclusion}
+% \input{Acknowledge}
+
+%\bibliographystyle{acm}
+% \bibliographystyle{ACM-Reference-Format}
+% \balance
+% \bibliography{abbrev2,crypto,refs}
+
+% \input{src/securesearch/app}

@@ -1,0 +1,77 @@
+\appendix
+
+\subsubsection{Proof of Lemma~\ref{lem:4_1}}\label{app:proof41}
+
+\begin{lemma}[4.1]
+Consider a Bloom filter with false positive rate $\frac{1}{m}$, where
+$m$ is an arbitrary positive integer. Suppose at most $m$ $\sf BF.Check$ operations
+are performed in the BF.
+%
+Then, for any $\delta > 0$, we have:
+$$\Pr [ \mbox{\rm \# false positives} \ge 1+\delta] 
+  \le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}}.$$ 
+\end{lemma}
+\begin{proof}
+Let $\alpha_i$ be the $i$th item that is checked through $\sf
+BF.Check$. That is, we consider a sequence of $${\sf
+BF.Check}(\alpha_1), \ldots, {\sf BF.Check}(\alpha_{m}),$$
+where $\alpha_i$ is an arbitrary item. 
+Since we wish to upper bound the false positives (i.e., we don't care about true
+positives), it suffices to consider the
+case that for every $i$, 
+$\alpha_i \not \in {\sf BF}$ (i.e, $\alpha_i$ has not been inserted in the
+BF) as this maximizes the number of possible false positives.
+
+Let $X_1, \ldots, X_m$ be independent Bernoulli random variables with
+$\Pr[X_i = 1] = 1/m$. 
+%
+Since the BF false positive rate is assumed to be $1/m$, we have
+for all $i$, 
+$$\Pr[{\sf BF.Check}(\alpha_i)=1] = \Pr[\mbox{query $i$ is a false positive}] \le
+1/m.$$
+Thus, we can bound the number of false positives
+by $\sum_{i=1}^m X_i$.
+
+Now, let $\mu :=
+\Exp[\sum X_i] = m \cdot \frac 1 m = 1$.  By applying the Chernoff bound with $\mu =
+1$,  we have: 
+%
+$$ \Pr\left[\sum_{i=1}^m X_i \ge 1 + \delta \right]  
+\le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}} .$$
+\end{proof}
+
+
+\subsubsection{Proof of Theorem~\ref{thm:ssp-code}}\label{app:proof63}
+
+\begin{theorem}[6.3]%\label{thm:ssp-code}
+Given an FHE scheme, and a $(n, s, c, f_p)$-CODE scheme over domain $D$
+in the random oracle model, the construction in Algorithm~\ref{alg:ssCODE} yields a $(\ell,
+f_p)$-secure search scheme for records in domain $D$ in the random oracle
+model, where $\ell = \frac{c(s)\cdot \ell_c}{s}$, $\ell_c$ is the length
+of an FHE ciphertext with plaintext space $D$, and $s$ is the number of
+matching records.
+\end{theorem}
+
+\begin{proof}
+We begin by proving that the adversary cannot distinguish
+between two different queries.
+The adversary chooses a database $x$ and two queries $q^0, q^1$, with
+the promise that $s = \sum_{i=1}^n q^0(x_i) = \sum_{i=1}^n q^1(x_i)$.
+
+The entire view of the adversary during the experiment can be
+reconstructed efficiently given (1) the encrypted database $\lbra x
+\lket$, (2) the encrypted query $\lbra q \lket$, (3) the decrypted value
+of $s$.
+
+We note that the CODE scheme may return either more than $s$ values to the client (in case of a false positive) or less than $s$ values (in case decoding fails), but both of these occur with probability at most $\negl(\secparam)$ and thus we can ignore them in the following.
+
+Since the value of $s$ is the same for $q_0$ and $q_1$, the only thing
+that changes in the view of the adversary when switching from $b = 0$ to
+$b=1$ is the encrypted query $\tilde{q_b}$.  Therefore, the adversary
+guesses $b$ with negligible advantage by the IND-CPA security of the FHE
+scheme.
+
+The proof that the adversary cannot distinguish between the same query
+applied to two different databases follows nearly identically.
+
+\end{proof}

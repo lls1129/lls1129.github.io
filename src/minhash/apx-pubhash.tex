@@ -1,0 +1,273 @@
+\subsection{Proof of Theorem~\ref{thm:CDDP}}
+We first give the intuition of the proof. We assume that each of the non-intersecting elements has high min-entropy. 
+WLOG, consider an adversary corrupting $P_1$.
+The view of the adversary will be 
+  \[\view^{\Pbase}_{P_1}(A, B) := (A,c, h_1, \ldots, h_k). \]
+%
+As shown above, the sensitivity can be upper-bounded by a small value $s$. 
+
+Unlike $\PC$, however, when we show the existence of sufficient noise from the remaining iterations, we need to take the additional leakage into consideration. 
+
+First, since the hash functions are public, iterations are no longer independent of each other as needed by the analysis in Section~\ref{sec:curator}. We address this issue by employing the fact that each of the non-intersecting items has high min-entropy. In the random oracle model, as long as the adversary does not query hash function $h$ on some point $x$, $h(x)$ is uniformly random to the adversary.  Since the non-intersecting items have high min-entropy, the adversary is negligibly likely to query any of them to the hash functions, thus guaranteeing independence.  
+
+
+\paragraph{Good iterations and Poisson Binomial distribution.}
+Now, to see how the remaining iterations still hide the sensitivity even with the public hash functions, let  
+$R = B \setminus I$. 
+%
+For the remaining $k-s$ iterations, the high min-entropy of each element in $R$ will jitter
+the final count. In particular, consider the $j$th hash
+function $h_j$ in the protocol (among the $k-s$ remaining iterations) and let
+\[v_j^A = \min h_j(A),~~
+v_j^I = \min h_j(I),~~
+v_j^R = \min h_j(R).\]
+%
+Suppose $v_j^A = v_j^I$. Then, if $v_j^R \ge v_j^I$, the
+min-hash $u_j^A$ of $A$ will be equal to the min-hash $u_j^B$ of $B$ (both of which are equal to $v_j^I$)
+and the
+final count $c$ will be incremented due to this $j$th iteration.
+%
+However, if $v_j^R < v_j^I$, then it will be $u_j^A \ne u_j^B$, and the
+final count will not be incremented. This way, the distribution of $v_j^R$
+will jitter the final count. 
+%
+The above discussion can be formalized into the following definition. 
+\begin{definition}[$\theta$-good iteration]\label{def:theta-good}
+Let $n_R = n_B - n_I$, we define 
+$\good_\theta(h_j, A, I, n_B)$ to be true if and only if the following
+holds: 
+\[ \min h_j(A) = \min h_j(I), ~\mbox{and}~
+    \min h_j(I) \in
+    \left[1-\left(\frac{1}{2}+\theta\right)^{1/n_R}, 
+        1-\left(\frac{1}{2}-\theta\right)^{1/n_R}\right].\]
+\end{definition}
+The second condition of the definition requires that $\min h_j(I)$ is somewhere in the middle (parameterized by $\theta \in \Theta(1)$) so that the distribution of $R$ (i.e., random $v_j^R$) may reduce the final count with a decent chance (and also keep the count with a decent chance).
+%
+As long as $n_I/n_A$ is a constant fraction, there are sufficiently many $\theta$-good iterations, although we lose some iterations.
+In particular, if we let $k_g$ be the number of good iterations, we have $k_g = \Theta(k)$. 
+
+With public hash functions and thereby $\min h_j(I)$ being leaked to the adversary, it turns out that the noise from the $k_g$ iterations follows a Poisson Binomial distribution, which is a generalization of a Binomial distribution where each trial has a different success probability. However, using the techniques of \cite{COK22}, we can still show that this distribution works as a good noise to hide the private data. 
+
+%In particular, we  to upper-bound the privacy guarantee as those from a binomial mechanism (with rather worse parameters compared to $\PC$). 
+
+
+ \subsubsection{Proof}
+\label{apx:pubHashHighEntropy}
+WLOG, we consider two neighboring inputs 
+$(A, B) \mbox{ and } (A, \Bp).$
+DDP for the case in which $\xs$ is added into $A$ can be shown symmetrically. We
+prove the theorem by a hybrid argument. In particular, we define a slightly
+different ideal functionality $\Pbase^{(1)}$ as follows:
+%
+\begin{itemize}
+\item Let $\Pbase^{(1)}$ be the same as $\Pbase$ except that for each $x^B_i
+\in B\setminus A$, each element in $\{y^B_{i,j}\}_j$ is chosen uniformly
+at random from $[0,1]$.
+\end{itemize}
+
+
+We set up the following
+hybrids.  We will argue that for any $\xs \in \U$ and over $(A, B, I)
+\from \Delta_\PH$, it holds 
+%
+\begin{align*}
+& (\view^{\Pbase}_{P_1}(A,B), I) \capprox
+(\view^{\Pbase^{(1)}}_{P_1}(A,B), I) \\
+& ~~~~~ \approx_{\ee, \dd} (\view^{\Pbase^{(1)}}_{P_1}(A, \Bp), I)
+\capprox (\view^{\Pbase}_{P_1}(A, \Bp), I)
+\end{align*}
+%
+for any constant $\ee > 0$ and for some $\dd \in \negl(\secparam)$, as
+long as each element in $B \setminus I$ has high min-entropy.  
+
+\iffalse
+Thanks to the standard technique of the generic two-party secure
+computation~\cite{JC:LinPin09}, the following holds: 
+%
+\[
+\view^{\Pbase}_{P_1}(A,B), I) \capprox
+(\view^{\Pbase}_{P_1}(A,B), I), ~~~
+\view^{\Pbase}_{P_1}(A,\Bp), I) \capprox
+(\view^{\Pbase}_{P_1}(A,\Bp), I). 
+\]
+
+Now we show $(\view^{\Pbase}_{P_1}(A,B), I) \capprox
+(\view^{\Pbase^{(1)}}_{P_1}(A,B), I)$. 
+%
+\fi
+Recall that the min-entropy of
+each element $x^B_i$ with $i \in B\setminus A$ is at least $\kappa$.
+Therefore, the probability that any adversary making at most
+polynomially many oracle queries queries any $x^B_i$ is $\negl(\kappa)$.
+Conditioned on the adversary not querying any such $x^B_i$, any
+$y^B_{i,j}$ for $j \in [k]$ is chosen uniformly random from $\U$.
+%
+The same argument shows $\view^{\Pbase}_{P_1}(A,\Bp), I) \capprox
+(\view^{\Pbase^{(1)}}_{P_1}(A,\Bp), I)$.
+Therefore, we are left only to show
+$(\view^{\Pbase^{(1)}}_{P_1}(A,B), I)  \aed  (\view^{\Pbase^{(1)}}_{P_1}(A,
+\Bp), I)$.
+
+
+
+\paragraph{DDP of $\Pbase^{(1)}$.}
+We show $(A, I, h_1, \ldots, h_k, c) \aed (A,
+I, h_1, \ldots, h_k, c_{+\xs})$, where $c$ is the final count from
+$\Pbase^{(1)}(A, B)$ and $c_{+\xs}$ is the final count from $\Pbase^{(1)}(A, \Bp)$. 
+%
+We show how to leverage the uncertainties of $x^B_i
+\in R = B \setminus A$ so that good iterations work like the needed noise to
+guarantee DP.
+
+
+\begin{lemma}\label{lem:good_event}
+For any $A, I, n_B$ and $n_R = n_B - n_I$, we have
+ \[p_\theta \stackrel{def}{=} \Pr_{h}[\good_\theta(h, A,
+ I, n_B)] \ge
+ \left(\left(\frac{1}{2}+\theta \right)^{\frac{n_A}{n_R}} -
+ \left(\frac{1}{2}-\theta \right)^{\frac{n_A}{n_R}}\right) \cdot
+ \frac{n_I}{n_A} ~~.\]
+\end{lemma}
+The proof is found in Appendix~\ref{apx:proof:good_event}.
+This lemma shows that a random hash leads to a good iteration with
+probability $p_\theta$, which is constant in our setting based on the assumption
+about $n_A, n_I, n_R$.
+
+Recall that $S_{\xs}$ was the random variable that represents the set of  
+iterations $j$ such that the min-hash $u_j^B$ comes from $\xs$ when
+$P_2$'s input is $\Bp$. From Lemma~\ref{lem:sen}, with overwhelming
+probability $|S_{\xs}| = O(\lg\lg\kappa)$.  
+
+Now, fix $A, I, \xs$ and $h_1, \ldots, h_k$ and let $G_{\theta}$ be the set of
+iterations $j$ in which a $\theta$-good event takes place; i.e.,
+%
+$$G_{\theta} = \left\{ j \in [k]: \good_\theta(h_j, A, I, n_B) \right\}.$$
+
+Let $K_{\theta} = G_{\theta} \setminus S_{\xs}$. 
+The following lemma shows that the $\theta$-good events takes place
+$\Theta(\secparam)$-many times, with overwhelming probability.  
+
+\begin{lemma}\label{thm:good_hash}
+Suppose $k = \Theta(\secparam)$, $n_B = \Omega(\secparam^2)$, and
+$p_\theta \in \Theta(1)$. Let $s = |S_\xs|$. Then, 
+we have 
+\[ \Pr_{h_1, \ldots, h_k}\left[ |K_\theta| > \frac{2}{3} (k-s) p_\theta \right ] \ge 1 - \negl(\secparam).\] 
+\end{lemma}
+The proof is found in Appendix~\ref{apx:proof:good_hash}.
+
+
+
+\paragraph{Our goal.}
+For a set $W$, define $c_W \stackrel{def}{=} \sum_{j \in W} \Eq(u^A_j, u^B_j)$. Let $\overline K_\theta := [k] \setminus K_\theta$.
+Note that the contributions to the final output can be divided into two parts:
+\begin{itemize}
+    \item  $c_{K_\theta}$:  The contribution from the iterations in $K_\theta$, which contains all the $\theta$-good iterations such that $\xs$ does not hash to the minimum across $\Bp$.
+    
+    \item $c_{\overline{K_\theta}}$:  The contribution from all the remaining iterations  
+\end{itemize}
+%
+
+\iffalse
+\paragraph{Fixing randomness.}
+Now, fix $A, I, \xs$ and $h_1, \ldots, h_k$.
+For sets $V, W$, let $Y_{V,W} \stackrel{def}{=}  \{ y^B_{i,j}: i \in V, j \in W\}$.
+Recall that we are considering $\Pbase^{(1)}$ that satisfy the following condition: 
+\begin{itemize}
+\item For each $x^B_i \in B\setminus A$, each element in $\{y^B_{i,j}\}_j$ is chosen uniformly
+at random from $[0,1]$.
+\end{itemize}
+Therefore, even after $(A, I, \xs, h_1, \ldots, h_k)$ is fixed, it holds that $Y_{R, [k]}$ are still uniformly distributed. 
+Moreover, we additionally fix $Y_{R, \overline G_\theta}$, which implies that only $Y_{R, G_\theta}$ is uniformly random. 
+
+Note that fixing 
+$A, I, \xs, h_1, \ldots, h_k$ also allows us to determine which iterations are
+$\theta$-good (i.e., $G_\theta$). 
+%Thanks to Lemma~\ref{lem:sen},
+%we can safely condition that the fixed hash functions are such that
+%$|S_{\xs}|$ is smaller than or equal to $s =\lg\lg\kappa$.  
+
+\paragraph{Small sensitivity.}
+Given all this, we first show that there for $s = \Theta(\lg\lg\kappa)$, 
+\[\Pr_{Y_{R, G_\theta}}\left[\left|c_{\overline K_\theta} -
+c^{\xp}_{\overline
+K_\theta}\right|> s \right] \le \negl(\kappa).\]
+%
+To show inequality, noting
+that $\overline K_\theta = \overline G_\theta \cup S_{\xs}$, consider two cases: 
+
+\begin{itemize}
+\item For iteration $j\in \overline{G}_\theta \setminus S_{\xs}$, we have $u^B_j
+= u^{\Bp}_j$. This is because $j \not \in S_{\xs}$ implies that $\xs$
+doesn't lead to min-hash.  Therefore, such iterations don't
+contribute to the difference of $c$ and $c^{\xp}$. 
+
+\item For the rest iterations $j \in S_{\xs}$, we have $|S_{\xs}| \le s$ with overwhelming probability due to Lemma \ref{lem:sen}, which
+shows the above equation. 
+\end{itemize}
+\fi
+
+
+Essentially, for any final count $q$, we are interested in comparing the two
+probabilities: 
+%
+\[\Pr[c_{\overline K_\theta} + c_{K_\theta} = q] \mbox{~and~}
+\Pr[c^{\xp}_{\overline K_\theta} + c^{\xp}_{K_\theta} = q].\]
+
+Following our discussion on sensitivity in Section \ref{sec:basic},  the
+difference of $c_{\overline K_\theta}$ and $c^{\xp}_{\overline K_\theta}$
+is upper-bounded by $s = O(\lg\lg \secparam)$. 
+%
+Note that we have $c_{K_\theta} = c^{\xp}_{K_\theta}$ because $j \in K_\theta$
+implies $j \not \in S_{\xs}$. Therefore, we only need to analyze the single distribution of
+$c_{K_\theta}$ as a noise and compare the following two probabilities:
+%
+\[\Pr[c_{K_\theta} = q] \mbox{~~and~}
+\Pr[c_{K_\theta}+s = q].\]
+
+\paragraph{Distribution of $c_{K_\theta}$.}
+We have $c_{K_\theta} = \sum_{j \in K_\theta} c_j,$ where $c_j = {\sf Eq}(u_j^A, u_j^B)$. 
+Note that since we have $j \in K_\theta$, a $\theta$-good event takes place in
+iteration $j$, i.e., $\min h_j(A) = \min h_j(I)$. 
+
+Let $\gamma_j = 1 - \min h_j(I)$. Note that the hash of each item $R$ is
+randomly distributed in  $\Pbase^{(1)}$. Therefore, the probability that $c_j = 1$
+is $(\gamma_j)^{n_R}$, in which case every hash of items in $R$ must be at least $\min h_j(I)$. 
+
+
+%
+Let $\eta_{-\theta} = 1/2-\theta$ and $\eta_{+\theta}= 1/2+\theta.$ Since $j$ is a good iteration, we have 
+$(\gamma_j)^{n_R} \in [\eta_{-\theta}, \eta_{+\theta}].$
+Therefore, letting $p_j = (\gamma_j)^{n_R}$, we have $c_j \sim \Ber(p_j)$, where
+$\Ber$ denotes the Bernoulli distribution.  %
+Since these Bernoulli distributions are independent from each other, 
+can apply Lemma~\ref{lem:pb-dp} below to conclude that $C_{K_\theta} \aed
+C_{K_\theta}+s$. 
+
+
+\newcommand{\PB}{\mathsf{PB}}
+For $j \in [n]$, consider  $c_j \sim \Ber(p_j)$.
+% where
+%$\Ber$ denotes the Bernoulli distribution.
+%Let 
+With $p_J = \{p_j\}_{j=1}^n,$
+let $\PB(n, p_J)$ denote the distribution of $\sum_{j \in [n]} c_j$. This
+distribution is called a Additive Poisson Binomial distribution. 
+
+We conclude the proof by showing that the Additive Poisson Binomial distribution
+with appropriate parameters satisfies the following DP-like property.  
+
+\begin{lemma} \label{lem:pb-dp}
+Consider an Additive Poisson Binomial distribution $\PB(n, p_J)$, where $n \in
+\Omega(\kappa)$ and for each $p_j$, it holds that  $p_j \in [1/2 - \theta, 1/2 + \theta]$ where $\theta
+\in (0, 1/2)$ is a constant independent of $\kappa$. Then, for any constant $\ee$ and $s  = \Theta(\lg\lg \kappa)$, 
+there are $a, b \in [n]$ such that
+\begin{itemize}
+    \item For any $\ell \in [a,b], e^{-\ee} \le \frac{\Pr[\PB(n, p_J) =
+    \ell]}{\Pr[\PB(n, p_J)+s = \ell]} \le e^{\ee}.$ 
+    \item For any $\ell \not \in [a,b]$, $\Pr[\PB(n,p_J) = \ell] =
+    \negl(\kappa)$ and $\Pr[\PB(n,p_J)+s = \ell] = \negl(\kappa)$.
+\end{itemize}
+\end{lemma}
+
+The proof is found in Appendix~\ref{apx:proof:pb-dp}.
+
