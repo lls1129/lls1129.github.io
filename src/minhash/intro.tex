@@ -85,7 +85,7 @@ compute differentially-private estimates of the Jaccard index.
 While ideally, parties should follow recommendations to add noise to the output of the min-hash count before releasing it (as in functionality $\Pbasenoisy$),
 in practice, this may not happen. Further, there may be historical counts that have already been released without added noise.
 We refer to settings in which such output is released as ``output leakage.''
-\dnote{Not sure if we should use this term. Can we come up with something else? ``After the fact leakage'' usually refers to leakage on a secret key after observing the ciphertext.}\anote{I changes the term to ``output leakage'', is this better?}
+
 We ask whether any privacy for an individual can be salvaged in this case.
 Somewhat surprisingly, we show that  under certain 
 conditions on the inputs to $\Pbase$ or $\PC$, the error of the min-hash approximation itself is sufficient to achieve (variants of) differential privacy--meaning that the presence of an individual element in one of the two input sets cannot be inferred given the output of $\Pbase$ or $\PC$.  Essentially, the error of the sketch acts as noise to protect the privacy of the inputs.
@@ -138,10 +138,6 @@ Unfortunately, in this case there is a problem when trying to argue privacy. In 
  Since the min-hash protocol provides a good approximation of the Jaccard index, the adversary will be able to 
  exactly determine whether or not $x^* \in B$ with noticeable probability.%\footnote{Our discussion here focuses on the case when the adversary provides input $A$.  The case when the adversary instead controls $B$ is symmetric.}.
 
-\dnote{Not sure how accurate the following is, should we remove it?
-The above gives a counter-example against the differential privacy of min-hash in the public permutation setting. However, does it really give rise to a realistic privacy breach?
-}
-\anote{I am not sure what exactly is the problem here.}
 
 Note that the above attack works only if the adversary knows the entirety of both sets $A, B$ and just tries to distinguish whether
 $x^* \in B$ or not.
