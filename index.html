@@ -6410,6 +6410,49 @@ functionality.</h4>
 href="#prot:pb" data-reference-type="ref"
 data-reference="prot:pb">[prot:pb]</a>. In this work, we will consider
 several variants and consider privacy implications.</p>
+<div class="algorithm">
+<p>The functionality is parameterized with a random oracle <span
+class="math inline">\(\OOO\)</span>.</p>
+<p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
+<span class="math inline">\(P_2\)</span>’s input vectors <span
+class="math inline">\(A = (x^A_1, \ldots,
+x^A_{n_A})\)</span> and <span class="math inline">\(B = (x^B_1, \ldots,
+x^B_{n_B})\)</span>.</p>
+<p><strong>Minhash:</strong></p>
+<ol>
+<li><p>Randomly sample prefix <span
+class="math inline">\(\mathsf{pre}\)</span>, which is used to define
+hash functions <span class="math inline">\(h_1,h_2,\dots,h_k\)</span>,
+where for <span class="math inline">\(i \in [k]\)</span>, <span
+class="math inline">\(h_i(\cdot) := \mathcal{O}(\mathsf{pre} || i ||
+\cdot)\)</span>.</p></li>
+<li><p>For input <span class="math inline">\(A\)</span>, compute the
+min-hash vector <span
+class="math inline">\((u^A_1,u^A_2,\dots,u^A_k)\)</span> as follows:</p>
+<ol>
+<li><p>For each iteration <span class="math inline">\(j \in
+[k]\)</span>:</p>
+<ol>
+<li><p>For each item <span class="math inline">\(x^A_i \in A\)</span>,
+compute <span class="math inline">\(y^A_{i,j} =
+h_j(x^A_i)\)</span>.</p></li>
+<li><p>Compute the min-hash for iteration <span
+class="math inline">\(j\)</span>; that is, <span
+class="math inline">\(u^A_j = \min \{ y^A_{i,j} : i \in [n_A]
+\}.\)</span></p></li>
+</ol></li>
+</ol></li>
+<li><p>Likewise, compute another min-hash vector <span
+class="math inline">\((u^B_1,u^B_2,\dots,u^B_k)\)</span> for input <span
+class="math inline">\(B\)</span> similarly.</p></li>
+<li><p>Compute <span class="math inline">\(c = \sum_{j=1}^k {\sf
+Eq}(u^A_j, u^B_j).\)</span></p></li>
+</ol>
+<p><strong>Output:</strong> Return <span
+class="math inline">\((\mathsf{pre}, c)\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>.</p>
+</div>
 <h4 data-number="5.3.0.4" id="differential-privacy.-1"><span
 class="header-section-number">5.3.0.4</span> Differential privacy.</h4>
 <p>The definitions of <span
@@ -6646,6 +6689,36 @@ class="math inline">\(\Pbasenoisy\)</span> of <span
 class="math inline">\(\Pbase\)</span> described in Figure <a
 href="#prot:noisy" data-reference-type="ref"
 data-reference="prot:noisy">[prot:noisy]</a>.</p>
+<div class="algorithm">
+<ol>
+<li><p>Run <span class="math inline">\(\Pbase\)</span> and let <span
+class="math inline">\((\mathsf{pre},c)\)</span> be the output from <span
+class="math inline">\(\Pbase\)</span>.</p></li>
+<li><p>Sample <span class="math inline">\(\zeta^A\)</span> and <span
+class="math inline">\(\zeta^B\)</span> from Laplace distributions <span
+class="math inline">\(Lap(\frac{\sens(\delta/2,k,
+n_A)}{\epsilon})\)</span> and <span
+class="math inline">\(Lap(\frac{\sens(\delta/2,k,
+n_B)}{\epsilon})\)</span> respectively. Let <span
+class="math inline">\(\coins_A\)</span> and <span
+class="math inline">\(\coins_B\)</span> the random coins that the
+functionality used to sample them.</p></li>
+<li><p>Let <span class="math inline">\(\ell_A\)</span> and <span
+class="math inline">\(\ell_B\)</span> be the minimum integers satisfying
+<span class="math inline">\(\Pr[|\zeta^A| &gt; \ell_A] \le
+\delta/2\)</span> and <span class="math inline">\(\Pr[|\zeta^B| &gt;
+\ell_B] \le \delta /2\)</span>. If <span class="math inline">\(|\zeta_A|
+&gt; \ell_A\)</span>, then truncate it so that it holds <span
+class="math inline">\(|\zeta_A| = \ell_A\)</span>. Likewise, truncate
+<span class="math inline">\(\zeta_B\)</span> if necessary.</p></li>
+<li><p>Let <span class="math inline">\(\round(\cdot)\)</span> be a
+rounding function. Output <span class="math inline">\(({\mathsf{pre}},
+\coins_A, \round(c + \zeta^B))\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(({\sf
+pre}, \coins_B, \round(c + \zeta^A))\)</span> to <span
+class="math inline">\(P_2\)</span>.</p></li>
+</ol>
+</div>
 <div class="theorem">
 <p><strong>Theorem 46</strong>. <span
 class="math inline">\(\Pbasenoisy\)</span> is <span
@@ -6680,6 +6753,16 @@ data-cites="DGT12">[140]</span> that computes the exact cardinality of
 the intersection of the two input sets, as described in Figure <a
 href="#func:psica" data-reference-type="ref"
 data-reference="func:psica">[func:psica]</a>.</p>
+<div class="algorithm">
+<p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> has
+a set <span class="math inline">\(A\)</span> and <span
+class="math inline">\(P_2\)</span> has a set <span
+class="math inline">\(B\)</span>.</p>
+<p><strong>Output:</strong> Return <span class="math inline">\(|A \cap
+B|\)</span> to <span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(\bot\)</span> to <span
+class="math inline">\(P_2\)</span>.</p>
+</div>
 <p>In particular, in order to compute the noisy min-hash match counts,
 the parties construct two sets consisting min-hash values and additional
 dummy elements and then run <span
@@ -6714,6 +6797,84 @@ class="math inline">\(n_A\)</span> and <span
 class="math inline">\(n_B\)</span></em></span> even when the protocol
 implementing <span class="math inline">\(\F_{\psica}\)</span> has a
 linear communication complexity.</p>
+<div class="algorithm">
+<p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
+<span class="math inline">\(P_2\)</span>’s input vectors <span
+class="math inline">\(A = (x^A_1, \ldots,
+x^A_{n_A})\)</span> and <span class="math inline">\(B = (x^B_1, \ldots,
+x^B_{n_B})\)</span>.<br />
+<strong>Protocol:</strong></p>
+<ol>
+<li><p><span class="math inline">\(P_1\)</span> samples prefix <span
+class="math inline">\(\mathsf{pre}\)</span> and sends it to <span
+class="math inline">\(P_2\)</span>. This prefix is used to define hash
+functions <span class="math inline">\(h_1,h_2,\dots,h_k\)</span>, where
+for <span class="math inline">\(i \in [k]\)</span>, <span
+class="math inline">\(h_i(\cdot) := \mathcal{O}(\mathsf{pre} || i ||
+\cdot)\)</span>.</p></li>
+<li><p><span id="Step:public_hash" label="Step:public_hash"></span>
+<span class="math inline">\(P_1\)</span> computes the min-hash vector
+<span class="math inline">\((u^A_1,u^A_2,\dots,u^A_k)\)</span> locally
+exactly as described in <span class="math inline">\(\Pbase\)</span>.
+Likewise, <span class="math inline">\(P_2\)</span> locally computes
+<span class="math inline">\((u^B_1,u^B_2,\dots,u^B_k)\)</span>.</p></li>
+<li><p><span class="math inline">\(P_1\)</span> (resp. <span
+class="math inline">\(P_2\)</span>) samples <span
+class="math inline">\(\zeta^A\)</span> (resp. <span
+class="math inline">\(\zeta^B\)</span>) from Laplace distribution <span
+class="math inline">\(Lap(\frac{\sens(\delta/2,k,
+n_A)}{\epsilon})\)</span> (resp. <span
+class="math inline">\(Lap(\frac{\sens(\delta/2,k,
+n_B)}{\epsilon})\)</span>). Let <span
+class="math inline">\(\coins_A\)</span> (resp. <span
+class="math inline">\(\coins_B\)</span>) be the random coins that <span
+class="math inline">\(P_1\)</span> (resp. <span
+class="math inline">\(P_2\)</span>) used in sampling the noise <span
+class="math inline">\(\zeta^A\)</span> (resp. <span
+class="math inline">\(\zeta^B\)</span>). As in <span
+class="math inline">\(\Pbasenoisy\)</span>, parties truncate <span
+class="math inline">\(\zeta^A\)</span> and <span
+class="math inline">\(\zeta_B\)</span> based on <span
+class="math inline">\(\ell_A\)</span> and <span
+class="math inline">\(\ell_B\)</span>, if necessary.</p>
+<p>Let <span class="math inline">\(Z^B\)</span> be a <span
+class="math inline">\(2\ell_B\)</span>-bit vector representing the unary
+encoding of <span class="math inline">\(\round(\zeta^B+\ell_B)\)</span>.
+That is, the first <span
+class="math inline">\(\round(\zeta^B+\ell_B)\)</span> bits are 1’s and
+the remaining bits are 0’s. We let <span
+class="math inline">\(Z^B_j\)</span> denote the <span
+class="math inline">\(j\)</span>th bit of <span
+class="math inline">\(Z^B\)</span>.</p></li>
+<li><p><span class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> invokes <span
+class="math inline">\(\F_{\psica}\)</span> with the following
+inputs:</p>
+<ul>
+<li><p><span class="math inline">\(P_1\)</span>’s input: <span
+class="math inline">\(\{ (i, u_i^A) : i \in [k]\} \cup \{(j+k, 1) : j
+\in[2\ell_B]\}\)</span></p></li>
+<li><p><span class="math inline">\(P_2\)</span>’s input: <span
+class="math inline">\(\{ (i, u_i^B) : i \in [k]\} \cup \{(j+k, Z^B_j) :
+j \in[2\ell_B]\}\)</span></p></li>
+</ul>
+<p>Let <span class="math inline">\(out\)</span> be the output to <span
+class="math inline">\(P_1\)</span> from functionality <span
+class="math inline">\(\F_{\psica}\)</span>. Set <span
+class="math inline">\(c_A = out - \ell_B\)</span>.</p></li>
+<li><p><span class="math inline">\(P_1\)</span> computes <span
+class="math inline">\(c^{+} = c^A + \round(\zeta^A)\)</span> and sends
+<span class="math inline">\(c^+\)</span> to <span
+class="math inline">\(P_2\)</span>. <span
+class="math inline">\(P_2\)</span> computes <span
+class="math inline">\(c^B = c^{+} - \round(\zeta^B)\)</span>.</p></li>
+</ol>
+<p><strong>Output:</strong> <span class="math inline">\(P_1\)</span> and
+<span class="math inline">\(P_2\)</span> output <span
+class="math inline">\((\mathsf{pre}, \coins_A, c^A)\)</span> and <span
+class="math inline">\((\mathsf{pre}, \coins_B, c^B)\)</span>
+respectively.</p>
+</div>
 <div class="proposition">
 <p><strong>Proposition 47</strong>. Protocol <span
 class="math inline">\(\PPH^{\mathcal{O}}\)</span> described in Figure <a
@@ -6762,6 +6923,13 @@ privacy. Our observation is that the final count <span
 class="math inline">\(c\)</span> follows a binomial distribution in the
 private hash setting, which can be treated as noise to obscure the
 sensitivity.</p>
+<div class="algorithm">
+<p><span class="math inline">\(\PC\)</span> works exactly the same as
+<span class="math inline">\(\Pbase\)</span> except that it outputs only
+the final count <span class="math inline">\(c\)</span> (with the prefix
+<span class="math inline">\({\mathsf{pre}}\)</span> hidden to the
+participants).</p>
+</div>
 <div id="thm:PrivH" class="theorem">
 <p><strong>Theorem 48</strong>. For any constant <span
 class="math inline">\(\ee &gt; 0\)</span>, if <span
@@ -6853,6 +7021,27 @@ adversary, having corrupted one of the two parties, has access to the
 view of the party and even the actual intersection. However, the
 adversary does not know the other party’s input set (except from the
 intersection).</p>
+<div class="algorithm">
+<p>Parameterized with <span class="math inline">\((n_A, n_B,
+n_I)\)</span>, a distribution <span class="math inline">\(\DDD_{A,
+B}\)</span> in this family samples <span class="math inline">\((A,
+B)\)</span> such that</p>
+<ul>
+<li><p>Letting <span class="math inline">\(I = A \cap B\)</span>, it
+holds that <span class="math inline">\(|A| = n_A, |B| = n_B\)</span>,
+and <span class="math inline">\(|I| = n_I\)</span></p></li>
+</ul>
+<p>Output:</p>
+<ul>
+<li><p>The inputs to the parties <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> are <span
+class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> respectively.</p></li>
+<li><p>Give <span class="math inline">\(I\)</span> to the adversary as
+the auxiliary information.</p></li>
+</ul>
+</div>
 <p>Below, we show that <span class="math inline">\(\Pbase\)</span>
 achieves DDP under certain circumstances.</p>
 <div id="thm:CDDP" class="theorem">
@@ -7913,6 +8102,43 @@ assumption in the random oracle model. Essentially the same security
 proof found in the original paper can be applied to show the security of
 this variant, when <span class="math inline">\(H_2\)</span> is also
 modeled as a random oracle.</p>
+<div class="algorithm">
+<p>Let <span class="math inline">\(G\)</span> be a multiplicative group
+of order <span class="math inline">\(q\)</span>. Let <span
+class="math inline">\(H_1:\zo^* \to G\)</span> and <span
+class="math inline">\(H_2:\zo^* \to \zo^\lambda\)</span> be hash
+functions.</p>
+<p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> has
+<span class="math inline">\(C = \{c_1, \ldots, c_v\}\)</span> and <span
+class="math inline">\(P_2\)</span> has <span class="math inline">\(S =
+\{s_1, \ldots, s_w\}\)</span>.</p>
+<ol>
+<li><p><span class="math inline">\(P_1\)</span> samples a random
+exponent <span class="math inline">\(R_c \from \ZZ_q\)</span>. For <span
+class="math inline">\(i \in [v]\)</span>, <span
+class="math inline">\(P_1\)</span> computes <span
+class="math inline">\(a_i = H_1(c_i)^{R_c}\)</span>. <span
+class="math inline">\(P_1\)</span> sends <span
+class="math inline">\((a_1, \ldots, a_v)\)</span>.</p></li>
+<li><p><span class="math inline">\(P_2\)</span> samples <span
+class="math inline">\(R_s \from \ZZ_q\)</span> and computes <span
+class="math inline">\((a&#39;_1, a&#39;_2, \ldots, a&#39;_v) =
+\shuffle(a_1^{R_s}, \ldots, a_v^{R_s}).\)</span> <span
+class="math inline">\(P_2\)</span> also computes <span
+class="math inline">\((b_1, b_2, \ldots, b_w) = \shuffle(H_1(s_1)^{R_s},
+\ldots, H_1(s_w)^{R_s}).\)</span> <span
+class="math inline">\(P_2\)</span> sends <span
+class="math inline">\((H_2(a&#39;_1), \ldots, H_2(a&#39;_w))\)</span>
+and <span class="math inline">\((b_1, \ldots, b_w)\)</span> to <span
+class="math inline">\(P_1\)</span>.</p></li>
+<li><p><span class="math inline">\(P_1\)</span> computes <span
+class="math inline">\((b&#39;_1, \ldots, b&#39;_w) = (b_1^{R_c}, \ldots,
+b_w^{R_c})\)</span>. <span class="math inline">\(P_1\)</span> outputs
+the following value: <span class="math display">\[| ~\{H_2(a&#39;_1),
+\ldots, H_2(a&#39;_v)\} \cap \{H_2(b&#39;_1), \ldots,
+H_2(b&#39;_w)\}|.\]</span></p></li>
+</ol>
+</div>
 <p>We briefly sketch the security proof here while referring the full
 proof to the original paper <span class="citation"
 data-cites="DGT12">[140]</span>. We first show the simulator for the
@@ -11529,8 +11755,7 @@ href="https://signal.org/blog/sealed-sender/">https://signal.org/blog/sealed-sen
 <div class="csl-left-margin">[172] </div><div
 class="csl-right-inline">I. Martiny, G. Kaptchuk, A. Aviv, D. Roche, and
 E. Wustrow, <span>“Improving signal’s sealed sender,”</span> in
-<em><span>ISOC</span> network and distributed system security symposium
-– <span>NDSS</span></em>, Jan. 2021. doi: <a
+<em>Ndss</em>, Jan. 2021. doi: <a
 href="https://doi.org/10.14722/ndss.2021.24180">10.14722/ndss.2021.24180</a>.</div>
 </div>
 <div id="ref-STOC:Goldreich87" class="csl-entry" role="listitem">
