@@ -2680,7 +2680,7 @@ We instantiated a single-server PIR protocol in our construction using
 SealPIR <span class="citation" data-cites="SP:ACLS18">[106]</span>. For
 the root finding step of the decoding procedure in PS-COIE, we use an
 implementation based on SageMath 9.2 <span class="citation"
-data-cites="Sage"><strong>Sage?</strong></span>.</p>
+data-cites="Sage">[107]</span>.</p>
 <h4 data-number="3.7.1.1" id="measuring-the-fetch-step."><span
 class="header-section-number">3.7.1.1</span> Measuring the Fetch
 step.</h4>
@@ -2953,7 +2953,7 @@ one.</p>
 <p>We use SealPIR for our PIR protocol, which requires 368.6 KB per
 request. We remark that a very recently introduced SealPIR+ takes 80KB
 per request (see Table 1 in <span class="citation"
-data-cites="MulPIR">[107]</span>), using which we can reduce the
+data-cites="MulPIR">[108]</span>), using which we can reduce the
 communication further.</p>
 <p>We can now compare the communication costs based on rows 1 and 2 of
 Figure <a href="#tbl:communication_new" data-reference-type="ref"
@@ -3068,7 +3068,7 @@ functionality.</p>
 class="header-section-number">3.8.2.2</span> Secure multi-party
 computation (MPC).</h4>
 <p>Secure two-party computation <span class="citation"
-data-cites="FOCS:Yao86 STOC:GolMicWig87">[25], [108]</span> allows
+data-cites="FOCS:Yao86 STOC:GolMicWig87">[25], [109]</span> allows
 players to compute any function of their private inputs without
 compromising privacy of their inputs. For example, the client and the
 server can run a protocol for secure two-party computation to solve the
@@ -3119,8 +3119,8 @@ class="math inline">\(L_p\)</span> sampling has been used to develop
 important streaming algorithms such as the heavy hitters, <span
 class="math inline">\(L_p\)</span> norm estimation, cascaded norm
 estimation, and finding duplicates in data streams <span
-class="citation" data-cites="AKO11 MW10 JST11 BOZ12">[30], [109], [110],
-[111]</span>.</p>
+class="citation" data-cites="AKO11 MW10 JST11 BOZ12">[30], [110], [111],
+[112]</span>.</p>
 <p>In this work, we introduce and explore the problem of private
 two-party sampling. We consider a setting in which two parties would
 like to sample from a distribution whose probability mass function is
@@ -3184,7 +3184,7 @@ product sampling. We describe a concrete, independent application for
 this new notion:  product sampling can be used to implement a
 distributed version of the well-known exponential mechanism for
 differentially-private data release <span class="citation"
-data-cites="FOCS:McSTal07">[112]</span>.</p>
+data-cites="FOCS:McSTal07">[113]</span>.</p>
 <h3 data-number="4.1.1" id="our-work-1"><span
 class="header-section-number">4.1.1</span> Our Work</h3>
 <p>We explore the problems described above, providing multiple two-party
@@ -3261,13 +3261,13 @@ how to make our construction constant round while incurring small
 additional leakage. Importantly, we must do this <span><em>without
 computing the exact inner product</em></span> which itself requires
 <span class="math inline">\(O(n)\)</span> communication <span
-class="citation" data-cites="STOC:BabNisSze89">[113]</span>.</p>
+class="citation" data-cites="STOC:BabNisSze89">[114]</span>.</p>
 <h4 data-number="4.1.1.5" id="two-party-exponential-mechanism."><span
 class="header-section-number">4.1.1.5</span> Two party exponential
 mechanism.</h4>
 <p>As mentioned previously, one important application of product
 sampling is the exponential mechanism for providing differential
-privacy <span class="citation" data-cites="FOCS:McSTal07">[112]</span>.
+privacy <span class="citation" data-cites="FOCS:McSTal07">[113]</span>.
 In Section <a href="#sec:dp" data-reference-type="ref"
 data-reference="sec:dp">4.6</a>, we describe this application in
 detail.</p>
@@ -3400,7 +3400,7 @@ compute <span class="math inline">\(||\vec{w}_1 +
 \vec{w}_2||_2^2\)</span> (and therefore impossible to compute <span
 class="math inline">\(\mathcal{D}[i]\)</span> for each <span
 class="math inline">\(i\)</span>) with sublinear communication <span
-class="citation" data-cites="STOC:BabNisSze89">[113]</span>. Instead, we
+class="citation" data-cites="STOC:BabNisSze89">[114]</span>. Instead, we
 sample index <span class="math inline">\(i\)</span> from a different,
 related, distribution, which is easy to sample with sub-linear
 communication. We then show that we can efficiently correct this
@@ -3582,7 +3582,7 @@ procedure. We now consider how to parallelize this process. To do so, we
 need to compute the inner product in order to determine, a priori, how
 many samples will suffice. However, computing this value requires <span
 class="math inline">\(O(n)\)</span> communication <span class="citation"
-data-cites="STOC:BabNisSze89">[113]</span>!</p>
+data-cites="STOC:BabNisSze89">[114]</span>!</p>
 <p>The natural thing to do is therefore to use an approximation to the
 inner product that can be computed with sublinear communication.
 However, when replacing an exact computation of a function <span
@@ -3591,7 +3591,7 @@ approximation <span class="math inline">\(\tilde{f}(\vec{w}_1,
 \vec{w}_2; r)\)</span>, one needs to be careful that <em>more</em>
 information is not leaked by the output. Specifically, Ishai et
 al. <span class="citation"
-data-cites="ICALP:FIMNSW01 ATA:FIMNSW06">[72], [114]</span> introduced
+data-cites="ICALP:FIMNSW01 ATA:FIMNSW06">[72], [115]</span> introduced
 the notion of secure multiparty computation of approximations and,
 loosely speaking, their security definition says that the approximate
 computation is secure if its output can be simulated from the exactly
@@ -3718,7 +3718,7 @@ computation of differentially private functionalities.</h4>
 data-cites="dwork2006our">[35]</span> there has been a good amount of
 work (e.g. <span class="citation"
 data-cites="acar2017achieving clifton2013challenges eriguchi2021efficient goryczka2013secure pathak2010multiparty pentyala2022training">[36],
-[37], [38], [115], [116], [117]</span>) on using MPC to realize
+[37], [38], [116], [117], [118]</span>) on using MPC to realize
 differentially private functionalities to protect the privacy of
 individual inputs given the output of the MPC. These works have focused
 on building efficient, private applications in machine learning and
@@ -5212,7 +5212,7 @@ inner product</h3>
 <p>We achieve a protocol that securely approximates the inner product
 with sublinear communication. In particular, we take advantage of the
 well known Johnson–Lindenstrauss Transform (JLT) <span class="citation"
-data-cites="JL84 STOC:IndMot98">[118], [119]</span> sketch.</p>
+data-cites="JL84 STOC:IndMot98">[119], [120]</span> sketch.</p>
 <h4 data-number="4.5.1.1"
 id="additional-assumptions-about-vecw_1-and-vecw_2"><span
 class="header-section-number">4.5.1.1</span> Additional assumptions
@@ -5263,7 +5263,7 @@ abuse the notation and treat the vectors <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> as column vectors.)</p>
 <div class="lemma">
-<p><span>(cf. <span class="citation" data-cites="Kaban15">[120],
+<p><span>(cf. <span class="citation" data-cites="Kaban15">[121],
 Corollary 3.1</span>)</span> <span id="lem:jlt_k"
 label="lem:jlt_k"></span> For all <span class="math inline">\(\vec{w}_1,
 \vec{w}_2\)</span> such that <span class="math inline">\(\cos(\vec{w}_1,
@@ -5282,7 +5282,7 @@ output.</h4>
 <p>What is interesting is that the approximate inner product doesn’t
 reveal anything more than the inner product itself. In this sense, it
 satisfies the notion of private approximation introduced in <span
-class="citation" data-cites="FIM+06">[121]</span>. In particular, we
+class="citation" data-cites="FIM+06">[122]</span>. In particular, we
 prove the following:</p>
 <div class="lemma">
 <p><span id="lem:simip" label="lem:simip"></span> The output of <span
@@ -5507,7 +5507,7 @@ class="header-section-number">4.6.1.2</span> Utility.</h4>
 <p>Although using a larger value <span class="math inline">\(\Delta
 u\)</span> deteriorates the utility of the mechanism, we show that the
 utility is still acceptable. Applying Theorem 3.11 in <span
-class="citation" data-cites="DR14">[122]</span> to our setting, we have
+class="citation" data-cites="DR14">[123]</span> to our setting, we have
 <span class="math display">\[\Pr\left[f_{\sf loss}^{c_i}(D)
 \le f_{\sf loss}^{c_{opt}}(D) - \frac{2 \Delta u}{\e} \cdot (\log n +
 \secparam)
@@ -5821,8 +5821,8 @@ class="header-section-number">5.1</span> Introduction</h2>
 class="header-section-number">5.1.0.1</span> Min-hash sketch.</h4>
 <p>The min-hash sketch is a simple and well-known technique to produce
 an unbiased estimate of the Jaccard index <span class="citation"
-data-cites="B97 LOZ12">[123], [124]</span>. The Jaccard index <span
-class="citation" data-cites="jaccard">[125]</span> is a similarity
+data-cites="B97 LOZ12">[124], [125]</span>. The Jaccard index <span
+class="citation" data-cites="jaccard">[126]</span> is a similarity
 measure between two sets <span class="math inline">\(A\)</span> and
 <span class="math inline">\(B\)</span>, denoted <span
 class="math inline">\(J(A, B)\)</span>, defined as the fraction of the
@@ -5831,16 +5831,16 @@ and <span class="math inline">\(B\)</span> divided by the number of
 elements in their union. That is, <span
 class="math inline">\(J(A,B)=\frac{|A \cap B|}{|A \cup B|}\)</span>. The
 Jaccard index has seen wide application for clustering of websites and
-documents <span class="citation" data-cites="B97 cn:BGMZ97">[123],
-[126]</span>, community identification <span class="citation"
-data-cites="kdd:TanBerKem07">[127]</span>, DNA matching <span
+documents <span class="citation" data-cites="B97 cn:BGMZ97">[124],
+[127]</span>, community identification <span class="citation"
+data-cites="kdd:TanBerKem07">[128]</span>, DNA matching <span
 class="citation" data-cites="wpes:CFGT12">[63]</span>, and machine
 learning <span class="citation"
-data-cites="ijcai:WWTDLZ19 icip:JKWC22">[128], [129]</span>.</p>
+data-cites="ijcai:WWTDLZ19 icip:JKWC22">[129], [130]</span>.</p>
 <p>Computing the Jaccard index exactly, especially when the input sets
 are large, can be costly. The min-hash sketch allows
 communication-efficient approximation <span class="citation"
-data-cites="B97">[123]</span>. The basic idea behind the min-hash sketch
+data-cites="B97">[124]</span>. The basic idea behind the min-hash sketch
 is to apply a random hash function <span
 class="math inline">\(h\)</span> to both sets <span
 class="math inline">\(A\)</span> and <span
@@ -5866,7 +5866,7 @@ medical records.</p>
 <p>There are two classes of solutions for privacy-preserving min-hash.
 The first class of solutions (e.g. <span class="citation"
 data-cites="wpes:CFGT12 BluCriGas14 eprint:RCSWK19 Faber:thesis">[63],
-[130], <strong>eprint:RCSWK19?</strong>,
+[131], <strong>eprint:RCSWK19?</strong>,
 <strong>Faber:thesis?</strong></span>) considers how to compute the
 min-hash and Jaccard index in a two-party setting, where the parties do
 not trust each other with their private inputs. The goal of these works
@@ -5936,7 +5936,7 @@ href="#sec:basic" data-reference-type="ref"
 data-reference="sec:basic">5.4</a>. In Section <a href="#sec:eval"
 data-reference-type="ref" data-reference="sec:eval">5.9</a>, we evaluate
 the performance when instantiating the PSI-CA protocol <span
-class="citation" data-cites="DGT12 TL23">[131], [132]</span> in the
+class="citation" data-cites="DGT12 TL23">[132], [133]</span> in the
 semi-honest setting. The resulting protocol has better accuracy compared
 to the prior work <span class="citation"
 data-cites="ICML:HehTinCor23 sisap:AumBouSch20">[48], [64]</span>. We
@@ -6039,7 +6039,7 @@ precisely, we assume that given the adversary’s set (and even the
 intersection between the two sets), the honest party’s set still has
 sufficiently high min-entropy. With this assumption, we turn to the tool
 of distributional DP (DDP) <span class="citation"
-data-cites="FOCS:BGKS13">[133]</span> which allows us to analyze
+data-cites="FOCS:BGKS13">[134]</span> which allows us to analyze
 differential privacy when the distribution of inputs has sufficient
 uncertainty.</p>
 <p>We begin with a relatively strong assumption on the amount of
@@ -6141,9 +6141,9 @@ class="math inline">\(\Omega(n \lg(\ell))\)</span> while it can still be
 possible that for every <span class="math inline">\(i\)</span>, the
 marginal distribution over <span class="math inline">\(R_i\)</span> has
 only <span><em>constant</em></span> min-entropy (see Example 1.1
-in <span class="citation" data-cites="DKZ18">[134]</span>). To deal with
+in <span class="citation" data-cites="DKZ18">[135]</span>). To deal with
 such situations, Skórski <span class="citation"
-data-cites="skorski2019strong">[135]</span> proves a theorem showing the
+data-cites="skorski2019strong">[136]</span> proves a theorem showing the
 existence of “spoiling bits.” Namely, given <span
 class="math inline">\(R_1, \ldots, R_n\)</span>, some additional
 information known as spoiling bits can be released such that,
@@ -6216,7 +6216,7 @@ data-reference="thm:chain_leak_3">[thm:chain_leak_3]</a>.</p>
 class="header-section-number">5.1.0.8</span> A note on composition.</h4>
 <p>One known weakness of the DDP definition is the lack of a general
 composition theorem <span class="citation"
-data-cites="FOCS:BGKS13">[133]</span>. However, for the specific setting
+data-cites="FOCS:BGKS13">[134]</span>. However, for the specific setting
 of our min-hash protocols we can leverage the small output of min-hash
 to argue composition properties after leakage of several outputs.
 Specifically, suppose that the adversary executes a min-hash protocol
@@ -6279,7 +6279,7 @@ privacy relaxation to improve efficiency of set-intersection protocols.
 data-cites="Usenix:MLRG20"><strong>Usenix:MLRG20?</strong></span>
 consider graph-parallel computations and design more efficient solutions
 with differential private leakages.  <span class="citation"
-data-cites="SODA:CCMS19">[136]</span> consider classic tasks like
+data-cites="SODA:CCMS19">[137]</span> consider classic tasks like
 sorting, merging, and range-query data structures with differential
 privacy relaxation.  <span class="citation"
 data-cites="ACNS:GKLX22">[71]</span> consider multiparty shuffle that
@@ -6479,7 +6479,7 @@ id="distributional-differential-privacy-ddp."><span
 class="header-section-number">5.3.0.5</span> Distributional differential
 privacy (DDP).</h4>
 <p>We adapt the original definition <span class="citation"
-data-cites="FOCS:BGKS13">[133]</span> for our purpose to consider a
+data-cites="FOCS:BGKS13">[134]</span> for our purpose to consider a
 two-party protocol that takes sets as input more explicitly.
 Specifically, we consider a computational indistinguishability variant
 for our DDP definition.</p>
@@ -6663,7 +6663,7 @@ functionality <span class="math inline">\(\Pbasenoisy\)</span>. The
 protocol takes advantage of an ideal functionality <span
 class="math inline">\(\F_{\psica}\)</span> of private set intersection
 cardinality (PSI-CA) <span class="citation"
-data-cites="DGT12">[131]</span> that computes the exact cardinality of
+data-cites="DGT12">[132]</span> that computes the exact cardinality of
 the intersection of the two input sets, as described in Figure <a
 href="#func:psica" data-reference-type="ref"
 data-reference="func:psica">[func:psica]</a>.</p>
@@ -6680,7 +6680,7 @@ Figure <a href="#pro:ph" data-reference-type="ref"
 data-reference="pro:ph">[pro:ph]</a>.</p>
 <p>It is worth noting that the above task could also be implemented
 using a generic two-party computation (2PC) protocol. However,  <span
-class="citation" data-cites="DGT12">[131]</span> proposed an efficient
+class="citation" data-cites="DGT12">[132]</span> proposed an efficient
 PSI-CA protocol that outperforms 2PC protocols for small input sizes
 (using the start-to-finish comparison including the 2PC preprocessing
 steps). See Section <a href="#sec:eval_comp" data-reference-type="ref"
@@ -6694,7 +6694,7 @@ class="math inline">\(\Pbasenoisy\)</span>. It implies that protocol
 <span class="math inline">\(\PPH\)</span> is also <span
 class="math inline">\((\ee,
 \dd)\)</span>-computational-DP <span class="citation"
-data-cites="SCRS17">[137]</span>. The main benefit of the protocol is
+data-cites="SCRS17">[138]</span>. The main benefit of the protocol is
 that the hash computations can be computed locally and the communication
 complexity of the protocol is <span><em>sub-linear in <span
 class="math inline">\(n_A\)</span> and <span
@@ -6987,7 +6987,7 @@ adversary, it turns out that the noise from the <span
 class="math inline">\(k_g\)</span> iterations follows a Poisson Binomial
 distribution, which is a generalization of a Binomial distribution where
 each trial has a different success probability. However, using the
-techniques of <span class="citation" data-cites="COK22">[138]</span>, we
+techniques of <span class="citation" data-cites="COK22">[139]</span>, we
 can still show that this distribution works as a good noise to hide the
 private data.</p>
 <h3 data-number="5.7.1" id="apx:pubHashHighEntropy"><span
@@ -7643,7 +7643,7 @@ are not <span class="math inline">\(\theta\)</span>-good is small. We
 can lower-bound the remaining min-entropy in <span
 class="math inline">\(\mathcal{D}\)</span>, therefore, using the weak
 chain rule for min-entropy <span class="citation"
-data-cites="DORS08">[139], Lemma 2.2</span>.</p>
+data-cites="DORS08">[140], Lemma 2.2</span>.</p>
 <p>If we want to use the weak chain rule to lower bound the remaining
 min-entropy with all but <span
 class="math inline">\(2^{-\kappa}\)</span> probability, however, we need
@@ -7666,14 +7666,14 @@ the total min-entropy in <span class="math inline">\(R\)</span> remains
 high!</p>
 <p>This phenomenon has been previously observed and studied in the
 literature <span class="citation"
-data-cites="skorski2019strong">[135]</span>. One way to deal with such a
+data-cites="skorski2019strong">[136]</span>. One way to deal with such a
 counter-intuitive situation is to actually leak a small amount of
 <em>additional</em> information, known as “spoiled” bits. This will
 lower the total min-entropy in <span class="math inline">\(R\)</span>,
 but will ensure that a large fraction of blocks in <span
 class="math inline">\(R\)</span> still have high min entropy of at least
 <span class="math inline">\(1.5\lg(n)\)</span>. We extend the techniques
-of <span class="citation" data-cites="skorski2019strong">[135]</span> to
+of <span class="citation" data-cites="skorski2019strong">[136]</span> to
 produce spoiling leakage so that the min-entropy in <span
 class="math inline">\(R\)</span> still stays high in our protocol. We
 discuss more details about the strong chain rule in the next
@@ -7893,7 +7893,7 @@ class="math inline">\(\F_{\psica}\)</span> instantiated with the PSI-CA
 protocol described in Figure <a href="#pro:psica"
 data-reference-type="ref" data-reference="pro:psica">[pro:psica]</a>. It
 is a variant of the protocol in <span class="citation"
-data-cites="DGT12">[131]</span>, where <span
+data-cites="DGT12">[132]</span>, where <span
 class="math inline">\(H_2\)</span> is applied to <span
 class="math inline">\(\{a&#39;_i\}_{i \in [v]}\)</span> and <span
 class="math inline">\(\{b&#39;_j\}_{j \in [w]}\)</span> in order to
@@ -7904,7 +7904,7 @@ this variant, when <span class="math inline">\(H_2\)</span> is also
 modeled as a random oracle.</p>
 <p>We briefly sketch the security proof here while referring the full
 proof to the original paper <span class="citation"
-data-cites="DGT12">[131]</span>. We first show the simulator for the
+data-cites="DGT12">[132]</span>. We first show the simulator for the
 corrupted <span class="math inline">\(P_1\)</span>. Let <span
 class="math inline">\(t\)</span> be the protocol output (i.e., set
 intersection cardinality). The simulator chooses random <span
@@ -8076,12 +8076,12 @@ class="header-section-number">6</span> FACTs</h1>
 class="header-section-number">6.1</span> Introduction</h2>
 <p>The proliferation of fake and misleading information online has had
 significant impact on political discourse <span class="citation"
-data-cites="NYTimes:IsaRoo18">[140]</span> and has resulted in
+data-cites="NYTimes:IsaRoo18">[141]</span> and has resulted in
 violence <span class="citation"
-data-cites="WAPo:Samuels20">[141]</span>. Large services like Facebook
+data-cites="WAPo:Samuels20">[142]</span>. Large services like Facebook
 and YouTube have begun to remove or label content that they know to be
 fraudulent or misleading <span class="citation"
-data-cites="Facebook:fakeNews Youtube:fakeNews">[142], [143]</span>,
+data-cites="Facebook:fakeNews Youtube:fakeNews">[143], [144]</span>,
 through a combination of a manual process of reviewing posts/videos and
 automated machine learning techniques.</p>
 <p>However, on end-to-end encrypted messaging services (EEMS), like
@@ -8096,7 +8096,7 @@ difficult because some platforms, like Signal, also hide the path the
 message took, so identifying and addressing the original source of the
 misinformation may not be possible.</p>
 <p>Tyagi et al. <span class="citation"
-data-cites="CCS:TyaMieRis19">[144]</span> introduced a first approach
+data-cites="CCS:TyaMieRis19">[145]</span> introduced a first approach
 for overcoming this challenge and allow EEMS to effectively
 <em>traceback</em> an offending message to find the originator based on
 a user complaint. The traceback procedure also assures that all other
@@ -8115,7 +8115,7 @@ privacy of the sender (e.g., the leaker) by issuing a single complaint
 to the EEMS. While it may be possible to apply manual review to these
 complaints, the scale of possible complaints could make this
 impractical. Several follow-on papers <span class="citation"
-data-cites="CCS:PeaEskBon21 eprint:IssAlhMay2021">[145], [146]</span>
+data-cites="CCS:PeaEskBon21 eprint:IssAlhMay2021">[146], [147]</span>
 show how to achieve <em>source-tracking</em> for EEMS to identify the
 source of a message without relying on traceback of all intermediate
 recipients. However, these systems still allow a single complainer to
@@ -8140,7 +8140,7 @@ would enable the checking and updating of counts for each message, but
 the access patterns of clients checking and updating counters could
 reveal how many complaints a message receives even if the threshold is
 not reached. Oblivious RAM (ORAM) (e.g. <span class="citation"
-data-cites="JACM:GolOst96 JACM:SDSCFRYD18">[147], [148]</span>) could be
+data-cites="JACM:GolOst96 JACM:SDSCFRYD18">[148], [149]</span>) could be
 used to protect the access patterns, but have high computational
 overheads and usually assume clients may share secrets and are not
 malicious. Pricate Information Retrieval (PIR) does not assume clients
@@ -8247,14 +8247,14 @@ This suggests an immediate solution where the server stores an encrypted
 counter for each message, and clients interact with the server to
 increment the counter and check the threshold. While implementing such
 counters is certainly possible using homomorphic encryption <span
-class="citation" data-cites="STOC:Gentry09">[149]</span> or standard
+class="citation" data-cites="STOC:Gentry09">[150]</span> or standard
 secure computation techniques <span class="citation"
-data-cites="FOCS:Yao86 STOC:GolMicWig87 STOC:BenGolWig88">[25], [108],
-[150]</span> , the problem is that the access pattern of clients’
+data-cites="FOCS:Yao86 STOC:GolMicWig87 STOC:BenGolWig88">[25], [109],
+[151]</span> , the problem is that the access pattern of clients’
 updates to counters leaks information to the server by revealing the
 complaint histogram. This suggests a further modification to store the
 counters inside an oblivious RAM (ORAM) <span class="citation"
-data-cites="JACM:GolOst96">[147]</span> to hide such access patterns
+data-cites="JACM:GolOst96">[148]</span> to hide such access patterns
 from the client. However, in our setting this would require a
 multi-client ORAM <span class="citation"
 data-cites="maffei-msmcoram concuroram MOSE">[82], [83], [84]</span>
@@ -8318,14 +8318,14 @@ class="header-section-number">6.1.3</span> Limitations of FACTS</h3>
 <p>In order to present FACTS, it is also important to recognize what our
 system does <em>not</em> do.</p>
 <p>First, unlike some prior work, e.g. <span class="citation"
-data-cites="ICS:Geiger16">[151]</span>, <span class="citation"
-data-cites="km-private-membership-usenix21">[152]</span>, FACTS does not
+data-cites="ICS:Geiger16">[152]</span>, <span class="citation"
+data-cites="km-private-membership-usenix21">[153]</span>, FACTS does not
 attempt to automatically detect misinformation. Instead, it relies on
 users reporting it when they see it. This reliance on users has inherent
 benefits and limitations. While our system is not subject to the kinds
 of machine-generated false positives that can arise from, e.g., hash
 collisions <span class="citation"
-data-cites="brandom-verge-apple-csam">[153]</span>, our model is
+data-cites="brandom-verge-apple-csam">[154]</span>, our model is
 inherently vulnerable to any sufficiently large group of dishonest
 users, who could trigger an audit on a benign message. This is why we
 suggest the possibility of a manual human review process on message
@@ -8527,7 +8527,7 @@ structure shares some of the same basic functionality as a counting
 Bloom filter <span class="citation"
 data-cites="TON:FCAB00 PODC:Mitzenmacher01">[94], [95]</span> or
 count-min sketch <span class="citation"
-data-cites="JAL:CorMut05">[154]</span>, which is to insert elements and
+data-cites="JAL:CorMut05">[155]</span>, which is to insert elements and
 compute the (approximate) frequency of a given element.</p>
 <p>Our CCBF differs from a usual count-min sketch in that each update
 operation is accompanied by a <em>user id</em>, and each user can only
@@ -9315,10 +9315,10 @@ the added overhead due to FACTS.</p>
 <p>For these experiments, we implemented both the client and server
 using the Rust programming language. We used SHA-3 for a hash function,
 and for encryption and signatures we used Rust’s ring library<span
-class="citation" data-cites="ring">[155]</span> implementation of
+class="citation" data-cites="ring">[156]</span> implementation of
 OpenSSL’s ChaCha20-Poly1305 protocol and Ed25519 respectively. To
 instantiate the CCBF, we used a simple library bitvec<span
-class="citation" data-cites="bitvec">[156]</span> that allows memory to
+class="citation" data-cites="bitvec">[157]</span> that allows memory to
 be bit addressed, rather than byte addressed, which gains us a quick,
 compact way to store the CCBF data structure.</p>
 <p>To simulate network overhead, we implemented a simple web server and
@@ -9793,7 +9793,7 @@ server (or an auditor) after the threshold of complaints has been
 reached: the user id of the message’s originator, and the contents of
 the message itself. Indeed, one of our motivations was to avoid
 revealing the entire path or tree of message forwarding as in prior work
-<span class="citation" data-cites="CCS:TyaMieRis19">[144]</span>.</p>
+<span class="citation" data-cites="CCS:TyaMieRis19">[145]</span>.</p>
 <p>However, in some environments, even this may be too much to release
 to a service provider that could be, for instance, compromised or
 influenced by an oppressive regime. An advantage of FACTS is that the
@@ -9929,11 +9929,11 @@ recipient of any message. This can trivially be accomplished by
 foregoing a central server and doing peer-to-peer communication (note
 that FACTS may still be useful as a central complaint repository); or
 using more sophisticated cryptography to hide metadata <span
-class="citation" data-cites="stadium verdict ricochet">[157], [158],
-[159]</span>.</p>
+class="citation" data-cites="stadium verdict ricochet">[158], [159],
+[160]</span>.</p>
 <p>Of particular interest for us is the recently deployed <em>sealed
 sender</em> mechanism on the popular Signal platform <span
-class="citation" data-cites="signal-ss">[160]</span>. The goal in this
+class="citation" data-cites="signal-ss">[161]</span>. The goal in this
 case is to obscure the sender, but not the recipient, from the server
 handling the actual message transmission. We note that this concept
 plays particularly well with FACTS, as the additional leakage in our
@@ -9943,10 +9943,10 @@ exactly what is revealed under sealed sender already! Both systems thus
 work to still hide message sender and originator identities (at least
 until an audit is performed).</p>
 <p>However, note that recent work <span class="citation"
-data-cites="signal-ndss21">[161]</span> has shown that some timing
+data-cites="signal-ndss21">[162]</span> has shown that some timing
 attacks are still possible under sealed sender, and the same attacks
 would apply just as well to FACTS. But the solutions proposed in <span
-class="citation" data-cites="signal-ndss21">[161]</span> might also be
+class="citation" data-cites="signal-ndss21">[162]</span> might also be
 deployed alongside FACTS to prevent such leakage; we leave the
 investigation of this question for future work.</p>
 <h2 data-number="6.9" id="sec:related"><span
@@ -9965,8 +9965,8 @@ senders given only one (or a few) complaints.</p>
 <h4 data-number="6.9.0.2" id="oblivious-ram-oram"><span
 class="header-section-number">6.9.0.2</span> Oblivious RAM (ORAM):</h4>
 <p>Oblivious Random-Access Memory (ORAM) <span class="citation"
-data-cites="STOC:Goldreich87 STOC:Ostrovsky90 JACM:GolOst96">[147],
-[162], [163]</span> allows a client to obliviously access encrypted
+data-cites="STOC:Goldreich87 STOC:Ostrovsky90 JACM:GolOst96">[148],
+[163], [164]</span> allows a client to obliviously access encrypted
 memory stored on a server without leaking the access pattern to the
 server. The standard ORAM definition assumes a single user with full
 control over the database. While some important progress has been made
@@ -9997,7 +9997,7 @@ Sketching:</h4>
 storing the counts of complaints on a large set of messages. There has
 indeed been a lot of recent interest (e.g., <span class="citation"
 data-cites="PoPETS:CDKY20 CCS:WJSYG19 NDSS:MelDanDec16 CCS:JanJoh16 CCS:FMJS17 AM14 FGJ+15">[40],
-[41], [42], [43], [164], [165], [166]</span>) in private sketching
+[41], [42], [43], [165], [166], [167]</span>) in private sketching
 algorithms for cardinality estimation, frequency measurement, and other
 approximations. However, these works generally focus on a multi-party
 setting, with multiple parties running secure computation to evaluate
@@ -11000,14 +11000,20 @@ query processing,”</span> in <em>ieeesp18name</em>, ieeesp18ed, Ed.,
 ieeesp18addr: ieeesppub, 2018, pp. 962–979. doi: <a
 href="https://doi.org/10.1109/SP.2018.00062">10.1109/SP.2018.00062</a>.</div>
 </div>
-<div id="ref-MulPIR" class="csl-entry" role="listitem">
+<div id="ref-Sage" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[107] </div><div
+class="csl-right-inline">W. A. Stein <em>et al.</em>,
+<em><span>S</span>age <span>M</span>athematics <span>S</span>oftware
+(<span>V</span>ersion 9.2)</em>. The Sage Development Team, 2020.</div>
+</div>
+<div id="ref-MulPIR" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[108] </div><div
 class="csl-right-inline">A. Ali <em>et al.</em>,
 <span>“Communication–computation trade-offs in PIR.”</span> Usenix
 Security (To appear), 2021.</div>
 </div>
 <div id="ref-STOC:GolMicWig87" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[108] </div><div
+<div class="csl-left-margin">[109] </div><div
 class="csl-right-inline">O. Goldreich, S. Micali, and A. Wigderson,
 <span>“How to play any mental game or <span>A</span> completeness
 theorem for protocols with honest majority,”</span> in
@@ -11016,7 +11022,7 @@ theorem for protocols with honest majority,”</span> in
 href="https://doi.org/10.1145/28395.28420">10.1145/28395.28420</a>.</div>
 </div>
 <div id="ref-AKO11" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[109] </div><div
+<div class="csl-left-margin">[110] </div><div
 class="csl-right-inline">A. Andoni, R. Krauthgamer, and K. Onak,
 <span>“Streaming algorithms via precision sampling,”</span> in
 <em><span>IEEE</span> 52nd annual symposium on foundations of computer
@@ -11026,7 +11032,7 @@ pp. 363–372. doi: <a
 href="https://doi.org/10.1109/FOCS.2011.82">10.1109/FOCS.2011.82</a>.</div>
 </div>
 <div id="ref-JST11" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[110] </div><div
+<div class="csl-left-margin">[111] </div><div
 class="csl-right-inline">H. Jowhari, M. Saglam, and G. Tardos,
 <span>“Tight bounds for lp samplers, finding duplicates in streams, and
 related problems,”</span> in <em>Proceedings of the 30th
@@ -11037,21 +11043,21 @@ principles of database systems, <span>PODS</span> 2011, june 12-16,
 href="https://doi.org/10.1145/1989284.1989289">10.1145/1989284.1989289</a>.</div>
 </div>
 <div id="ref-BOZ12" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[111] </div><div
+<div class="csl-left-margin">[112] </div><div
 class="csl-right-inline">V. Braverman, R. Ostrovsky, and C. Zaniolo,
 <span>“Optimal sampling from sliding windows,”</span> <em>J. Comput.
 Syst. Sci.</em>, vol. 78, no. 1, pp. 260–272, 2012, doi: <a
 href="https://doi.org/10.1016/j.jcss.2011.04.004">10.1016/j.jcss.2011.04.004</a>.</div>
 </div>
 <div id="ref-FOCS:McSTal07" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[112] </div><div
+<div class="csl-left-margin">[113] </div><div
 class="csl-right-inline">F. McSherry and K. Talwar, <span>“Mechanism
 design via differential privacy,”</span> in <em>focs07name</em>,
 focs07ed, Ed., focs07addr: focspub, 2007, pp. 94–103. doi: <a
 href="https://doi.org/10.1109/FOCS.2007.41">10.1109/FOCS.2007.41</a>.</div>
 </div>
 <div id="ref-STOC:BabNisSze89" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[113] </div><div
+<div class="csl-left-margin">[114] </div><div
 class="csl-right-inline">L. Babai, N. Nisan, and M. Szegedy,
 <span>“Multiparty protocols and logspace-hard pseudorandom sequences
 (extended abstract),”</span> in <em>stoc89name</em>, stoc89ed, Ed.,
@@ -11059,41 +11065,41 @@ stoc89addr: stocpub, 1989, pp. 1–11. doi: <a
 href="https://doi.org/10.1145/73007.73008">10.1145/73007.73008</a>.</div>
 </div>
 <div id="ref-ATA:FIMNSW06" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[114] </div><div
+<div class="csl-left-margin">[115] </div><div
 class="csl-right-inline">J. Feigenbaum, Y. Ishai, T. Malkin, K. Nissim,
 M. J. Strauss, and R. N. Wright, <span>“Secure multiparty computation of
 approximations,”</span> <em><span>ACM</span> Trans. Algorithms</em>,
 vol. 2, no. 3, pp. 435–472, 2006.</div>
 </div>
 <div id="ref-goryczka2013secure" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[115] </div><div
+<div class="csl-left-margin">[116] </div><div
 class="csl-right-inline">S. Goryczka, L. Xiong, and V. Sunderam,
 <span>“Secure multiparty aggregation with differential privacy: A
 comparative study,”</span> in <em>Proceedings of the joint EDBT/ICDT
 2013 workshops</em>, 2013, pp. 155–163.</div>
 </div>
 <div id="ref-pathak2010multiparty" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[116] </div><div
+<div class="csl-left-margin">[117] </div><div
 class="csl-right-inline">M. Pathak, S. Rane, and B. Raj,
 <span>“Multiparty differential privacy via aggregation of locally
 trained classifiers,”</span> <em>Advances in neural information
 processing systems</em>, vol. 23, 2010.</div>
 </div>
 <div id="ref-pentyala2022training" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[117] </div><div
+<div class="csl-left-margin">[118] </div><div
 class="csl-right-inline">S. Pentyala <em>et al.</em>, <span>“Training
 differentially private models with secure multiparty
 computation,”</span> <em>arXiv preprint arXiv:2202.02625</em>,
 2022.</div>
 </div>
 <div id="ref-JL84" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[118] </div><div
+<div class="csl-left-margin">[119] </div><div
 class="csl-right-inline">W. B. Johnson and J. Lindenstrauss,
 <span>“Extensions of lipschitz mappings into a hilbert space.”</span>
 1984.</div>
 </div>
 <div id="ref-STOC:IndMot98" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[119] </div><div
+<div class="csl-left-margin">[120] </div><div
 class="csl-right-inline">P. Indyk and R. Motwani, <span>“Approximate
 nearest neighbors: Towards removing the curse of dimensionality,”</span>
 in <em>stoc98name</em>, stoc98ed, Ed., stoc98addr: stocpub, 1998, pp.
@@ -11101,7 +11107,7 @@ in <em>stoc98name</em>, stoc98ed, Ed., stoc98addr: stocpub, 1998, pp.
 href="https://doi.org/10.1145/276698.276876">10.1145/276698.276876</a>.</div>
 </div>
 <div id="ref-Kaban15" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[120] </div><div
+<div class="csl-left-margin">[121] </div><div
 class="csl-right-inline">A. Kabán, <span>“Improved bounds on the dot
 product under random projection and random sign projection,”</span> in
 <em>Proceedings of the 21th <span>ACM</span> <span>SIGKDD</span>
@@ -11112,7 +11118,7 @@ G. I. Webb, D. D. Margineantu, and G. Williams, Eds., <span>ACM</span>,
 href="https://doi.org/10.1145/2783258.2783364">10.1145/2783258.2783364</a>.</div>
 </div>
 <div id="ref-FIM+06" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[121] </div><div
+<div class="csl-left-margin">[122] </div><div
 class="csl-right-inline">J. Feigenbaum, Y. Ishai, T. Malkin, K. Nissim,
 M. J. Strauss, and R. N. Wright, <span>“Secure multiparty computation of
 approximations,”</span> <em><span>ACM</span> Trans. Algorithms</em>,
@@ -11120,14 +11126,14 @@ vol. 2, no. 3, pp. 435–472, 2006, doi: <a
 href="https://doi.org/10.1145/1159892.1159900">10.1145/1159892.1159900</a>.</div>
 </div>
 <div id="ref-DR14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[122] </div><div
+<div class="csl-left-margin">[123] </div><div
 class="csl-right-inline">C. Dwork and A. Roth, <span>“The algorithmic
 foundations of differential privacy,”</span> <em>Found. Trends Theor.
 Comput. Sci.</em>, vol. 9, no. 3–4, pp. 211–407, 2014, doi: <a
 href="https://doi.org/10.1561/0400000042">10.1561/0400000042</a>.</div>
 </div>
 <div id="ref-B97" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[123] </div><div
+<div class="csl-left-margin">[124] </div><div
 class="csl-right-inline">A. Broder, <span>“On the resemblance and
 containment of documents,”</span> in <em>Compression and complexity of
 sequences, international conference on</em>, IEEE Computer Society,
@@ -11135,7 +11141,7 @@ sequences, international conference on</em>, IEEE Computer Society,
 href="https://doi.org/10.1109/sequen.1997.666900">10.1109/sequen.1997.666900</a>.</div>
 </div>
 <div id="ref-LOZ12" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[124] </div><div
+<div class="csl-left-margin">[125] </div><div
 class="csl-right-inline">P. Li, A. B. Owen, and C.-H. Zhang, <span>“One
 permutation hashing,”</span> in <em>In proceedings of the 26th annual
 conference on neural information processing systems 2012.</em>, 2012,
@@ -11143,7 +11149,7 @@ pp. 3122–3130. doi: <a
 href="https://doi.org/10.5555/2999325.2999482">10.5555/2999325.2999482</a>.</div>
 </div>
 <div id="ref-jaccard" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[125] </div><div
+<div class="csl-left-margin">[126] </div><div
 class="csl-right-inline">P. Jaccard, <span>“<span>É</span>tude
 comparative de la distribution florale dans une portion des alpes et des
 jura,”</span> <em>Bull Soc Vaudoise Sci Nat</em>, vol. 37, pp. 547–579,
@@ -11151,7 +11157,7 @@ jura,”</span> <em>Bull Soc Vaudoise Sci Nat</em>, vol. 37, pp. 547–579,
 href="https://doi.org/10.5169/seals-266450">10.5169/seals-266450</a>.</div>
 </div>
 <div id="ref-cn:BGMZ97" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[126] </div><div
+<div class="csl-left-margin">[127] </div><div
 class="csl-right-inline">A. Z. Broder, S. C. Glassman, M. S. Manasse,
 and G. Zweig, <span>“Syntactic clustering of the web,”</span>
 <em>Comput. Networks</em>, vol. 29, no. 8–13, pp. 1157–1166, 1997, doi:
@@ -11159,7 +11165,7 @@ and G. Zweig, <span>“Syntactic clustering of the web,”</span>
 href="https://doi.org/10.1016/s0169-7552(97)00031-7">10.1016/s0169-7552(97)00031-7</a>.</div>
 </div>
 <div id="ref-kdd:TanBerKem07" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[127] </div><div
+<div class="csl-left-margin">[128] </div><div
 class="csl-right-inline">C. Tantipathananandh, T. Y. Berger-Wolf, and D.
 Kempe, <span>“A framework for community identification in dynamic social
 networks,”</span> in <em>KDD</em>, <span>ACM</span>, 2007, pp. 717–726.
@@ -11167,7 +11173,7 @@ doi: <a
 href="https://doi.org/10.1145/1281192.1281269">10.1145/1281192.1281269</a>.</div>
 </div>
 <div id="ref-ijcai:WWTDLZ19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[128] </div><div
+<div class="csl-left-margin">[129] </div><div
 class="csl-right-inline">H. Wu, C. Wang, Y. Tyshetskiy, A. Docherty, K.
 Lu, and L. Zhu, <span>“Adversarial examples for graph data: Deep
 insights into attack and defense,”</span> in <em><span>IJCAI</span>
@@ -11175,7 +11181,7 @@ insights into attack and defense,”</span> in <em><span>IJCAI</span>
 href="https://doi.org/10.24963/ijcai.2019/669">10.24963/ijcai.2019/669</a>.</div>
 </div>
 <div id="ref-icip:JKWC22" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[129] </div><div
+<div class="csl-left-margin">[130] </div><div
 class="csl-right-inline">B. Jiang, H. Krim, T. Wu, and D. Cansever,
 <span>“Refining self-supervised learning in imaging: Beyond linear
 metric,”</span> in <em><span>ICIP</span> 2022</em>, <span>IEEE</span>,
@@ -11183,7 +11189,7 @@ metric,”</span> in <em><span>ICIP</span> 2022</em>, <span>IEEE</span>,
 href="https://doi.org/10.1109/icip46576.2022.9897745">10.1109/icip46576.2022.9897745</a>.</div>
 </div>
 <div id="ref-BluCriGas14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[130] </div><div
+<div class="csl-left-margin">[131] </div><div
 class="csl-right-inline">C. Blundo, E. D. Cristofaro, and P. Gasti,
 <span>“EsPRESSO: Efficient privacy-preserving evaluation of sample set
 similarity,”</span> <em>J. Comput. Secur.</em>, vol. 22, no. 3, pp.
@@ -11191,7 +11197,7 @@ similarity,”</span> <em>J. Comput. Secur.</em>, vol. 22, no. 3, pp.
 href="https://doi.org/10.3233/jcs-130482">10.3233/jcs-130482</a>.</div>
 </div>
 <div id="ref-DGT12" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[131] </div><div
+<div class="csl-left-margin">[132] </div><div
 class="csl-right-inline">E. D. Cristofaro, P. Gasti, and G. Tsudik,
 <span>“Fast and private computation of cardinality of set intersection
 and union,”</span> in <em>CANS 2012</em>, Springer, 2012, pp. 218–231.
@@ -11199,7 +11205,7 @@ doi: <a
 href="https://doi.org/10.1007/978-3-642-35404-5_17">10.1007/978-3-642-35404-5_17</a>.</div>
 </div>
 <div id="ref-TL23" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[132] </div><div
+<div class="csl-left-margin">[133] </div><div
 class="csl-right-inline">Y. Tan and B. Lv, <span>“Break two PSI-CA
 protocols in polynomial time,”</span> in <em>Proceedings of the 2024
 16th international conference on machine learning and computing</em>, in
@@ -11208,7 +11214,7 @@ pp. 65–72. doi: <a
 href="https://doi.org/10.1145/3651671.3651682">10.1145/3651671.3651682</a>.</div>
 </div>
 <div id="ref-FOCS:BGKS13" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[133] </div><div
+<div class="csl-left-margin">[134] </div><div
 class="csl-right-inline">R. Bassily, A. Groce, J. Katz, and A. Smith,
 <span>“Coupled-worlds privacy: Exploiting adversarial uncertainty in
 statistical data privacy,”</span> in <em>focs13name</em>, focs13ed, Ed.,
@@ -11216,14 +11222,14 @@ focs13addr: focspub, 2013, pp. 439–448. doi: <a
 href="https://doi.org/10.1109/FOCS.2013.54">10.1109/FOCS.2013.54</a>.</div>
 </div>
 <div id="ref-DKZ18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[134] </div><div
+<div class="csl-left-margin">[135] </div><div
 class="csl-right-inline">S. Dziembowski, T. Kazana, and M. Zdanowicz,
 <span>“Quasi chain rule for min-entropy,”</span> <em>Inf. Process.
 Lett.</em>, vol. 134, pp. 62–66, 2018, doi: <a
 href="https://doi.org/10.1016/j.ipl.2018.02.007">10.1016/j.ipl.2018.02.007</a>.</div>
 </div>
 <div id="ref-skorski2019strong" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[135] </div><div
+<div class="csl-left-margin">[136] </div><div
 class="csl-right-inline">M. Skórski, <span>“Strong chain rules for
 min-entropy under few bits spoiled,”</span> in <em>2019 IEEE
 international symposium on information theory (ISIT)</em>, IEEE, 2019,
@@ -11231,7 +11237,7 @@ pp. 1122–1126. doi: <a
 href="https://doi.org/10.1109/isit.2019.8849240">10.1109/isit.2019.8849240</a>.</div>
 </div>
 <div id="ref-SODA:CCMS19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[136] </div><div
+<div class="csl-left-margin">[137] </div><div
 class="csl-right-inline">T.-H. H. Chan, K.-M. Chung, B. M. Maggs, and E.
 Shi, <span>“Foundations of differentially oblivious algorithms,”</span>
 in <em>soda19name</em>, soda19ed, Ed., soda19addr: sodapub, 2019, pp.
@@ -11239,7 +11245,7 @@ in <em>soda19name</em>, soda19ed, Ed., soda19addr: sodapub, 2019, pp.
 href="https://doi.org/10.1137/1.9781611975482.150">10.1137/1.9781611975482.150</a>.</div>
 </div>
 <div id="ref-SCRS17" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[137] </div><div
+<div class="csl-left-margin">[138] </div><div
 class="csl-right-inline">E. Shi, T.-H. H. Chan, E. G. Rieffel, and D.
 Song, <span>“Distributed private data analysis: Lower bounds and
 practical constructions,”</span> <em><span>ACM</span> Trans.
@@ -11247,14 +11253,14 @@ Algorithms</em>, vol. 13, no. 4, pp. 50:1–50:38, 2017, doi: <a
 href="https://doi.org/10.1145/3146549">10.1145/3146549</a>.</div>
 </div>
 <div id="ref-COK22" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[138] </div><div
+<div class="csl-left-margin">[139] </div><div
 class="csl-right-inline">W.-N. Chen, A. Ozgur, and P. Kairouz,
 <span>“The poisson binomial mechanism for unbiased federated learning
 with secure aggregation,”</span> in <em>ICML 2022</em>, PMLR, 2022, pp.
 3490–3506.</div>
 </div>
 <div id="ref-DORS08" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[139] </div><div
+<div class="csl-left-margin">[140] </div><div
 class="csl-right-inline">Y. Dodis, R. Ostrovsky, L. Reyzin, and A.
 Smith, <span>“Fuzzy extractors: How to generate strong keys from
 biometrics and other noisy data,”</span> <em><span>SIAM</span> Journal
@@ -11262,7 +11268,7 @@ on Computing</em>, vol. 38, no. 1, pp. 97–139, Jan. 2008, doi: <a
 href="https://doi.org/10.1137/060651380">10.1137/060651380</a>.</div>
 </div>
 <div id="ref-NYTimes:IsaRoo18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[140] </div><div
+<div class="csl-left-margin">[141] </div><div
 class="csl-right-inline">M. Isaac and K. Roose, <span>“Disinformation
 spreads on WhatsApp ahead of brazilian election.”</span> <a
 href="https://www.nytimes.com/2018/10/19/technology/whatsapp-brazil-presidential-election.html"
@@ -11270,7 +11276,7 @@ class="uri">https://www.nytimes.com/2018/10/19/technology/whatsapp-brazil-presid
 2018.</div>
 </div>
 <div id="ref-WAPo:Samuels20" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[141] </div><div
+<div class="csl-left-margin">[142] </div><div
 class="csl-right-inline">E. Samuels, <span>“How misinformation on
 WhatsApp led to a mob killing in india.”</span> <a
 href="https://www-washingtonpost-com.proxygw.wrlc.org/politics/2020/02/21/how-misinformation-whatsapp-led-deathly-mob-lynching-india/ics/2020/02/21/how-misinformation-whatsapp-led-deathly-mob-lynching-india/"
@@ -11278,21 +11284,21 @@ class="uri">https://www-washingtonpost-com.proxygw.wrlc.org/politics/2020/02/21/
 2020.</div>
 </div>
 <div id="ref-Facebook:fakeNews" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[142] </div><div
+<div class="csl-left-margin">[143] </div><div
 class="csl-right-inline">Facebook, <span>“How is <span>Facebook</span>
 addressing false information through independent fact-checkers?”</span>
 <a href="https://www.facebook.com/help/1952307158131536"
 class="uri">https://www.facebook.com/help/1952307158131536</a>.</div>
 </div>
 <div id="ref-Youtube:fakeNews" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[143] </div><div
+<div class="csl-left-margin">[144] </div><div
 class="csl-right-inline">Youtube, <span>“How does <span>YouTube</span>
 combat misinformation?”</span> <a
 href="https://www.youtube.com/howyoutubeworks/our-commitments/fighting-misinformation/#policies"
 class="uri">https://www.youtube.com/howyoutubeworks/our-commitments/fighting-misinformation/#policies</a>.</div>
 </div>
 <div id="ref-CCS:TyaMieRis19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[144] </div><div
+<div class="csl-left-margin">[145] </div><div
 class="csl-right-inline">N. Tyagi, I. Miers, and T. Ristenpart,
 <span>“Traceback for end-to-end encrypted messaging,”</span> in
 <em>ccs19name</em>, ccs19ed, Ed., ccs19addr: ccspub, 2019, pp. 413–430.
@@ -11300,7 +11306,7 @@ doi: <a
 href="https://doi.org/10.1145/3319535.3354243">10.1145/3319535.3354243</a>.</div>
 </div>
 <div id="ref-CCS:PeaEskBon21" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[145] </div><div
+<div class="csl-left-margin">[146] </div><div
 class="csl-right-inline">C. Peale, S. Eskandarian, and D. Boneh,
 <span>“Secure complaint-enabled source-tracking for encrypted
 messaging,”</span> in <em>ccs21name</em>, ccs21ed, Ed., ccs21addr:
@@ -11308,20 +11314,20 @@ ccspub, 2021, pp. 1484–1506. doi: <a
 href="https://doi.org/10.1145/3460120.3484539">10.1145/3460120.3484539</a>.</div>
 </div>
 <div id="ref-eprint:IssAlhMay2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[146] </div><div
+<div class="csl-left-margin">[147] </div><div
 class="csl-right-inline">R. Issa, N. AlHaddad, and M. Varia,
 <span>“Hecate: Abuse reporting in secure messengers with sealed
 sender.”</span> Cryptology ePrint Archive, 2021.</div>
 </div>
 <div id="ref-JACM:GolOst96" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[147] </div><div
+<div class="csl-left-margin">[148] </div><div
 class="csl-right-inline">O. Goldreich and R. Ostrovsky, <span>“Software
 protection and simulation on oblivious RAMs,”</span> <em>J.
 <span>ACM</span></em>, vol. 43, no. 3, pp. 431–473, 1996, doi: <a
 href="https://doi.org/10.1145/233551.233553">10.1145/233551.233553</a>.</div>
 </div>
 <div id="ref-JACM:SDSCFRYD18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[148] </div><div
+<div class="csl-left-margin">[149] </div><div
 class="csl-right-inline">E. Stefanov <em>et al.</em>, <span>“Path
 <span>ORAM:</span> An extremely simple oblivious <span>RAM</span>
 protocol,”</span> <em>J. <span>ACM</span></em>, vol. 65, no. 4, pp.
@@ -11329,14 +11335,14 @@ protocol,”</span> <em>J. <span>ACM</span></em>, vol. 65, no. 4, pp.
 href="https://doi.org/10.1145/3177872">10.1145/3177872</a>.</div>
 </div>
 <div id="ref-STOC:Gentry09" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[149] </div><div
+<div class="csl-left-margin">[150] </div><div
 class="csl-right-inline">C. Gentry, <span>“Fully homomorphic encryption
 using ideal lattices,”</span> in <em>stoc09name</em>, stoc09ed, Ed.,
 stoc09addr: stocpub, 2009, pp. 169–178. doi: <a
 href="https://doi.org/10.1145/1536414.1536440">10.1145/1536414.1536440</a>.</div>
 </div>
 <div id="ref-STOC:BenGolWig88" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[150] </div><div
+<div class="csl-left-margin">[151] </div><div
 class="csl-right-inline">M. Ben-Or, S. Goldwasser, and A. Wigderson,
 <span>“Completeness theorems for non-cryptographic fault-tolerant
 distributed computation (extended abstract),”</span> in
@@ -11345,7 +11351,7 @@ doi: <a
 href="https://doi.org/10.1145/62212.62213">10.1145/62212.62213</a>.</div>
 </div>
 <div id="ref-ICS:Geiger16" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[151] </div><div
+<div class="csl-left-margin">[152] </div><div
 class="csl-right-inline">R. S. Geiger, <span>“Bot-based collective
 blocklists in twitter: The counterpublic moderation of harassment in a
 networked public space,”</span> <em>Information, Communication &amp;
@@ -11354,7 +11360,7 @@ href="https://doi.org/10.1080/1369118X.2016.1153700">10.1080/1369118X.2016.11537
 </div>
 <div id="ref-km-private-membership-usenix21" class="csl-entry"
 role="listitem">
-<div class="csl-left-margin">[152] </div><div
+<div class="csl-left-margin">[153] </div><div
 class="csl-right-inline">A. Kulshrestha and J. Mayer, <span>“Identifying
 harmful media in end-to-end encrypted communication: Efficient private
 membership computation,”</span> in <em>30th <span>USENIX</span> security
@@ -11364,14 +11370,14 @@ href="https://www.usenix.org/conference/usenixsecurity21/presentation/kulshresth
 </div>
 <div id="ref-brandom-verge-apple-csam" class="csl-entry"
 role="listitem">
-<div class="csl-left-margin">[153] </div><div
+<div class="csl-left-margin">[154] </div><div
 class="csl-right-inline">R. Brandom, <span>“Apple says collision in
 child-abuse hashing system is not a concern,”</span> <em>The Verge</em>,
 Aug. 2021, Available: <a
 href="https://www.theverge.com/2021/8/18/22630439/apple-csam-neuralhash-collision-vulnerability-flaw-cryptography">https://www.theverge.com/2021/8/18/22630439/apple-csam-neuralhash-collision-vulnerability-flaw-cryptography</a></div>
 </div>
 <div id="ref-JAL:CorMut05" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[154] </div><div
+<div class="csl-left-margin">[155] </div><div
 class="csl-right-inline">G. Cormode and S. Muthukrishnan, <span>“An
 improved data stream summary: The count-min sketch and its
 applications,”</span> <em>J. Algorithms</em>, vol. 55, no. 1, pp. 58–75,
@@ -11379,26 +11385,26 @@ applications,”</span> <em>J. Algorithms</em>, vol. 55, no. 1, pp. 58–75,
 href="https://doi.org/10.1016/j.jalgor.2003.12.001">10.1016/j.jalgor.2003.12.001</a>.</div>
 </div>
 <div id="ref-ring" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[155] </div><div
+<div class="csl-left-margin">[156] </div><div
 class="csl-right-inline">B. Smith, <span>“Ring.”</span> <a
 href="https://lib.rs/crates/ring"
 class="uri">https://lib.rs/crates/ring</a>, Nov. 2021.</div>
 </div>
 <div id="ref-bitvec" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[156] </div><div
+<div class="csl-left-margin">[157] </div><div
 class="csl-right-inline">A. Payne, <span>“Bitvec.”</span> <a
 href="https://lib.rs/crates/bitvec"
 class="uri">https://lib.rs/crates/bitvec</a>, Nov. 2021.</div>
 </div>
 <div id="ref-stadium" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[157] </div><div
+<div class="csl-left-margin">[158] </div><div
 class="csl-right-inline">N. Tyagi, Y. Gilad, D. Leung, M. Zaharia, and
 N. Zeldovich, <span>“Stadium: A distributed metadata-private messaging
 system,”</span> in <em>Proceedings of the 26th symposium on operating
 systems principles</em>, ACM, 2017, pp. 423–440.</div>
 </div>
 <div id="ref-verdict" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[158] </div><div
+<div class="csl-left-margin">[159] </div><div
 class="csl-right-inline">H. Corrigan-Gibbs, D. I. Wolinsky, and B. Ford,
 <span>“Proactively accountable anonymous messaging in verdict,”</span>
 in <em>Presented as part of the 22nd <span
@@ -11409,26 +11415,26 @@ class="math inline">\(\}\)</span> security 13)</em>, 2013, pp.
 147–162.</div>
 </div>
 <div id="ref-ricochet" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[159] </div><div
+<div class="csl-left-margin">[160] </div><div
 class="csl-right-inline">J. Brooks <em>et al.</em>, <span>“Ricochet:
 Anonymous instant messaging for real privacy.”</span> 2016.</div>
 </div>
 <div id="ref-signal-ss" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[160] </div><div
+<div class="csl-left-margin">[161] </div><div
 class="csl-right-inline">J. Lund, <span>“Technology preview: Sealed
 sender for signal,”</span> <em>Technology preview: Sealed sender for
 Signal</em>. Oct. 2018. Available: <a
 href="https://signal.org/blog/sealed-sender/">https://signal.org/blog/sealed-sender/</a></div>
 </div>
 <div id="ref-signal-ndss21" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[161] </div><div
+<div class="csl-left-margin">[162] </div><div
 class="csl-right-inline">I. Martiny, G. Kaptchuk, A. Aviv, D. Roche, and
 E. Wustrow, <span>“Improving signal’s sealed sender,”</span> in
 <em>Ndss</em>, Jan. 2021. doi: <a
 href="https://doi.org/10.14722/ndss.2021.24180">10.14722/ndss.2021.24180</a>.</div>
 </div>
 <div id="ref-STOC:Goldreich87" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[162] </div><div
+<div class="csl-left-margin">[163] </div><div
 class="csl-right-inline">O. Goldreich, <span>“Towards a theory of
 software protection and simulation by oblivious
 <span>RAMs</span>,”</span> in <em>stoc87name</em>, stoc87ed, Ed.,
@@ -11436,14 +11442,14 @@ stoc87addr: stocpub, 1987, pp. 182–194. doi: <a
 href="https://doi.org/10.1145/28395.28416">10.1145/28395.28416</a>.</div>
 </div>
 <div id="ref-STOC:Ostrovsky90" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[163] </div><div
+<div class="csl-left-margin">[164] </div><div
 class="csl-right-inline">R. Ostrovsky, <span>“Efficient computation on
 oblivious <span>RAMs</span>,”</span> in <em>stoc90name</em>, stoc90ed,
 Ed., stoc90addr: stocpub, 1990, pp. 514–523. doi: <a
 href="https://doi.org/10.1145/100216.100289">10.1145/100216.100289</a>.</div>
 </div>
 <div id="ref-CCS:FMJS17" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[164] </div><div
+<div class="csl-left-margin">[165] </div><div
 class="csl-right-inline">E. Fenske, A. Mani, A. Johnson, and M. Sherr,
 <span>“Distributed measurement with private set-union
 cardinality,”</span> in <em>ccs17name</em>, ccs17ed, Ed., ccs17addr:
@@ -11451,7 +11457,7 @@ ccspub, 2017, pp. 2295–2312. doi: <a
 href="https://doi.org/10.1145/3133956.3134034">10.1145/3133956.3134034</a>.</div>
 </div>
 <div id="ref-AM14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[165] </div><div
+<div class="csl-left-margin">[166] </div><div
 class="csl-right-inline">V. G. Ashok and R. Mukkamala, <span>“A scalable
 and efficient privacy preserving global itemset support approximation
 using bloom filters,”</span> in <em>Data and applications security and
@@ -11461,7 +11467,7 @@ july 14-16, 2014. proceedings</em>, 2014, pp. 382–389. doi: <a
 href="https://doi.org/10.1007/978-3-662-43936-4\_26">10.1007/978-3-662-43936-4\_26</a>.</div>
 </div>
 <div id="ref-FGJ+15" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[166] </div><div
+<div class="csl-left-margin">[167] </div><div
 class="csl-right-inline">R. Egert, M. Fischlin, D. Gens, S. Jacob, M.
 Senker, and J. Tillmanns, <span>“Privately computing set-union and
 set-intersection cardinality via bloom filters,”</span> in
