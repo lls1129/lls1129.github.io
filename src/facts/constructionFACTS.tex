@@ -10,7 +10,7 @@ We start our description with an auxiliary protocol $\orig(A,x)$ between a user 
 
 Roughly, this protocol works by having $S$ produce a signature on (a hash of) the message together with the originator's identity.  Due to the use of the hash, $S$ produces this signature without learning anything about the message, while the fact that $S$ includes the originator's identity in this signature prevents a malicious originator from including the wrong identity in the message. Moreover, since the tag is bound to the message, this prevents a replay attack where an adversary reuses tags across messages to change the identity of the originator. 
 
-\begin{algorithm}[htbp]
+\begin{algorithm}[htbp!]
 \begin{enumerate}
   \item To originate a message $x$, the originator $A$ chooses a random salt $r \gets \bool^\secparam$, computes a salted hash $h = H(r || x)$,
     and sends $h$ to $S$.

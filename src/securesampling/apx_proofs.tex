@@ -1,6 +1,6 @@
-\section{Proofs} \label{apx:proof}
+\subsection{Proofs} \label{apx:proof}
 
-\subsection{Proof of Theorem~\ref{th:l1}}\label{apx:pfTheorem1}
+\subsubsection{Proof of Theorem~\ref{th:l1}}\label{apx:pfTheorem1}
 We describe the simulator $\Sim$ in the $\{\F_\oslone, \F_{2PC} \}$-hybrid model
 for the case that Party 1 is corrupted.
 The simulator and proof of security are analogous in the case that Party 2 is corrupted.
@@ -61,7 +61,7 @@ from a geometric distribution with success probability $p = ||\vec{w}_1 | \vec{w
 which is exactly what $\Sim$ does.
 
 
-\subsection{Proof of Theorem~\ref{thm:os-fhe}}\label{apx:pfTheorem2}
+\subsubsection{Proof of Theorem~\ref{thm:os-fhe}}\label{apx:pfTheorem2}
 We first give the simulation of the sender. The simulator proceeds as
 follows: 
 \BI
@@ -95,7 +95,7 @@ to the receiver.
 The simulation is perfect. 
 
 
-\subsection{Proof of Theorem~\ref{th:l2}} \label{apx:pfTheorem3}
+\subsubsection{Proof of Theorem~\ref{th:l2}} \label{apx:pfTheorem3}
 We describe the simulator $\Sim$ in the $\{\F_{L_1}^{ss}, \F_{2PC}\}$-hybrid model
 for the case that Party 1 is corrupted.
 The simulator and proof of security are analogous in the case that Party 2 is corrupted.
@@ -151,7 +151,7 @@ This concludes the proof of security of the $L_2$
 sampling protocol.
  
 %
-%\subsection{Proof of Theorem~\ref{th:l2}}
+%\subsubsection{Proof of Theorem~\ref{th:l2}}
 %Note that the entire view of Party $P_b$ consists of the secret shares
 %received in from the oblivious sampling functionality, its view in the
 %secure protocol computation, the final output, denoted $i^*$, and the
@@ -208,7 +208,7 @@ sampling protocol.
 %This can be efficiently simulated given just the $L_2$ norm $p = ||\vec{w}_1||^2 + 2 \langle \vec{w}_1, \vec{w}_2 \rangle +  ||\vec{w}_2||^2$.
 %
 
-\subsection{Proof of Lemma~\ref{lem:close_dist_2}}\label{apx:pfLemma5}
+\subsubsection{Proof of Lemma~\ref{lem:close_dist_2}}\label{apx:pfLemma5}
 We want to show that
 \begin{align*}
     \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] &= \frac{(w_{1,i} + w_{2,i})^p}{||\vec{w}_1 + \vec{w}_2||_p^p}\\
@@ -225,7 +225,7 @@ The inequality holds due to Jensen's inequality with convex function $f(x) = x^p
 This completes the proof of Lemma~\ref{lem:close_dist_2}.
  
 
-\subsection{Proof of Lemma~\ref{lem:lp}}\label{apx:pfLemma6}
+\subsubsection{Proof of Lemma~\ref{lem:lp}}\label{apx:pfLemma6}
 Note that $\Pi_{L_p}$ simply performs rejection sampling in a distributed setting where sampling from $D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)$ and computing the probabilities is done in a distributed manner. It is therefore well-known that
 as long as for all $i \in [n]$,
 \begin{equation} \label{eq:rejection_2}
@@ -242,7 +242,7 @@ Combining the above, we have that $\Pi_{L_p}$ has expected
 communication $\tilde{O}(1)$
 and worst case (with all but negligible probability) communication $\tilde{O}(1)$.
 
-\subsection{Proof of Lemma~\ref{lem:simip}}\label{apx:pfLemma10}
+\subsubsection{Proof of Lemma~\ref{lem:simip}}\label{apx:pfLemma10}
 We will show that the joint distribution over the $i$-th entries of
 $\tilde{\vec{w}_1} := \vec{M} \w_1 = (\tilde w_{1,1}, \ldots, \tilde w_{1,k})$,
 $\tilde{\vec{w}_2} = \vec{M} \w_2 = (\tilde w_{2,1}, \ldots, \tilde w_{2,k})$

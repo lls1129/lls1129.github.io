@@ -64,7 +64,7 @@ In these protocols, the size-$s$ bit vector $T$ is considered \emph{public} or \
 
 The $\Increment(x,C)$ protocol, outlined in \cref{alg:increment}, involves the User attempting to set a single bit from 0 to 1 within the item set for $x$. However, the user is only allowed to write locations within their own user set. So, if there are no 0 bits in the intersection of these two index sets, the user instead changes any other arbitrary 0 bit in its own user set in order to maintain item obliviousness.
 
-\begin{algorithm}[htp]
+\begin{algorithm}[htbp!]
     \caption{$\Increment(x,C)$\label{alg:increment}}
 \begin{enumerate}
     \item User and server separately compute the list of $u$ user locations for user $C$, $U_C \subseteq \{0,\ldots,s-1\}$.
@@ -84,7 +84,7 @@ The $\TestCount(x,t)$ protocol is not interactive as it only requires reading th
 
 This protocol is detailed in \cref{alg:testcount}.
 
-\begin{algorithm}[htp]
+\begin{algorithm}[htp!]
     \caption{$\TestCount(x,t)$\label{alg:testcount}}
 \begin{enumerate}
     \item Use parameters $s,u,v$ and current value of $m$ total number of bits set in $T$, to compute the tipping point $\tau$.
