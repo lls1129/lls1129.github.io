@@ -87,6 +87,11 @@
 %\input{methodology}
 
 % \bibliography{bib/references,bib/CryptoBib/abbrev0,bib/CryptoBib/crypto}
+\ifdefined\pandoc
+  \section{References}
+\fi
+\addcontentsline{toc}{section}{References}
+% \section*{References}
 \bibliographystyle{plain}
 % \bibliography{src/bib/main}
 % \bibliography{src/bib/CryptoBib/abbrev2.bib,src/bib/CryptoBib/abbrev1.bib,src/bib/CryptoBib/abbrev3.bib,src/bib/abbrev2.bib,src/bib/sampling/abbrev3.bib,src/bib/abbrev1.bib,src/bib/abbrev3.bib,src/bib/abbrev4.bib,src/bib/main.bib,src/bib/bib.bib,src/bib/CryptoBib/crypto.bib,src/bib/references.bib,src/bib/CryptoBib/abbrev0.bib,src/bib/crypto.bib,src/bib/sampling/refs.bib,src/bib/sampling/crypto.bib,src/bib/refs.bib,src/bib/abbrev0.bib}
