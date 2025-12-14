@@ -9487,7 +9487,6 @@ class="math inline">\(\AdvSP \le \negl(\secparam)\)</span></em></p>
 <p><strong>Theorem 62</strong>. <em>FACTS is private against a
 semi-honest server</em></p>
 </div>
-<div class="proofsketch">
 <p>First, consider the server’s view on a <span
 class="math inline">\(\send\)</span> command. This view consists of a
 message <span class="math inline">\(h = H(r||m)\)</span> for <span
@@ -9530,8 +9529,8 @@ class="math inline">\(V_x\)</span> conditioned on them containing this
 location. Hence the location sent to the server is uniformly random
 unless <span class="math inline">\(\A\)</span> makes the corresponding
 <span class="math inline">\(H\)</span> query, which only happens with
-<span class="math inline">\(\negl(\secparam)\)</span> probability.</p>
-</div>
+<span class="math inline">\(\negl(\secparam)\)</span> probability.
+0◻</p>
 <p>The above theorem states that, beyond the meta-data of who sent a
 message to whom and who has sent complaints and when, FACTS reveals no
 information about messages and complaints to a semi-honest server until
@@ -9610,10 +9609,10 @@ class="math inline">\(\AdvCP \le \negl(\csecparam)\)</span></em></p>
 <p><strong>Theorem 64</strong>. <em>FACTS achieves privacy against
 malicious users.</em></p>
 </div>
-<div class="proofsketch">
-<p>The view of <span class="math inline">\(B\)</span> on an execution of
-<span class="math inline">\(\send(\cdot,B,\tag_x,x)\)</span> consists of
-the received message and tag <span class="math inline">\((\tag_x,
+<p><span> The view of <span class="math inline">\(B\)</span> on an
+execution of <span
+class="math inline">\(\send(\cdot,B,\tag_x,x)\)</span> consists of the
+received message and tag <span class="math inline">\((\tag_x,
 x)\)</span> where <span class="math inline">\(\tag_x =
 (r,e,\s)\)</span>. Since <span class="math inline">\(e\)</span> is a
 semantically secure encryption of the identity of the originator, <span
@@ -9628,9 +9627,8 @@ both when <span class="math inline">\(b=0\)</span> and <span
 class="math inline">\(b=1\)</span> except for this change in <span
 class="math inline">\(e\)</span>, this means that <span
 class="math inline">\(\tag_x\)</span> does not help <span
-class="math inline">\(\A\)</span> distinguish between these two
-cases.</p>
-</div>
+class="math inline">\(\A\)</span> distinguish between these two cases.
+0◻</span></p>
 <h3 data-number="6.7.3" id="integrity"><span
 class="header-section-number">6.7.3</span> Integrity</h3>
 <p>We now turn to the integrity guarantees provided by FACTS. We aim for
@@ -9683,8 +9681,7 @@ class="math inline">\(\negl(\csecparam)\)</span>.</em></p>
 <p><strong>Theorem 66</strong>. <em>The FACTS scheme is
 unforgeable.</em></p>
 </div>
-<div class="proofsketch">
-<p>A valid tag <span class="math inline">\(\tagg_y\)</span> with
+<p><span> A valid tag <span class="math inline">\(\tagg_y\)</span> with
 originator <span class="math inline">\(O\)</span> consists of <span
 class="math inline">\(\tagg_y = (r,e,\s)\)</span> where <span
 class="math inline">\(r\)</span> is a random seed s.t. <span
@@ -9702,8 +9699,7 @@ value <span class="math inline">\(h\)</span>. Thus, by the
 unforgeability of <span class="math inline">\(\Sig\)</span>, <span
 class="math inline">\(\A\)</span> cannot produce the necessary signature
 except with probability negligible in <span
-class="math inline">\(\csecparam\)</span>.</p>
-</div>
+class="math inline">\(\csecparam\)</span>. 0◻</span></p>
 <p>Next, we give a definition that captures the ability of an adversary
 controlling a subset of the users to delay the audit of a particular
 message. Our goal is to show that the adversary cannot protect a
@@ -9745,10 +9741,9 @@ class="math inline">\(\ell\)</span>-audit delay resilient for any <span
 class="math inline">\(\ell \ge 1.1t+.4\secparam + .7\sqrt{\secparam
 t}\)</span>.</em></p>
 </div>
-<div class="proofsketch">
-<p>This follows immediately from Theorem <a href="#thm:fn"
-data-reference-type="ref" data-reference="thm:fn">[thm:fn]</a></p>
-</div>
+<p><span> This follows immediately from Theorem <a href="#thm:fn"
+data-reference-type="ref" data-reference="thm:fn">[thm:fn]</a>
+0◻</span></p>
 <p>Next, we define the following game to capture the ability of a small
 number of malicious users to cause the audit of some message.
 Importantly, this definition also captures the case where malicious
@@ -9793,12 +9788,10 @@ class="math inline">\(\ell\)</span>-party audit speed-up resilient for
 <span class="math inline">\(\ell \le (t - 2.1\sqrt{\lambda
 t})/L\)</span>.</em></p>
 </div>
-<div class="proofsketch">
-<p>This follows immediately from Theorem <a href="#thm:fp"
+<p><span> This follows immediately from Theorem <a href="#thm:fp"
 data-reference-type="ref" data-reference="thm:fp">[thm:fp]</a> because
 each user <span class="math inline">\(\in \A\)</span> makes at most
-<span class="math inline">\(L\)</span> complaints.</p>
-</div>
+<span class="math inline">\(L\)</span> complaints. 0◻</span></p>
 <h2 data-number="6.8" id="sec:altFACTS"><span
 class="header-section-number">6.8</span> Alternative FACTS</h2>
 <p>In this section we describe several optimizations or enhancements to
