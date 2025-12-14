@@ -185,7 +185,7 @@ We say that a FACTS scheme disallows \emph{framing} if for any PPT $\A$, $\A$ WI
 The FACTS scheme is unforgeable.
 \end{theorem}
 \begin{proofsketch}
-A valid tag $\tagg_y$ with originator $O$ consists of $\tagg_y = (r,e,\s)$ where $r$ is a random seed s.t. $H(r||y) = h$, $e = \Enc_{PK_S}(O)$, and $\s = \Sig_{SK_S}(h||e)$.  Thus, to frame $O$, $\A$ needs to produce a valid signature on $h||\Enc(O)$.  $\A$ can observe tags from polynomially many messages originated by $\O$, but except with probability negligible in $\secparam$ none of them will have the same value $h$.  Thus, by the unforgeability of $\Sig$, $\A$ cannot produce the necessary signature except with probability negligible in $\csecparam$.
+A valid tag $\tagg_y$ with originator $O$ consists of $\tagg_y = (r,e,\s)$ where $r$ is a random seed s.t. $H(r||y) = h$, $e = \Enc_{PK_S}(O)$, and $\s = \Sig_{SK_S}(h||e)$.  Thus, to frame $O$, $\A$ needs to produce a valid signature on $h||\Enc(O)$.  $\A$ can observe tags from polynomially many messages originated by \O, but except with probability negligible in $\secparam$ none of them will have the same value $h$.  Thus, by the unforgeability of $\Sig$, $\A$ cannot produce the necessary signature except with probability negligible in $\csecparam$.
 \end{proofsketch}
 
 Next, we give a definition that captures the ability of an adversary controlling a subset of the users to delay the audit of a particular message.  Our goal is to show that the adversary cannot protect a malicious message from being audited.
