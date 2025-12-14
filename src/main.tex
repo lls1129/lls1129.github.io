@@ -62,6 +62,48 @@
 
 \input{src/universalmacro}
 
+% --- HEADER SETUP ---
+% \usepackage{fancyhdr}
+
+% Logic: If PDF, show header. If Web, do nothing (handled by footer.html)
+% \ifdefined\pandoc
+%   % Web: Do nothing here (The button is in footer.html)
+% \else
+%   % PDF: Setup fancy headers
+%   \pagestyle{fancy}
+%   \fancyhf{} % Clear default headers/footers
+  
+%   % Left Header: Link to Website
+%   \lhead{\small \href{https://lls1129.github.io}{\textbf{View HTML Version}}}
+  
+%   % Right Header: Page Number
+%   \rhead{\small \thepage}
+  
+%   % Remove header line rule if you want a cleaner look (optional)
+%   \renewcommand{\headrulewidth}{0.5pt} 
+% \fi
+
+% --- HEADER SETUP (PDF ONLY) ---
+\ifdefined\pandoc
+  % Web: Do nothing (Button is in footer.html)
+\else
+  \usepackage{fancyhdr}
+  
+  % 1. Define a special style JUST for the first page
+  \fancypagestyle{firstpage}{
+    \fancyhf{} % Clear default headers/footers
+    % Top Left: The Link
+    \lhead{\small \href{https://lls1129.github.io}{\textbf{View HTML Version}}}
+    % Bottom Center: Page Number
+    \cfoot{\thepage}
+    % Remove the horizontal line
+    \renewcommand{\headrulewidth}{0pt}
+  }
+  
+  % 2. Set the rest of the document to "plain" (No header, just page num at bottom)
+  \pagestyle{plain}
+\fi
+
 \begin{document}
 
 \ifdefined\pandoc
@@ -84,11 +126,26 @@
 % This title becomes the main web header
 \title{Thesis Proposal}
 \author{Linsheng Liu}
-\date{December 1, 2025}
+\date{December 1, 2025\\
+    % \ifdefined\pandoc
+    %     \medskip
+    %     \textbf{\href{http://lls1129.github.io/main.pdf}{[Download PDF Version]}}
+    % \else
+    %     % PDF SEES THIS:
+    %     % Replace 'linshengliu.com' with your actual domain
+    %     \textbf{\href{http://lls1129.github.io/}{[View HTML Version]}}
+    % \fi
+}
 \maketitle
 
+
+% Apply the custom header ONLY to this page (the first page)
+\ifdefined\pandoc\else
+  \thispagestyle{firstpage}
+\fi
+
 % This automatically generates the "Jump" links on the website
-\href{http://lls1129.github.io/main.pdf}{PDF Version}
+% \href{http://lls1129.github.io/}{HTML Version}
 
 \tableofcontents
 
