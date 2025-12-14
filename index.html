@@ -444,7 +444,7 @@ class="toc-section-number">5.6</span> DDP of <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span></a></li>
 <li><a href="#proof-of-theorem-thmcddp"
 id="toc-proof-of-theorem-thmcddp"><span
-class="toc-section-number">5.7</span> Proof of Theorem [thm:CDDP]</a>
+class="toc-section-number">5.7</span> Proof of Theorem 50</a>
 <ul>
 <li><a href="#apx:pubHashHighEntropy"
 id="toc-apx:pubHashHighEntropy"><span
@@ -452,7 +452,7 @@ class="toc-section-number">5.7.1</span> Proof</a></li>
 </ul></li>
 <li><a href="#sec:ddp-polysize" id="toc-sec:ddp-polysize"><span
 class="toc-section-number">5.8</span> Highlights of Proof of
-Theorem [thm:CDDP2]</a>
+Theorem 51</a>
 <ul>
 <li><a href="#min-hash-graph" id="toc-min-hash-graph"><span
 class="toc-section-number">5.8.1</span> Min-hash Graph</a></li>
@@ -1340,16 +1340,16 @@ class="math display">\[\idx(a) := \{ i: a_i \ne 0\}.\]</span></p>
 class="header-section-number">3.2.0.1</span> Chernoff bound.</h4>
 <p>We will use the following version of Chernoff bound.</p>
 <div class="theorem">
-<p>Let <span class="math inline">\(X_1, \ldots, X_n\)</span> be
-independent random variables taking values in <span
-class="math inline">\(\zo\)</span> such that <span
+<p><strong>Theorem 1</strong>. <em>Let <span class="math inline">\(X_1,
+\ldots, X_n\)</span> be independent random variables taking values in
+<span class="math inline">\(\zo\)</span> such that <span
 class="math inline">\(\Pr[X_i = 1] = p\)</span>. Let <span
 class="math inline">\(\mu := \Exp[\sum X_i] = np\)</span>. Then for any
 <span class="math inline">\(\delta &gt; 0\)</span>, it holds <span
 class="math display">\[\Pr\left[ \sum_{i=1}^n X_i \ge (1 + \delta) \mu
 \right] \le
 \left (\frac {e^\delta} {(1+\delta)^{(1+\delta)}}
-\right)^\mu.\]</span></p>
+\right)^\mu.\]</span></em></p>
 </div>
 <h4 data-number="3.2.0.2" id="fhe."><span
 class="header-section-number">3.2.0.2</span> FHE.</h4>
@@ -1910,17 +1910,16 @@ class="header-section-number">3.4.2.3</span> Useful lemma.</h4>
 <p>The following lemma will be useful to analyze the parameters <span
 class="math inline">\(c\)</span> and <span
 class="math inline">\(f_p\)</span>.</p>
-<div class="lemma">
-<p><span id="lem:4_1" label="lem:4_1"></span> Consider a Bloom filter
-with false positive rate <span
-class="math inline">\(\frac{1}{m}\)</span>, where <span
-class="math inline">\(m\)</span> is an arbitrary positive integer.
+<div id="lem:4_1" class="lemma">
+<p><strong>Lemma 2</strong>. <em>Consider a Bloom filter with false
+positive rate <span class="math inline">\(\frac{1}{m}\)</span>, where
+<span class="math inline">\(m\)</span> is an arbitrary positive integer.
 Suppose at most <span class="math inline">\(m\)</span> <span
 class="math inline">\(\sf BF.Check\)</span> operations are performed in
 the BF. Then, for any <span class="math inline">\(\delta &gt;
 0\)</span>, we have: <span class="math display">\[\Pr [ \mbox{\rm \#
 false positives} \ge 1+\delta]
-  \le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}}.\]</span></p>
+  \le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}}.\]</span></em></p>
 </div>
 <p>The proof, by an application of the Chernoff bound, can be found in
 Appendix <a href="#app:proof41" data-reference-type="ref"
@@ -2199,15 +2198,16 @@ class="header-section-number">3.5.1.3</span> Parameters.</h4>
 values can be recovered with all but negligible probability. We assume
 that we know the upper bound <span class="math inline">\(s\)</span> on
 the number of inserted values. We prove the following lemma.</p>
-<div class="lemma">
-<p><span id="lem:countingBloom" label="lem:countingBloom"></span> If at
-most <span class="math inline">\(s\)</span> values have been inserted in
-the <span class="math inline">\(\sf BFS\)</span> data structure, then by
-setting <span class="math inline">\(\eta\)</span> and <span
+<div id="lem:countingBloom" class="lemma">
+<p><strong>Lemma 3</strong>. <em>If at most <span
+class="math inline">\(s\)</span> values have been inserted in the <span
+class="math inline">\(\sf BFS\)</span> data structure, then by setting
+<span class="math inline">\(\eta\)</span> and <span
 class="math inline">\(\ell\)</span> such that <span
 class="math display">\[\ell \ge 2 (s\eta - 1),\]</span> we can recover
 all <span class="math inline">\(s\)</span> values with probability at
-least <span class="math inline">\(1 - s\cdot(1/2)^\eta\)</span>.</p>
+least <span class="math inline">\(1 -
+s\cdot(1/2)^\eta\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Consider a (key, value) pair <span
@@ -2340,13 +2340,13 @@ ciphertexts.</p>
 <p>The decoding algorithm uses <span class="math inline">\(\ell\)</span>
 decryption operations.</p>
 <p>Since by Lemma <a href="#lem:countingBloom" data-reference-type="ref"
-data-reference="lem:countingBloom">[lem:countingBloom]</a>, the size
-<span class="math inline">\(\ell\)</span> of the Bloom filter only
-depends on the number of matches <span class="math inline">\(s\)</span>
-and the number of hash function <span
-class="math inline">\(\eta\)</span>, we get that the communication
-complexity of the above protocol is independent of the database size
-<span class="math inline">\(n\)</span>.</p>
+data-reference="lem:countingBloom">3</a>, the size <span
+class="math inline">\(\ell\)</span> of the Bloom filter only depends on
+the number of matches <span class="math inline">\(s\)</span> and the
+number of hash function <span class="math inline">\(\eta\)</span>, we
+get that the communication complexity of the above protocol is
+independent of the database size <span
+class="math inline">\(n\)</span>.</p>
 <h2 data-number="3.6" id="sec:ssp"><span
 class="header-section-number">3.6</span> Secure Search Protocols</h2>
 <p>We implement secure search protocols by using compressed oblivious
@@ -2423,12 +2423,12 @@ class="math inline">\(b&#39;\)</span></p></li>
 |\Pr[b=b&#39;]-1/2|.\]</span></p></li>
 </ol>
 <div class="definition">
-<p>A setup-free <span class="math inline">\((\ell, f_p)\)</span>-secure
-search scheme <span class="math inline">\(\ssp\)</span> is <em>fully
-secure</em> if every PPT adversary <span
-class="math inline">\(\A\)</span> controlling the server has a
-negligible advantage <span class="math inline">\(\Adv \le
-\negl(\kappa)\)</span> in the game above.</p>
+<p><strong>Definition 4</strong>. <em>A setup-free <span
+class="math inline">\((\ell, f_p)\)</span>-secure search scheme <span
+class="math inline">\(\ssp\)</span> is <em>fully secure</em> if every
+PPT adversary <span class="math inline">\(\A\)</span> controlling the
+server has a negligible advantage <span class="math inline">\(\Adv \le
+\negl(\kappa)\)</span> in the game above.</em></p>
 </div>
 <h3 data-number="3.6.3" id="from-coie-to-secure-search"><span
 class="header-section-number">3.6.3</span> From COIE to Secure
@@ -2500,12 +2500,12 @@ class="math inline">\(\mathcal{S}&#39;\)</span>.</p></li>
 </ol>
 </div>
 <div class="theorem">
-<p>Given an FHE scheme, a <span class="math inline">\((n, s, c,
-f_p)\)</span>-COIE scheme in the random oracle model, and a PIR scheme
-in the random oracle model with communication complexity <span
-class="math inline">\(\ell_p\)</span> for records in <span
-class="math inline">\(\zo^m\)</span>, the construction in Algorithm <a
-href="#alg:ssCOIE" data-reference-type="ref"
+<p><strong>Theorem 5</strong>. <em>Given an FHE scheme, a <span
+class="math inline">\((n, s, c, f_p)\)</span>-COIE scheme in the random
+oracle model, and a PIR scheme in the random oracle model with
+communication complexity <span class="math inline">\(\ell_p\)</span> for
+records in <span class="math inline">\(\zo^m\)</span>, the construction
+in Algorithm <a href="#alg:ssCOIE" data-reference-type="ref"
 data-reference="alg:ssCOIE">[alg:ssCOIE]</a> yields a <span
 class="math inline">\((\ell,f_p)\)</span>-secure search scheme for
 records in <span class="math inline">\(\zo^m\)</span> in the Random
@@ -2513,7 +2513,7 @@ Oracle Model, where <span class="math inline">\(\ell = \frac{c\cdot
 \ell_c + (s+f_p)\cdot \ell_{p}}{s}\)</span>, <span
 class="math inline">\(\ell_c\)</span> is the length of an FHE
 ciphertext, and <span class="math inline">\(s\)</span> is the number of
-matching records.</p>
+matching records.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> We begin by proving that the adversary cannot
@@ -2621,11 +2621,11 @@ class="math inline">\(\mathcal{S}\)</span> of size <span
 class="math inline">\(s\)</span> matching records.</p></li>
 </ol>
 </div>
-<div class="theorem">
-<p><span id="thm:ssp-code" label="thm:ssp-code"></span> Given an FHE
-scheme, and a <span class="math inline">\((n, s, c, f_p)\)</span>-CODE
-scheme over domain <span class="math inline">\(D\)</span> in the random
-oracle model, the construction in Algorithm <a href="#alg:ssCODE"
+<div id="thm:ssp-code" class="theorem">
+<p><strong>Theorem 6</strong>. <em>Given an FHE scheme, and a <span
+class="math inline">\((n, s, c, f_p)\)</span>-CODE scheme over domain
+<span class="math inline">\(D\)</span> in the random oracle model, the
+construction in Algorithm <a href="#alg:ssCODE"
 data-reference-type="ref" data-reference="alg:ssCODE">[alg:ssCODE]</a>
 yields a <span class="math inline">\((\ell,
 f_p)\)</span>-secure search scheme for records in domain <span
@@ -2633,7 +2633,8 @@ class="math inline">\(D\)</span> in the random oracle model, where <span
 class="math inline">\(\ell = \frac{c(s)\cdot \ell_c}{s}\)</span>, <span
 class="math inline">\(\ell_c\)</span> is the length of an FHE ciphertext
 with plaintext space <span class="math inline">\(D\)</span>, and <span
-class="math inline">\(s\)</span> is the number of matching records.</p>
+class="math inline">\(s\)</span> is the number of matching
+records.</em></p>
 </div>
 <p>The proof is similar to the COIE-based scheme and can be found in
 Appendix <a href="#app:proof63" data-reference-type="ref"
@@ -3992,12 +3993,12 @@ following circuit:</p>
 <p>Output: <span class="math inline">\(i_1 \cdot (1-b) + i_2 \cdot
 b\)</span>.</p>
 </div>
-<div class="theorem">
-<p><span id="th:l1" label="th:l1"></span> Protocol <a href="#fig:l1"
+<div id="th:l1" class="theorem">
+<p><strong>Theorem 7</strong>. <em>Protocol <a href="#fig:l1"
 data-reference-type="ref" data-reference="fig:l1">[fig:l1]</a> securely
 realizes <span class="math inline">\(\F_{L_1}\)</span> with semi-honest
 security in the <span class="math inline">\((\F_\oslone,
-\F_\bcoin)\)</span>-hybrid.</p>
+\F_\bcoin)\)</span>-hybrid.</em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfTheorem1"
 data-reference-type="ref"
@@ -4056,14 +4057,14 @@ class="math inline">\(c\)</span> is decrypted to the receiver.</p>
 receiver outputs the decryption of <span
 class="math inline">\(c\)</span>.</p>
 </div>
-<div class="theorem">
-<p><span id="thm:os-fhe" label="thm:os-fhe"></span> Assuming the
-existence of threshold FHE with <span
+<div id="thm:os-fhe" class="theorem">
+<p><strong>Theorem 8</strong>. <em>Assuming the existence of threshold
+FHE with <span
 class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
 security, Protocol <a href="#fig:os-fhe" data-reference-type="ref"
 data-reference="fig:os-fhe">[fig:os-fhe]</a> securely realizes <span
 class="math inline">\(\F_{\oslone}\)</span> in the semi-honest security
-model.</p>
+model.</em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfTheorem2"
 data-reference-type="ref"
@@ -4109,22 +4110,22 @@ class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
 distribution <span
 class="math inline">\(D_{\mathsf{ignore}}\)</span>.</p>
 <div class="definition">
-<p>For input vectors <span class="math inline">\(\vec{w}_1,
-\vec{w}_2\)</span>, let <span
+<p><strong>Definition 9</strong>. <em>For input vectors <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, let <span
 class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
 be the distribution that “ignores” the cross term in <span
 class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>. I.e. <span
 class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)\)</span>
 samples index <span class="math inline">\(i \in [n]\)</span> with
 probability <span class="math inline">\(\frac{w^2_{1,i} +
-w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\)</span>.</p>
+w^2_{2,i}}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\)</span>.</em></p>
 </div>
-<div class="lemma">
-<p><span id="lem:ignore" label="lem:ignore"></span> There exists a
-protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
-sampling from <span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
+<div id="lem:ignore" class="lemma">
+<p><strong>Lemma 10</strong>. <em>There exists a protocol <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for sampling from
+<span class="math inline">\(D_{\mathsf{ignore}}(\vec{w}_1,
 \vec{w}_2)\)</span> with <span
-class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
+class="math inline">\(\tilde{O}(1)\)</span> communication.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
@@ -4133,29 +4134,30 @@ the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
 D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
 </div>
 <div class="definition">
-<p>For <span class="math inline">\(i \in [n]\)</span>, let the
-corrective parameter function be defined as <span
-class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{w_{1,i}^2 +
-2w_{1,i}w_{2,i} +
-w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.\]</span></p>
+<p><strong>Definition 11</strong>. <em>For <span class="math inline">\(i
+\in [n]\)</span>, let the corrective parameter function be defined as
+<span class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) :=
+\frac{w_{1,i}^2 + 2w_{1,i}w_{2,i} +
+w_{2,i}^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}.\]</span></em></p>
 </div>
 <div class="definition">
-<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
-\vec{w}_2)\)</span> is defined as <span
-class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
-\vec{w}_2||_2^2}{||\vec{w}_1||_2^2 + ||\vec{w}_2||_2^2}\]</span> This
-ensures that for every <span class="math inline">\(i\)</span>, <span
+<p><strong>Definition 12</strong>. <em>The constant <span
+class="math inline">\(c := c(\vec{w}_1, \vec{w}_2)\)</span> is defined
+as <span class="math display">\[c(\vec{w}_1, \vec{w}_2) :=
+\frac{||\vec{w}_1 + \vec{w}_2||_2^2}{||\vec{w}_1||_2^2 +
+||\vec{w}_2||_2^2}\]</span> This ensures that for every <span
+class="math inline">\(i\)</span>, <span
 class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
-\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</em></p>
 </div>
 <p>The following lemma will be useful for arguing the validity of the
 final protocol.</p>
-<div class="lemma">
-<p><span id="lem:close_dist" label="lem:close_dist"></span> For all
-<span class="math inline">\(i \in \mathsf{supp}(D_{L_2}(\vec{w}_1,
-\vec{w}_2))\)</span>, <span
+<div id="lem:close_dist" class="lemma">
+<p><strong>Lemma 13</strong>. <em>For all <span class="math inline">\(i
+\in \mathsf{supp}(D_{L_2}(\vec{w}_1, \vec{w}_2))\)</span>, <span
 class="math inline">\(\Pr_{D_{L_2}(\vec{w}_1, \vec{w}_2)}[i] \leq 2/c
-\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+\cdot \Pr_{D_{\mathsf{ignore}}(\vec{w}_1,
+\vec{w}_2)}[i]\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> <span class="math display">\[\begin{aligned}
@@ -4217,13 +4219,13 @@ probability <span class="math display">\[\begin{aligned}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
 </section>
-<div class="lemma">
-<p><span id="lem:insecure_L2_prot" label="lem:insecure_L2_prot"></span>
-With all but negligible probability, on inputs <span
-class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, <span
-class="math inline">\(\Pi_{L_2}\)</span> samples exactly correctly from
-<span class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>, and
-has communication <span class="math inline">\(\tilde{O}(1)\)</span>.</p>
+<div id="lem:insecure_L2_prot" class="lemma">
+<p><strong>Lemma 14</strong>. <em>With all but negligible probability,
+on inputs <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>,
+<span class="math inline">\(\Pi_{L_2}\)</span> samples exactly correctly
+from <span class="math inline">\(D_{L_2}(\vec{w}_1, \vec{w}_2)\)</span>,
+and has communication <span
+class="math inline">\(\tilde{O}(1)\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Note that <span
@@ -4251,14 +4253,13 @@ number of rounds. Further, it can be immediately noted that condition
 (<a href="#eq:rejection" data-reference-type="ref"
 data-reference="eq:rejection">[eq:rejection]</a>) is met due to Lemma <a
 href="#lem:close_dist" data-reference-type="ref"
-data-reference="lem:close_dist">[lem:close_dist]</a>. Finally, each
-round has <span class="math inline">\(\tilde{O}(1)\)</span>
-communication, since <span
+data-reference="lem:close_dist">13</a>. Finally, each round has <span
+class="math inline">\(\tilde{O}(1)\)</span> communication, since <span
 class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> has communication
 <span class="math inline">\(\tilde{O}(1)\)</span> (by Lemma <a
 href="#lem:ignore" data-reference-type="ref"
-data-reference="lem:ignore">[lem:ignore]</a>) and since, in addition to
-that, only a constant number of length <span
+data-reference="lem:ignore">10</a>) and since, in addition to that, only
+a constant number of length <span
 class="math inline">\(\tilde{O}(1)\)</span> values are exchanged in each
 round. Combining the above, we have that <span
 class="math inline">\(\Pi_{L_2}\)</span> has expected communication
@@ -4267,12 +4268,13 @@ all but negligible probability) communication <span
 class="math inline">\(\tilde{O}(1)\)</span>. 0◻ ◻</p>
 </div>
 <div class="remark">
-<p>Note that the protocol and analysis above did not require that
-vectors <span class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> are
-normalized. I.e. we do not require that <span
+<p><strong>Remark 15</strong>. <em>Note that the protocol and analysis
+above did not require that vectors <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> are normalized.
+I.e. we do not require that <span
 class="math inline">\(||\vec{w}_1||_1\)</span> or <span
 class="math inline">\(||\vec{w}_2||_1\)</span> are equal to <span
-class="math inline">\(1\)</span> or to each other.</p>
+class="math inline">\(1\)</span> or to each other.</em></p>
 </div>
 <h3 data-number="4.3.2" id="sec:secure"><span
 class="header-section-number">4.3.2</span> Secure <span
@@ -4375,15 +4377,15 @@ with all but negligible probability,</p>
 <h4 data-number="4.3.2.3" id="security."><span
 class="header-section-number">4.3.2.3</span> Security.</h4>
 <p>Security of our protocol is stated through the following theorem.</p>
-<div class="theorem">
-<p><span id="th:l2" label="th:l2"></span> Assuming the existence of
-threshold FHE with <span
+<div id="th:l2" class="theorem">
+<p><strong>Theorem 16</strong>. <em>Assuming the existence of threshold
+FHE with <span
 class="math inline">\(\mathsf{IND}\mbox{-}\mathsf{CPA}\)</span>
 security, Protocol <a href="#fig:l2" data-reference-type="ref"
 data-reference="fig:l2">[fig:l2]</a> securely realizes the <span
 class="math inline">\(L_2\)</span> sampling functionality in the <span
 class="math inline">\(\{\F_{L_1}^{ss}, \F_{2PC}\}\)</span>-hybrid model
-with semi-honest security.</p>
+with semi-honest security.</em></p>
 </div>
 <p>We provide the proof in Appendix <a href="#apx:pfTheorem3"
 data-reference-type="ref"
@@ -4449,23 +4451,23 @@ D_{L_p}(\vec{w}_1, \vec{w}_2) \mbox{ samples } i ]
 distribution <span class="math inline">\(D_{\mathsf{ignore},
 p}\)</span>.</p>
 <div class="definition">
-<p>For input vectors <span class="math inline">\(\vec{w}_1,
-\vec{w}_2\)</span>, let <span class="math inline">\(D_{\mathsf{ignore},
-p}(\vec{w}_1, \vec{w}_2)\)</span> be the distribution that “ignores” the
-cross term in <span class="math inline">\(D_{L_p}(\vec{w}_1,
-\vec{w}_2)\)</span>. I.e. <span
+<p><strong>Definition 17</strong>. <em>For input vectors <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span>, let <span
 class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> be the distribution that “ignores” the cross term in
+<span class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span>.
+I.e. <span class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
 \vec{w}_2)\)</span> samples index <span class="math inline">\(i \in
 [n]\)</span> with probability <span
 class="math inline">\(\frac{w^p_{1,i} + w^p_{2,i}}{||\vec{w}_1||_p^p +
-||\vec{w}_2|_p^p}\)</span>.</p>
+||\vec{w}_2|_p^p}\)</span>.</em></p>
 </div>
-<div class="lemma">
-<p><span id="lem:ignore_2" label="lem:ignore_2"></span> There exists a
-protocol <span class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for
-sampling from <span class="math inline">\(D_{\mathsf{ignore},
-p}(\vec{w}_1, \vec{w}_2)\)</span> with <span
-class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
+<div id="lem:ignore_2" class="lemma">
+<p><strong>Lemma 18</strong>. <em>There exists a protocol <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> for sampling from
+<span class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> with <span
+class="math inline">\(\tilde{O}(1)\)</span> communication.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
@@ -4474,29 +4476,30 @@ the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
 D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
 </div>
 <div class="definition">
-<p>For <span class="math inline">\(i \in [n]\)</span>, let the
-corrective parameter function be defined as <span
-class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) := \frac{(w_{1,i} +
-w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.\]</span></p>
+<p><strong>Definition 19</strong>. <em>For <span class="math inline">\(i
+\in [n]\)</span>, let the corrective parameter function be defined as
+<span class="math display">\[f_c(\vec{w}_1, \vec{w}_2, i) :=
+\frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}.\]</span></em></p>
 </div>
 <div class="definition">
-<p>The constant <span class="math inline">\(c := c(\vec{w}_1,
-\vec{w}_2)\)</span> is defined as <span
-class="math display">\[c(\vec{w}_1, \vec{w}_2) := \frac{||\vec{w}_1 +
-\vec{w}_2||_p^p}{||\vec{w}_1||_p^p + ||\vec{w}_2||_p^p}\]</span> This
-ensures that for every <span class="math inline">\(i\)</span>, <span
+<p><strong>Definition 20</strong>. <em>The constant <span
+class="math inline">\(c := c(\vec{w}_1, \vec{w}_2)\)</span> is defined
+as <span class="math display">\[c(\vec{w}_1, \vec{w}_2) :=
+\frac{||\vec{w}_1 + \vec{w}_2||_p^p}{||\vec{w}_1||_p^p +
+||\vec{w}_2||_p^p}\]</span> This ensures that for every <span
+class="math inline">\(i\)</span>, <span
 class="math inline">\(f_c(\vec{w}_1, \vec{w}_2, i) = c \cdot
-\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</p>
+\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i]\)</span>.</em></p>
 </div>
 <p>The following lemma will be useful for arguing the validity of the
 final protocol.</p>
-<div class="lemma">
-<p><span id="lem:close_dist_2" label="lem:close_dist_2"></span> For all
-<span class="math inline">\(i \in \mathsf{supp}(D_{L_p}(\vec{w}_1,
-\vec{w}_2))\)</span>, <span
+<div id="lem:close_dist_2" class="lemma">
+<p><strong>Lemma 21</strong>. <em>For all <span class="math inline">\(i
+\in \mathsf{supp}(D_{L_p}(\vec{w}_1, \vec{w}_2))\)</span>, <span
 class="math display">\[\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq
 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1,
-\vec{w}_2)}[i].\]</span></p>
+\vec{w}_2)}[i].\]</span></em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma5"
 data-reference-type="ref"
@@ -4506,23 +4509,22 @@ protocol <span class="math inline">\(\Pi_{L_p}\)</span> in Protocol <a
 href="#fig:lpexact" data-reference-type="ref"
 data-reference="fig:lpexact">[fig:lpexact]</a>. We show the correctness
 and efficiency of the protocol below.</p>
-<div class="lemma">
-<p><span id="lem:lp" label="lem:lp"></span> With all but negligible
-probability, on inputs <span class="math inline">\(\vec{w}_1\)</span>
-and <span class="math inline">\(\vec{w}_2\)</span>, protocol <span
+<div id="lem:lp" class="lemma">
+<p><strong>Lemma 22</strong>. <em>With all but negligible probability,
+on inputs <span class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(\vec{w}_2\)</span>, protocol <span
 class="math inline">\(\Pi_{L_p}\)</span> samples exactly correctly from
 <span class="math inline">\(D_{L_p}(\vec{w}_1, \vec{w}_2)\)</span>.
 Further, for any constant <span class="math inline">\(p\)</span>, the
 protocol has communication <span
-class="math inline">\(\tilde{O}(1)\)</span>.</p>
+class="math inline">\(\tilde{O}(1)\)</span>.</em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma6"
 data-reference-type="ref"
 data-reference="apx:pfLemma6">[apx:pfLemma6]</a>. We note that this
 result strictly generalizes Lemma <a href="#lem:insecure_L2_prot"
-data-reference-type="ref"
-data-reference="lem:insecure_L2_prot">[lem:insecure_L2_prot]</a>. In
-particular, setting <span class="math inline">\(p=2\)</span> in the
+data-reference-type="ref" data-reference="lem:insecure_L2_prot">14</a>.
+In particular, setting <span class="math inline">\(p=2\)</span> in the
 above protocol yields a protocol with exactly the same parameters as the
 <span class="math inline">\(L_2\)</span> sampling protocol.</p>
 <h2 data-number="4.4" id="sec:prod"><span
@@ -4613,7 +4615,9 @@ class="math inline">\(T\)</span> respectively. The communication
 complexity of the solution to the disjointness problem is known to have
 a linear lowerbound, as shown in the following Theorem:</p>
 <div class="theorem">
-<p>For any (even non-private) two-party protocol <span
+<p><strong>Theorem 23</strong> (<span class="citation"
+data-cites="tcs:Razborov92 siamdm:KalSch92 jcss:BJKS04">[123], [124],
+[125]</span>). <em>For any (even non-private) two-party protocol <span
 class="math inline">\(\Pi\)</span> where each party holds <span
 class="math inline">\(v_S\)</span> and <span
 class="math inline">\(v_T\)</span> respectively, if <span
@@ -4621,7 +4625,7 @@ class="math inline">\(\Pi\)</span> computes <span
 class="math inline">\(\mathsf{DISJ}^n(v_S,
 v_T)\)</span> correctly with probability at least 2/3, the communication
 complexity of <span class="math inline">\(\Pi\)</span> is <span
-class="math inline">\(\Theta(n)\)</span>.</p>
+class="math inline">\(\Theta(n)\)</span>.</em></p>
 </div>
 <h4 data-number="4.4.1.2" id="our-impossibility-result."><span
 class="header-section-number">4.4.1.2</span> Our impossibility
@@ -4646,8 +4650,8 @@ vector <span class="math inline">\(\vec{w}\)</span> is <em><span
 class="math inline">\(\gamma\)</span>-heavy</em> when each coordinate of
 <span class="math inline">\(\vec{w}\)</span> is a number contained in
 <span class="math inline">\([\gamma,1]\)</span>.</p>
-<div class="theorem">
-<p><span id="th:lower_bound" label="th:lower_bound"></span> Let <span
+<div id="th:lower_bound" class="theorem">
+<p><strong>Theorem 24</strong>. <em>Let <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> be <span
 class="math inline">\(\gamma\)</span>-heavy vectors of length <span
@@ -4658,14 +4662,14 @@ protocol <span class="math inline">\(\Pp\)</span> for the product
 sampling from <span class="math inline">\(\w_1\)</span> and <span
 class="math inline">\(\w_2\)</span>, with communication at most <span
 class="math inline">\(C
-:= C(n, \gamma)\)</span>.</p>
-<p>Then, for any <span class="math inline">\(\gamma \le 1/2n\)</span>,
-there exists a constant <span class="math inline">\(\rho\)</span> and a
-probabilistic protocol computing <span
-class="math inline">\(\mathsf{DISJ}^n\)</span> correctly with
-probability at least 2/3 that has communication at most <span
+:= C(n, \gamma)\)</span>.</em></p>
+<p><em>Then, for any <span class="math inline">\(\gamma \le
+1/2n\)</span>, there exists a constant <span
+class="math inline">\(\rho\)</span> and a probabilistic protocol
+computing <span class="math inline">\(\mathsf{DISJ}^n\)</span> correctly
+with probability at least 2/3 that has communication at most <span
 class="math inline">\(\log(n) + 1 +
-\rho \cdot (C + 1)\)</span>.</p>
+\rho \cdot (C + 1)\)</span>.</em></p>
 </div>
 <p>We construct a protocol computing <span
 class="math inline">\(\mathsf{DISJ}^n\)</span> by taking advantage of
@@ -4726,21 +4730,21 @@ output <span class="math inline">\(1-x\)</span>.</p>
 </div>
 <p>The following lemmas give the completeness and soundness of the
 protocol.</p>
-<div class="lemma">
-<p><span id="clm:completeness" label="clm:completeness"></span> If <span
+<div id="clm:completeness" class="lemma">
+<p><strong>Lemma 25</strong>. <em>If <span
 class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, then the
 parties both output <span class="math inline">\(1\)</span> with
 probability at least <span class="math inline">\(\frac{1}{2 + n \cdot
-\gamma}\)</span>.</p>
+\gamma}\)</span>.</em></p>
 </div>
-<div class="lemma">
-<p><span id="clm:soundness" label="clm:soundness"></span> If <span
+<div id="clm:soundness" class="lemma">
+<p><strong>Lemma 26</strong>. <em>If <span
 class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint, then
 the parties both output <span class="math inline">\(1\)</span> with
 probability at most <span class="math inline">\(1-\frac{1}{1 + n \cdot
-\gamma}\)</span>.</p>
+\gamma}\)</span>.</em></p>
 </div>
 <p>Before we prove the lemmas, we briefly describe how we can use these
 lemmas to achieve a protocol that correctly computes <span
@@ -4809,9 +4813,8 @@ g_\gamma(\vec{a}), g_\gamma(\vec{b}) \rangle } { n \cdot n } \ge \frac 1
 {n^2}.\]</span></p>
 <div class="proof">
 <p><em>Proof of Lemma <a href="#clm:completeness"
-data-reference-type="ref"
-data-reference="clm:completeness">[clm:completeness]</a>.</em> Assume
-that <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+data-reference-type="ref" data-reference="clm:completeness">25</a>.</em>
+Assume that <span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are disjoint, and
 moreover, assume WLOG that <span
 class="math inline">\(\mathbf{A}\)</span> is the designated party, and
@@ -4860,8 +4863,8 @@ the protocol. 0◻ ◻</p>
 </div>
 <div class="proof">
 <p><em>Proof of Lemma <a href="#clm:soundness" data-reference-type="ref"
-data-reference="clm:soundness">[clm:soundness]</a>.</em> Assume that
-<span class="math inline">\(\tilde{\vec{a}}\)</span>, <span
+data-reference="clm:soundness">26</a>.</em> Assume that <span
+class="math inline">\(\tilde{\vec{a}}\)</span>, <span
 class="math inline">\(\tilde{\vec{b}}\)</span> are not disjoint. As
 before, consider <span class="math inline">\(W_{0,0}\)</span>, <span
 class="math inline">\(W_{1,0}\)</span>, <span
@@ -4981,14 +4984,14 @@ class="math inline">\(i\)</span>.</p>
 <h4 data-number="4.4.2.4" id="security.-1"><span
 class="header-section-number">4.4.2.4</span> Security.</h4>
 <p>We will prove the following theorem.</p>
-<div class="theorem">
-<p><span id="th:prodIP" label="th:prodIP"></span> Protocol <span
+<div id="th:prodIP" class="theorem">
+<p><strong>Theorem 27</strong>. <em>Protocol <span
 class="math inline">\(\Pp^{IP}\)</span> securely realizes <span
 class="math inline">\(\Fp\)</span> with leakage <span
 class="math inline">\(\flk(\w_1,
 \w_2) = \ip{\vec{w}_1}{\vec{w}_2}\)</span> in the <span
 class="math inline">\(\{\F_\oslone, \F_{2PC}
-\}\)</span>-hybrid model with semi-honest security.</p>
+\}\)</span>-hybrid model with semi-honest security.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> We describe the simulator <span
@@ -5125,12 +5128,11 @@ collision, and repeat if necessary.</p>
 <p>Without a full proof, we provide some intuition for the fact that
 this tradeoff between leakage and communication is inherent. We can do
 that by generalizing the statement of Theorem <a href="#th:lower_bound"
-data-reference-type="ref"
-data-reference="th:lower_bound">[th:lower_bound]</a>. We first modify
-the definition of <span class="math inline">\(\gamma\)</span>-heavy
-defined previously: for any <span class="math inline">\(t(n) =
-O(n)\)</span>, we say that a vector <span
-class="math inline">\(\w\)</span> of length <span
+data-reference-type="ref" data-reference="th:lower_bound">24</a>. We
+first modify the definition of <span
+class="math inline">\(\gamma\)</span>-heavy defined previously: for any
+<span class="math inline">\(t(n) = O(n)\)</span>, we say that a vector
+<span class="math inline">\(\w\)</span> of length <span
 class="math inline">\(n\)</span> is <span
 class="math inline">\(\gamma_{t,n}\)</span>-heavy if each of the <span
 class="math inline">\(t := t(n)\)</span> coordinates of <span
@@ -5210,7 +5212,7 @@ inner product</h3>
 <p>We achieve a protocol that securely approximates the inner product
 with sublinear communication. In particular, we take advantage of the
 well known Johnson–Lindenstrauss Transform (JLT) <span class="citation"
-data-cites="JL84 STOC:IndMot98">[123], [124]</span> sketch.</p>
+data-cites="JL84 STOC:IndMot98">[126], [127]</span> sketch.</p>
 <h4 data-number="4.5.1.1"
 id="additional-assumptions-about-vecw_1-and-vecw_2"><span
 class="header-section-number">4.5.1.1</span> Additional assumptions
@@ -5260,19 +5262,19 @@ variance <span class="math inline">\(1\)</span>.</p>
 abuse the notation and treat the vectors <span
 class="math inline">\(\vec{w}_1\)</span> and <span
 class="math inline">\(\vec{w}_2\)</span> as column vectors.)</p>
-<div class="lemma">
-<p><span>(cf. <span class="citation" data-cites="Kaban15">[125],
-Corollary 3.1</span>)</span> <span id="lem:jlt_k"
-label="lem:jlt_k"></span> For all <span class="math inline">\(\vec{w}_1,
-\vec{w}_2\)</span> such that <span class="math inline">\(\cos(\vec{w}_1,
-\vec{w}_2)\geq t\)</span>, the procedure <span
-class="math inline">\({\sf approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
-approximates <span class="math inline">\(\langle \vec{w}_1,
+<div id="lem:jlt_k" class="lemma">
+<p><strong>Lemma 28</strong>. <em><span>(cf. <span class="citation"
+data-cites="Kaban15">[128], Corollary 3.1</span>)</span> For all <span
+class="math inline">\(\vec{w}_1, \vec{w}_2\)</span> such that <span
+class="math inline">\(\cos(\vec{w}_1, \vec{w}_2)\geq t\)</span>, the
+procedure <span class="math inline">\({\sf approxIP}(\vec{w}_1,
+\vec{w}_2)\)</span> approximates <span class="math inline">\(\langle
+\vec{w}_1,
 \vec{w}_2 \rangle\)</span> up to a <span class="math inline">\(1\pm
 \epsilon\)</span> approximation factor with all but negligible
 probability (over the choice of the JLT matrix), using JLT dimension
 <span class="math inline">\(k = \omega\left(\frac{\log(n)}{t^2 \cdot
-\epsilon^2}\right)\)</span>.</p>
+\epsilon^2}\right)\)</span>.</em></p>
 </div>
 <h4 data-number="4.5.1.3" id="privacy-of-the-approximate-output."><span
 class="header-section-number">4.5.1.3</span> Privacy of the approximate
@@ -5280,16 +5282,17 @@ output.</h4>
 <p>What is interesting is that the approximate inner product doesn’t
 reveal anything more than the inner product itself. In this sense, it
 satisfies the notion of private approximation introduced in <span
-class="citation" data-cites="FIM+06">[126]</span>. In particular, we
+class="citation" data-cites="FIM+06">[129]</span>. In particular, we
 prove the following:</p>
-<div class="lemma">
-<p><span id="lem:simip" label="lem:simip"></span> The output of <span
+<div id="lem:simip" class="lemma">
+<p><strong>Lemma 29</strong>. <em>The output of <span
 class="math inline">\(\mathsf{approxIP}(\vec{w}_1, \vec{w}_2)\)</span>
 can be simulated perfectly given only <span
 class="math inline">\(\langle \vec{w}_1, \vec{w}_1 \rangle\)</span>,
 <span class="math inline">\(\langle
 \vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
-class="math inline">\(\langle \vec{w}_1, \vec{w}_2 \rangle\)</span>.</p>
+class="math inline">\(\langle \vec{w}_1, \vec{w}_2
+\rangle\)</span>.</em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:pfLemma10"
 data-reference-type="ref"
@@ -5301,7 +5304,7 @@ JLT.</h4>
 the inner product. See Protocol <a href="#fig:ip-fhe"
 data-reference-type="ref" data-reference="fig:ip-fhe">[fig:ip-fhe]</a>.
 The protocol uses threshold FHE (e.g.,  <span class="citation"
-data-cites="popets:MTBH21">[127]</span>).</p>
+data-cites="popets:MTBH21">[130]</span>).</p>
 <section id="inputs-2" class="algorithm" data-number="4.5.1.5">
 <h4 data-number="4.5.1.5"><span
 class="header-section-number">4.5.1.5</span> Inputs:</h4>
@@ -5343,7 +5346,7 @@ security of the threshold FHE, it is easy to see that the protocol
 securely realizes a functionality for computing <span
 class="math inline">\({\sf approxIP}\)</span>. Based on Lemma <a
 href="#lem:simip" data-reference-type="ref"
-data-reference="lem:simip">[lem:simip]</a>, the leakage profile of the
+data-reference="lem:simip">29</a>, the leakage profile of the
 functionality is <span class="math inline">\(\langle \vec{w}_1,
 \vec{w}_1 \rangle\)</span>, <span class="math inline">\(\langle
 \vec{w}_2, \vec{w}_2 \rangle\)</span>, and <span
@@ -5456,9 +5459,9 @@ curator will choose classifier <span class="math inline">\(c_i\)</span>
 with the probability <span class="math inline">\(\frac{w_{i,i} \cdot
 w_{i,2}}{\ipw}\)</span>.</p>
 <div class="lemma">
-<p>If <span class="math inline">\(|D| \ge 40 (\log n +
-\secparam)/\epsilon\)</span>, our mechanism provides <span
-class="math inline">\((\epsilon, 0)\)</span>-DP.</p>
+<p><strong>Lemma 30</strong>. <em>If <span class="math inline">\(|D| \ge
+40 (\log n + \secparam)/\epsilon\)</span>, our mechanism provides <span
+class="math inline">\((\epsilon, 0)\)</span>-DP.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Let <span class="math inline">\(q_i(D) =
@@ -5505,7 +5508,7 @@ class="header-section-number">4.6.1.2</span> Utility.</h4>
 <p>Although using a larger value <span class="math inline">\(\Delta
 u\)</span> deteriorates the utility of the mechanism, we show that the
 utility is still acceptable. Applying Theorem 3.11 in <span
-class="citation" data-cites="DR14">[128]</span> to our setting, we have
+class="citation" data-cites="DR14">[131]</span> to our setting, we have
 <span class="math display">\[\Pr\left[f_{\sf loss}^{c_i}(D)
 \le f_{\sf loss}^{c_{opt}}(D) - \frac{2 \Delta u}{\e} \cdot (\log n +
 \secparam)
@@ -5576,7 +5579,7 @@ variance <span class="math inline">\(1\)</span>. The dimension <span
 class="math inline">\(k\)</span> (with <span class="math inline">\(k \ll
 n\)</span>) is determined appropriately according to Lemma <a
 href="#lem:jlt_k" data-reference-type="ref"
-data-reference="lem:jlt_k">[lem:jlt_k]</a>.</p>
+data-reference="lem:jlt_k">28</a>.</p>
 <p>Choose a value <span class="math inline">\(x\)</span> from the
 Laplace distribution <span class="math inline">\({\sf
 Lap}(1/(\Delta u \cdot |D|))\)</span>.</p>
@@ -5607,14 +5610,14 @@ class="math inline">\({w}_{b,i} \propto e^{-\epsilon \cdot
 additive loss functions <span
 class="math inline">\(f^{c_i}_\mathsf{loss}\)</span>.</p>
 <div class="theorem">
-<p>If <span class="math inline">\(|D| \ge 40 \cdot (\log n +
-\secparam)/\epsilon\)</span>, the mechanism <span
+<p><strong>Theorem 31</strong>. <em>If <span class="math inline">\(|D|
+\ge 40 \cdot (\log n + \secparam)/\epsilon\)</span>, the mechanism <span
 class="math inline">\(\dIP\)</span> is <span
 class="math inline">\(\epsilon\)</span>-differentially private w.r.t a
 database <span class="math inline">\(D_1\)</span> (resp., <span
 class="math inline">\(D_2\)</span>) when the loss functions <span
 class="math inline">\(f^{c_i}_{\mathsf{loss}}(D)\)</span> have low
-sensitivity <span class="math inline">\(1/|D|\)</span>.</p>
+sensitivity <span class="math inline">\(1/|D|\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> We prove differential privacy with respect to <span
@@ -5752,12 +5755,11 @@ class="math inline">\(\mathsf{abort}\)</span>.</p>
 <h4 data-number="4.6.3.2" id="security.-3"><span
 class="header-section-number">4.6.3.2</span> Security.</h4>
 <p>We will prove the following theorem.</p>
-<div class="theorem">
-<p><span id="thm:prodDP" label="thm:prodDP"></span> If <span
-class="math inline">\(|D| \ge 40 \cdot \secparam (\log n +
-\secparam)/\epsilon^2\)</span>, protocol <span
-class="math inline">\(\Pi_{\mathsf{EM}}\)</span> is <span
-class="math inline">\((2\epsilon,\negl(\secparam))\)</span>-DP.</p>
+<div id="thm:prodDP" class="theorem">
+<p><strong>Theorem 32</strong>. <em>If <span class="math inline">\(|D|
+\ge 40 \cdot \secparam (\log n + \secparam)/\epsilon^2\)</span>,
+protocol <span class="math inline">\(\Pi_{\mathsf{EM}}\)</span> is <span
+class="math inline">\((2\epsilon,\negl(\secparam))\)</span>-DP.</em></p>
 </div>
 <p>It is easy to see that this protocol runs an enough number of product
 samplings in parallel so that it does not output <span
@@ -5819,8 +5821,8 @@ class="header-section-number">5.1</span> Introduction</h2>
 class="header-section-number">5.1.0.1</span> Min-hash sketch.</h4>
 <p>The min-hash sketch is a simple and well-known technique to produce
 an unbiased estimate of the Jaccard index <span class="citation"
-data-cites="B97 LOZ12">[129], [130]</span>. The Jaccard index <span
-class="citation" data-cites="jaccard">[131]</span> is a similarity
+data-cites="B97 LOZ12">[132], [133]</span>. The Jaccard index <span
+class="citation" data-cites="jaccard">[134]</span> is a similarity
 measure between two sets <span class="math inline">\(A\)</span> and
 <span class="math inline">\(B\)</span>, denoted <span
 class="math inline">\(J(A, B)\)</span>, defined as the fraction of the
@@ -5829,16 +5831,16 @@ and <span class="math inline">\(B\)</span> divided by the number of
 elements in their union. That is, <span
 class="math inline">\(J(A,B)=\frac{|A \cap B|}{|A \cup B|}\)</span>. The
 Jaccard index has seen wide application for clustering of websites and
-documents <span class="citation" data-cites="B97 cn:BGMZ97">[129],
-[132]</span>, community identification <span class="citation"
-data-cites="kdd:TanBerKem07">[133]</span>, DNA matching <span
+documents <span class="citation" data-cites="B97 cn:BGMZ97">[132],
+[135]</span>, community identification <span class="citation"
+data-cites="kdd:TanBerKem07">[136]</span>, DNA matching <span
 class="citation" data-cites="wpes:CFGT12">[63]</span>, and machine
 learning <span class="citation"
-data-cites="ijcai:WWTDLZ19 icip:JKWC22">[134], [135]</span>.</p>
+data-cites="ijcai:WWTDLZ19 icip:JKWC22">[137], [138]</span>.</p>
 <p>Computing the Jaccard index exactly, especially when the input sets
 are large, can be costly. The min-hash sketch allows
 communication-efficient approximation <span class="citation"
-data-cites="B97">[129]</span>. The basic idea behind the min-hash sketch
+data-cites="B97">[132]</span>. The basic idea behind the min-hash sketch
 is to apply a random hash function <span
 class="math inline">\(h\)</span> to both sets <span
 class="math inline">\(A\)</span> and <span
@@ -5864,7 +5866,7 @@ medical records.</p>
 <p>There are two classes of solutions for privacy-preserving min-hash.
 The first class of solutions (e.g. <span class="citation"
 data-cites="wpes:CFGT12 BluCriGas14 eprint:RCSWK19 Faber:thesis">[63],
-[64], [65], [136]</span>) considers how to compute the min-hash and
+[64], [65], [139]</span>) considers how to compute the min-hash and
 Jaccard index in a two-party setting, where the parties do not trust
 each other with their private inputs. The goal of these works is to
 design secure two-party computation protocols for computing the min-hash
@@ -5922,9 +5924,10 @@ which adds (properly-tuned) Laplace noise to the output of the min hash
 data-reference="prot:noisy">[prot:noisy]</a> for details.) We then prove
 the following theorem about this functionality.</p>
 <div class="theorem">
-<p><span class="math inline">\(\Pbasenoisy\)</span> is <span
+<p><strong>Theorem 33</strong> (Informal). <em><span
+class="math inline">\(\Pbasenoisy\)</span> is <span
 class="math inline">\((\ee, \dd)\)</span>-DP against an adversary
-corrupting either party.</p>
+corrupting either party.</em></p>
 </div>
 <p>To realize a protocol for DP estimation of the Jaccard index, we now
 just need to instantiate this functionality. We show how this can be
@@ -5933,7 +5936,7 @@ href="#sec:basic" data-reference-type="ref"
 data-reference="sec:basic">5.4</a>. In Section <a href="#sec:eval"
 data-reference-type="ref" data-reference="sec:eval">5.9</a>, we evaluate
 the performance when instantiating the PSI-CA protocol <span
-class="citation" data-cites="DGT12 TL23">[137], [138]</span> in the
+class="citation" data-cites="DGT12 TL23">[140], [141]</span> in the
 semi-honest setting. The resulting protocol has better accuracy compared
 to the prior work <span class="citation"
 data-cites="ICML:HehTinCor23 sisap:AumBouSch20">[48], [66]</span>. We
@@ -5991,14 +5994,14 @@ always outputs 0 in the first case and outputs a count <span
 class="math inline">\(\ge 1\)</span> with noticeable probability in the
 second. We prove the following theorem showing that when this is not the
 case the min-hash output is differentially private:</p>
-<div class="theorem">
-<p><span id="thm:dpInformal" label="thm:dpInformal"></span> If the size
-of the intersection is a constant fraction of the size of <span
+<div id="thm:dpInformal" class="theorem">
+<p><strong>Theorem 34</strong> (Informal). <em>If the size of the
+intersection is a constant fraction of the size of <span
 class="math inline">\(A\)</span> and <span
 class="math inline">\(B\)</span>, then the output of <span
 class="math inline">\(\PC\)</span> is <span
 class="math inline">\((\epsilon,\delta)\)</span>-DP for negligible <span
-class="math inline">\(\delta\)</span>.</p>
+class="math inline">\(\delta\)</span>.</em></p>
 </div>
 <p>We stress that this theorem crucially relies on the fact that the
 parties, and the adversary, do not have any information about the chosen
@@ -6036,7 +6039,7 @@ precisely, we assume that given the adversary’s set (and even the
 intersection between the two sets), the honest party’s set still has
 sufficiently high min-entropy. With this assumption, we turn to the tool
 of distributional DP (DDP) <span class="citation"
-data-cites="FOCS:BGKS13">[139]</span> which allows us to analyze
+data-cites="FOCS:BGKS13">[142]</span> which allows us to analyze
 differential privacy when the distribution of inputs has sufficient
 uncertainty.</p>
 <p>We begin with a relatively strong assumption on the amount of
@@ -6046,16 +6049,16 @@ unpredictable (i.e., has a high amount of min-entropy), even conditioned
 on all the other set elements. Under this assumption, we prove the
 following theorem:</p>
 <div class="theorem">
-<p>If each non-intersecting item has sufficiently high min-entropy,
-revealing the hash functions<a href="#fn10" class="footnote-ref"
-id="fnref10" role="doc-noteref"><sup>10</sup></a> together with the
-min-hash counts (as in the <span class="math inline">\(\Pbase\)</span>
-functionality) preserves <span
-class="math inline">\((\epsilon,\delta)\)</span>-DDP for negligible
-<span class="math inline">\(\delta\)</span>, as long as the size of the
-intersection is a constant fraction of the size of <span
+<p><strong>Theorem 35</strong> (Informal). <em>If each non-intersecting
+item has sufficiently high min-entropy, revealing the hash functions<a
+href="#fn10" class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a> together with the min-hash counts
+(as in the <span class="math inline">\(\Pbase\)</span> functionality)
+preserves <span class="math inline">\((\epsilon,\delta)\)</span>-DDP for
+negligible <span class="math inline">\(\delta\)</span>, as long as the
+size of the intersection is a constant fraction of the size of <span
 class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>.</p>
+class="math inline">\(B\)</span>.</em></p>
 </div>
 <p>Not surprisingly, the proof of this Theorem (given in Section <a
 href="#sec:ddp1" data-reference-type="ref"
@@ -6113,16 +6116,16 @@ class="math inline">\(R\)</span> given leakage <span
 class="math inline">\(L\)</span>.</p></li>
 </ul>
 <div class="theorem">
-<p>Assume the set <span class="math inline">\(R\)</span> is drawn from a
-distribution <span class="math inline">\(\mathcal{D} \in
-\mathcal{C}\)</span>. Then the min-hash protocol in the random oracle
-model (corresponding to functionality <span
-class="math inline">\(\Pbase\)</span>) preserves <span
-class="math inline">\((\epsilon,\delta)\)</span>-DDP for negligible
-<span class="math inline">\(\delta\)</span>, as long as the size of the
-intersection is a constant fraction of the size of <span
+<p><strong>Theorem 36</strong> (Informal). <em>Assume the set <span
+class="math inline">\(R\)</span> is drawn from a distribution <span
+class="math inline">\(\mathcal{D} \in \mathcal{C}\)</span>. Then the
+min-hash protocol in the random oracle model (corresponding to
+functionality <span class="math inline">\(\Pbase\)</span>) preserves
+<span class="math inline">\((\epsilon,\delta)\)</span>-DDP for
+negligible <span class="math inline">\(\delta\)</span>, as long as the
+size of the intersection is a constant fraction of the size of <span
 class="math inline">\(A\)</span> and <span
-class="math inline">\(B\)</span>.</p>
+class="math inline">\(B\)</span>.</em></p>
 </div>
 <h4 data-number="5.1.0.7"
 id="on-spoiling-bits-and-leakage-resilience."><span
@@ -6138,9 +6141,9 @@ class="math inline">\(\Omega(n \lg(\ell))\)</span> while it can still be
 possible that for every <span class="math inline">\(i\)</span>, the
 marginal distribution over <span class="math inline">\(R_i\)</span> has
 only <span><em>constant</em></span> min-entropy (see Example 1.1
-in <span class="citation" data-cites="DKZ18">[140]</span>). To deal with
+in <span class="citation" data-cites="DKZ18">[143]</span>). To deal with
 such situations, Skórski <span class="citation"
-data-cites="skorski2019strong">[141]</span> proves a theorem showing the
+data-cites="skorski2019strong">[144]</span> proves a theorem showing the
 existence of “spoiling bits.” Namely, given <span
 class="math inline">\(R_1, \ldots, R_n\)</span>, some additional
 information known as spoiling bits can be released such that,
@@ -6207,13 +6210,12 @@ out that the leakage we need for our result has this form.</p>
 <p>We state our theorem in general terms as we believe it may find
 further applications in leakage resilient cryptography. For the formal
 theorem statement see Theorem <a href="#thm:chain_leak_3"
-data-reference-type="ref"
-data-reference="thm:chain_leak_3">[thm:chain_leak_3]</a>.</p>
+data-reference-type="ref" data-reference="thm:chain_leak_3">58</a>.</p>
 <h4 data-number="5.1.0.8" id="a-note-on-composition."><span
 class="header-section-number">5.1.0.8</span> A note on composition.</h4>
 <p>One known weakness of the DDP definition is the lack of a general
 composition theorem <span class="citation"
-data-cites="FOCS:BGKS13">[139]</span>. However, for the specific setting
+data-cites="FOCS:BGKS13">[142]</span>. However, for the specific setting
 of our min-hash protocols we can leverage the small output of min-hash
 to argue composition properties after leakage of several outputs.
 Specifically, suppose that the adversary executes a min-hash protocol
@@ -6272,10 +6274,10 @@ data-cites="CCS:HMFS17">[70]</span> and  <span class="citation"
 data-cites="PETS:GroRinRos19">[71]</span> applied the differential
 privacy relaxation to improve efficiency of set-intersection protocols.
  <span class="citation" data-cites="CCS:MazGor18">[72]</span>, and
- <span class="citation" data-cites="Usenix:MLRG20">[142]</span> consider
+ <span class="citation" data-cites="Usenix:MLRG20">[145]</span> consider
 graph-parallel computations and design more efficient solutions with
 differential private leakages.  <span class="citation"
-data-cites="SODA:CCMS19">[143]</span> consider classic tasks like
+data-cites="SODA:CCMS19">[146]</span> consider classic tasks like
 sorting, merging, and range-query data structures with differential
 privacy relaxation.  <span class="citation"
 data-cites="ACNS:GKLX22">[73]</span> consider multiparty shuffle that
@@ -6408,17 +6410,22 @@ class="header-section-number">5.3.0.4</span> Differential privacy.</h4>
 class="math inline">\((\ee,\dd)\)</span>-differential privacy are given
 below.</p>
 <div class="definition">
-<p>Two random variables <span class="math inline">\(X\)</span> and <span
+<p><strong>Definition 37</strong> (<span
+class="math inline">\((\ee,\dd)\)</span>-indistinguishablity). <em>Two
+random variables <span class="math inline">\(X\)</span> and <span
 class="math inline">\(Y\)</span> are <span
 class="math inline">\((\ee,\dd)\)</span>-indistinguishable (denoted as
 <span class="math inline">\(X \aed Y\)</span>) if, for all events <span
 class="math inline">\(S\)</span>, we have <span
 class="math display">\[\Pr[X \in S] \leq e^\ee \cdot \Pr[Y \in S] + \dd,
 ~~
-        \Pr[Y \in S] \leq e^\ee \cdot \Pr[X \in S] + \dd.\]</span></p>
+        \Pr[Y \in S] \leq e^\ee \cdot \Pr[X \in S] +
+\dd.\]</span></em></p>
 </div>
 <div class="definition">
-<p>Two random variables <span class="math inline">\(X\)</span> and <span
+<p><strong>Definition 38</strong> (Computational <span
+class="math inline">\((\ee,\dd)\)</span>-indistinguishablity). <em>Two
+random variables <span class="math inline">\(X\)</span> and <span
 class="math inline">\(Y\)</span> are computationally <span
 class="math inline">\((\ee,\dd)\)</span>-indistinguishable (denoted as
 <span class="math inline">\(X \caed Y\)</span>) if, for any polynomial
@@ -6426,13 +6433,15 @@ time adversary <span class="math inline">\(\A\)</span>, it holds <span
 class="math display">\[\Pr[\A(X) = 1] \leq e^\ee \cdot \Pr[\A(Y) = 1] +
 \dd, ~~
         \Pr[\A(Y) = 1] \leq e^\ee \cdot \Pr[\A(X) = 1] +
-\dd.\]</span></p>
+\dd.\]</span></em></p>
 </div>
 <div class="definition">
-<p>Let <span class="math inline">\(X\)</span> be an input space and
-<span class="math inline">\(\nb\)</span> be a relation capturing the
-notion of neighboring inputs. Let <span class="math inline">\(\MM: X
-\rightarrow Z\)</span> be a randomized algorithm that takes input <span
+<p><strong>Definition 39</strong> ((Computational) <span
+class="math inline">\((\ee,\dd)\)</span>-differential privacy). <em>Let
+<span class="math inline">\(X\)</span> be an input space and <span
+class="math inline">\(\nb\)</span> be a relation capturing the notion of
+neighboring inputs. Let <span class="math inline">\(\MM: X \rightarrow
+Z\)</span> be a randomized algorithm that takes input <span
 class="math inline">\(x\in X\)</span> and outputs a value over <span
 class="math inline">\(Z\)</span>. We say that the mechanism <span
 class="math inline">\(\MM\)</span> is <span class="math inline">\((\ee,
@@ -6442,19 +6451,20 @@ class="math display">\[\forall x, x&#39; \in X  \st x \nb x&#39;: ~
 class="math inline">\(\MM\)</span> is <span class="math inline">\((\ee,
 \dd)\)</span>-computationally differentially private if <span
 class="math inline">\(\forall x, x&#39; \in X  \st x \nb x&#39;: ~
-\MM(x) \caed \MM(x&#39;).\)</span></p>
+\MM(x) \caed \MM(x&#39;).\)</span></em></p>
 </div>
 <div class="definition">
-<p>The global sensitivity of a function <span
-class="math inline">\(f:\NN^{|\XXX|} \to \RR^k\)</span> is: <span
-class="math display">\[\Delta f = \max_{X, Y \in \NN^{|\XXX|}, \Vert X -
-Y \Vert_1 = 1} \Vert f(X) - f(Y) \Vert_1\]</span></p>
+<p><strong>Definition 40</strong>. <em>The global sensitivity of a
+function <span class="math inline">\(f:\NN^{|\XXX|} \to \RR^k\)</span>
+is: <span class="math display">\[\Delta f = \max_{X, Y \in \NN^{|\XXX|},
+\Vert X - Y \Vert_1 = 1} \Vert f(X) - f(Y) \Vert_1\]</span></em></p>
 </div>
 <div class="definition">
-<p>The Laplace Distribution (centered at 0) with scale <span
-class="math inline">\(b\)</span> is the distribution with probability
-density function: <span class="math inline">\(Lap(x|b) = \frac 1 {2b}
-e^{-|x|/b}.\)</span></p>
+<p><strong>Definition 41</strong>. <em>The Laplace Distribution
+(centered at 0) with scale <span class="math inline">\(b\)</span> is the
+distribution with probability density function: <span
+class="math inline">\(Lap(x|b) = \frac 1 {2b}
+e^{-|x|/b}.\)</span></em></p>
 </div>
 <p>We will write <span class="math inline">\(Lap(b)\)</span> to denote
 the Laplace distribution with scale <span
@@ -6474,12 +6484,13 @@ id="distributional-differential-privacy-ddp."><span
 class="header-section-number">5.3.0.5</span> Distributional differential
 privacy (DDP).</h4>
 <p>We adapt the original definition <span class="citation"
-data-cites="FOCS:BGKS13">[139]</span> for our purpose to consider a
+data-cites="FOCS:BGKS13">[142]</span> for our purpose to consider a
 two-party protocol that takes sets as input more explicitly.
 Specifically, we consider a computational indistinguishability variant
 for our DDP definition.</p>
 <div class="definition">
-<p>Given a two-party functionality <span
+<p><strong>Definition 42</strong> (View of a party in a two-party
+functionality). <em>Given a two-party functionality <span
 class="math inline">\(\F\)</span> with parties <span
 class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span>, let <span
@@ -6492,21 +6503,22 @@ class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> respectively. In particular, <span
 class="math inline">\(\view_{P_1}^\F(A, B)\)</span> consists of the
 following (the view of <span class="math inline">\(P_2\)</span> is
-defined similarly):</p>
+defined similarly):</em></p>
 <ul>
-<li><p>The input <span class="math inline">\(A\)</span> of <span
+<li><p><em>The input <span class="math inline">\(A\)</span> of <span
 class="math inline">\(P_1\)</span>, the private random coins of <span
 class="math inline">\(P_1\)</span>, and the output of the
-functionality.</p></li>
-<li><p>If the functionality is in the random oracle model, we allow a
-semi-honest <span class="math inline">\(P_1\)</span> to make a
+functionality.</em></p></li>
+<li><p><em>If the functionality is in the random oracle model, we allow
+a semi-honest <span class="math inline">\(P_1\)</span> to make a
 polynomial number of arbitrary queries to the random oracle and to add
-the input/output information to its view.</p></li>
+the input/output information to its view.</em></p></li>
 </ul>
 </div>
 <div class="definition">
-<p>A two party functionality <span class="math inline">\(\F\)</span> is
-(computationally) <strong><span
+<p><strong>Definition 43</strong> (DP and DDP of a two-party
+functionality). <em>A two party functionality <span
+class="math inline">\(\F\)</span> is (computationally) <strong><span
 class="math inline">\((\ee,\dd)\)</span>-DP</strong> against an
 adversary corrupting <span class="math inline">\(P_1\)</span>, if for
 every <span class="math inline">\((A, B)\)</span> and every <span
@@ -6514,8 +6526,8 @@ class="math inline">\(x^* \in
 \U\)</span>, it holds that <span class="math inline">\(\view^\F_{P_1}(A,
 B)\)</span> is (compuatationally) <span
 class="math inline">\((\ee,\dd)\)</span>-indistinguishable from <span
-class="math inline">\(\view^\F_{P_1}(A, \Bp)\)</span>.</p>
-<p>Let <span class="math inline">\(\XXX\)</span> denote a random
+class="math inline">\(\view^\F_{P_1}(A, \Bp)\)</span>.</em></p>
+<p><em>Let <span class="math inline">\(\XXX\)</span> denote a random
 variable for two sets over universe <span
 class="math inline">\(\U\)</span>. Let <span
 class="math inline">\(\Z\)</span> denote the random variable measuring
@@ -6536,20 +6548,21 @@ class="math inline">\(\big(\view^\F_{P_1}(A, \Bp), Z\big)\)</span>.
 Here, <span class="math inline">\((A, B)\)</span> and <span
 class="math inline">\(Z\)</span> are sampled from <span
 class="math inline">\(\DDD\)</span>, and each party may use additional
-randomness.</p>
-<p>DP and DDP against an adversary corrupting <span
-class="math inline">\(P_2\)</span> is defined symmetrically.</p>
+randomness.</em></p>
+<p><em>DP and DDP against an adversary corrupting <span
+class="math inline">\(P_2\)</span> is defined symmetrically.</em></p>
 </div>
 <h4 data-number="5.3.0.6"
 id="tail-bound-for-a-binomial-distribution."><span
 class="header-section-number">5.3.0.6</span> Tail bound for a Binomial
 distribution.</h4>
 <p>We will use this well-known inequality.</p>
-<div class="lemma">
-<p><span id="lem:bin" label="lem:bin"></span> Consider a Binomial
-distribution <span class="math inline">\(B(n,p)\)</span>. We have <span
+<div id="lem:bin" class="lemma">
+<p><strong>Lemma 44</strong> (<span class="citation"
+data-cites="D18">[147]</span>). <em>Consider a Binomial distribution
+<span class="math inline">\(B(n,p)\)</span>. We have <span
 class="math display">\[\Pr_{X \sim B(n,p)}[X \ge k] \le
-\binom{n}{k}  p^k.\]</span></p>
+\binom{n}{k}  p^k.\]</span></em></p>
 </div>
 <h2 data-number="5.4" id="sec:basic"><span
 class="header-section-number">5.4</span> Min-Hash with DP</h2>
@@ -6606,17 +6619,17 @@ class="math inline">\(\delta\)</span>, the following measure can be used
 as the global sensitivity: <span class="math display">\[\sens(\delta, k,
 n_B) := \arg\min_s ~~\{s: \Pr_{h_1, \ldots, h_k}[|S_x| \ge s] \le \delta
 \}\]</span></p>
-<div class="lemma">
-<p><span id="lem:sen" label="lem:sen"></span> For any <span
+<div id="lem:sen" class="lemma">
+<p><strong>Lemma 45</strong>. <em>For any <span
 class="math inline">\(\{x_{i}^B\}_{i \in [n_B]}\)</span> and <span
 class="math inline">\(x \in \U\)</span>, we have <span
 class="math inline">\(\sens(\delta, k, n_B) \le  \binom{k}{s} \cdot
-\left(\frac{1}{n_B+1}\right)^s\)</span>.</p>
+\left(\frac{1}{n_B+1}\right)^s\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> The result immediately follows from Lemma <a
 href="#lem:bin" data-reference-type="ref"
-data-reference="lem:bin">[lem:bin]</a>. ◻</p>
+data-reference="lem:bin">44</a>. ◻</p>
 </div>
 <p>According to the above lemma, Asymptotically, with <span
 class="math inline">\(k = \Omega(\secparam)\)</span>, we have <span
@@ -6630,9 +6643,10 @@ class="math inline">\(\Pbase\)</span> described in Figure <a
 href="#prot:noisy" data-reference-type="ref"
 data-reference="prot:noisy">[prot:noisy]</a>.</p>
 <div class="theorem">
-<p><span class="math inline">\(\Pbasenoisy\)</span> is <span
+<p><strong>Theorem 46</strong>. <em><span
+class="math inline">\(\Pbasenoisy\)</span> is <span
 class="math inline">\((\ee, \dd)\)</span>-DP against an adversary
-corrupting either party.</p>
+corrupting either party.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> Based on the definition, <span
@@ -6658,7 +6672,7 @@ functionality <span class="math inline">\(\Pbasenoisy\)</span>. The
 protocol takes advantage of an ideal functionality <span
 class="math inline">\(\F_{\psica}\)</span> of private set intersection
 cardinality (PSI-CA) <span class="citation"
-data-cites="DGT12">[137]</span> that computes the exact cardinality of
+data-cites="DGT12">[140]</span> that computes the exact cardinality of
 the intersection of the two input sets, as described in Figure <a
 href="#func:psica" data-reference-type="ref"
 data-reference="func:psica">[func:psica]</a>.</p>
@@ -6675,7 +6689,7 @@ Figure <a href="#pro:ph" data-reference-type="ref"
 data-reference="pro:ph">[pro:ph]</a>.</p>
 <p>It is worth noting that the above task could also be implemented
 using a generic two-party computation (2PC) protocol. However,  <span
-class="citation" data-cites="DGT12">[137]</span> proposed an efficient
+class="citation" data-cites="DGT12">[140]</span> proposed an efficient
 PSI-CA protocol that outperforms 2PC protocols for small input sizes
 (using the start-to-finish comparison including the 2PC preprocessing
 steps). See Section <a href="#sec:eval_comp" data-reference-type="ref"
@@ -6689,7 +6703,7 @@ class="math inline">\(\Pbasenoisy\)</span>. It implies that protocol
 <span class="math inline">\(\PPH\)</span> is also <span
 class="math inline">\((\ee,
 \dd)\)</span>-computational-DP <span class="citation"
-data-cites="SCRS17">[144]</span>. The main benefit of the protocol is
+data-cites="SCRS17">[148]</span>. The main benefit of the protocol is
 that the hash computations can be computed locally and the communication
 complexity of the protocol is <span><em>sub-linear in <span
 class="math inline">\(n_A\)</span> and <span
@@ -6697,10 +6711,12 @@ class="math inline">\(n_B\)</span></em></span> even when the protocol
 implementing <span class="math inline">\(\F_{\psica}\)</span> has a
 linear communication complexity.</p>
 <div class="proposition">
-<p>Protocol <span class="math inline">\(\PPH^{\mathcal{O}}\)</span>
-described in Figure <a href="#pro:ph" data-reference-type="ref"
+<p><strong>Proposition 47</strong>. <em>Protocol <span
+class="math inline">\(\PPH^{\mathcal{O}}\)</span> described in Figure <a
+href="#pro:ph" data-reference-type="ref"
 data-reference="pro:ph">[pro:ph]</a> securely realizes <span
-class="math inline">\(\Pbasenoisy\)</span> in the semi-honest model.</p>
+class="math inline">\(\Pbasenoisy\)</span> in the semi-honest
+model.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> First note that the protocol will correctly compute
@@ -6743,8 +6759,8 @@ privacy. Our observation is that the final count <span
 class="math inline">\(c\)</span> follows a binomial distribution in the
 private hash setting, which can be treated as noise to obscure the
 sensitivity.</p>
-<div class="theorem">
-<p><span id="thm:PrivH" label="thm:PrivH"></span> For any constant <span
+<div id="thm:PrivH" class="theorem">
+<p><strong>Theorem 48</strong>. <em>For any constant <span
 class="math inline">\(\ee &gt; 0\)</span>, if <span
 class="math inline">\(k = k(\ee, \kappa) \in \Omega(\kappa),
 n_A/k \in \Omega(\kappa), n_B/k \in \Omega(\kappa)\)</span>, and <span
@@ -6753,7 +6769,7 @@ class="math inline">\(J(A, B) \in
 class="math inline">\(\kappa\)</span>, then <span
 class="math inline">\(\PC\)</span> is <span
 class="math inline">\((\ee,\delta)\)</span>-DP with <span
-class="math inline">\(\delta \in \negl(\kappa)\)</span>.</p>
+class="math inline">\(\delta \in \negl(\kappa)\)</span>.</em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> WLOG, let <span class="math inline">\(B = (x_1^B,
@@ -6775,29 +6791,29 @@ This match count <span class="math inline">\(c_\xs\)</span> will work as
 an additive noise. Since <span class="math inline">\(h_1, \ldots,
 h_k\)</span> are private, we have <span class="math inline">\(c_{K_\xs}
 \sim \Bino(k-s, p).\)</span> By applying Lemma <a href="#lem:bin-dp"
-data-reference-type="ref" data-reference="lem:bin-dp">[lem:bin-dp]</a>
-below, we conclude that <span class="math inline">\(\PC\)</span> is
-differentially private. ◻</p>
+data-reference-type="ref" data-reference="lem:bin-dp">49</a> below, we
+conclude that <span class="math inline">\(\PC\)</span> is differentially
+private. ◻</p>
 </div>
-<div class="lemma">
-<p><span id="lem:bin-dp" label="lem:bin-dp"></span> Consider a Binomial
-distribution <span class="math inline">\(\Bin\)</span>, where <span
-class="math inline">\(n \in \Omega(\kappa)\)</span> and <span
-class="math inline">\(p \in (0,1)\)</span> is a constant independent of
-<span class="math inline">\(\kappa\)</span>. Then, for any constant
-<span class="math inline">\(\ee\)</span> and <span
-class="math inline">\(s = O(\lg\lg \kappa)\)</span>, there are <span
-class="math inline">\(a, b \in [n]\)</span> with <span
-class="math inline">\(a &lt; np &lt; b\)</span> such that</p>
+<div id="lem:bin-dp" class="lemma">
+<p><strong>Lemma 49</strong>. <em>Consider a Binomial distribution <span
+class="math inline">\(\Bin\)</span>, where <span class="math inline">\(n
+\in \Omega(\kappa)\)</span> and <span class="math inline">\(p \in
+(0,1)\)</span> is a constant independent of <span
+class="math inline">\(\kappa\)</span>. Then, for any constant <span
+class="math inline">\(\ee\)</span> and <span class="math inline">\(s =
+O(\lg\lg \kappa)\)</span>, there are <span class="math inline">\(a, b
+\in [n]\)</span> with <span class="math inline">\(a &lt; np &lt;
+b\)</span> such that</em></p>
 <ul>
-<li><p>For any <span class="math inline">\(\ell \in [a,b], e^{-\ee} \le
-\frac{\Pr_{X\sim \Bin}[X
+<li><p><em>For any <span class="math inline">\(\ell \in [a,b], e^{-\ee}
+\le \frac{\Pr_{X\sim \Bin}[X
     = \ell]}{\Pr_{X\sim \Bin}[X+s = \ell]} \le
-e^{\ee}.\)</span></p></li>
-<li><p>For any <span class="math inline">\(\ell \not \in [a,b]\)</span>,
-<span class="math inline">\(\Pr[\Bin = \ell] =
+e^{\ee}.\)</span></em></p></li>
+<li><p><em>For any <span class="math inline">\(\ell \not \in
+[a,b]\)</span>, <span class="math inline">\(\Pr[\Bin = \ell] =
     \negl(\kappa)\)</span> and <span class="math inline">\(\Pr[\Bin+s =
-\ell] = \negl(\kappa)\)</span>.</p></li>
+\ell] = \negl(\kappa)\)</span>.</em></p></li>
 </ul>
 </div>
 <p>The proof of the lemma is found in Appendix <a href="#apx:lem:bin-dp"
@@ -6836,8 +6852,8 @@ adversary does not know the other party’s input set (except from the
 intersection).</p>
 <p>Below, we show that <span class="math inline">\(\Pbase\)</span>
 achieves DDP under certain circumstances.</p>
-<div class="theorem">
-<p><span id="thm:CDDP" label="thm:CDDP"></span> For every constant <span
+<div id="thm:CDDP" class="theorem">
+<p><strong>Theorem 50</strong>. <em>For every constant <span
 class="math inline">\(\epsilon &gt; 0\)</span>, consider <span
 class="math inline">\(\Pbase\)</span> in the random oracle model with
 <span class="math inline">\(k = k(\epsilon, \kappa)\)</span>, where
@@ -6853,11 +6869,11 @@ class="math inline">\((\ee,\delta,\Delta_\PH)\)</span>-DDP against an
 adversary corrupting <span class="math inline">\(P_1\)</span> with <span
 class="math inline">\(\dd \in \negl(\kappa)\)</span>. DDP against an
 adversary corrupting <span class="math inline">\(P_2\)</span> holds when
-the parameters are set symmetrically.</p>
+the parameters are set symmetrically.</em></p>
 </div>
-<div class="theorem">
-<p><span id="thm:CDDP2" label="thm:CDDP2"></span> For security parameter
-<span class="math inline">\(\kappa\)</span>, every constant <span
+<div id="thm:CDDP2" class="theorem">
+<p><strong>Theorem 51</strong>. <em>For security parameter <span
+class="math inline">\(\kappa\)</span>, every constant <span
 class="math inline">\(\epsilon &gt; 0\)</span>, and every constant <span
 class="math inline">\(\gamma \in (0,1)\)</span>, consider <span
 class="math inline">\(\Pbase\)</span> in the random oracle model with
@@ -6882,7 +6898,7 @@ class="math inline">\((\epsilon, \delta, \Delta_\PH)\)</span>-DDP with
 \in \negl(\kappa)\)</span> against an adversary corrupting <span
 class="math inline">\(P_1\)</span>. DDP against an adversary corrupting
 <span class="math inline">\(P_2\)</span> holds when the parameters are
-set symmetrically.</p>
+set symmetrically.</em></p>
 </div>
 <h4 data-number="5.6.0.1" id="remark.-2"><span
 class="header-section-number">5.6.0.1</span> Remark.</h4>
@@ -6894,14 +6910,14 @@ simple two-party computation to compute the number of times these
 minimums match. We note that this protocol has communication and
 computation that is sublinear in the input size as it only depends on
 the number of hash functions. By Theorems <a href="#thm:CDDP"
-data-reference-type="ref" data-reference="thm:CDDP">[thm:CDDP]</a>
-and <a href="#thm:CDDP2" data-reference-type="ref"
-data-reference="thm:CDDP2">[thm:CDDP2]</a> this protocol achieves DDP
-when the conditions of either of the theorems are satisfied.</p>
+data-reference-type="ref" data-reference="thm:CDDP">50</a> and <a
+href="#thm:CDDP2" data-reference-type="ref"
+data-reference="thm:CDDP2">51</a> this protocol achieves DDP when the
+conditions of either of the theorems are satisfied.</p>
 <h2 data-number="5.7" id="proof-of-theorem-thmcddp"><span
 class="header-section-number">5.7</span> Proof of Theorem <a
 href="#thm:CDDP" data-reference-type="ref"
-data-reference="thm:CDDP">[thm:CDDP]</a></h2>
+data-reference="thm:CDDP">50</a></h2>
 <p>We first give the intuition of the proof. We assume that each of the
 non-intersecting elements has high min-entropy. WLOG, consider an
 adversary corrupting <span class="math inline">\(P_1\)</span>. The view
@@ -6953,15 +6969,16 @@ class="math inline">\(u_j^A \ne u_j^B\)</span>, and the final count will
 not be incremented. This way, the distribution of <span
 class="math inline">\(v_j^R\)</span> will jitter the final count. The
 above discussion can be formalized into the following definition.</p>
-<div class="definition">
-<p><span id="def:theta-good" label="def:theta-good"></span> Let <span
+<div id="def:theta-good" class="definition">
+<p><strong>Definition 52</strong> (<span
+class="math inline">\(\theta\)</span>-good iteration). <em>Let <span
 class="math inline">\(n_R = n_B - n_I\)</span>, we define <span
 class="math inline">\(\good_\theta(h_j, A, I, n_B)\)</span> to be true
 if and only if the following holds: <span class="math display">\[\min
 h_j(A) = \min h_j(I), ~\mbox{and}~
     \min h_j(I) \in
     \left[1-\left(\frac{1}{2}+\theta\right)^{1/n_R},
-        1-\left(\frac{1}{2}-\theta\right)^{1/n_R}\right].\]</span></p>
+        1-\left(\frac{1}{2}-\theta\right)^{1/n_R}\right].\]</span></em></p>
 </div>
 <p>The second condition of the definition requires that <span
 class="math inline">\(\min h_j(I)\)</span> is somewhere in the middle
@@ -6982,7 +6999,7 @@ adversary, it turns out that the noise from the <span
 class="math inline">\(k_g\)</span> iterations follows a Poisson Binomial
 distribution, which is a generalization of a Binomial distribution where
 each trial has a different success probability. However, using the
-techniques of <span class="citation" data-cites="COK22">[145]</span>, we
+techniques of <span class="citation" data-cites="COK22">[149]</span>, we
 can still show that this distribution works as a good noise to hide the
 private data.</p>
 <h3 data-number="5.7.1" id="apx:pubHashHighEntropy"><span
@@ -7046,16 +7063,15 @@ class="math inline">\(\Pbase^{(1)}(A, \Bp)\)</span>. We show how to
 leverage the uncertainties of <span class="math inline">\(x^B_i
 \in R = B \setminus A\)</span> so that good iterations work like the
 needed noise to guarantee DP.</p>
-<div class="lemma">
-<p><span id="lem:good_event" label="lem:good_event"></span> For any
-<span class="math inline">\(A, I, n_B\)</span> and <span
-class="math inline">\(n_R = n_B - n_I\)</span>, we have <span
-class="math display">\[p_\theta \stackrel{def}{=}
-\Pr_{h}[\good_\theta(h, A,
+<div id="lem:good_event" class="lemma">
+<p><strong>Lemma 53</strong>. <em>For any <span class="math inline">\(A,
+I, n_B\)</span> and <span class="math inline">\(n_R = n_B -
+n_I\)</span>, we have <span class="math display">\[p_\theta
+\stackrel{def}{=} \Pr_{h}[\good_\theta(h, A,
 I, n_B)] \ge
 \left(\left(\frac{1}{2}+\theta \right)^{\frac{n_A}{n_R}} -
 \left(\frac{1}{2}-\theta \right)^{\frac{n_A}{n_R}}\right) \cdot
-\frac{n_I}{n_A} ~~.\]</span></p>
+\frac{n_I}{n_A} ~~.\]</span></em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:good_event"
 data-reference-type="ref"
@@ -7071,7 +7087,7 @@ class="math inline">\(u_j^B\)</span> comes from <span
 class="math inline">\(\xs\)</span> when <span
 class="math inline">\(P_2\)</span>’s input is <span
 class="math inline">\(\Bp\)</span>. From Lemma <a href="#lem:sen"
-data-reference-type="ref" data-reference="lem:sen">[lem:sen]</a>, with
+data-reference-type="ref" data-reference="lem:sen">45</a>, with
 overwhelming probability <span class="math inline">\(|S_{\xs}| =
 O(\lg\lg\kappa)\)</span>.</p>
 <p>Now, fix <span class="math inline">\(A, I, \xs\)</span> and <span
@@ -7086,15 +7102,14 @@ S_{\xs}\)</span>. The following lemma shows that the <span
 class="math inline">\(\theta\)</span>-good events takes place <span
 class="math inline">\(\Theta(\secparam)\)</span>-many times, with
 overwhelming probability.</p>
-<div class="lemma">
-<p><span id="thm:good_hash" label="thm:good_hash"></span> Suppose <span
-class="math inline">\(k = \Theta(\secparam)\)</span>, <span
-class="math inline">\(n_B = \Omega(\secparam^2)\)</span>, and <span
-class="math inline">\(p_\theta \in \Theta(1)\)</span>. Let <span
-class="math inline">\(s = |S_\xs|\)</span>. Then, we have <span
-class="math display">\[\Pr_{h_1, \ldots, h_k}\left[ |K_\theta| &gt;
-\frac{2}{3} (k-s) p_\theta \right ] \ge 1 -
-\negl(\secparam).\]</span></p>
+<div id="thm:good_hash" class="lemma">
+<p><strong>Lemma 54</strong>. <em>Suppose <span class="math inline">\(k
+= \Theta(\secparam)\)</span>, <span class="math inline">\(n_B =
+\Omega(\secparam^2)\)</span>, and <span class="math inline">\(p_\theta
+\in \Theta(1)\)</span>. Let <span class="math inline">\(s =
+|S_\xs|\)</span>. Then, we have <span class="math display">\[\Pr_{h_1,
+\ldots, h_k}\left[ |K_\theta| &gt; \frac{2}{3} (k-s) p_\theta \right ]
+\ge 1 - \negl(\secparam).\]</span></em></p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:good_hash"
 data-reference-type="ref"
@@ -7164,7 +7179,7 @@ class="math inline">\(c_j \sim \Ber(p_j)\)</span>, where <span
 class="math inline">\(\Ber\)</span> denotes the Bernoulli distribution.
 Since these Bernoulli distributions are independent from each other, can
 apply Lemma <a href="#lem:pb-dp" data-reference-type="ref"
-data-reference="lem:pb-dp">[lem:pb-dp]</a> below to conclude that <span
+data-reference="lem:pb-dp">55</a> below to conclude that <span
 class="math inline">\(C_{K_\theta} \aed
 C_{K_\theta}+s\)</span>.</p>
 <p>For <span class="math inline">\(j \in [n]\)</span>, consider <span
@@ -7177,10 +7192,10 @@ distribution.</p>
 <p>We conclude the proof by showing that the Additive Poisson Binomial
 distribution with appropriate parameters satisfies the following DP-like
 property.</p>
-<div class="lemma">
-<p><span id="lem:pb-dp" label="lem:pb-dp"></span> Consider an Additive
-Poisson Binomial distribution <span class="math inline">\(\mathsf{PB}(n,
-p_J)\)</span>, where <span class="math inline">\(n \in
+<div id="lem:pb-dp" class="lemma">
+<p><strong>Lemma 55</strong>. <em>Consider an Additive Poisson Binomial
+distribution <span class="math inline">\(\mathsf{PB}(n, p_J)\)</span>,
+where <span class="math inline">\(n \in
 \Omega(\kappa)\)</span> and for each <span
 class="math inline">\(p_j\)</span>, it holds that <span
 class="math inline">\(p_j \in [1/2 - \theta, 1/2 + \theta]\)</span>
@@ -7189,17 +7204,18 @@ where <span class="math inline">\(\theta
 class="math inline">\(\kappa\)</span>. Then, for any constant <span
 class="math inline">\(\ee\)</span> and <span class="math inline">\(s  =
 \Theta(\lg\lg \kappa)\)</span>, there are <span class="math inline">\(a,
-b \in [n]\)</span> such that</p>
+b \in [n]\)</span> such that</em></p>
 <ul>
-<li><p>For any <span class="math inline">\(\ell \in [a,b], e^{-\ee} \le
-\frac{\Pr[\mathsf{PB}(n, p_J) =
+<li><p><em>For any <span class="math inline">\(\ell \in [a,b], e^{-\ee}
+\le \frac{\Pr[\mathsf{PB}(n, p_J) =
     \ell]}{\Pr[\mathsf{PB}(n, p_J)+s = \ell]} \le
-e^{\ee}.\)</span></p></li>
-<li><p>For any <span class="math inline">\(\ell \not \in [a,b]\)</span>,
-<span class="math inline">\(\Pr[\mathsf{PB}(n,p_J) = \ell] =
+e^{\ee}.\)</span></em></p></li>
+<li><p><em>For any <span class="math inline">\(\ell \not \in
+[a,b]\)</span>, <span class="math inline">\(\Pr[\mathsf{PB}(n,p_J) =
+\ell] =
     \negl(\kappa)\)</span> and <span
 class="math inline">\(\Pr[\mathsf{PB}(n,p_J)+s = \ell] =
-\negl(\kappa)\)</span>.</p></li>
+\negl(\kappa)\)</span>.</em></p></li>
 </ul>
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:pb-dp"
@@ -7208,11 +7224,11 @@ data-reference="apx:proof:pb-dp">[apx:proof:pb-dp]</a>.</p>
 <h2 data-number="5.8" id="sec:ddp-polysize"><span
 class="header-section-number">5.8</span> Highlights of Proof of
 Theorem <a href="#thm:CDDP2" data-reference-type="ref"
-data-reference="thm:CDDP2">[thm:CDDP2]</a></h2>
+data-reference="thm:CDDP2">51</a></h2>
 <p>Here, we highlight only the important parts of the proof of
 Theorem <a href="#thm:CDDP2" data-reference-type="ref"
-data-reference="thm:CDDP2">[thm:CDDP2]</a>. The full proof can be found
-in Appendix <a href="#apx:proof_CDDP2" data-reference-type="ref"
+data-reference="thm:CDDP2">51</a>. The full proof can be found in
+Appendix <a href="#apx:proof_CDDP2" data-reference-type="ref"
 data-reference="apx:proof_CDDP2">[apx:proof_CDDP2]</a>. We show that
 <span class="math inline">\(\Pbase\)</span> satisfies DDP even when the
 size of the universe <span class="math inline">\(\U\)</span> of size
@@ -7435,11 +7451,10 @@ class="math inline">\(E^{n&#39;}_{r}\)</span> is another way of
 representing an Additive Poisson Binomial distribution. That is, <span
 class="math inline">\(E^{n&#39;}_{k_b,r} = \Pr[ \mathsf{PB}(k_b, p_J) =
 r ].\)</span> Therefore, based on Lemma <a href="#lem:pb-dp"
-data-reference-type="ref" data-reference="lem:pb-dp">[lem:pb-dp]</a>, we
-have the following:</p>
-<div class="corollary">
-<p><span id="lem:concrete_expected_probs"
-label="lem:concrete_expected_probs"></span> Let <span
+data-reference-type="ref" data-reference="lem:pb-dp">55</a>, we have the
+following:</p>
+<div id="lem:concrete_expected_probs" class="corollary">
+<p><strong>Corollary 56</strong>. <em>Let <span
 class="math inline">\(k_b \in \Omega(\kappa)\)</span>, and consider any
 <span class="math inline">\(H_1\)</span> that makes <span
 class="math inline">\(|\YYY| &gt;
@@ -7447,17 +7462,17 @@ k_b\)</span> in the min-hash graph construction. For any <span
 class="math inline">\(s = O(\lg\lg\kappa)\)</span>, any constant <span
 class="math inline">\(\ee\)</span>, there are <span
 class="math inline">\(a, b \in [k_b]\)</span> such that over the choice
-of <span class="math inline">\(H_2\)</span>, we have</p>
+of <span class="math inline">\(H_2\)</span>, we have</em></p>
 <ul>
-<li><p>For any <span class="math inline">\(r \not \in[a + s,
+<li><p><em>For any <span class="math inline">\(r \not \in[a + s,
 b]\)</span>, then <span class="math inline">\(E^{n_R&#39;}_{k_b,
 r}\)</span> and <span class="math inline">\(E^{n_R&#39;}_{k_b,
 r-s}\)</span> are both negligible in <span
-class="math inline">\(\kappa\)</span>.</p></li>
-<li><p>For any <span class="math inline">\(r \in [a, b]\)</span>, then
-it holds <span class="math inline">\(e^{-\ee/3} \leq E^{n_R&#39;}_{k_b,
-r}/E^{n_R&#39;}_{k_b, r-s}
-\leq e^{\ee/3}\)</span>.</p></li>
+class="math inline">\(\kappa\)</span>.</em></p></li>
+<li><p><em>For any <span class="math inline">\(r \in [a, b]\)</span>,
+then it holds <span class="math inline">\(e^{-\ee/3} \leq
+E^{n_R&#39;}_{k_b, r}/E^{n_R&#39;}_{k_b, r-s}
+\leq e^{\ee/3}\)</span>.</em></p></li>
 </ul>
 </div>
 <p>The above indicates that the distribution over <span
@@ -7516,7 +7531,7 @@ class="math inline">\(D_{T,r}\)</span> is close to its mean <span
 class="math inline">\(E_{\hat k,r}^{n_R&#39;}\)</span> (and then
 applying Corollary <a href="#lem:concrete_expected_probs"
 data-reference-type="ref"
-data-reference="lem:concrete_expected_probs">[lem:concrete_expected_probs]</a>).</p>
+data-reference="lem:concrete_expected_probs">56</a>).</p>
 <h4 data-number="5.8.3.2" id="geometric-collision-property."><span
 class="header-section-number">5.8.3.2</span> Geometric collision
 property.</h4>
@@ -7544,16 +7559,16 @@ class="math inline">\(z \in [n&#39;]\)</span>. We show that <span
 class="math inline">\(\mathsf{Var}[D_{T,r}]\)</span> can be bounded for
 any distribution over sets <span class="math inline">\(R&#39;\)</span>
 that has this property.</p>
-<div class="definition">
-<p><span id="def:geo_col" label="def:geo_col"></span> Let <span
-class="math inline">\(\mathcal{D}\)</span> be a distribution over sets
-<span class="math inline">\(R&#39;\)</span> of size <span
-class="math inline">\(n&#39;_R\)</span>. We say that <span
+<div id="def:geo_col" class="definition">
+<p><strong>Definition 57</strong> (Geometric Collision Property).
+<em>Let <span class="math inline">\(\mathcal{D}\)</span> be a
+distribution over sets <span class="math inline">\(R&#39;\)</span> of
+size <span class="math inline">\(n&#39;_R\)</span>. We say that <span
 class="math inline">\({\mathcal{D}}\)</span> has the <em>Geometric
 Collision Property</em> if for all <span class="math inline">\(z \in
 [n&#39;_R]\)</span> <span class="math display">\[\Pr_{R&#39;_i, R&#39;_j
 \sim {\mathcal{D}}} \left [|R&#39;_i \cap R&#39;_j| = z \right ] \leq
-\left ( \frac{1}{\sqrt{n_R}} \right)^z.\]</span></p>
+\left ( \frac{1}{\sqrt{n_R}} \right)^z.\]</span></em></p>
 </div>
 <p>Based on this property, we can show the following lemma.</p>
 <div class="restatable">
@@ -7638,7 +7653,7 @@ are not <span class="math inline">\(\theta\)</span>-good is small. We
 can lower-bound the remaining min-entropy in <span
 class="math inline">\(\mathcal{D}\)</span>, therefore, using the weak
 chain rule for min-entropy <span class="citation"
-data-cites="DORS08">[146], Lemma 2.2</span>.</p>
+data-cites="DORS08">[150], Lemma 2.2</span>.</p>
 <p>If we want to use the weak chain rule to lower bound the remaining
 min-entropy with all but <span
 class="math inline">\(2^{-\kappa}\)</span> probability, however, we need
@@ -7661,14 +7676,14 @@ the total min-entropy in <span class="math inline">\(R\)</span> remains
 high!</p>
 <p>This phenomenon has been previously observed and studied in the
 literature <span class="citation"
-data-cites="skorski2019strong">[141]</span>. One way to deal with such a
+data-cites="skorski2019strong">[144]</span>. One way to deal with such a
 counter-intuitive situation is to actually leak a small amount of
 <em>additional</em> information, known as “spoiled” bits. This will
 lower the total min-entropy in <span class="math inline">\(R\)</span>,
 but will ensure that a large fraction of blocks in <span
 class="math inline">\(R\)</span> still have high min entropy of at least
 <span class="math inline">\(1.5\lg(n)\)</span>. We extend the techniques
-of <span class="citation" data-cites="skorski2019strong">[141]</span> to
+of <span class="citation" data-cites="skorski2019strong">[144]</span> to
 produce spoiling leakage so that the min-entropy in <span
 class="math inline">\(R\)</span> still stays high in our protocol. We
 discuss more details about the strong chain rule in the next
@@ -7705,7 +7720,7 @@ sequences of leakages from <span class="math inline">\(\ell_1(\cdot),
 \ldots,
 \ell_n(\cdot)\)</span> should be sufficiently small (see Property 1 in
 Theorem <a href="#thm:chain_leak_3" data-reference-type="ref"
-data-reference="thm:chain_leak_3">[thm:chain_leak_3]</a> below).</p>
+data-reference="thm:chain_leak_3">58</a> below).</p>
 <h4 data-number="5.8.5.3" id="spoiling-functions."><span
 class="header-section-number">5.8.5.3</span> Spoiling functions.</h4>
 <p>Our theorem below states the existence of a spoiling function <span
@@ -7730,8 +7745,7 @@ class="math inline">\(i \in V\)</span>, the random strings <span
 class="math inline">\(\rho_i\)</span> are uniform random and independent
 conditioned on <span class="math inline">\(f(R)\)</span>. (See
 Properties (5)-(8) in Theorem <a href="#thm:chain_leak_3"
-data-reference-type="ref"
-data-reference="thm:chain_leak_3">[thm:chain_leak_3]</a>).</p>
+data-reference-type="ref" data-reference="thm:chain_leak_3">58</a>).</p>
 <p>The properties of <span class="math inline">\(f(\cdot)\)</span> are
 roughly the following: (1) The failure probability (outputting <span
 class="math inline">\(\bot\)</span>) is small. (2) As long as the total
@@ -7745,8 +7759,7 @@ class="math inline">\(f(R)\)</span> (3) The leakages <span
 class="math inline">\(\{\ell_i(\cdot)\}_{i \in W}\)</span> can be
 computed given <span class="math inline">\(f(R)\)</span>. (See
 Properties (2)-(4) in Theorem <a href="#thm:chain_leak_3"
-data-reference-type="ref"
-data-reference="thm:chain_leak_3">[thm:chain_leak_3]</a>)</p>
+data-reference-type="ref" data-reference="thm:chain_leak_3">58</a>)</p>
 <h4 data-number="5.8.5.4" id="our-theorem."><span
 class="header-section-number">5.8.5.4</span> Our theorem.</h4>
 <p>The main difference between our spoiling lemma and prior ones is that
@@ -7755,14 +7768,15 @@ our min and max entropy guarantees on <span class="math inline">\(R =
 leakage <span class="math inline">\(\{\ell_i\}_{i \in W}\)</span> which
 is included in the spoiled bits <span
 class="math inline">\(f(R)\)</span>.</p>
-<div class="theorem">
-<p><span id="thm:chain_leak_3" label="thm:chain_leak_3"></span> Let
-<span class="math inline">\(\mathcal{U} = U_1 \times \cdots \times
-U_n\)</span> be a fixed universe and <span class="math inline">\(R =
-(R_1,\dots,R_n)\)</span> be a sequence of (possibly correlated) random
-variables where each <span class="math inline">\(R_i\)</span> is over
-<span class="math inline">\(U_i\)</span> (and all are disjoint) and
-<span class="math inline">\(|U_i| = \ell\)</span> for all <span
+<div id="thm:chain_leak_3" class="theorem">
+<p><strong>Theorem 58</strong> (Block structures with few bits spoiled
+and leakage). <em>Let <span class="math inline">\(\mathcal{U} = U_1
+\times \cdots \times U_n\)</span> be a fixed universe and <span
+class="math inline">\(R = (R_1,\dots,R_n)\)</span> be a sequence of
+(possibly correlated) random variables where each <span
+class="math inline">\(R_i\)</span> is over <span
+class="math inline">\(U_i\)</span> (and all are disjoint) and <span
+class="math inline">\(|U_i| = \ell\)</span> for all <span
 class="math inline">\(i\)</span>. Let <span
 class="math inline">\(\rho_1, \ldots, \rho_n\)</span> be a sequence of
 uniformly random strings over <span
@@ -7773,9 +7787,9 @@ leakage functions. Then, for any <span class="math inline">\(\epsilon
 and any <span class="math inline">\(c \in [2^\delta,
 \ell/2^\delta]\)</span>, there exists a spoiling leakage function <span
 class="math inline">\(f(R)\)</span> that satisfies the following
-properties.</p>
+properties.</em></p>
 <ol>
-<li><p>A sequence <span class="math inline">\(\beta_1, \ldots,
+<li><p><em>A sequence <span class="math inline">\(\beta_1, \ldots,
 \beta_n\)</span> is valid if for all <span class="math inline">\(i \in
 V\)</span>, <span class="math inline">\(\beta_i = \bot\)</span> and for
 all <span class="math inline">\(i \in W\)</span>, <span
@@ -7784,12 +7798,13 @@ class="math inline">\(\beta_i = \ell_i(R_i, \rho_i,
 = (\beta_{i+1}, \ldots, \beta_n)\)</span>. We require that the number of
 valid sequences <span class="math inline">\(\beta_1, \ldots,
 \beta_n\)</span> is at most <span
-class="math inline">\(B\)</span>.</p></li>
-<li><p>It holds that <span class="math inline">\(\Pr_{R}[f(R) = \bot]
-\leq \epsilon n\)</span>.</p></li>
-<li><p><span class="math inline">\(|Im(f)| \leq  B \cdot \left (
-2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}\)</span>.</p></li>
-<li><p>Conditioned on any <span class="math inline">\(y \in Im(f)
+class="math inline">\(B\)</span>.</em></p></li>
+<li><p><em>It holds that <span class="math inline">\(\Pr_{R}[f(R) =
+\bot] \leq \epsilon n\)</span>.</em></p></li>
+<li><p><em><span class="math inline">\(|Im(f)| \leq  B \cdot \left (
+2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right
+)^{n}\)</span>.</em></p></li>
+<li><p><em>Conditioned on any <span class="math inline">\(y \in Im(f)
 \setminus \{\bot\}\)</span>, for all <span class="math inline">\(i \in
 W\)</span>, the leakage <span class="math inline">\(\ell_i(R_i, \rho_i,
 \beta_{&gt;i})\)</span> can be computed from <span
@@ -7797,14 +7812,14 @@ class="math inline">\(y\)</span>. Here, <span
 class="math inline">\(\beta_j = \bot\)</span> if <span
 class="math inline">\(j \in V\)</span> and <span
 class="math inline">\(\beta_j = \ell_j(R_j, \rho_j, \beta_{&gt;
-j})\)</span> otherwise.</p></li>
-<li><p>Let <span class="math inline">\(Im(f)\)</span> be the set of
+j})\)</span> otherwise.</em></p></li>
+<li><p><em>Let <span class="math inline">\(Im(f)\)</span> be the set of
 images of <span class="math inline">\(f\)</span>. Every <span
 class="math inline">\(y \in Im(f) \setminus \{\bot\}\)</span> specifies
 two disjoint sets <span class="math inline">\(V\)</span> and <span
 class="math inline">\(W\)</span> such that <span class="math inline">\(V
-\cup W = [n]\)</span>.</p></li>
-<li><p>Conditioned on any <span class="math inline">\(y \in Im(f)
+\cup W = [n]\)</span>.</em></p></li>
+<li><p><em>Conditioned on any <span class="math inline">\(y \in Im(f)
 \setminus \{\bot\}\)</span>, for every <span class="math inline">\(i \in
 V\)</span>, every element in distribution <span
 class="math inline">\(R_i \mid R_{&lt;i}\)</span> has low probability
@@ -7814,8 +7829,8 @@ weight, i.e., <span class="math display">\[\begin{aligned}
     \Pr\left[R_i = r_i~ \Bigg |~R_{&lt;i} = r_{&lt;i},~ y\right]
     \leq  \frac{2^{\delta}}{c}.
     
-\end{aligned}\]</span></p></li>
-<li><p>Conditioned on any <span class="math inline">\(y \in Im(f)
+\end{aligned}\]</span></em></p></li>
+<li><p><em>Conditioned on any <span class="math inline">\(y \in Im(f)
 \setminus \{\bot\}\)</span>, for every <span class="math inline">\(i \in
 W\)</span>, it holds that <span class="math inline">\(R_i \mid
 R_{&lt;i}\)</span> has small support size, i.e., <span
@@ -7825,10 +7840,10 @@ f(r) =  y, \forall i \in W: \\
         ~~\left | \left \{ r_i : \Pr[R_i = r_i|R_{&lt;i} = r_{&lt;i},
 y]] \geq 0 \right \}  \right | \leq 2^{\delta} \cdot c.
     
-\end{aligned}\]</span></p></li>
-<li><p><span class="math inline">\(\{\rho_i\}_{i \in V}\)</span> are
+\end{aligned}\]</span></em></p></li>
+<li><p><em><span class="math inline">\(\{\rho_i\}_{i \in V}\)</span> are
 distributed independently and uniformly at random conditioned on <span
-class="math inline">\(f(R)\)</span>.</p></li>
+class="math inline">\(f(R)\)</span>.</em></p></li>
 </ol>
 </div>
 <p>The proof is found in Appendix <a href="#sec:construct-gcp2"
@@ -7888,7 +7903,7 @@ class="math inline">\(\F_{\psica}\)</span> instantiated with the PSI-CA
 protocol described in Figure <a href="#pro:psica"
 data-reference-type="ref" data-reference="pro:psica">[pro:psica]</a>. It
 is a variant of the protocol in <span class="citation"
-data-cites="DGT12">[137]</span>, where <span
+data-cites="DGT12">[140]</span>, where <span
 class="math inline">\(H_2\)</span> is applied to <span
 class="math inline">\(\{a&#39;_i\}_{i \in [v]}\)</span> and <span
 class="math inline">\(\{b&#39;_j\}_{j \in [w]}\)</span> in order to
@@ -7899,7 +7914,7 @@ this variant, when <span class="math inline">\(H_2\)</span> is also
 modeled as a random oracle.</p>
 <p>We briefly sketch the security proof here while referring the full
 proof to the original paper <span class="citation"
-data-cites="DGT12">[137]</span>. We first show the simulator for the
+data-cites="DGT12">[140]</span>. We first show the simulator for the
 corrupted <span class="math inline">\(P_1\)</span>. Let <span
 class="math inline">\(t\)</span> be the protocol output (i.e., set
 intersection cardinality). The simulator chooses random <span
@@ -8061,9 +8076,9 @@ class="math inline">\(0.5\)</span>. This is due to the likelihood that a
 hash function is <span class="math inline">\(\theta\)</span>-good being
 maximized when striking a balance between the two conditions stipulated
 in Definition <a href="#def:theta-good" data-reference-type="ref"
-data-reference="def:theta-good">[def:theta-good]</a>: (i) the hash of an
-intersecting item should be the minimum hash value, and (ii) the minimum
-hash value is neither too large nor too small.</p></li>
+data-reference="def:theta-good">52</a>: (i) the hash of an intersecting
+item should be the minimum hash value, and (ii) the minimum hash value
+is neither too large nor too small.</p></li>
 </ul>
 <h1 data-number="6" id="facts"><span
 class="header-section-number">6</span> FACTs</h1>
@@ -8071,12 +8086,12 @@ class="header-section-number">6</span> FACTs</h1>
 class="header-section-number">6.1</span> Introduction</h2>
 <p>The proliferation of fake and misleading information online has had
 significant impact on political discourse <span class="citation"
-data-cites="NYTimes:IsaRoo18">[147]</span> and has resulted in
+data-cites="NYTimes:IsaRoo18">[151]</span> and has resulted in
 violence <span class="citation"
-data-cites="WAPo:Samuels20">[148]</span>. Large services like Facebook
+data-cites="WAPo:Samuels20">[152]</span>. Large services like Facebook
 and YouTube have begun to remove or label content that they know to be
 fraudulent or misleading <span class="citation"
-data-cites="Facebook:fakeNews Youtube:fakeNews">[149], [150]</span>,
+data-cites="Facebook:fakeNews Youtube:fakeNews">[153], [154]</span>,
 through a combination of a manual process of reviewing posts/videos and
 automated machine learning techniques.</p>
 <p>However, on end-to-end encrypted messaging services (EEMS), like
@@ -8091,7 +8106,7 @@ difficult because some platforms, like Signal, also hide the path the
 message took, so identifying and addressing the original source of the
 misinformation may not be possible.</p>
 <p>Tyagi et al. <span class="citation"
-data-cites="CCS:TyaMieRis19">[151]</span> introduced a first approach
+data-cites="CCS:TyaMieRis19">[155]</span> introduced a first approach
 for overcoming this challenge and allow EEMS to effectively
 <em>traceback</em> an offending message to find the originator based on
 a user complaint. The traceback procedure also assures that all other
@@ -8110,7 +8125,7 @@ privacy of the sender (e.g., the leaker) by issuing a single complaint
 to the EEMS. While it may be possible to apply manual review to these
 complaints, the scale of possible complaints could make this
 impractical. Several follow-on papers <span class="citation"
-data-cites="CCS:PeaEskBon21 eprint:IssAlhMay2021">[152], [153]</span>
+data-cites="CCS:PeaEskBon21 eprint:IssAlhMay2021">[156], [157]</span>
 show how to achieve <em>source-tracking</em> for EEMS to identify the
 source of a message without relying on traceback of all intermediate
 recipients. However, these systems still allow a single complainer to
@@ -8135,7 +8150,7 @@ would enable the checking and updating of counts for each message, but
 the access patterns of clients checking and updating counters could
 reveal how many complaints a message receives even if the threshold is
 not reached. Oblivious RAM (ORAM) (e.g. <span class="citation"
-data-cites="JACM:GolOst96 JACM:SDSCFRYD18">[154], [155]</span>) could be
+data-cites="JACM:GolOst96 JACM:SDSCFRYD18">[158], [159]</span>) could be
 used to protect the access patterns, but have high computational
 overheads and usually assume clients may share secrets and are not
 malicious. Pricate Information Retrieval (PIR) does not assume clients
@@ -8242,14 +8257,14 @@ This suggests an immediate solution where the server stores an encrypted
 counter for each message, and clients interact with the server to
 increment the counter and check the threshold. While implementing such
 counters is certainly possible using homomorphic encryption <span
-class="citation" data-cites="STOC:Gentry09">[156]</span> or standard
+class="citation" data-cites="STOC:Gentry09">[160]</span> or standard
 secure computation techniques <span class="citation"
 data-cites="FOCS:Yao86 STOC:GolMicWig87 STOC:BenGolWig88">[25], [113],
-[157]</span> , the problem is that the access pattern of clients’
+[161]</span> , the problem is that the access pattern of clients’
 updates to counters leaks information to the server by revealing the
 complaint histogram. This suggests a further modification to store the
 counters inside an oblivious RAM (ORAM) <span class="citation"
-data-cites="JACM:GolOst96">[154]</span> to hide such access patterns
+data-cites="JACM:GolOst96">[158]</span> to hide such access patterns
 from the client. However, in our setting this would require a
 multi-client ORAM <span class="citation"
 data-cites="maffei-msmcoram concuroram MOSE">[85], [86], [87]</span>
@@ -8313,14 +8328,14 @@ class="header-section-number">6.1.3</span> Limitations of FACTS</h3>
 <p>In order to present FACTS, it is also important to recognize what our
 system does <em>not</em> do.</p>
 <p>First, unlike some prior work, e.g. <span class="citation"
-data-cites="ICS:Geiger16">[158]</span>, <span class="citation"
-data-cites="km-private-membership-usenix21">[159]</span>, FACTS does not
+data-cites="ICS:Geiger16">[162]</span>, <span class="citation"
+data-cites="km-private-membership-usenix21">[163]</span>, FACTS does not
 attempt to automatically detect misinformation. Instead, it relies on
 users reporting it when they see it. This reliance on users has inherent
 benefits and limitations. While our system is not subject to the kinds
 of machine-generated false positives that can arise from, e.g., hash
 collisions <span class="citation"
-data-cites="brandom-verge-apple-csam">[160]</span>, our model is
+data-cites="brandom-verge-apple-csam">[164]</span>, our model is
 inherently vulnerable to any sufficiently large group of dishonest
 users, who could trigger an audit on a benign message. This is why we
 suggest the possibility of a manual human review process on message
@@ -8522,7 +8537,7 @@ structure shares some of the same basic functionality as a counting
 Bloom filter <span class="citation"
 data-cites="TON:FCAB00 PODC:Mitzenmacher01">[97], [98]</span> or
 count-min sketch <span class="citation"
-data-cites="JAL:CorMut05">[161]</span>, which is to insert elements and
+data-cites="JAL:CorMut05">[165]</span>, which is to insert elements and
 compute the (approximate) frequency of a given element.</p>
 <p>Our CCBF differs from a usual count-min sketch in that each update
 operation is accompanied by a <em>user id</em>, and each user can only
@@ -8720,8 +8735,8 @@ probabilities</h4>
 class="math inline">\(\falling{n}{k}\)</span> to denote the <em>falling
 factorial</em>, defined by <span class="math display">\[\falling{n}{k} =
 \frac{n!}{(n-k)!} = n\cdot(n-1)\cdot(n-2)\cdots(n-k+1).\]</span></p>
-<div class="lemma">
-<p><span id="lem:intersect" label="lem:intersect"></span> Let <span
+<div id="lem:intersect" class="lemma">
+<p><strong>Lemma 59</strong>. <em>Let <span
 class="math inline">\(k,a,b,s\)</span> be non-negative integers with
 <span class="math inline">\(k \le b \le a \le s\)</span>, and suppose
 <span class="math inline">\(S\)</span> and <span
@@ -8734,7 +8749,7 @@ class="math display">\[\label{eqn:intersect}
 \Pr(|S \cap T| = k) =
     \frac{\falling{a}{k} \cdot{} \falling{b}{k} \cdot{}
 \falling{(s-a)}{b-k}}
-         {\falling{s}{b} \cdot{} k!}.\]</span></p>
+         {\falling{s}{b} \cdot{} k!}.\]</span></em></p>
 </div>
 <div class="proof">
 <p><em>Proof.</em> The number of ways to choose <span
@@ -8783,7 +8798,7 @@ class="math inline">\(p_w\)</span> to be the probability that an
 arbitrary user is able to write to one of the <span
 class="math inline">\(w\)</span> remaining unfilled slots for the
 message. From <a href="#lem:intersect" data-reference-type="ref"
-data-reference="lem:intersect">[lem:intersect]</a>, we have <span
+data-reference="lem:intersect">59</a>, we have <span
 class="math display">\[p_w = 1 -
 \frac{\falling{(s-u)}{w}}{\falling{s}{w}},
     \label{eqn:pw}\]</span> which can be computed in <span
@@ -8846,9 +8861,8 @@ class="math inline">\(q_w\)</span> is the same as the probability of a
 size-<span class="math inline">\(m\)</span> set and a size-<span
 class="math inline">\(v\)</span> set having intersection size exactly
 <span class="math inline">\(v-w\)</span>. From <a href="#lem:intersect"
-data-reference-type="ref"
-data-reference="lem:intersect">[lem:intersect]</a>, this is <span
-class="math display">\[q_w =
+data-reference-type="ref" data-reference="lem:intersect">59</a>, this is
+<span class="math display">\[q_w =
     \frac{\falling{m}{v-w} \cdot{} \falling{v}{v-w} \cdot{}
 \falling{(s-m)}{w}}
          {\falling{s}{v} \cdot{} (v-w)!}.\]</span> We can pre-compute
@@ -8992,8 +9006,8 @@ class="math inline">\(2^{-\lambda}\)</span>.</p>
 </div>
 <p>We can easily summarize the various conditions on the parameters as
 follows:</p>
-<div class="corollary">
-<p><span id="cor:params" label="cor:params"></span> Let <span
+<div id="cor:params" class="corollary">
+<p><strong>Corollary 60</strong>. <em>Let <span
 class="math inline">\(n\)</span> be a limit on the total number of calls
 to <span class="math inline">\(\mathsf{Increment}\)</span>, and <span
 class="math inline">\(t\)</span> be a desired threshold satisfying <span
@@ -9005,7 +9019,7 @@ class="math inline">\(u=47.31\tfrac{n}{t}\)</span>, any call to <span
 class="math inline">\(\ensuremath{\mathsf{TestCount}}(x,t)\)</span> will
 satisfy the high accuracy assurances of <a href="#thm:fp,thm:fn"
 data-reference-type="ref"
-data-reference="thm:fp,thm:fn">[thm:fp,thm:fn]</a>.</p>
+data-reference="thm:fp,thm:fn">[thm:fp,thm:fn]</a>.</em></p>
 </div>
 <h2 data-number="6.5" id="sec:construction"><span
 class="header-section-number">6.5</span> Instantiating FACTS</h2>
@@ -9252,10 +9266,10 @@ second. To understand accuracy and efficiency of FACTS, we measure them
 for a range of thresholds <span class="math inline">\(100 \le t \le
 1000\)</span>. With these fixed, we set the remaining parameters
 according to Corollary <a href="#cor:params" data-reference-type="ref"
-data-reference="cor:params">[cor:params]</a>. In particular, we set the
-server’s storage <span class="math inline">\(s=96n=12MB\)</span>. The
-user set size <span class="math inline">\(u\)</span> varies from
-(approximately) 47,000 to 470,000 bits, while the message set size <span
+data-reference="cor:params">60</a>. In particular, we set the server’s
+storage <span class="math inline">\(s=96n=12MB\)</span>. The user set
+size <span class="math inline">\(u\)</span> varies from (approximately)
+47,000 to 470,000 bits, while the message set size <span
 class="math inline">\(v\)</span> goes from (approximately) 740 to
 7400.</p>
 <div class="figure*">
@@ -9310,10 +9324,10 @@ the added overhead due to FACTS.</p>
 <p>For these experiments, we implemented both the client and server
 using the Rust programming language. We used SHA-3 for a hash function,
 and for encryption and signatures we used Rust’s ring library<span
-class="citation" data-cites="ring">[162]</span> implementation of
+class="citation" data-cites="ring">[166]</span> implementation of
 OpenSSL’s ChaCha20-Poly1305 protocol and Ed25519 respectively. To
 instantiate the CCBF, we used a simple library bitvec<span
-class="citation" data-cites="bitvec">[163]</span> that allows memory to
+class="citation" data-cites="bitvec">[167]</span> that allows memory to
 be bit addressed, rather than byte addressed, which gains us a quick,
 compact way to store the CCBF data structure.</p>
 <p>To simulate network overhead, we implemented a simple web server and
@@ -9327,7 +9341,7 @@ in the accuracy experiments, we set <span
 class="math inline">\(n=1,000,000\)</span> and threshold varying from
 100 to 1000, with the remaining parameters determined by Corollary <a
 href="#cor:params" data-reference-type="ref"
-data-reference="cor:params">[cor:params]</a>.</p>
+data-reference="cor:params">60</a>.</p>
 <p>For our measurement of message origination we looked at the cost of
 originating and sending a message of size 2MB. Creating and sending such
 a message with the encrypted hash and identity took 98ms, which
@@ -9464,12 +9478,14 @@ class="math inline">\(b&#39;\)</span></p></li>
 |\Pr[b=b&#39;]-1/2|.\]</span></p></li>
 </ol>
 <div class="definition">
-<p>A FACTS scheme is <em>private against a semi-honest server</em> if
-the adversary has a negligible advantage in the game above <span
-class="math inline">\(\AdvSP \le \negl(\secparam)\)</span></p>
+<p><strong>Definition 61</strong> (Privacy vs. Server). <em>A FACTS
+scheme is <em>private against a semi-honest server</em> if the adversary
+has a negligible advantage in the game above <span
+class="math inline">\(\AdvSP \le \negl(\secparam)\)</span></em></p>
 </div>
 <div class="theorem">
-<p>FACTS is private against a semi-honest server</p>
+<p><strong>Theorem 62</strong>. <em>FACTS is private against a
+semi-honest server</em></p>
 </div>
 <div class="proofsketch">
 <p>First, consider the server’s view on a <span
@@ -9585,12 +9601,14 @@ class="math inline">\(b&#39;\)</span></p></li>
 |\Pr[b=b&#39;]-1/2|.\]</span></p></li>
 </ol>
 <div class="definition">
-<p>A FACTS scheme achieves <em>privacy against malicious users</em> if
-the adversary has a negligible advantage in the game above <span
-class="math inline">\(\AdvCP \le \negl(\csecparam)\)</span></p>
+<p><strong>Definition 63</strong> (User privacy). <em>A FACTS scheme
+achieves <em>privacy against malicious users</em> if the adversary has a
+negligible advantage in the game above <span
+class="math inline">\(\AdvCP \le \negl(\csecparam)\)</span></em></p>
 </div>
 <div class="theorem">
-<p>FACTS achieves privacy against malicious users.</p>
+<p><strong>Theorem 64</strong>. <em>FACTS achieves privacy against
+malicious users.</em></p>
 </div>
 <div class="proofsketch">
 <p>The view of <span class="math inline">\(B\)</span> on an execution of
@@ -9654,14 +9672,16 @@ prior command <span
 class="math inline">\(\send(O,\cdot,\perp,y)\)</span>.</p></li>
 </ol>
 <div class="definition">
-<p>We say that a FACTS scheme disallows <em>framing</em> if for any PPT
-<span class="math inline">\(\A\)</span>, <span
+<p><strong>Definition 65</strong> (No framing). <em>We say that a FACTS
+scheme disallows <em>framing</em> if for any PPT <span
+class="math inline">\(\A\)</span>, <span
 class="math inline">\(\A\)</span> WINS in the above game with
 probability at most <span
-class="math inline">\(\negl(\csecparam)\)</span>.</p>
+class="math inline">\(\negl(\csecparam)\)</span>.</em></p>
 </div>
 <div class="theorem">
-<p>The FACTS scheme is unforgeable.</p>
+<p><strong>Theorem 66</strong>. <em>The FACTS scheme is
+unforgeable.</em></p>
 </div>
 <div class="proofsketch">
 <p>A valid tag <span class="math inline">\(\tagg_y\)</span> with
@@ -9711,18 +9731,19 @@ audit is not successful (i.e., the audit threshold is not
 reached).</p></li>
 </ol>
 <div class="definition">
-<p>We say that a FACTS scheme is <em><span
-class="math inline">\(\ell\)</span>-audit delay resilient</em> for
-integer <span class="math inline">\(\ell &lt; n\)</span> if for any PPT
-<span class="math inline">\(\A\)</span>, <span
+<p><strong>Definition 67</strong> (No delay). <em>We say that a FACTS
+scheme is <em><span class="math inline">\(\ell\)</span>-audit delay
+resilient</em> for integer <span class="math inline">\(\ell &lt;
+n\)</span> if for any PPT <span class="math inline">\(\A\)</span>, <span
 class="math inline">\(\A\)</span> WINS in the above game with
 probability at most <span
-class="math inline">\(\negl(\secparam)\)</span>.</p>
+class="math inline">\(\negl(\secparam)\)</span>.</em></p>
 </div>
 <div class="theorem">
-<p>The FACTS scheme is <span class="math inline">\(\ell\)</span>-audit
-delay resilient for any <span class="math inline">\(\ell \ge
-1.1t+.4\secparam + .7\sqrt{\secparam t}\)</span>.</p>
+<p><strong>Theorem 68</strong>. <em>The FACTS scheme is <span
+class="math inline">\(\ell\)</span>-audit delay resilient for any <span
+class="math inline">\(\ell \ge 1.1t+.4\secparam + .7\sqrt{\secparam
+t}\)</span>.</em></p>
 </div>
 <div class="proofsketch">
 <p>This follows immediately from Theorem <a href="#thm:fn"
@@ -9757,18 +9778,20 @@ class="math inline">\(\audit(\cdot, \tagg_x,x)\)</span>.</p></li>
 audit is successful.</p></li>
 </ol>
 <div class="definition">
-<p>We say that a FACTS scheme is <em><span
-class="math inline">\(\ell\)</span>-party audit speed-up resilient</em>
-if for any PPT <span class="math inline">\(\A\)</span> controlling at
-most <span class="math inline">\(\ell\)</span> users, <span
+<p><strong>Definition 69</strong> (No speed up). <em>We say that a FACTS
+scheme is <em><span class="math inline">\(\ell\)</span>-party audit
+speed-up resilient</em> if for any PPT <span
+class="math inline">\(\A\)</span> controlling at most <span
+class="math inline">\(\ell\)</span> users, <span
 class="math inline">\(\A\)</span> WINS in the above game with
 probability at most <span
-class="math inline">\(\negl(\secparam)\)</span>.</p>
+class="math inline">\(\negl(\secparam)\)</span>.</em></p>
 </div>
 <div class="theorem">
-<p>The FACTS scheme is <span class="math inline">\(\ell\)</span>-party
-audit speed-up resilient for <span class="math inline">\(\ell \le (t -
-2.1\sqrt{\lambda t})/L\)</span>.</p>
+<p><strong>Theorem 70</strong>. <em>The FACTS scheme is <span
+class="math inline">\(\ell\)</span>-party audit speed-up resilient for
+<span class="math inline">\(\ell \le (t - 2.1\sqrt{\lambda
+t})/L\)</span>.</em></p>
 </div>
 <div class="proofsketch">
 <p>This follows immediately from Theorem <a href="#thm:fp"
@@ -9788,7 +9811,7 @@ server (or an auditor) after the threshold of complaints has been
 reached: the user id of the message’s originator, and the contents of
 the message itself. Indeed, one of our motivations was to avoid
 revealing the entire path or tree of message forwarding as in prior work
-<span class="citation" data-cites="CCS:TyaMieRis19">[151]</span>.</p>
+<span class="citation" data-cites="CCS:TyaMieRis19">[155]</span>.</p>
 <p>However, in some environments, even this may be too much to release
 to a service provider that could be, for instance, compromised or
 influenced by an oppressive regime. An advantage of FACTS is that the
@@ -9924,11 +9947,11 @@ recipient of any message. This can trivially be accomplished by
 foregoing a central server and doing peer-to-peer communication (note
 that FACTS may still be useful as a central complaint repository); or
 using more sophisticated cryptography to hide metadata <span
-class="citation" data-cites="stadium verdict ricochet">[164], [165],
-[166]</span>.</p>
+class="citation" data-cites="stadium verdict ricochet">[168], [169],
+[170]</span>.</p>
 <p>Of particular interest for us is the recently deployed <em>sealed
 sender</em> mechanism on the popular Signal platform <span
-class="citation" data-cites="signal-ss">[167]</span>. The goal in this
+class="citation" data-cites="signal-ss">[171]</span>. The goal in this
 case is to obscure the sender, but not the recipient, from the server
 handling the actual message transmission. We note that this concept
 plays particularly well with FACTS, as the additional leakage in our
@@ -9938,10 +9961,10 @@ exactly what is revealed under sealed sender already! Both systems thus
 work to still hide message sender and originator identities (at least
 until an audit is performed).</p>
 <p>However, note that recent work <span class="citation"
-data-cites="signal-ndss21">[168]</span> has shown that some timing
+data-cites="signal-ndss21">[172]</span> has shown that some timing
 attacks are still possible under sealed sender, and the same attacks
 would apply just as well to FACTS. But the solutions proposed in <span
-class="citation" data-cites="signal-ndss21">[168]</span> might also be
+class="citation" data-cites="signal-ndss21">[172]</span> might also be
 deployed alongside FACTS to prevent such leakage; we leave the
 investigation of this question for future work.</p>
 <h2 data-number="6.9" id="sec:related"><span
@@ -9960,8 +9983,8 @@ senders given only one (or a few) complaints.</p>
 <h4 data-number="6.9.0.2" id="oblivious-ram-oram"><span
 class="header-section-number">6.9.0.2</span> Oblivious RAM (ORAM):</h4>
 <p>Oblivious Random-Access Memory (ORAM) <span class="citation"
-data-cites="STOC:Goldreich87 STOC:Ostrovsky90 JACM:GolOst96">[154],
-[169], [170]</span> allows a client to obliviously access encrypted
+data-cites="STOC:Goldreich87 STOC:Ostrovsky90 JACM:GolOst96">[158],
+[173], [174]</span> allows a client to obliviously access encrypted
 memory stored on a server without leaking the access pattern to the
 server. The standard ORAM definition assumes a single user with full
 control over the database. While some important progress has been made
@@ -9992,7 +10015,7 @@ Sketching:</h4>
 storing the counts of complaints on a large set of messages. There has
 indeed been a lot of recent interest (e.g., <span class="citation"
 data-cites="PoPETS:CDKY20 CCS:WJSYG19 NDSS:MelDanDec16 CCS:JanJoh16 CCS:FMJS17 AM14 FGJ+15">[40],
-[41], [42], [43], [171], [172], [173]</span>) in private sketching
+[41], [42], [43], [175], [176], [177]</span>) in private sketching
 algorithms for cardinality estimation, frequency measurement, and other
 approximations. However, these works generally focus on a multi-party
 setting, with multiple parties running secure computation to evaluate
@@ -11115,14 +11138,37 @@ differentially private models with secure multiparty
 computation,”</span> <em>arXiv preprint arXiv:2202.02625</em>,
 2022.</div>
 </div>
-<div id="ref-JL84" class="csl-entry" role="listitem">
+<div id="ref-tcs:Razborov92" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[123] </div><div
+class="csl-right-inline">A. A. Razborov, <span>“On the distributional
+complexity of disjointness,”</span> <em>Theor. Comput. Sci.</em>, vol.
+106, no. 2, pp. 385–390, 1992, doi: <a
+href="https://doi.org/10.1016/0304-3975(92)90260-M">10.1016/0304-3975(92)90260-M</a>.</div>
+</div>
+<div id="ref-siamdm:KalSch92" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[124] </div><div
+class="csl-right-inline">B. Kalyanasundaram and G. Schnitger, <span>“The
+probabilistic communication complexity of set intersection,”</span>
+<em><span>SIAM</span> J. Discret. Math.</em>, vol. 5, no. 4, pp.
+545–557, 1992, doi: <a
+href="https://doi.org/10.1137/0405044">10.1137/0405044</a>.</div>
+</div>
+<div id="ref-jcss:BJKS04" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[125] </div><div
+class="csl-right-inline">Z. Bar-Yossef, T. S. Jayram, R. Kumar, and D.
+Sivakumar, <span>“An information statistics approach to data stream and
+communication complexity,”</span> <em>J. Comput. Syst. Sci.</em>, vol.
+68, no. 4, pp. 702–732, 2004, doi: <a
+href="https://doi.org/10.1016/j.jcss.2003.11.006">10.1016/j.jcss.2003.11.006</a>.</div>
+</div>
+<div id="ref-JL84" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[126] </div><div
 class="csl-right-inline">W. B. Johnson and J. Lindenstrauss,
 <span>“Extensions of lipschitz mappings into a hilbert space.”</span>
 1984.</div>
 </div>
 <div id="ref-STOC:IndMot98" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[124] </div><div
+<div class="csl-left-margin">[127] </div><div
 class="csl-right-inline">P. Indyk and R. Motwani, <span>“Approximate
 nearest neighbors: Towards removing the curse of dimensionality,”</span>
 in <em>stoc98name</em>, stoc98ed, Ed., stoc98addr: stocpub, 1998, pp.
@@ -11130,7 +11176,7 @@ in <em>stoc98name</em>, stoc98ed, Ed., stoc98addr: stocpub, 1998, pp.
 href="https://doi.org/10.1145/276698.276876">10.1145/276698.276876</a>.</div>
 </div>
 <div id="ref-Kaban15" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[125] </div><div
+<div class="csl-left-margin">[128] </div><div
 class="csl-right-inline">A. Kabán, <span>“Improved bounds on the dot
 product under random projection and random sign projection,”</span> in
 <em>Proceedings of the 21th <span>ACM</span> <span>SIGKDD</span>
@@ -11141,7 +11187,7 @@ G. I. Webb, D. D. Margineantu, and G. Williams, Eds., <span>ACM</span>,
 href="https://doi.org/10.1145/2783258.2783364">10.1145/2783258.2783364</a>.</div>
 </div>
 <div id="ref-FIM+06" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[126] </div><div
+<div class="csl-left-margin">[129] </div><div
 class="csl-right-inline">J. Feigenbaum, Y. Ishai, T. Malkin, K. Nissim,
 M. J. Strauss, and R. N. Wright, <span>“Secure multiparty computation of
 approximations,”</span> <em><span>ACM</span> Trans. Algorithms</em>,
@@ -11149,21 +11195,21 @@ vol. 2, no. 3, pp. 435–472, 2006, doi: <a
 href="https://doi.org/10.1145/1159892.1159900">10.1145/1159892.1159900</a>.</div>
 </div>
 <div id="ref-popets:MTBH21" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[127] </div><div
+<div class="csl-left-margin">[130] </div><div
 class="csl-right-inline">C. Mouchet, J. R. Troncoso-Pastoriza, J.-P.
 Bossuat, and J.-P. Hubaux, <span>“Multiparty homomorphic encryption from
 ring-learning-with-errors,”</span> <em>Proceedings on Privacy Enhancing
 Technologies (PoPETs)</em>, vol. 2021, no. 4, pp. 291–311, 2021.</div>
 </div>
 <div id="ref-DR14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[128] </div><div
+<div class="csl-left-margin">[131] </div><div
 class="csl-right-inline">C. Dwork and A. Roth, <span>“The algorithmic
 foundations of differential privacy,”</span> <em>Found. Trends Theor.
 Comput. Sci.</em>, vol. 9, no. 3–4, pp. 211–407, 2014, doi: <a
 href="https://doi.org/10.1561/0400000042">10.1561/0400000042</a>.</div>
 </div>
 <div id="ref-B97" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[129] </div><div
+<div class="csl-left-margin">[132] </div><div
 class="csl-right-inline">A. Broder, <span>“On the resemblance and
 containment of documents,”</span> in <em>Compression and complexity of
 sequences, international conference on</em>, IEEE Computer Society,
@@ -11171,7 +11217,7 @@ sequences, international conference on</em>, IEEE Computer Society,
 href="https://doi.org/10.1109/sequen.1997.666900">10.1109/sequen.1997.666900</a>.</div>
 </div>
 <div id="ref-LOZ12" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[130] </div><div
+<div class="csl-left-margin">[133] </div><div
 class="csl-right-inline">P. Li, A. B. Owen, and C.-H. Zhang, <span>“One
 permutation hashing,”</span> in <em>In proceedings of the 26th annual
 conference on neural information processing systems 2012.</em>, 2012,
@@ -11179,7 +11225,7 @@ pp. 3122–3130. doi: <a
 href="https://doi.org/10.5555/2999325.2999482">10.5555/2999325.2999482</a>.</div>
 </div>
 <div id="ref-jaccard" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[131] </div><div
+<div class="csl-left-margin">[134] </div><div
 class="csl-right-inline">P. Jaccard, <span>“<span>É</span>tude
 comparative de la distribution florale dans une portion des alpes et des
 jura,”</span> <em>Bull Soc Vaudoise Sci Nat</em>, vol. 37, pp. 547–579,
@@ -11187,7 +11233,7 @@ jura,”</span> <em>Bull Soc Vaudoise Sci Nat</em>, vol. 37, pp. 547–579,
 href="https://doi.org/10.5169/seals-266450">10.5169/seals-266450</a>.</div>
 </div>
 <div id="ref-cn:BGMZ97" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[132] </div><div
+<div class="csl-left-margin">[135] </div><div
 class="csl-right-inline">A. Z. Broder, S. C. Glassman, M. S. Manasse,
 and G. Zweig, <span>“Syntactic clustering of the web,”</span>
 <em>Comput. Networks</em>, vol. 29, no. 8–13, pp. 1157–1166, 1997, doi:
@@ -11195,7 +11241,7 @@ and G. Zweig, <span>“Syntactic clustering of the web,”</span>
 href="https://doi.org/10.1016/s0169-7552(97)00031-7">10.1016/s0169-7552(97)00031-7</a>.</div>
 </div>
 <div id="ref-kdd:TanBerKem07" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[133] </div><div
+<div class="csl-left-margin">[136] </div><div
 class="csl-right-inline">C. Tantipathananandh, T. Y. Berger-Wolf, and D.
 Kempe, <span>“A framework for community identification in dynamic social
 networks,”</span> in <em>KDD</em>, <span>ACM</span>, 2007, pp. 717–726.
@@ -11203,7 +11249,7 @@ doi: <a
 href="https://doi.org/10.1145/1281192.1281269">10.1145/1281192.1281269</a>.</div>
 </div>
 <div id="ref-ijcai:WWTDLZ19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[134] </div><div
+<div class="csl-left-margin">[137] </div><div
 class="csl-right-inline">H. Wu, C. Wang, Y. Tyshetskiy, A. Docherty, K.
 Lu, and L. Zhu, <span>“Adversarial examples for graph data: Deep
 insights into attack and defense,”</span> in <em><span>IJCAI</span>
@@ -11211,7 +11257,7 @@ insights into attack and defense,”</span> in <em><span>IJCAI</span>
 href="https://doi.org/10.24963/ijcai.2019/669">10.24963/ijcai.2019/669</a>.</div>
 </div>
 <div id="ref-icip:JKWC22" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[135] </div><div
+<div class="csl-left-margin">[138] </div><div
 class="csl-right-inline">B. Jiang, H. Krim, T. Wu, and D. Cansever,
 <span>“Refining self-supervised learning in imaging: Beyond linear
 metric,”</span> in <em><span>ICIP</span> 2022</em>, <span>IEEE</span>,
@@ -11219,7 +11265,7 @@ metric,”</span> in <em><span>ICIP</span> 2022</em>, <span>IEEE</span>,
 href="https://doi.org/10.1109/icip46576.2022.9897745">10.1109/icip46576.2022.9897745</a>.</div>
 </div>
 <div id="ref-BluCriGas14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[136] </div><div
+<div class="csl-left-margin">[139] </div><div
 class="csl-right-inline">C. Blundo, E. D. Cristofaro, and P. Gasti,
 <span>“EsPRESSO: Efficient privacy-preserving evaluation of sample set
 similarity,”</span> <em>J. Comput. Secur.</em>, vol. 22, no. 3, pp.
@@ -11227,7 +11273,7 @@ similarity,”</span> <em>J. Comput. Secur.</em>, vol. 22, no. 3, pp.
 href="https://doi.org/10.3233/jcs-130482">10.3233/jcs-130482</a>.</div>
 </div>
 <div id="ref-DGT12" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[137] </div><div
+<div class="csl-left-margin">[140] </div><div
 class="csl-right-inline">E. D. Cristofaro, P. Gasti, and G. Tsudik,
 <span>“Fast and private computation of cardinality of set intersection
 and union,”</span> in <em>CANS 2012</em>, Springer, 2012, pp. 218–231.
@@ -11235,7 +11281,7 @@ doi: <a
 href="https://doi.org/10.1007/978-3-642-35404-5_17">10.1007/978-3-642-35404-5_17</a>.</div>
 </div>
 <div id="ref-TL23" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[138] </div><div
+<div class="csl-left-margin">[141] </div><div
 class="csl-right-inline">Y. Tan and B. Lv, <span>“Break two PSI-CA
 protocols in polynomial time,”</span> in <em>Proceedings of the 2024
 16th international conference on machine learning and computing</em>, in
@@ -11244,7 +11290,7 @@ pp. 65–72. doi: <a
 href="https://doi.org/10.1145/3651671.3651682">10.1145/3651671.3651682</a>.</div>
 </div>
 <div id="ref-FOCS:BGKS13" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[139] </div><div
+<div class="csl-left-margin">[142] </div><div
 class="csl-right-inline">R. Bassily, A. Groce, J. Katz, and A. Smith,
 <span>“Coupled-worlds privacy: Exploiting adversarial uncertainty in
 statistical data privacy,”</span> in <em>focs13name</em>, focs13ed, Ed.,
@@ -11252,14 +11298,14 @@ focs13addr: focspub, 2013, pp. 439–448. doi: <a
 href="https://doi.org/10.1109/FOCS.2013.54">10.1109/FOCS.2013.54</a>.</div>
 </div>
 <div id="ref-DKZ18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[140] </div><div
+<div class="csl-left-margin">[143] </div><div
 class="csl-right-inline">S. Dziembowski, T. Kazana, and M. Zdanowicz,
 <span>“Quasi chain rule for min-entropy,”</span> <em>Inf. Process.
 Lett.</em>, vol. 134, pp. 62–66, 2018, doi: <a
 href="https://doi.org/10.1016/j.ipl.2018.02.007">10.1016/j.ipl.2018.02.007</a>.</div>
 </div>
 <div id="ref-skorski2019strong" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[141] </div><div
+<div class="csl-left-margin">[144] </div><div
 class="csl-right-inline">M. Skórski, <span>“Strong chain rules for
 min-entropy under few bits spoiled,”</span> in <em>2019 IEEE
 international symposium on information theory (ISIT)</em>, IEEE, 2019,
@@ -11267,22 +11313,29 @@ pp. 1122–1126. doi: <a
 href="https://doi.org/10.1109/isit.2019.8849240">10.1109/isit.2019.8849240</a>.</div>
 </div>
 <div id="ref-Usenix:MLRG20" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[142] </div><div
+<div class="csl-left-margin">[145] </div><div
 class="csl-right-inline">S. Mazloom, P. H. Le, S. Ranellucci, and S. D.
 Gordon, <span>“Secure parallel computation on national scale volumes of
 data,”</span> in <em>USENIX security symposium</em>, Boston, MA, USA:
 USENIX Association, 2020, pp. 2487–2504.</div>
 </div>
 <div id="ref-SODA:CCMS19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[143] </div><div
+<div class="csl-left-margin">[146] </div><div
 class="csl-right-inline">T.-H. H. Chan, K.-M. Chung, B. M. Maggs, and E.
 Shi, <span>“Foundations of differentially oblivious algorithms,”</span>
 in <em>soda19name</em>, soda19ed, Ed., soda19addr: sodapub, 2019, pp.
 2448–2467. doi: <a
 href="https://doi.org/10.1137/1.9781611975482.150">10.1137/1.9781611975482.150</a>.</div>
 </div>
+<div id="ref-D18" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[147] </div><div
+class="csl-right-inline">B. Doerr, <span>“Probabilistic tools for the
+analysis of randomized optimization heuristics,”</span> <em>CoRR</em>,
+vol. abs/1801.06733, 2018, Available: <a
+href="https://arxiv.org/abs/1801.06733">https://arxiv.org/abs/1801.06733</a></div>
+</div>
 <div id="ref-SCRS17" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[144] </div><div
+<div class="csl-left-margin">[148] </div><div
 class="csl-right-inline">E. Shi, T.-H. H. Chan, E. G. Rieffel, and D.
 Song, <span>“Distributed private data analysis: Lower bounds and
 practical constructions,”</span> <em><span>ACM</span> Trans.
@@ -11290,14 +11343,14 @@ Algorithms</em>, vol. 13, no. 4, pp. 50:1–50:38, 2017, doi: <a
 href="https://doi.org/10.1145/3146549">10.1145/3146549</a>.</div>
 </div>
 <div id="ref-COK22" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[145] </div><div
+<div class="csl-left-margin">[149] </div><div
 class="csl-right-inline">W.-N. Chen, A. Ozgur, and P. Kairouz,
 <span>“The poisson binomial mechanism for unbiased federated learning
 with secure aggregation,”</span> in <em>ICML 2022</em>, PMLR, 2022, pp.
 3490–3506.</div>
 </div>
 <div id="ref-DORS08" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[146] </div><div
+<div class="csl-left-margin">[150] </div><div
 class="csl-right-inline">Y. Dodis, R. Ostrovsky, L. Reyzin, and A.
 Smith, <span>“Fuzzy extractors: How to generate strong keys from
 biometrics and other noisy data,”</span> <em><span>SIAM</span> Journal
@@ -11305,7 +11358,7 @@ on Computing</em>, vol. 38, no. 1, pp. 97–139, Jan. 2008, doi: <a
 href="https://doi.org/10.1137/060651380">10.1137/060651380</a>.</div>
 </div>
 <div id="ref-NYTimes:IsaRoo18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[147] </div><div
+<div class="csl-left-margin">[151] </div><div
 class="csl-right-inline">M. Isaac and K. Roose, <span>“Disinformation
 spreads on WhatsApp ahead of brazilian election.”</span> <a
 href="https://www.nytimes.com/2018/10/19/technology/whatsapp-brazil-presidential-election.html"
@@ -11313,7 +11366,7 @@ class="uri">https://www.nytimes.com/2018/10/19/technology/whatsapp-brazil-presid
 2018.</div>
 </div>
 <div id="ref-WAPo:Samuels20" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[148] </div><div
+<div class="csl-left-margin">[152] </div><div
 class="csl-right-inline">E. Samuels, <span>“How misinformation on
 WhatsApp led to a mob killing in india.”</span> <a
 href="https://www-washingtonpost-com.proxygw.wrlc.org/politics/2020/02/21/how-misinformation-whatsapp-led-deathly-mob-lynching-india/ics/2020/02/21/how-misinformation-whatsapp-led-deathly-mob-lynching-india/"
@@ -11321,21 +11374,21 @@ class="uri">https://www-washingtonpost-com.proxygw.wrlc.org/politics/2020/02/21/
 2020.</div>
 </div>
 <div id="ref-Facebook:fakeNews" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[149] </div><div
+<div class="csl-left-margin">[153] </div><div
 class="csl-right-inline">Facebook, <span>“How is <span>Facebook</span>
 addressing false information through independent fact-checkers?”</span>
 <a href="https://www.facebook.com/help/1952307158131536"
 class="uri">https://www.facebook.com/help/1952307158131536</a>.</div>
 </div>
 <div id="ref-Youtube:fakeNews" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[150] </div><div
+<div class="csl-left-margin">[154] </div><div
 class="csl-right-inline">Youtube, <span>“How does <span>YouTube</span>
 combat misinformation?”</span> <a
 href="https://www.youtube.com/howyoutubeworks/our-commitments/fighting-misinformation/#policies"
 class="uri">https://www.youtube.com/howyoutubeworks/our-commitments/fighting-misinformation/#policies</a>.</div>
 </div>
 <div id="ref-CCS:TyaMieRis19" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[151] </div><div
+<div class="csl-left-margin">[155] </div><div
 class="csl-right-inline">N. Tyagi, I. Miers, and T. Ristenpart,
 <span>“Traceback for end-to-end encrypted messaging,”</span> in
 <em>ccs19name</em>, ccs19ed, Ed., ccs19addr: ccspub, 2019, pp. 413–430.
@@ -11343,7 +11396,7 @@ doi: <a
 href="https://doi.org/10.1145/3319535.3354243">10.1145/3319535.3354243</a>.</div>
 </div>
 <div id="ref-CCS:PeaEskBon21" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[152] </div><div
+<div class="csl-left-margin">[156] </div><div
 class="csl-right-inline">C. Peale, S. Eskandarian, and D. Boneh,
 <span>“Secure complaint-enabled source-tracking for encrypted
 messaging,”</span> in <em>ccs21name</em>, ccs21ed, Ed., ccs21addr:
@@ -11351,20 +11404,20 @@ ccspub, 2021, pp. 1484–1506. doi: <a
 href="https://doi.org/10.1145/3460120.3484539">10.1145/3460120.3484539</a>.</div>
 </div>
 <div id="ref-eprint:IssAlhMay2021" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[153] </div><div
+<div class="csl-left-margin">[157] </div><div
 class="csl-right-inline">R. Issa, N. AlHaddad, and M. Varia,
 <span>“Hecate: Abuse reporting in secure messengers with sealed
 sender.”</span> Cryptology ePrint Archive, 2021.</div>
 </div>
 <div id="ref-JACM:GolOst96" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[154] </div><div
+<div class="csl-left-margin">[158] </div><div
 class="csl-right-inline">O. Goldreich and R. Ostrovsky, <span>“Software
 protection and simulation on oblivious RAMs,”</span> <em>J.
 <span>ACM</span></em>, vol. 43, no. 3, pp. 431–473, 1996, doi: <a
 href="https://doi.org/10.1145/233551.233553">10.1145/233551.233553</a>.</div>
 </div>
 <div id="ref-JACM:SDSCFRYD18" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[155] </div><div
+<div class="csl-left-margin">[159] </div><div
 class="csl-right-inline">E. Stefanov <em>et al.</em>, <span>“Path
 <span>ORAM:</span> An extremely simple oblivious <span>RAM</span>
 protocol,”</span> <em>J. <span>ACM</span></em>, vol. 65, no. 4, pp.
@@ -11372,14 +11425,14 @@ protocol,”</span> <em>J. <span>ACM</span></em>, vol. 65, no. 4, pp.
 href="https://doi.org/10.1145/3177872">10.1145/3177872</a>.</div>
 </div>
 <div id="ref-STOC:Gentry09" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[156] </div><div
+<div class="csl-left-margin">[160] </div><div
 class="csl-right-inline">C. Gentry, <span>“Fully homomorphic encryption
 using ideal lattices,”</span> in <em>stoc09name</em>, stoc09ed, Ed.,
 stoc09addr: stocpub, 2009, pp. 169–178. doi: <a
 href="https://doi.org/10.1145/1536414.1536440">10.1145/1536414.1536440</a>.</div>
 </div>
 <div id="ref-STOC:BenGolWig88" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[157] </div><div
+<div class="csl-left-margin">[161] </div><div
 class="csl-right-inline">M. Ben-Or, S. Goldwasser, and A. Wigderson,
 <span>“Completeness theorems for non-cryptographic fault-tolerant
 distributed computation (extended abstract),”</span> in
@@ -11388,7 +11441,7 @@ doi: <a
 href="https://doi.org/10.1145/62212.62213">10.1145/62212.62213</a>.</div>
 </div>
 <div id="ref-ICS:Geiger16" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[158] </div><div
+<div class="csl-left-margin">[162] </div><div
 class="csl-right-inline">R. S. Geiger, <span>“Bot-based collective
 blocklists in twitter: The counterpublic moderation of harassment in a
 networked public space,”</span> <em>Information, Communication &amp;
@@ -11397,7 +11450,7 @@ href="https://doi.org/10.1080/1369118X.2016.1153700">10.1080/1369118X.2016.11537
 </div>
 <div id="ref-km-private-membership-usenix21" class="csl-entry"
 role="listitem">
-<div class="csl-left-margin">[159] </div><div
+<div class="csl-left-margin">[163] </div><div
 class="csl-right-inline">A. Kulshrestha and J. Mayer, <span>“Identifying
 harmful media in end-to-end encrypted communication: Efficient private
 membership computation,”</span> in <em>30th <span>USENIX</span> security
@@ -11407,14 +11460,14 @@ href="https://www.usenix.org/conference/usenixsecurity21/presentation/kulshresth
 </div>
 <div id="ref-brandom-verge-apple-csam" class="csl-entry"
 role="listitem">
-<div class="csl-left-margin">[160] </div><div
+<div class="csl-left-margin">[164] </div><div
 class="csl-right-inline">R. Brandom, <span>“Apple says collision in
 child-abuse hashing system is not a concern,”</span> <em>The Verge</em>,
 Aug. 2021, Available: <a
 href="https://www.theverge.com/2021/8/18/22630439/apple-csam-neuralhash-collision-vulnerability-flaw-cryptography">https://www.theverge.com/2021/8/18/22630439/apple-csam-neuralhash-collision-vulnerability-flaw-cryptography</a></div>
 </div>
 <div id="ref-JAL:CorMut05" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[161] </div><div
+<div class="csl-left-margin">[165] </div><div
 class="csl-right-inline">G. Cormode and S. Muthukrishnan, <span>“An
 improved data stream summary: The count-min sketch and its
 applications,”</span> <em>J. Algorithms</em>, vol. 55, no. 1, pp. 58–75,
@@ -11422,26 +11475,26 @@ applications,”</span> <em>J. Algorithms</em>, vol. 55, no. 1, pp. 58–75,
 href="https://doi.org/10.1016/j.jalgor.2003.12.001">10.1016/j.jalgor.2003.12.001</a>.</div>
 </div>
 <div id="ref-ring" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[162] </div><div
+<div class="csl-left-margin">[166] </div><div
 class="csl-right-inline">B. Smith, <span>“Ring.”</span> <a
 href="https://lib.rs/crates/ring"
 class="uri">https://lib.rs/crates/ring</a>, Nov. 2021.</div>
 </div>
 <div id="ref-bitvec" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[163] </div><div
+<div class="csl-left-margin">[167] </div><div
 class="csl-right-inline">A. Payne, <span>“Bitvec.”</span> <a
 href="https://lib.rs/crates/bitvec"
 class="uri">https://lib.rs/crates/bitvec</a>, Nov. 2021.</div>
 </div>
 <div id="ref-stadium" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[164] </div><div
+<div class="csl-left-margin">[168] </div><div
 class="csl-right-inline">N. Tyagi, Y. Gilad, D. Leung, M. Zaharia, and
 N. Zeldovich, <span>“Stadium: A distributed metadata-private messaging
 system,”</span> in <em>Proceedings of the 26th symposium on operating
 systems principles</em>, ACM, 2017, pp. 423–440.</div>
 </div>
 <div id="ref-verdict" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[165] </div><div
+<div class="csl-left-margin">[169] </div><div
 class="csl-right-inline">H. Corrigan-Gibbs, D. I. Wolinsky, and B. Ford,
 <span>“Proactively accountable anonymous messaging in verdict,”</span>
 in <em>Presented as part of the 22nd <span
@@ -11452,26 +11505,26 @@ class="math inline">\(\}\)</span> security 13)</em>, 2013, pp.
 147–162.</div>
 </div>
 <div id="ref-ricochet" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[166] </div><div
+<div class="csl-left-margin">[170] </div><div
 class="csl-right-inline">J. Brooks <em>et al.</em>, <span>“Ricochet:
 Anonymous instant messaging for real privacy.”</span> 2016.</div>
 </div>
 <div id="ref-signal-ss" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[167] </div><div
+<div class="csl-left-margin">[171] </div><div
 class="csl-right-inline">J. Lund, <span>“Technology preview: Sealed
 sender for signal,”</span> <em>Technology preview: Sealed sender for
 Signal</em>. Oct. 2018. Available: <a
 href="https://signal.org/blog/sealed-sender/">https://signal.org/blog/sealed-sender/</a></div>
 </div>
 <div id="ref-signal-ndss21" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[168] </div><div
+<div class="csl-left-margin">[172] </div><div
 class="csl-right-inline">I. Martiny, G. Kaptchuk, A. Aviv, D. Roche, and
 E. Wustrow, <span>“Improving signal’s sealed sender,”</span> in
 <em>Ndss</em>, Jan. 2021. doi: <a
 href="https://doi.org/10.14722/ndss.2021.24180">10.14722/ndss.2021.24180</a>.</div>
 </div>
 <div id="ref-STOC:Goldreich87" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[169] </div><div
+<div class="csl-left-margin">[173] </div><div
 class="csl-right-inline">O. Goldreich, <span>“Towards a theory of
 software protection and simulation by oblivious
 <span>RAMs</span>,”</span> in <em>stoc87name</em>, stoc87ed, Ed.,
@@ -11479,14 +11532,14 @@ stoc87addr: stocpub, 1987, pp. 182–194. doi: <a
 href="https://doi.org/10.1145/28395.28416">10.1145/28395.28416</a>.</div>
 </div>
 <div id="ref-STOC:Ostrovsky90" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[170] </div><div
+<div class="csl-left-margin">[174] </div><div
 class="csl-right-inline">R. Ostrovsky, <span>“Efficient computation on
 oblivious <span>RAMs</span>,”</span> in <em>stoc90name</em>, stoc90ed,
 Ed., stoc90addr: stocpub, 1990, pp. 514–523. doi: <a
 href="https://doi.org/10.1145/100216.100289">10.1145/100216.100289</a>.</div>
 </div>
 <div id="ref-CCS:FMJS17" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[171] </div><div
+<div class="csl-left-margin">[175] </div><div
 class="csl-right-inline">E. Fenske, A. Mani, A. Johnson, and M. Sherr,
 <span>“Distributed measurement with private set-union
 cardinality,”</span> in <em>ccs17name</em>, ccs17ed, Ed., ccs17addr:
@@ -11494,7 +11547,7 @@ ccspub, 2017, pp. 2295–2312. doi: <a
 href="https://doi.org/10.1145/3133956.3134034">10.1145/3133956.3134034</a>.</div>
 </div>
 <div id="ref-AM14" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[172] </div><div
+<div class="csl-left-margin">[176] </div><div
 class="csl-right-inline">V. G. Ashok and R. Mukkamala, <span>“A scalable
 and efficient privacy preserving global itemset support approximation
 using bloom filters,”</span> in <em>Data and applications security and
@@ -11504,7 +11557,7 @@ july 14-16, 2014. proceedings</em>, 2014, pp. 382–389. doi: <a
 href="https://doi.org/10.1007/978-3-662-43936-4\_26">10.1007/978-3-662-43936-4\_26</a>.</div>
 </div>
 <div id="ref-FGJ+15" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[173] </div><div
+<div class="csl-left-margin">[177] </div><div
 class="csl-right-inline">R. Egert, M. Fischlin, D. Gens, S. Jacob, M.
 Senker, and J. Tillmanns, <span>“Privately computing set-union and
 set-intersection cardinality via bloom filters,”</span> in
@@ -11564,8 +11617,8 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>As noted previously, it is sufficient to store a short
 seed to identify the hash.<a href="#fnref9" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>We use cryptographic hash functions to instantiate the
-hashes in the random oracle model.<a href="#fnref10"
+<li id="fn10"><p><em>We use cryptographic hash functions to instantiate
+the hashes in the random oracle model.</em><a href="#fnref10"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn11"><p>We note that since the underlying messaging scheme is
 encrypted, the actual ciphertext sent will not be the same as the
