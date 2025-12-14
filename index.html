@@ -548,24 +548,81 @@ class="toc-section-number">6.8</span> Alternative FACTS</a></li>
 <li><a href="#sec:related" id="toc-sec:related"><span
 class="toc-section-number">6.9</span> Related Work</a></li>
 </ul></li>
+<li><a href="#sec:omitted_proofs" id="toc-sec:omitted_proofs"><span
+class="toc-section-number">7</span> Omitted Proofs</a>
+<ul>
+<li><a href="#secure-search-2" id="toc-secure-search-2"><span
+class="toc-section-number">7.1</span> Secure Search</a>
+<ul>
+<li><a href="#app:proof41" id="toc-app:proof41"><span
+class="toc-section-number">7.1.1</span> Proof of Lemma 2</a></li>
+<li><a href="#app:proof63" id="toc-app:proof63"><span
+class="toc-section-number">7.1.2</span> Proof of Theorem 6</a></li>
+</ul></li>
+<li><a href="#secure-sampling-2" id="toc-secure-sampling-2"><span
+class="toc-section-number">7.2</span> Secure Sampling</a>
+<ul>
+<li><a href="#definitions" id="toc-definitions"><span
+class="toc-section-number">7.2.1</span> Definitions</a></li>
+<li><a href="#apx:proof" id="toc-apx:proof"><span
+class="toc-section-number">7.2.2</span> Proofs</a></li>
+<li><a href="#apx:otl1" id="toc-apx:otl1"><span
+class="toc-section-number">7.2.3</span> Realizing <span
+class="math inline">\(\F_\oslone\)</span> with OT with Less
+Precision</a></li>
+<li><a href="#apx:ssL1" id="toc-apx:ssL1"><span
+class="toc-section-number">7.2.4</span> <span
+class="math inline">\(L_1\)</span> Sampling Protocol with Secret Shared
+Output</a></li>
+</ul></li>
+<li><a href="#min-hash" id="toc-min-hash"><span
+class="toc-section-number">7.3</span> Min-Hash</a>
+<ul>
+<li><a href="#apx:lem:bin-dp" id="toc-apx:lem:bin-dp"><span
+class="toc-section-number">7.3.1</span> Proof of Lemma 49</a></li>
+<li><a href="#apx:proof:good_event" id="toc-apx:proof:good_event"><span
+class="toc-section-number">7.3.2</span> Proof of Lemma 53</a></li>
+<li><a href="#apx:proof:good_hash" id="toc-apx:proof:good_hash"><span
+class="toc-section-number">7.3.3</span> Proof of Lemma 54</a></li>
+<li><a href="#apx:proof:pb-dp" id="toc-apx:proof:pb-dp"><span
+class="toc-section-number">7.3.4</span> Proof of Lemma 55</a></li>
+<li><a href="#apx:proof_CDDP2" id="toc-apx:proof_CDDP2"><span
+class="toc-section-number">7.3.5</span> Proof of Theorem 51</a></li>
+<li><a href="#sec:fixed_oracle_prob"
+id="toc-sec:fixed_oracle_prob"><span
+class="toc-section-number">7.3.6</span> Proof of
+Lemma [cor:fixed_oracle_prob]</a></li>
+<li><a href="#sec:construct-gcp2" id="toc-sec:construct-gcp2"><span
+class="toc-section-number">7.3.7</span> Strong Chain Rule</a></li>
+<li><a href="#sec:tradeoff" id="toc-sec:tradeoff"><span
+class="toc-section-number">7.3.8</span> Proof of Lemma 80</a></li>
+</ul></li>
+<li><a href="#facts-1" id="toc-facts-1"><span
+class="toc-section-number">7.4</span> FACTS</a>
+<ul>
+<li><a href="#app:proofs" id="toc-app:proofs"><span
+class="toc-section-number">7.4.1</span> Proofs for tail bound
+probabilistic analysis</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#timeline" id="toc-timeline"><span
-class="toc-section-number">7</span> Timeline</a></li>
+class="toc-section-number">8</span> Timeline</a></li>
 <li><a href="#preliminary-results" id="toc-preliminary-results"><span
-class="toc-section-number">8</span> Preliminary Results</a>
+class="toc-section-number">9</span> Preliminary Results</a>
 <ul>
 <li><a href="#microbenchmarks" id="toc-microbenchmarks"><span
-class="toc-section-number">8.1</span> Microbenchmarks</a></li>
+class="toc-section-number">9.1</span> Microbenchmarks</a></li>
 <li><a href="#bandwidth-overhead-analysis"
 id="toc-bandwidth-overhead-analysis"><span
-class="toc-section-number">8.2</span> Bandwidth Overhead
+class="toc-section-number">9.2</span> Bandwidth Overhead
 Analysis</a></li>
 <li><a href="#conclusion-of-preliminary-data"
 id="toc-conclusion-of-preliminary-data"><span
-class="toc-section-number">8.3</span> Conclusion of Preliminary
+class="toc-section-number">9.3</span> Conclusion of Preliminary
 Data</a></li>
 </ul></li>
 <li><a href="#conclusion-1" id="toc-conclusion-1"><span
-class="toc-section-number">9</span> Conclusion</a></li>
+class="toc-section-number">10</span> Conclusion</a></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
 </nav>
@@ -1936,7 +1993,7 @@ false positives} \ge 1+\delta]
 </div>
 <p>The proof, by an application of the Chernoff bound, can be found in
 Appendix <a href="#app:proof41" data-reference-type="ref"
-data-reference="app:proof41">[app:proof41]</a>.</p>
+data-reference="app:proof41">7.1.1</a>.</p>
 <p>Regarding the above Lemma, we remark that setting <span
 class="math inline">\(\delta =
 \Omega(\log \secparam)\)</span>, we have <span
@@ -2649,7 +2706,7 @@ class="math inline">\(s\)</span> is the number of matching records.</p>
 </div>
 <p>The proof is similar to the COIE-based scheme and can be found in
 Appendix <a href="#app:proof63" data-reference-type="ref"
-data-reference="app:proof63">[app:proof63]</a>.</p>
+data-reference="app:proof63">7.1.2</a>.</p>
 <h4 data-number="3.6.4.1"
 id="on-the-use-of-homomorphic-multiplication."><span
 class="header-section-number">3.6.4.1</span> On the use of homomorphic
@@ -3382,7 +3439,7 @@ are provided in Section <a href="#sec:l1" data-reference-type="ref"
 data-reference="sec:l1">4.2</a>.</p>
 <p>Additionally, an alternative construction that uses sub-linear OT for
 the oblivious sampling is provided in Appendix <a href="#apx:otl1"
-data-reference-type="ref" data-reference="apx:otl1">[apx:otl1]</a>.</p>
+data-reference-type="ref" data-reference="apx:otl1">7.2.3</a>.</p>
 <h4 data-number="4.1.2.2" id="l_2-sampling-of-component-wise-sum."><span
 class="header-section-number">4.1.2.2</span> <span
 class="math inline">\(L_2\)</span> Sampling of component-wise sum.</h4>
@@ -4084,7 +4141,7 @@ data-reference="apx:pfTheorem2">[apx:pfTheorem2]</a>.</p>
 1-out-of-<span class="math inline">\(m\)</span> oblivious transfer (OT),
 but requires computation that is exponential in the bit precision in
 Appendix <a href="#apx:otl1" data-reference-type="ref"
-data-reference="apx:otl1">[apx:otl1]</a>.</p>
+data-reference="apx:otl1">7.2.3</a>.</p>
 <h4 data-number="4.2.2.5" id="securely-realizing-f_bcoin."><span
 class="header-section-number">4.2.2.5</span> Securely realizing <span
 class="math inline">\(\F_\bcoin\)</span>.</h4>
@@ -4367,7 +4424,7 @@ secret shared among both parties. We can securely realize this
 functionality with semi-honest security through a trivial change in the
 protocol <span class="math inline">\(\Pi_{L_1}\)</span>; for the sake of
 completeness, we provide the details in Appendix <a href="#apx:ssL1"
-data-reference-type="ref" data-reference="apx:ssL1">[apx:ssL1]</a>.</p>
+data-reference-type="ref" data-reference="apx:ssL1">7.2.4</a>.</p>
 <h4 data-number="4.3.2.2" id="efficiency-and-correctness."><span
 class="header-section-number">4.3.2.2</span> Efficiency and
 correctness.</h4>
@@ -6988,8 +7045,7 @@ e^{\ee}.\)</span></p></li>
 </ul>
 </div>
 <p>The proof of the lemma is found in Appendix <a href="#apx:lem:bin-dp"
-data-reference-type="ref"
-data-reference="apx:lem:bin-dp">[apx:lem:bin-dp]</a>.</p>
+data-reference-type="ref" data-reference="apx:lem:bin-dp">7.3.1</a>.</p>
 <h4 data-number="5.5.0.1" id="remark.-1"><span
 class="header-section-number">5.5.0.1</span> Remark.</h4>
 <p>While <span class="math inline">\(\PC\)</span> could be considered as
@@ -7267,11 +7323,11 @@ I, n_B)] \ge
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:good_event"
 data-reference-type="ref"
-data-reference="apx:proof:good_event">[apx:proof:good_event]</a>. This
-lemma shows that a random hash leads to a good iteration with
-probability <span class="math inline">\(p_\theta\)</span>, which is
-constant in our setting based on the assumption about <span
-class="math inline">\(n_A, n_I, n_R\)</span>.</p>
+data-reference="apx:proof:good_event">7.3.2</a>. This lemma shows that a
+random hash leads to a good iteration with probability <span
+class="math inline">\(p_\theta\)</span>, which is constant in our
+setting based on the assumption about <span class="math inline">\(n_A,
+n_I, n_R\)</span>.</p>
 <p>Recall that <span class="math inline">\(S_{\xs}\)</span> was the
 random variable that represents the set of iterations <span
 class="math inline">\(j\)</span> such that the min-hash <span
@@ -7305,7 +7361,7 @@ overwhelming probability.</p>
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:good_hash"
 data-reference-type="ref"
-data-reference="apx:proof:good_hash">[apx:proof:good_hash]</a>.</p>
+data-reference="apx:proof:good_hash">7.3.3</a>.</p>
 <h4 data-number="5.7.1.2" id="our-goal."><span
 class="header-section-number">5.7.1.2</span> Our goal.</h4>
 <p>For a set <span class="math inline">\(W\)</span>, define <span
@@ -7411,7 +7467,7 @@ class="math inline">\(\Pr[\mathsf{PB}(n,p_J)+s = \ell] =
 </div>
 <p>The proof is found in Appendix <a href="#apx:proof:pb-dp"
 data-reference-type="ref"
-data-reference="apx:proof:pb-dp">[apx:proof:pb-dp]</a>.</p>
+data-reference="apx:proof:pb-dp">7.3.4</a>.</p>
 <h2 data-number="5.8" id="sec:ddp-polysize"><span
 class="header-section-number">5.8</span> Highlights of Proof of
 Theorem <a href="#thm:CDDP2" data-reference-type="ref"
@@ -7420,11 +7476,11 @@ data-reference="thm:CDDP2">51</a></h2>
 Theorem <a href="#thm:CDDP2" data-reference-type="ref"
 data-reference="thm:CDDP2">51</a>. The full proof can be found in
 Appendix <a href="#apx:proof_CDDP2" data-reference-type="ref"
-data-reference="apx:proof_CDDP2">[apx:proof_CDDP2]</a>. We show that
-<span class="math inline">\(\Pbase\)</span> satisfies DDP even when the
-size of the universe <span class="math inline">\(\U\)</span> of size
-<span class="math inline">\(n_R \cdot \ell\)</span> is polynomial in
-<span class="math inline">\(\kappa\)</span> with <span
+data-reference="apx:proof_CDDP2">7.3.5</a>. We show that <span
+class="math inline">\(\Pbase\)</span> satisfies DDP even when the size
+of the universe <span class="math inline">\(\U\)</span> of size <span
+class="math inline">\(n_R \cdot \ell\)</span> is polynomial in <span
+class="math inline">\(\kappa\)</span> with <span
 class="math inline">\(\ell = \Omega(n_R^3)\)</span>, and the secret set
 <span class="math inline">\(R\)</span> is chosen from the uniform
 distribution on <span class="math inline">\(\U\)</span>, conditioned on
@@ -7788,7 +7844,7 @@ class="math inline">\(e^{-\epsilon/3} E^{n&#39;_R}_{k_b,r} \leq D_{T,r}
 </div>
 <p>The proof is found in Appendix <a href="#sec:fixed_oracle_prob"
 data-reference-type="ref"
-data-reference="sec:fixed_oracle_prob">[sec:fixed_oracle_prob]</a>.</p>
+data-reference="sec:fixed_oracle_prob">7.3.6</a>.</p>
 <h4 data-number="5.8.3.3"
 id="multiple-bundles-of-iterations-towards-ddp-with-negligible-delta."><span
 class="header-section-number">5.8.3.3</span> Multiple bundles of
@@ -8037,10 +8093,9 @@ class="math inline">\(f(R)\)</span>.</p></li>
 </ol>
 </div>
 <p>The proof is found in Appendix <a href="#sec:construct-gcp2"
-data-reference-type="ref"
-data-reference="sec:construct-gcp2">[sec:construct-gcp2]</a>. Typically,
-one would like to set <span class="math inline">\(c\)</span> as large as
-possible, while ensuring that the size of <span
+data-reference-type="ref" data-reference="sec:construct-gcp2">7.3.7</a>.
+Typically, one would like to set <span class="math inline">\(c\)</span>
+as large as possible, while ensuring that the size of <span
 class="math inline">\(V\)</span> remains above some threshold. The
 achievable tradeoffs between <span class="math inline">\(c\)</span> and
 <span class="math inline">\(|V|\)</span> are determined by the
@@ -8049,9 +8104,9 @@ spoiling bits <span class="math inline">\(f(R)\)</span> are released.
 For our applications, we require <span class="math inline">\(c =
 n^{1.5}\)</span> and <span class="math inline">\(|V| \geq n/3\)</span>.
 In Section <a href="#sec:tradeoff" data-reference-type="ref"
-data-reference="sec:tradeoff">[sec:tradeoff]</a>, We show that our
-min-entropy assumption on <span class="math inline">\(R\)</span> implies
-that this parameter setting is achievable.</p>
+data-reference="sec:tradeoff">7.3.8</a>, We show that our min-entropy
+assumption on <span class="math inline">\(R\)</span> implies that this
+parameter setting is achievable.</p>
 <h2 data-number="5.9" id="sec:eval"><span
 class="header-section-number">5.9</span> Empirical Evaluation</h2>
 <h3 data-number="5.9.1" id="sec:eval_comp"><span
@@ -9116,8 +9171,7 @@ href="#lem:lowerp,lem:upperp" data-reference-type="ref"
 data-reference="lem:lowerp,lem:upperp">[lem:lowerp,lem:upperp]</a>
 respectively. The proofs, which are intricate but not especially
 surprising, can be found in <a href="#app:proofs"
-data-reference-type="ref"
-data-reference="app:proofs">[app:proofs]</a>.</p>
+data-reference-type="ref" data-reference="app:proofs">7.4.1</a>.</p>
 <p>In order to make our scheme practically realizable, we state and
 prove explicit rather than asymptotic results, with all constants
 specified. These constants in themselves are not particularly
@@ -10241,8 +10295,2418 @@ setting, with multiple parties running secure computation to evaluate
 the statistic in question. Since our goal was to restrict ourselves to
 user-server communication only, such techniques do not seem applicable
 to our setting.</p>
-<h1 data-number="7" id="timeline"><span
-class="header-section-number">7</span> Timeline</h1>
+<h1 data-number="7" id="sec:omitted_proofs"><span
+class="header-section-number">7</span> Omitted Proofs</h1>
+<h2 data-number="7.1" id="secure-search-2"><span
+class="header-section-number">7.1</span> Secure Search</h2>
+<h3 data-number="7.1.1" id="app:proof41"><span
+class="header-section-number">7.1.1</span> Proof of Lemma <a
+href="#lem:4_1" data-reference-type="ref"
+data-reference="lem:4_1">2</a></h3>
+<div class="lemma">
+<p><strong>Lemma 71</strong> (4.1). Consider a Bloom filter with false
+positive rate <span class="math inline">\(\frac{1}{m}\)</span>, where
+<span class="math inline">\(m\)</span> is an arbitrary positive integer.
+Suppose at most <span class="math inline">\(m\)</span> <span
+class="math inline">\(\sf BF.Check\)</span> operations are performed in
+the BF. Then, for any <span class="math inline">\(\delta &gt;
+0\)</span>, we have: <span class="math display">\[\Pr [ \mbox{\rm \#
+false positives} \ge 1+\delta]
+  \le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}}.\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\alpha_i\)</span> be
+the <span class="math inline">\(i\)</span>th item that is checked
+through <span class="math inline">\(\sf
+BF.Check\)</span>. That is, we consider a sequence of <span
+class="math display">\[{\sf
+BF.Check}(\alpha_1), \ldots, {\sf BF.Check}(\alpha_{m}),\]</span> where
+<span class="math inline">\(\alpha_i\)</span> is an arbitrary item.
+Since we wish to upper bound the false positives (i.e., we don’t care
+about true positives), it suffices to consider the case that for every
+<span class="math inline">\(i\)</span>, <span
+class="math inline">\(\alpha_i \not \in {\sf BF}\)</span> (i.e, <span
+class="math inline">\(\alpha_i\)</span> has not been inserted in the BF)
+as this maximizes the number of possible false positives.</p>
+<p>Let <span class="math inline">\(X_1, \ldots, X_m\)</span> be
+independent Bernoulli random variables with <span
+class="math inline">\(\Pr[X_i = 1] = 1/m\)</span>. Since the BF false
+positive rate is assumed to be <span class="math inline">\(1/m\)</span>,
+we have for all <span class="math inline">\(i\)</span>, <span
+class="math display">\[\Pr[{\sf BF.Check}(\alpha_i)=1] = \Pr[\mbox{query
+$i$ is a false positive}] \le
+1/m.\]</span> Thus, we can bound the number of false positives by <span
+class="math inline">\(\sum_{i=1}^m X_i\)</span>.</p>
+<p>Now, let <span class="math inline">\(\mu :=
+\Exp[\sum X_i] = m \cdot \frac 1 m = 1\)</span>. By applying the
+Chernoff bound with <span class="math inline">\(\mu =
+1\)</span>, we have: <span class="math display">\[\Pr\left[\sum_{i=1}^m
+X_i \ge 1 + \delta \right]  
+\le {\frac {e^\delta} {(1+\delta)^{(1+\delta)}}} .\]</span> ◻</p>
+</div>
+<h3 data-number="7.1.2" id="app:proof63"><span
+class="header-section-number">7.1.2</span> Proof of Theorem <a
+href="#thm:ssp-code" data-reference-type="ref"
+data-reference="thm:ssp-code">6</a></h3>
+<div class="theorem">
+<p><strong>Theorem 72</strong> (6.3). Given an FHE scheme, and a <span
+class="math inline">\((n, s, c, f_p)\)</span>-CODE scheme over domain
+<span class="math inline">\(D\)</span> in the random oracle model, the
+construction in Algorithm <a href="#alg:ssCODE"
+data-reference-type="ref" data-reference="alg:ssCODE">[alg:ssCODE]</a>
+yields a <span class="math inline">\((\ell,
+f_p)\)</span>-secure search scheme for records in domain <span
+class="math inline">\(D\)</span> in the random oracle model, where <span
+class="math inline">\(\ell = \frac{c(s)\cdot \ell_c}{s}\)</span>, <span
+class="math inline">\(\ell_c\)</span> is the length of an FHE ciphertext
+with plaintext space <span class="math inline">\(D\)</span>, and <span
+class="math inline">\(s\)</span> is the number of matching records.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We begin by proving that the adversary cannot
+distinguish between two different queries. The adversary chooses a
+database <span class="math inline">\(x\)</span> and two queries <span
+class="math inline">\(q^0, q^1\)</span>, with the promise that <span
+class="math inline">\(s = \sum_{i=1}^n q^0(x_i) = \sum_{i=1}^n
+q^1(x_i)\)</span>.</p>
+<p>The entire view of the adversary during the experiment can be
+reconstructed efficiently given (1) the encrypted database <span
+class="math inline">\(\lbra x
+\lket\)</span>, (2) the encrypted query <span
+class="math inline">\(\lbra q \lket\)</span>, (3) the decrypted value of
+<span class="math inline">\(s\)</span>.</p>
+<p>We note that the CODE scheme may return either more than <span
+class="math inline">\(s\)</span> values to the client (in case of a
+false positive) or less than <span class="math inline">\(s\)</span>
+values (in case decoding fails), but both of these occur with
+probability at most <span
+class="math inline">\(\negl(\secparam)\)</span> and thus we can ignore
+them in the following.</p>
+<p>Since the value of <span class="math inline">\(s\)</span> is the same
+for <span class="math inline">\(q_0\)</span> and <span
+class="math inline">\(q_1\)</span>, the only thing that changes in the
+view of the adversary when switching from <span class="math inline">\(b
+= 0\)</span> to <span class="math inline">\(b=1\)</span> is the
+encrypted query <span class="math inline">\(\tilde{q_b}\)</span>.
+Therefore, the adversary guesses <span class="math inline">\(b\)</span>
+with negligible advantage by the IND-CPA security of the FHE scheme.</p>
+<p>The proof that the adversary cannot distinguish between the same
+query applied to two different databases follows nearly
+identically. ◻</p>
+</div>
+<h2 data-number="7.2" id="secure-sampling-2"><span
+class="header-section-number">7.2</span> Secure Sampling</h2>
+<h3 data-number="7.2.1" id="definitions"><span
+class="header-section-number">7.2.1</span> Definitions</h3>
+<p>We assume that readers are familiar with security notions of standard
+cryptographic primitives <span class="citation"
+data-cites="KatzLindell2007">[178]</span> and formal definitions of a
+protocol securely realizing an ideal functionality (cf. <span
+class="citation" data-cites="EKR18">[179]</span>).</p>
+<p>The ideal functionality works as follows:</p>
+<div class="center">
+<p><span class="math inline">\(\F_{2PC}\)</span>: Ideal functionality
+for evaluating two-party circuits.</p>
+</div>
+<p>The functionality has the following parameter:</p>
+<p>Two party binary circuits <span class="math inline">\(C_1(\cdot,
+\cdot)\)</span> and <span class="math inline">\(C_2(\cdot,
+\cdot)\)</span>.</p>
+<p>The functionality proceeds as follows:</p>
+<p>Receive inputs <span class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p>
+<p>Send <span class="math inline">\(C_1(x_1, x_2)\)</span> to <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(C_2(x_1, x_2)\)</span> to <span
+class="math inline">\(P_2\)</span>.</p>
+<p>It is well know that Yao’s protocol securely realizes <span
+class="math inline">\(F_{2PC}\)</span> in the semi-honest security
+setting with a constant round and <span class="math inline">\(O(|C_1| +
+|C_2|)\)</span> communication <span class="citation"
+data-cites="JC:LinPin09">[180]</span>.</p>
+<p>We say that two vectors <span class="math inline">\(\vec{d} = (d_1,
+d_2, \ldots)\)</span> and <span class="math inline">\(\vec{d}&#39; =
+(d_1&#39;, d_2&#39;, \ldots)\)</span> are <em>neighboring</em> if they
+have the same length, and there exists only one index <span
+class="math inline">\(i\)</span> s.t. <span class="math inline">\(d_{i}
+\neq d&#39;_{i}\)</span>.</p>
+<div class="definition">
+<p><strong>Definition 73</strong> (Differential privacy with a trusted
+curator <span class="citation"
+data-cites="ICALP:Dwork06 TCC:DMNS06">[181], [182]</span>). A mechanism
+<span class="math inline">\(\mathcal{M}\)</span> satisfies <span
+class="math inline">\((\epsilon,\delta)\)</span>-differential privacy if
+for all neighboring data sets <span
+class="math inline">\(\vec{d}\)</span> and <span
+class="math inline">\(\vec{d}&#39;\)</span>, and all sets <span
+class="math inline">\(S \subseteq Range(\mathcal{M})\)</span> <span
+class="math display">\[\Pr[\mc{M}(\vec{d}) \in S] \le e^\epsilon \cdot
+\Pr[\mc{M}(\vec{d}&#39;) \in S] + \delta\]</span></p>
+</div>
+<h4 data-number="7.2.1.1"
+id="differential-privacy-in-the-two-party-setting."><span
+class="header-section-number">7.2.1.1</span> Differential privacy in the
+two-party setting.</h4>
+<p>Our presentation here follows the similar definitions given in prior
+work <span class="citation"
+data-cites="C:BeiNisOmr08 TALG:SCRS17 PoPETS:CDKY20">[43], [183],
+[184]</span>. For a two-party protocol <span
+class="math inline">\(\Pi\)</span> and an input <span
+class="math inline">\((\vd_1, \vd_2)\)</span>, we let <span
+class="math inline">\(\Pi(\vd_1, \vd_2)\)</span> denote the execution of
+<span class="math inline">\(\Pi\)</span> on this input. For an adversary
+<span class="math inline">\(\A\)</span> (corrupting either <span
+class="math inline">\(P_1\)</span> or <span
+class="math inline">\(P_2\)</span>), we define Let <span
+class="math inline">\(\view^\Pi_A(\vd_1, \vd_2)\)</span> be the view of
+the protocol to <span class="math inline">\(A\)</span> (consisting of
+input, the random tape, the protocol transcript, and the output).</p>
+<div class="definition">
+<p><strong>Definition 74</strong>. Let <span
+class="math inline">\(\edp&gt;0\)</span> and <span
+class="math inline">\(0 \le \ddp &lt; 1\)</span>. A (randomized)
+protocol <span class="math inline">\(\Pi\)</span> preserves
+<em>computational two-party <span
+class="math inline">\((\edp,\ddp)\)</span>-Differential Privacy</em>, if
+for any PPT distinguisher <span class="math inline">\(\cal D\)</span>,
+for any PPT adversary <span class="math inline">\(\A\)</span>, and for
+all neighboring inputs <span class="math inline">\(\vd := \vd_1 \|
+\vd_2\)</span> and <span class="math inline">\(\vd&#39; := \vd_1&#39; \|
+\vd_2&#39;\)</span>, there exists a negligible function <span
+class="math inline">\(\negl(\cdot)\)</span> such that, <span
+class="math display">\[\Pr[{\cal D}(\view^\Pi_A(\vd_1,
+\vd_2),1^\secparam)=1] \le e^\eps \cdot
+\Pr[{\cal D}(\view^\Pi_A(\vd_1&#39;, \vd_2&#39;),1^\secparam)=1] +
+\delta +
+\negl(\secparam)\]</span></p>
+</div>
+<p><span id="apx:bcoin" label="apx:bcoin"></span></p>
+<p>We can securely realize <span
+class="math inline">\(\mathcal{F}_{\mathsf{biasCoin}}\)</span>, by
+executing <span class="math inline">\(\mathcal{F}_{2PC}\)</span> for the
+following circuit <span
+class="math inline">\(C_{\mathsf{coinflip}}\)</span>. Since we just
+execute <span class="math inline">\(\mathcal{F}_{2PC}\)</span> with a
+circuit, security of the protocol is immediate.</p>
+<p><span class="math inline">\(C_{\mathsf{coinflip}}( \|\vec{w}_1\|_1,
+\{r_{1,j}\}_{j=1}^\secparam, b_1, \|\vec{w}_2\|_1, \{ r_{2,j}
+\}_{j=1}^\secparam, b_2)\)</span>    <span
+class="math inline">\(\rhd\)</span> <span class="math inline">\(r_j,
+b_j\)</span> are random bits.</p>
+<p><span class="math inline">\(P_1\)</span>’s input is <span
+class="math inline">\((\|\vec{w}_b\|_1, \{r_{1,j}\}, b_1)\)</span> and
+<span class="math inline">\(P_2\)</span>’s input is <span
+class="math inline">\((\|\vec{w}_2\|_1, \{r_{2,j}\}, b_2)\)</span>. We
+require <span class="math inline">\(\|\vec{w}_1\|_1,
+\|\vec{w}_2\|_1, \{r_{1,j}\}, \{r_{2,j}\} \in \zo^\secparam\)</span>,
+and <span class="math inline">\(b_1, b_2 \in \zo\)</span>.</p>
+<p>Let <span class="math inline">\(s_1 = \|\vec{w}_1\|_1\)</span> and
+<span class="math inline">\(s_2 = \|\vec{w}_2\|_1\)</span>. Let <span
+class="math inline">\(s = s_1 + s_2\)</span>. Compute <span
+class="math inline">\(\mask = 0^{\secparam-h}1^h\)</span> such that
+<span class="math inline">\(s
+\&amp; \mask = s\)</span> and <span class="math inline">\(s | \mask =
+\mask\)</span> where <span class="math inline">\(\&amp;\)</span> (resp.,
+<span class="math inline">\(|\)</span>) denotes bitwise AND (resp.,
+bitwise OR) operation. Note that there is a single <span
+class="math inline">\(h\)</span> satisfying the above conditions, i.e.,
+the effective bit-length <span class="math inline">\(h\)</span> of <span
+class="math inline">\(s\)</span> with <span
+class="math inline">\(2^{h-1} \le s &lt; 2^h\)</span>. This computation
+can be done by checking all possible candidates of <span
+class="math inline">\(h\)</span> one by one in <span
+class="math inline">\(O(\secparam)\)</span> steps.</p>
+<p>For <span class="math inline">\(j = 1,...,\lambda\)</span>, let <span
+class="math inline">\(r_j = (r_{1,j} \xor r_{2,j}) \&amp;
+\mask\)</span>. Note that it holds <span class="math inline">\(r_j &lt;
+2^h\)</span>.</p>
+<p>Find the first <span class="math inline">\(j^*\)</span> such that
+<span class="math inline">\(r_{j^*} \le s\)</span>. If there is no such
+<span class="math inline">\(j^*\)</span> output error.</p>
+<p>Compute <span class="math inline">\(b = b_1 \xor b_2\)</span>.</p>
+<p>If <span class="math inline">\(r_{j^*} \le s_1\)</span>, output <span
+class="math inline">\(b\)</span> to both <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span>. Otherwise, output <span
+class="math inline">\(b\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(b
+\xor 1\)</span> to <span class="math inline">\(P_2\)</span>.</p>
+<p>Note that <span class="math inline">\(\Pr[r_j &gt; s] = 1 -
+s/2^{h}  &lt; 1/2.\)</span> Therefore, with <span
+class="math inline">\(\lambda\)</span> repetitions, we have a good <span
+class="math inline">\(j^*\)</span> with probability <span
+class="math inline">\(1-2^{-\lambda}\)</span>. Finally, we have <span
+class="math inline">\(\Pr[r_{j^*} \le s_1| r_{j^*} \le s] = \frac
+{s_1}{s} =
+p\)</span>.</p>
+<h3 data-number="7.2.2" id="apx:proof"><span
+class="header-section-number">7.2.2</span> Proofs</h3>
+<p><span id="apx:pfTheorem1" label="apx:pfTheorem1"></span> We describe
+the simulator <span class="math inline">\(\Sim\)</span> in the <span
+class="math inline">\(\{\F_\oslone, \F_{2PC} \}\)</span>-hybrid model
+for the case that Party 1 is corrupted. The simulator and proof of
+security are analogous in the case that Party 2 is corrupted.</p>
+<p><span class="math inline">\(\Sim\)</span> receives as input <span
+class="math inline">\(\vec{w}_1\)</span>, the output <span
+class="math inline">\(i^*\)</span>, and <span
+class="math inline">\(||\vec{w}_1 + \vec{w}_2||_2\)</span>. <span
+class="math inline">\(\Sim\)</span> samples <span
+class="math inline">\(r^*\)</span> from a geometric distribution with
+success probability <span class="math inline">\(p = ||\vec{w}_1 +
+\vec{w}_2||_2^2\)</span>.</p>
+<p><span class="math inline">\(\Sim\)</span> invokes Party 1 on input
+<span class="math inline">\(\vec{w}_1\)</span>. For <span
+class="math inline">\(i \in [r^*-1]\)</span>, Party 1 sends its input to
+the first three invocations of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it three random values in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the second three invocations of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it three random values in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the <span class="math inline">\(\F_{2PC}\)</span> functionality
+and <span class="math inline">\(\Sim\)</span> returns to it <span
+class="math inline">\(\bot\)</span>. For <span class="math inline">\(i =
+r^*\)</span>, Party 1 sends its input to the first three invocation of
+<span class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it three random values in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the second three invocations of <span
+class="math inline">\(\F_\oslone\)</span> and <span
+class="math inline">\(\Sim\)</span> returns to it three random values in
+<span class="math inline">\(\mathbb{Z}_n\)</span>. Party 1 sends its
+input to the <span class="math inline">\(\F_{2PC}\)</span> functionality
+and <span class="math inline">\(\Sim\)</span> returns to it <span
+class="math inline">\(i^*\)</span>.</p>
+<p>It is clear that the view of Party 1 is identical in the ideal and
+real world, assuming that <span class="math inline">\(\Sim\)</span>
+samples the first succeeding round, <span
+class="math inline">\(r^*\)</span>, from the correct distribution. In
+the following, we argue that this is indeed the case.</p>
+<p>As was shown in the correctness analysis, if the protocol has not
+already halted before round <span class="math inline">\(r\)</span>, then
+the probability of halting (and outputting some valid index) in round
+<span class="math inline">\(r\)</span> is: <span
+class="math display">\[||\vec{w}_1||^2 + 2 \langle \vec{w}_1, \vec{w}_2
+\rangle +  ||\vec{w}_2||^2 = ||\vec{w}_1 | \vec{w}_2||_2^2.\]</span>
+Since <span class="math inline">\(r^*\)</span> is defined as the round
+in which the protocol halts, the distribution on <span
+class="math inline">\(r^*\)</span> is exactly the distribution on the
+number of Bernoulli trials (with probability <span
+class="math inline">\(p = ||\vec{w}_1 | \vec{w}_2||_2^2\)</span>) needed
+to get one success. Sampling the number of rounds is therefore
+equivalent to sampling the random variable corresponding to the number
+of rounds from a geometric distribution with success probability <span
+class="math inline">\(p = ||\vec{w}_1 | \vec{w}_2||_2^2\)</span>, which
+is exactly what <span class="math inline">\(\Sim\)</span> does.</p>
+<p><span id="apx:pfTheorem2" label="apx:pfTheorem2"></span> We first
+give the simulation of the sender. The simulator proceeds as
+follows:</p>
+<p>Send <span class="math inline">\(\vec{w}\)</span> to <span
+class="math inline">\(\F_{\oslone}\)</span> and receive <span
+class="math inline">\(\pi\)</span> as the output. Place <span
+class="math inline">\(\pi\)</span> on the random tape of the sender.</p>
+<p>Simulate the output of <span class="math inline">\(F_{2PC}\)</span>
+by sending a random <span class="math inline">\(r_1\)</span> to the
+sender.</p>
+<p>Simulate the key generation protocol honestly.</p>
+<p>Send a random encryption for <span class="math inline">\(\lbra r_2
+\lket\)</span> in Step 4. Due the semantic security of the underlying
+FHE scheme, the simulation is indistinguishable. Next, we give the
+simulation of the receiver.</p>
+<p>The simulator receives output <span class="math inline">\(i \xor
+\pi\)</span> from <span class="math inline">\(\F_{\oslone}\)</span>.</p>
+<p>The simulator works as functionality <span
+class="math inline">\(F_{2PC}\)</span> sending a random <span
+class="math inline">\(r_2\)</span> as the output to the receiver.</p>
+<p>The simulator runs the key generation protocol honestly, and stores
+the threshold decryption key of the sender.</p>
+<p>In step 6, the simulator computes <span class="math inline">\(c :=
+\lbra i \xor \pi \lket\)</span> and sends it to the receiver.</p>
+<p>The simulator runs the threshold decryption protocol honestly. The
+simulation is perfect.</p>
+<p><span id="apx:pfTheorem3" label="apx:pfTheorem3"></span> We describe
+the simulator <span class="math inline">\(\Sim\)</span> in the <span
+class="math inline">\(\{\F_{L_1}^{ss}, \F_{2PC}\}\)</span>-hybrid model
+for the case that Party 1 is corrupted. The simulator and proof of
+security are analogous in the case that Party 2 is corrupted.</p>
+<p><span class="math inline">\(\Sim\)</span> receives as input <span
+class="math inline">\(\vec{w}_1\)</span> and the output <span
+class="math inline">\(i^*\)</span>. <span
+class="math inline">\(\Sim\)</span> invokes Party 1 on input <span
+class="math inline">\(\vec{w}_1\)</span>. For <span
+class="math inline">\(j \in [B]\)</span>, the simulator works as
+follows:</p>
+<p>Upon Party 1 sending its input to <span
+class="math inline">\(\F_{L_1}\)</span>, <span
+class="math inline">\(\Sim\)</span> returns a uniformly random share
+<span class="math inline">\(r\)</span></p>
+<p>In place of the encryption of <span
+class="math inline">\(w_{2,i_j}\)</span> from Party 2, <span
+class="math inline">\(\Sim\)</span> sends Party 1 an FHE ciphertext
+encrypting 0.</p>
+<p>Upon Party 1 sending its input to <span
+class="math inline">\(\F_{2PC}\)</span>, <span
+class="math inline">\(\Sim\)</span> returns to Party 1 an FHE ciphertext
+encrypting 0.</p>
+<p>The only differences in the view of Party 1 in the ideal and hybrid
+worlds, are that (1) In the hybrid world it gets a secret share of <span
+class="math inline">\(i_j\)</span>, whereas in the ideal world it gets a
+uniformly random value; (2) In the hybrid world it gets an encryption of
+<span class="math inline">\(w_{2,i_j}\)</span> from Party 2, whereas in
+the ideal world it gets an encryption of 0; (3) In the hybrid world it
+gets encryptions of <span class="math inline">\(i_j\)</span> or <span
+class="math inline">\(0\)</span> from the ideal functionality <span
+class="math inline">\(\F_{2PC}\)</span>, whereas in the ideal world it
+always gets encryptions of <span class="math inline">\(0\)</span>.</p>
+<p>Receiving uniformly random values instead of correct secret shares
+does not affect the view of Party 1, since the additive secret sharing
+used has perfect secrecy. Further, switching from encryptions of <span
+class="math inline">\(w_{2,i_j}\)</span> and <span
+class="math inline">\(i_j\)</span> to encryptions of <span
+class="math inline">\(0\)</span> is indistinguishable due to the
+semantic security of the threshold FHE scheme. Thus, the view of Party 1
+is computationally indistinguishable in the hybrid world and the ideal
+world.</p>
+<p>This concludes the proof of security of the <span
+class="math inline">\(L_2\)</span> sampling protocol.</p>
+<p><span id="apx:pfLemma5" label="apx:pfLemma5"></span> We want to show
+that <span class="math display">\[\begin{aligned}
+    \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] &amp;= \frac{(w_{1,i} +
+w_{2,i})^p}{||\vec{w}_1 + \vec{w}_2||_p^p}\\
+   &amp;= \frac{(w_{1,i} + w_{2,i})^p}{c \cdot (||\vec{w}_1||_p^p  +
+||\vec{w}_2||_p^p)}\\
+    &amp;\leq \frac{2^{p-1} (w^p_{1,i} + w^p_{2,i})}{c \cdot
+(||\vec{w}_1||_p^p  + ||\vec{w}_2||_p^p)}\\
+    &amp;= 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)}[i].
+\end{aligned}\]</span> The inequality holds due to Jensen’s inequality
+with convex function <span class="math inline">\(f(x) = x^p\)</span>:
+<span class="math display">\[\begin{aligned}
+1/2^p \cdot(w_{1,i} + w_{2,i})^p &amp; = f(1/2 \cdot w_{i,1} + 1/2 \cdot
+w_{i,2}) \\
+&amp; \le 1/2 \cdot f(w_{i,1}) +  1/2 \cdot f(w_{2,i}) \\
+&amp; = 1/2 (w_{i,1}^p + w_{i,2}^p).
+\end{aligned}\]</span> This completes the proof of Lemma <a
+href="#lem:close_dist_2" data-reference-type="ref"
+data-reference="lem:close_dist_2">21</a>.</p>
+<p><span id="apx:pfLemma6" label="apx:pfLemma6"></span> Note that <span
+class="math inline">\(\Pi_{L_p}\)</span> simply performs rejection
+sampling in a distributed setting where sampling from <span
+class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> and computing the probabilities is done in a
+distributed manner. It is therefore well-known that as long as for all
+<span class="math inline">\(i \in [n]\)</span>, <span
+class="math display">\[\label{eq:rejection_2}
+    \Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq 2^p/c \cdot
+\Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i],\]</span> then
+<span class="math inline">\(\Pi_{L_2}\)</span> samples from the exact
+correct distribution, and the number of samples required from <span
+class="math inline">\(D_{\mathsf{ignore}, p}(\vec{w}_1,
+\vec{w}_2)\)</span> in protocol <span
+class="math inline">\(\Pi_{L_2}\)</span> follows a geometric
+distribution with probability <span
+class="math inline">\(c/2^p\)</span>. Thus, if condition (<a
+href="#eq:rejection_2" data-reference-type="ref"
+data-reference="eq:rejection_2">[eq:rejection_2]</a>) is met, the
+protocol samples exactly correctly and completes in an expected <span
+class="math inline">\(2^p/c \leq 2^p \in \tilde{O}(1)\)</span> number of
+rounds (since <span class="math inline">\(c \geq 1\)</span> and <span
+class="math inline">\(p \in O(1)\)</span>). Further, it can be
+immediately noted that condition (<a href="#eq:rejection_2"
+data-reference-type="ref"
+data-reference="eq:rejection_2">[eq:rejection_2]</a>) is met due to
+Lemma <a href="#lem:close_dist_2" data-reference-type="ref"
+data-reference="lem:close_dist_2">21</a>. Finally, each round has <span
+class="math inline">\(\tilde{O}(1)\)</span> communication, since <span
+class="math inline">\(\Pi_{\mathsf{ignore}}\)</span> has communication
+<span class="math inline">\(\tilde{O}(1)\)</span> (by Lemma <a
+href="#lem:ignore_2" data-reference-type="ref"
+data-reference="lem:ignore_2">18</a>) and since, in addition to that,
+only a constant number of length <span
+class="math inline">\(\tilde{O}(1)\)</span> values are exchanged in each
+round. Combining the above, we have that <span
+class="math inline">\(\Pi_{L_p}\)</span> has expected communication
+<span class="math inline">\(\tilde{O}(1)\)</span> and worst case (with
+all but negligible probability) communication <span
+class="math inline">\(\tilde{O}(1)\)</span>.</p>
+<p><span id="apx:pfLemma10" label="apx:pfLemma10"></span> We will show
+that the joint distribution over the <span
+class="math inline">\(i\)</span>-th entries of <span
+class="math inline">\(\tilde{\vec{w}_1} := \vec{M} \w_1 = (\tilde
+w_{1,1}, \ldots, \tilde w_{1,k})\)</span>, <span
+class="math inline">\(\tilde{\vec{w}_2} = \vec{M} \w_2 = (\tilde
+w_{2,1}, \ldots, \tilde w_{2,k})\)</span> can be sampled perfectly,
+given only <span class="math inline">\(\langle \vec{w}_1, \vec{w}_1
+\rangle\)</span>, <span class="math inline">\(\langle \vec{w}_2,
+\vec{w}_2 \rangle\)</span>, and <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2
+\rangle\)</span>.</p>
+<p>Due to independence of each of the coordinates of <span
+class="math inline">\(\tilde{\vec{w}_1},
+\tilde{\vec{w}_2}\)</span>, this immediately implies that the entire
+<span class="math inline">\(\mathsf{approxIP}(\vec{w}_1,
+\vec{w}_2)\)</span> can be simulated perfectly given only <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_1 \rangle\)</span>,
+<span class="math inline">\(\langle \vec{w}_2, \vec{w}_2
+\rangle\)</span>, and <span class="math inline">\(\langle \vec{w}_1,
+\vec{w}_2 \rangle\)</span>.</p>
+<p>We begin by noting that <span class="math display">\[\begin{aligned}
+\tilde{w}_{1,i}  &amp;=&amp; w_{1,1} M_{i,1} + w_{1,2} M_{i,2} + \cdots
++ w_{1,n} M_{i,n} \\
+\tilde{w}_{2,i}  &amp;=&amp; w_{2,1} M_{i,1} + w_{2,2} M_{i,2} + \cdot +
+w_{2,n} M_{i,n}
+\end{aligned}\]</span></p>
+<p>In the following, we show how to jointly sample <span
+class="math inline">\((\tilde{w}_{1,i}, \tilde{w}_{2,i})\)</span>.</p>
+<div class="description">
+<p><span>Step 1:</span> We begin by sampling from the marginal
+distribution over the first element of the tuple <span
+class="math inline">\(\tilde{w}_{1,i}\)</span>. Note that <span
+class="math inline">\(\tilde{w}_{1,i}\)</span> is distributed exactly as
+a Gaussian random variable with mean <span
+class="math inline">\(0\)</span> and variance <span
+class="math inline">\(\langle
+\vec{w}_1, \vec{w}_1 \rangle\)</span>. Thus, we can perfectly sample
+from the marginal distribution over <span
+class="math inline">\(\tilde{w}_{1,i}\)</span> given only <span
+class="math inline">\(\langle \vec{w}_1, \vec{w}_1
+\rangle\)</span>. Let <span class="math inline">\(z\)</span> be the
+resulting sample.</p>
+<p><span>Step 2:</span> We would now like to sample from the conditional
+distribution <span class="math inline">\(\tilde{w}_{2,i}\)</span>,
+conditioned on <span class="math inline">\(\tilde{w}_{1,i} =
+z\)</span>.</p>
+<p>First, the conditional distribution of <span
+class="math inline">\(M_{i,1}, \ldots, M_{i,n}\)</span> conditioned on
+<span class="math inline">\(w_{1,1} M_{i,1} + w_{1,2} M_{i,2} + \cdots +
+w_{1,n} M_{i,n} = z\)</span> is defined by the multivariate Gaussian
+distribution with the following mean <span
+class="math inline">\(\vec{\mu}\)</span> and covariance matrix <span
+class="math inline">\(\vec{\Sigma}\)</span> (see Corollary 7 in <span
+class="citation" data-cites="C:DDGR20">[185]</span>): <span
+class="math display">\[\vec{\mu} = \frac{z}{\langle \vec{w}_1, \vec{w}_1
+\rangle} \cdot \vec{w}_1
+, ~~~~~
+\vec{\Sigma} = \vec{I} - \frac{\vec{w}_1\vec{w}_1^T}{\langle \vec{w}_1,
+\vec{w}_1 \rangle}\]</span> Now, <span
+class="math inline">\(\tilde{w}_{2,i}\)</span> is a linear combination
+of the variables <span class="math inline">\(M_{i,1},
+\ldots, M_{i,n}\)</span> with coefficients <span
+class="math inline">\(w_{2,1}, \ldots, w_{2,n}\)</span>. Therefore,
+<span class="math inline">\(\tilde{w}_{2,i}\)</span> is distributed as a
+univariate Gaussian with mean <span
+class="math inline">\(\mu&#39;\)</span> and variance <span
+class="math inline">\(\sigma&#39;\)</span> as follows (see <span
+class="citation" data-cites="Liu">[186]</span> for example). <span
+class="math display">\[\mu&#39; = \langle \vec{w}_2, \vec{\mu} \rangle =
+\frac{z \langle \vec{w}_1,
+\vec{w}_2 \rangle}{\langle \vec{w}_1, \vec{w}_1 \rangle}\]</span> and
+<span class="math display">\[\sigma&#39; =
+\vec{w}_2^T\vec{\Sigma}\vec{w}_2
+= \vec{w}_2^T\vec{w}_2 -
+\frac{\vec{w}_2^T\vec{w}_1\vec{w}_1^T\vec{w}_2}{\langle \vec{w}_1,
+\vec{w}_1 \rangle}
+= \langle \vec{w}_2, \vec{w}_2 \rangle -
+\frac{(\langle \vec{w}_1, \vec{w}_2 \rangle)^2}{\langle \vec{w}_1,
+\vec{w}_1 \rangle}\]</span> Note that the mean and variance depend only
+on <span class="math inline">\(\langle \vec{w}_1, \vec{w}_1
+\rangle\)</span>, <span class="math inline">\(\langle \vec{w}_2,
+\vec{w}_2 \rangle\)</span>, and <span class="math inline">\(\langle
+\vec{w}_1, \vec{w}_2 \rangle\)</span>, so we can sample from this
+distribution given only those values. Let <span
+class="math inline">\(y\)</span> be the resulting sample.</p>
+<p><span>Step 3:</span> Output <span class="math inline">\((z,
+y)\)</span></p>
+</div>
+<h3 data-number="7.2.3" id="apx:otl1"><span
+class="header-section-number">7.2.3</span> Realizing <span
+class="math inline">\(\F_\oslone\)</span> with OT with Less
+Precision</h3>
+<p>We implement oblivious sampling using a 1-out-of-<span
+class="math inline">\(m\)</span> OT scheme. In particular, the receiver,
+as an OT receiver, chooses a random index from <span
+class="math inline">\([m]\)</span>, and the sender, as an OT sender,
+prepares an <span class="math inline">\(m\)</span>-dimensional input
+vector that encodes the <span class="math inline">\(L_1\)</span>
+distribution of <span class="math inline">\(\vec{w}\)</span> in a way
+that we will describe soon.</p>
+<h4 data-number="7.2.3.1"
+id="assumption-about-the-level-of-precision-of-the-input."><span
+class="header-section-number">7.2.3.1</span> Assumption about the level
+of precision of the input.</h4>
+<p>With this approach, each element from the prepared OT input vector
+will be chosen uniformly with probability <span
+class="math inline">\(\frac 1 m\)</span>. Therefore, the size <span
+class="math inline">\(m\)</span> affects the level of precision of the
+sampling. In particular, we set <span class="math inline">\(\mu :=
+1/m\)</span> as a precision unit, and we assume the following:</p>
+<p><em>For each <span class="math inline">\(i \in [n]\)</span>, it holds
+that <span class="math inline">\(\frac{w_{i}}{\|\vec{w}\|_1}\)</span> is
+a multiple of <span class="math inline">\(\mu\)</span>. If the input
+vector <span class="math inline">\(\vec w\)</span> is not consistent
+with the above requirement, one can round it by using the following
+function <span
+class="math inline">\(\rounding_{\mu}(\vec{w})\)</span>:</em></p>
+<p><span class="math inline">\(\rounding_\mu(\vec{w})\)</span></p>
+<p>Let <span class="math inline">\(\vec{w} = (w_1, \ldots,
+w_n)\)</span>. For <span class="math inline">\(i = 1, \ldots,
+n\)</span>, compute <span class="math inline">\(w_i&#39; =
+\trunc_{\mu}(w_i)\)</span>. Here, for any real number <span
+class="math inline">\(x\)</span> with <span class="math inline">\(x \in
+[0,1]\)</span>, denote <span class="math inline">\(\trunc_{\mu}(x) =
+\tilde x \cdot \mu\)</span> where <span class="math inline">\(\tilde
+x\)</span> is an integer that minimizes <span
+class="math inline">\(\Delta
+:= x - \tilde x \cdot \u\)</span> subject to <span
+class="math inline">\(\Delta \ge 0\)</span>. Typically, we have <span
+class="math inline">\(\mu = 2^{-q}\)</span> for a certain positive
+integer <span class="math inline">\(q\)</span>, and <span
+class="math inline">\(\trunc_{\mu}(x)\)</span> is simply truncating the
+lower order bits in the binary representation of <span
+class="math inline">\(x\)</span>.</p>
+<p>Let <span class="math inline">\(\vec{w}&#39; = (w_1&#39;, \ldots,
+w_n&#39;)\)</span>.</p>
+<p>Repeat the following until <span class="math inline">\(L_1\)</span>
+norm of <span class="math inline">\(\vec{w}&#39;\)</span> becomes 1.</p>
+<p>Find <span class="math inline">\(j = \arg\max_{i \in [n]} (w_i -
+w_i&#39;)\)</span>, and increase <span
+class="math inline">\(w&#39;_j\)</span> by <span
+class="math inline">\(\mu\)</span>.</p>
+<p>Output <span class="math inline">\(\vec{w}&#39;\)</span>.</p>
+<p>The above algorithm makes sure that for all <span
+class="math inline">\(i\)</span>, it holds <span
+class="math inline">\(|w&#39;_i - w_i|
+&lt; \mu\)</span>, which means <span
+class="math inline">\(\vec{w}&#39;\)</span> is a good approximation of
+<span class="math inline">\(\vec{w}\)</span>, with each element having
+an additive error of at most <span class="math inline">\(\mu\)</span>.
+To see why, note that in step 1, some <span
+class="math inline">\(w&#39;_i\)</span>s will get truncated leading to
+small difference, i.e., <span class="math inline">\(w_i - w_i&#39; &lt;
+\mu\)</span>. In step 2, since the truncated weights are added back to
+the elements in decreasing order of difference <span
+class="math inline">\((w_i - w_i&#39;)\)</span>, only some of the
+truncated <span class="math inline">\(w&#39;_i\)</span>s will be updated
+to <span class="math inline">\(w&#39;_i + \mu\)</span> (which will still
+be close to <span class="math inline">\(w_i\)</span>) until the <span
+class="math inline">\(L_1\)</span> norm of <span
+class="math inline">\(\vec{w}&#39;\)</span> becomes 1.</p>
+<p>In a situation where the low precision is acceptable, this OT-based
+solutions could be more efficient. However, if one needs a higher level
+of precision, we recommend using the FHE-based solution described in the
+next subsection. We also observe that by using an OT protocol with <span
+class="math inline">\(O(\log m)\)</span> communication <span
+class="citation" data-cites="IMS+09">[187], Theorem 2.2</span>, we
+expect we could support fairly large values of <span
+class="math inline">\(m\)</span>. The bottleneck on larger <span
+class="math inline">\(m\)</span> is likely to be storage, and the
+computation time needed for the OT.</p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> The sender has input <span
+class="math inline">\(\vec{w}\)</span>. We require every <span
+class="math inline">\(w_{i}/\|\vec{w}\|_1\)</span> is a multiple of
+<span class="math inline">\(\mu := \frac 1 m\)</span>.</p>
+<p>The sender computes the following:</p>
+<p>Given <span class="math inline">\(\vec{w}\)</span>, the sender
+prepares an <span class="math inline">\(m\)</span>-dimensional input
+vector as follows:</p>
+<p>For <span class="math inline">\(i = 1, \ldots, n\)</span>, do:</p>
+<p>Let <span class="math inline">\(k_i = \frac{w_i}{\|\vec{w}\|_1} \cdot
+m\)</span>. Insert <span class="math inline">\(k_i\)</span> copies of
+the index <span class="math inline">\(i\)</span> into the <span
+class="math inline">\(m\)</span>-dimensional vector <span
+class="math inline">\(\vec{v}\)</span>; that is, there should be <span
+class="math inline">\(k_i\)</span> slots (out of <span
+class="math inline">\(m\)</span>) whose value is <span
+class="math inline">\(i\)</span> in the <span
+class="math inline">\(m\)</span>-dimensional vector <span
+class="math inline">\(\vec{v}\)</span>. Note that for each <span
+class="math inline">\(i\)</span>, the fraction of the slots containing
+the index <span class="math inline">\(i\)</span> in <span
+class="math inline">\(\vec{v}\)</span> is <span
+class="math inline">\(\frac{k_i}{m} =
+\frac{w_i}{\|\vec{w}\|_1}\)</span>.</p>
+<p>The sender chooses a random pad <span
+class="math inline">\(\pi\)</span> uniformly at random.</p>
+<p>Let <span class="math inline">\(\vec{v} = (v_{1}, \ldots,
+v_{m})\)</span>. The sender shuffles <span
+class="math inline">\(\vec{v}\)</span> and blinds it by updating <span
+class="math inline">\(v_{i} := v_{i} \xor \pi\)</span> with a randomly
+chosen <span class="math inline">\(\pi\)</span>.</p>
+<p>Execute an OT protocol where the sender is the OT sender with input
+<span class="math inline">\(\vec{v}\)</span> and the receiver is the OT
+receiver with a randomly chosen number from <span
+class="math inline">\([m]\)</span>. Let <span
+class="math inline">\(u\)</span> be the output to the OT receiver.</p>
+<p>Output <span class="math inline">\(\pi\)</span> to the sender and
+output <span class="math inline">\(u\)</span> to the receiver.</p>
+</div>
+<h4 data-number="7.2.3.2" id="oblivious-sampling-protocol."><span
+class="header-section-number">7.2.3.2</span> Oblivious sampling
+protocol.</h4>
+<p>With the assumption about the level of precision of the input vector
+<span class="math inline">\(\vec{w}\)</span>, we can implement oblivious
+sampling. See Protocol <a href="#fig:osample-ot"
+data-reference-type="ref"
+data-reference="fig:osample-ot">[fig:osample-ot]</a>.</p>
+<p>Due to security of the OT protocol, the OT sender won’t know the OT
+receiver’s choice. However, since the OT receiver does know the sampled
+index, which leaks information about the data array, we hide this
+information from the OT receiver by having the OT sender
+<span><em>shuffle</em></span> the input vector.</p>
+<p>At the end of the OT protocol, the sender and receiver will hold the
+sampled index <span class="math inline">\(i\)</span> in a secret shared
+form; that is, the sender will hold <span
+class="math inline">\(\pi\)</span> and the receiver <span
+class="math inline">\(\pi \xor i\)</span>. Note that the sender re-uses
+the same <span class="math inline">\(\pi\)</span> across all inputs, in
+order to fix its share, independently of the receiver index. Security
+holds even with the re-use of this value because the receiver learns
+only a single element.</p>
+<h4 data-number="7.2.3.3" id="security.-4"><span
+class="header-section-number">7.2.3.3</span> Security.</h4>
+<p>We will prove the following theorem.</p>
+<div id="thm:osample-ot" class="theorem">
+<p><strong>Theorem 75</strong>. Protocol <a href="#fig:osample-ot"
+data-reference-type="ref"
+data-reference="fig:osample-ot">[fig:osample-ot]</a> securely realizes
+<span class="math inline">\(\F_{\oslone}\)</span> in the semi-honest
+security model.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> We first give the simulation of the sender. This is
+trivial in the OT-hybrid model, as the sender receives no messages in
+this protocol. The simulator submits the sender’s input to <span
+class="math inline">\(\F_{\oslone}\)</span>, and recieves <span
+class="math inline">\(\pi\)</span> as output. It places <span
+class="math inline">\(\pi\)</span> on the sender’s random tape, accepts
+the sender’s input to the OT functionality, and terminates.</p>
+<p>Next, we give the simulation of the receiver. The simulator submits
+input to <span class="math inline">\(\F_{\oslone}\)</span>, and receives
+output <span class="math inline">\(u\)</span>. Upon receiving OT choice
+from the adversary, it feeds <span class="math inline">\(u\)</span> to
+the adversary as the OT output. The simulation is perfect, since the
+view of the adversary contains nothing more than <span
+class="math inline">\(u\)</span>. ◻</p>
+</div>
+<h3 data-number="7.2.4" id="apx:ssL1"><span
+class="header-section-number">7.2.4</span> <span
+class="math inline">\(L_1\)</span> Sampling Protocol with Secret Shared
+Output</h3>
+<p>We give a more formal description of the functionality <span
+class="math inline">\(\F_{L_1}^{ss}\)</span>.</p>
+<div class="center">
+<p><span class="math inline">\(\F_{L_1}\)</span>: Ideal functionality
+for two-party <span class="math inline">\(L_1\)</span> sampling</p>
+</div>
+<p>The functionality has the following parameter:</p>
+<p><span class="math inline">\(n \in \NN\)</span>. The dimension of the
+input weight vectors <span class="math inline">\(\vec{w}_1\)</span> and
+<span class="math inline">\(\vec{w}_2\)</span>.</p>
+<p>The functionality proceeds as follows:</p>
+<p>Receive inputs <span class="math inline">\(\vec w_1\)</span> and
+<span class="math inline">\(\vec w_2\)</span> from <span
+class="math inline">\(P_1\)</span> and <span
+class="math inline">\(P_2\)</span> respectively.</p>
+<p>Sample <span class="math inline">\(i \in [n]\)</span> with
+probability <span class="math inline">\(\frac{w_{1,i} +
+w_{2,i}}{ \|\vec{w}_1 + \vec{w}_2\|_1 }\)</span></p>
+<p>Choose a random number <span class="math inline">\(\pi\)</span>
+consisting of <span class="math inline">\(\lceil \log n \rceil\)</span>
+bits.</p>
+<p>Send <span class="math inline">\(\pi\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(i
+\xor \pi\)</span> to <span class="math inline">\(P_2\)</span>.</p>
+<p>We describe a protocol securely realizing <span
+class="math inline">\(\F_{L_1}^{ss}\)</span> in the <span
+class="math inline">\((\F_\oslone, \F_\bcoin)\)</span>-hybrid.</p>
+<div class="algorithm">
+<p><strong>Inputs:</strong> Party <span
+class="math inline">\(P_b\)</span> has input <span
+class="math inline">\(\vec{w}_b\)</span>.</p>
+<p>Execute <span class="math inline">\(\F_\oslone\)</span> with <span
+class="math inline">\(P_1\)</span> as a sender with input <span
+class="math inline">\(\vec{w}_1\)</span> and <span
+class="math inline">\(P_2\)</span> as a receiver. Let <span
+class="math inline">\(\langle i_1 \rangle\)</span> be the secret share
+of the output index.</p>
+<p>Execute <span class="math inline">\(\F_\oslone\)</span> with <span
+class="math inline">\(P_2\)</span> as a sender with input <span
+class="math inline">\(\vec{w}_2\)</span> and <span
+class="math inline">\(P_1\)</span> as a receiver. Let <span
+class="math inline">\(\langle i_2 \rangle\)</span> be the secret share
+of the output index.</p>
+<p>Execute <span class="math inline">\(\F_\bcoin\)</span> where <span
+class="math inline">\(P_1\)</span> has input <span
+class="math inline">\(\|\vec{w}_1\|_1\)</span> and <span
+class="math inline">\(P_2\)</span> has input <span
+class="math inline">\(\|\vec{w}_2\|_1\)</span>. Let <span
+class="math inline">\(\langle b \rangle\)</span> be the secret share of
+the output bit. In addition, <span class="math inline">\(P_1\)</span>
+chooses random bits <span class="math inline">\(\pi\)</span>.</p>
+<p>Execute <span class="math inline">\(\F_{2PC}\)</span> for the
+following circuit:</p>
+<p>Input: <span class="math inline">\(\langle i_1 \rangle, \langle i_2
+\rangle, \langle b \rangle, \pi\)</span>.</p>
+<p>Compute <span class="math inline">\(i = i_1 \cdot (1-b) + i_2 \cdot
+b\)</span>.</p>
+<p>Output <span class="math inline">\(\pi\)</span> to <span
+class="math inline">\(P_1\)</span> and <span class="math inline">\(\pi
+\xor i\)</span> to <span class="math inline">\(P_2\)</span>.</p>
+</div>
+<p>Security of the protocol can be shown similarly to Theorem <a
+href="#th:l1" data-reference-type="ref"
+data-reference="th:l1">7</a>.</p>
+<h2 data-number="7.3" id="min-hash"><span
+class="header-section-number">7.3</span> Min-Hash</h2>
+<h3 data-number="7.3.1" id="apx:lem:bin-dp"><span
+class="header-section-number">7.3.1</span> Proof of Lemma <a
+href="#lem:bin-dp" data-reference-type="ref"
+data-reference="lem:bin-dp">49</a></h3>
+<p>Let <span class="math inline">\(c= p/(1-p)\)</span>. We need to find
+<span class="math inline">\(a &lt; np\)</span> and <span
+class="math inline">\(b &gt; np\)</span> satisfying the following
+condition. <span class="math display">\[\begin{aligned}
+    \frac{\Pr_{\Bin}[a]}{\Pr_{\Bin+s}[a]} =
+    \frac{ \binom{n}{a} p^a (1-p)^{n-a}}
+         {  \binom{n}{a-s} p^{a-s} (1-p)^{n-a+s}}
+   &lt; \left ( \frac{ n-a} {a -s} \right)^s  \cdot c^s
+   \le e^\ee.
+\end{aligned}\]</span> <span class="math display">\[\begin{aligned}
+    \frac{\Pr_{\Bin}[b]}{\Pr_{\Bin+s}[b]} =
+    \frac{ \binom{n}{b} p^{b} (1-p)^{n-b}}
+         {  \binom{n}{b-s} p^{b-s} (1-p)^{n-b+s}}
+   &gt; \left ( \frac{ n-b} {b} \right)^s  \cdot c^s
+   \ge e^{-\ee}.
+\end{aligned}\]</span></p>
+<h4 data-number="7.3.1.1" id="case-1-s-ge-ee."><span
+class="header-section-number">7.3.1.1</span> Case 1: <span
+class="math inline">\(s \ge \ee\)</span>.</h4>
+<p>We set <span class="math inline">\(a = \frac{np + s(1-p)\cdot
+e^{\ee/s}}{e^{\ee/s}\cdot (1-p) + p}\)</span> and <span
+class="math inline">\(b = \frac{e^{\ee/s} \cdot np}{(1-p) + e^{\ee/s}
+\cdot p}\)</span>. Note these values satisfy the above inequalities.</p>
+<p>To show the second requirement of the tail bound, it suffices to show
+that <span class="math inline">\(\Pr_{\Bin}[X
+\le a+s] = \negl(\kappa)\)</span>; the other case holds similarly.</p>
+<p>Let <span class="math inline">\(\mu := np \in \Theta(\kappa)\)</span>
+and let <span class="math inline">\(d = 1- (a+s)/\mu\)</span>. By
+applying the Chernoff bound, we have <span class="math display">\[\Pr_{X
+\from \Bin}[X \le a+s] = \Pr[ X \le (1-d) \mu ] \le
+\exp(-d^2\mu/2).\]</span> We will show that we have <span
+class="math inline">\(d = \Omega(\frac{1}{\lg\lg \kappa})\)</span>,
+which implies that with <span class="math inline">\(\mu \in
+\Theta(\kappa)\)</span>, the above probability is negligible in <span
+class="math inline">\(\kappa\)</span>. Let <span class="math inline">\(t
+= s(1-p)\cdot e^{\ee/s}\)</span> and <span class="math inline">\(u  =
+e^{\ee/s}\cdot (1-p) + p\)</span>. Then, we have <span
+class="math inline">\(a = \frac{\mu + t}{u}\)</span>. Note that we have
+<span class="math inline">\(\ee/s \cdot (1-p) + 1 \le u \le e\)</span>.
+We have the following: <span class="math display">\[\begin{aligned}
+    d = \frac{\mu - a - s}{\mu}
+      = \left(1 - \frac{1}{u}\right) - \frac{t/u + s}{\mu}  
+      \ge \frac{\ee/s \cdot (1-p)}{e} - \frac{t/u + s}{\mu}  
+      = \Omega\left(\frac{1}{\lg\lg \kappa}\right) - \tilde O(1/\kappa).
+\end{aligned}\]</span></p>
+<h4 data-number="7.3.1.2" id="case-2-s-le-ee."><span
+class="header-section-number">7.3.1.2</span> Case 2: <span
+class="math inline">\(s \le \ee\)</span>.</h4>
+<p>Let <span class="math inline">\(a = \frac{c}{c+e} \cdot (n+e\ee) &lt;
+np\)</span> and <span class="math inline">\(b = \frac{c}{c+e^{-1}}
+\cdot n &gt; np\)</span>. Observe that <span
+class="math inline">\(\frac{n-a} {b-s} \cdot c = e\)</span> and <span
+class="math inline">\(\frac{n-b}{b} \cdot c = e^{-1}\)</span>.
+Therefore, given <span class="math inline">\(s \le \ee\)</span>, the
+above inequalities hold. The tail bounds specified as the second
+condition of the lemma can be shown using the Chernoff bound since <span
+class="math inline">\(np-a \in \Theta(np) = \Theta(\secparam)\)</span>
+and so does <span class="math inline">\(b-np\)</span>.</p>
+<h3 data-number="7.3.2" id="apx:proof:good_event"><span
+class="header-section-number">7.3.2</span> Proof of Lemma <a
+href="#lem:good_event" data-reference-type="ref"
+data-reference="lem:good_event">53</a></h3>
+<p>Let <span class="math inline">\(t = \frac{1}{n_R}\)</span>, Let <span
+class="math inline">\(\mathsf{low} =
+1-\left(\frac{1}{2}+\theta\right)^t\)</span> and <span
+class="math inline">\(\mathsf{high}
+= 1-\left(\frac{1}{2}-\theta\right)^t\)</span>. Then, we have: <span
+class="math display">\[\begin{aligned}
+    &amp;\Pr_{h}[\good_\theta(h, A, I, n_B)]  \\
+    &amp; = \Pr_{h} \left[\left(\min h(I) \geq\mathsf{low}\right) \land
+\left(\min h(I) = \min h(A)\right)\right] \\
+    &amp; ~~~~ - \Pr_{h} \left[\left(\min h(I) \geq \mathsf{high}\right)
+\land \left(\min h(I) = \min h(A)\right)\right]\\
+    &amp; = \Pr_{h} \left[\min h(A) \geq\mathsf{low}\right] \cdot
+\Pr\left[ \min h(I) = \min h(A) \mid \min h(A) \geq\mathsf{low}\right]
+\\
+    &amp; ~~~~ - \Pr_{h} \left[\min h(A) \geq \mathsf{high}\right] \cdot
+\Pr\left[ \min h(I) = \min h(A) \mid \min h(A) \geq \mathsf{high}\right]
+\\
+    &amp; \ge \left(\frac{1}{2}+\theta\right)^{t \cdot n_A} \cdot
+    \frac{n_I}{n_A} - \left(\frac{1}{2}-\theta\right)^{t \cdot n_A}
+    \cdot \frac{n_I}{n_A}
+\end{aligned}\]</span></p>
+<h3 data-number="7.3.3" id="apx:proof:good_hash"><span
+class="header-section-number">7.3.3</span> Proof of Lemma <a
+href="#thm:good_hash" data-reference-type="ref"
+data-reference="thm:good_hash">54</a></h3>
+<p>We can lowerbound <span class="math inline">\(|K_\theta|\)</span>
+with <span class="math inline">\(\Bino(k-s, p_\theta)\)</span>. Recall
+<span class="math inline">\(s \in O(\lg\lg\kappa)\)</span>. Let <span
+class="math inline">\(\mu = (k-s) p_\theta = \Omega(\secparam).\)</span>
+Applying the Chernoff Bound, we have <span
+class="math inline">\(\Pr\left[ |K_\theta| \le (1 - 1/3) \mu \right] \le
+\exp(-\mu/18) \le \negl(\secparam). \qedhere\)</span></p>
+<h3 data-number="7.3.4" id="apx:proof:pb-dp"><span
+class="header-section-number">7.3.4</span> Proof of Lemma <a
+href="#lem:pb-dp" data-reference-type="ref"
+data-reference="lem:pb-dp">55</a></h3>
+<h4 data-number="7.3.4.1" id="hockey-stick-divergence."><span
+class="header-section-number">7.3.4.1</span> Hockey stick
+divergence.</h4>
+<p>We first review hockey stick divergence <span class="citation"
+data-cites="SasVer15 Ost02 ICALP:BarOlm13">[188], [189], [190]</span>.
+The hockey-stick divergence between two probability measures <span
+class="math inline">\(P,Q\)</span> over <span
+class="math inline">\(Z\)</span> is defined as: <span
+class="math display">\[\hsd{\alpha}{X}{Y} = \sup_{S \subseteq Z}(X(S) -
+\alpha Y(S)) = \sum_{z \in Z} [(X(z) - \alpha Y(z)]_+,\]</span> where
+<span class="math inline">\(\alpha \geq 1\)</span> and <span
+class="math inline">\([x]_+ = \max\{x,0\}\)</span>. We observe that the
+following holds directly from the definition of the hockey stick
+divergence.</p>
+<div class="corollary">
+<p><strong>Corollary 76</strong>. For any probability measures <span
+class="math inline">\(X,Y\)</span> over <span
+class="math inline">\(Z\)</span> and for any <span
+class="math inline">\(\ee, \dd\)</span>, it holds <span
+class="math display">\[X \aed Y \mbox{ if and only if
+}  \hsd{e^\ee}{X}{Y} \leq \dd \mbox{ and } \hsd{e^\ee}{Y}{X} \leq
+\dd.\]</span></p>
+</div>
+<h4 data-number="7.3.4.2" id="proof-of-lemma-6."><span
+class="header-section-number">7.3.4.2</span> Proof of Lemma 6.</h4>
+<p>Let <span class="math inline">\(\etan = 1/2 - \theta\)</span> and
+<span class="math inline">\(\etap = 1/2 + \theta\)</span>. For brevity,
+we let <span class="math inline">\(C\)</span> denote <span
+class="math inline">\(\mathsf{PB}(n,p_J)\)</span>. For any distribution
+<span class="math inline">\(\DDD\)</span>, let <span
+class="math inline">\(P_\DDD\)</span> denote the probability measure
+with respect to <span class="math inline">\(\DDD\)</span>. We first show
+that for any <span class="math inline">\(\ee&gt;0\)</span>, it holds
+that <span class="math inline">\(\hsd{e^\ee}{P_{C}}{P_{C + 1}}\)</span>
+is at most <span class="math display">\[\begin{aligned}
+   \max\left(\hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+1}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+1}}
+\right).
+\end{aligned}\]</span></p>
+<p>We start with an upper bound of the hockey-stick divergence is
+reached at extreme points. We rely on the results in <span
+class="citation" data-cites="COK22">[149]</span>. Although they use the
+Renyi divergence, their results are general enough to be applied to any
+<span class="math inline">\(f\)</span>-divergence.</p>
+<div class="lemma">
+<p><strong>Lemma 77</strong>. (<span class="citation"
+data-cites="COK22">[149], Lemma 3.5</span>) <span
+class="math display">\[\begin{aligned}
+     \hsd{e^\ee}{P_{C}}{P_{C + 1}}
+     \leq  \max_{j \in [n]} \hsd{e^\ee}{P_{\Bino(j, \eta_{-\theta}) +
+\Bino(n-j,\eta_{+\theta})}}{P_{\Bino(j, \eta_{-\theta}) +
+\Bino(n-j,\eta_{+\theta})+1}}.\label{eqa:twobinom}
+\end{aligned}\]</span></p>
+</div>
+<p>Next, we apply data processing inequality to simplify (<a
+href="#eqa:twobinom" data-reference-type="ref"
+data-reference="eqa:twobinom">[eqa:twobinom]</a>) from the above
+lemma.</p>
+<div class="lemma">
+<p><strong>Lemma 78</strong>. (<span class="citation"
+data-cites="COK22">[149], Lemma 3.6</span>) (<a href="#eqa:twobinom"
+data-reference-type="ref"
+data-reference="eqa:twobinom">[eqa:twobinom]</a>) is upper bounded by
+<span class="math display">\[\begin{aligned}
+\max \left(    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+1}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\eta_{-\theta})+1}}\right).
+\end{aligned}\]</span></p>
+</div>
+<p>We extend the above to upper bound the hockey-stick divergence
+between probability measures differed by an integer amount greater than
+1, i.e., <span class="math inline">\(P_{C}\)</span> and <span
+class="math inline">\(P_{C+s}\)</span> for <span
+class="math inline">\(s&gt;1\)</span>.</p>
+<div id="col:APBM" class="corollary">
+<p><strong>Corollary 79</strong>. For any <span
+class="math inline">\(\ee&gt;0\)</span>, it holds that <span
+class="math inline">\(\hsd{e^\ee}{P_{C}}{P_{C + s}}\)</span> is at most
+<span class="math display">\[\begin{aligned}
+    \max \left(
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\etap)}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \etap)+s}},
+    \hsd{e^\ee}{P_{\Bino(\lceil\frac{n}{2}\rceil,
+\eta_{-\theta})}}{P_{\Bino(\lceil\frac{n}{2}\rceil, \eta_{-\theta})+s}}
+\right).
+\end{aligned}\]</span></p>
+</div>
+<p>Finally, to give a bound on the divergence, we can apply Lemma <a
+href="#lem:bin-dp" data-reference-type="ref"
+data-reference="lem:bin-dp">49</a> to argue that the binomial
+distribution hides the small sensitivity. Specifically, as <span
+class="math inline">\(\lceil\frac{n}{2}\rceil \in
+\Theta(\kappa)\)</span> and <span class="math inline">\(s
+=\lg\lg\kappa\)</span>, we can claim <span class="math inline">\((\ee,
+\dd)\)</span>-DDP with <span class="math inline">\(\dd =
+\negl(\kappa)\)</span>.</p>
+<p>Similarly, it holds that <span
+class="math inline">\(\hsd{e^\ee}{P_{C+s}}{P_{C}} \le
+\negl(\kappa)\)</span>. 0◻</p>
+<h3 data-number="7.3.5" id="apx:proof_CDDP2"><span
+class="header-section-number">7.3.5</span> Proof of Theorem <a
+href="#thm:CDDP2" data-reference-type="ref"
+data-reference="thm:CDDP2">51</a></h3>
+<h4 data-number="7.3.5.1"
+id="on-the-definition-of-a-theta-good-iteration."><span
+class="header-section-number">7.3.5.1</span> On the definition of a
+<span class="math inline">\(\theta\)</span>-good iteration.</h4>
+<p>We keep the same definition of a <span
+class="math inline">\(\theta\)</span>-good iteration, except we set the
+exponent to <span class="math inline">\(1/n_R&#39;\)</span>, instead of
+<span class="math inline">\(1/n_R\)</span>, and we also require <span
+class="math inline">\(\theta \le 1/10\)</span>. In particular,</p>
+<ul>
+<li><p><span class="math inline">\(\min h(A) = \min h(I)\)</span>  and 
+<span class="math inline">\(\min h(I) \in
+    \left[1-\left(\frac{1}{2}+\theta\right)^t,
+        1-\left(\frac{1}{2}-\theta\right)^t\right]\)</span> with <span
+class="math inline">\(\boxed{t = \frac{1}{n_R&#39;}}\)</span>.</p></li>
+</ul>
+<h4 data-number="7.3.5.2" id="bundle-of-good-iterations-k_theta."><span
+class="header-section-number">7.3.5.2</span> Bundle of good iterations
+<span class="math inline">\(K_\theta\)</span>.</h4>
+<p>The total number of iterations in the min-hash protocol <span
+class="math inline">\(\PPH\)</span> is <span class="math inline">\(k =
+\Omega(\kappa \cdot \lg\lg\kappa)\)</span>. We require that <span
+class="math inline">\(n_R/k^2 =
+\Omega(\kappa)\)</span>.</p>
+<p>Using Lemma <a href="#lem:good_event" data-reference-type="ref"
+data-reference="lem:good_event">53</a>, with all but negligible
+probability, at least <span class="math inline">\(\Omega(\kappa \cdot
+\lg\lg\kappa)\)</span> iterations are <span
+class="math inline">\(\theta\)</span>-good. Recall that <span
+class="math inline">\(G_\theta\)</span> denotes the set of <span
+class="math inline">\(\theta\)</span>-good iterations, and <span
+class="math inline">\(K_\theta = G_\theta \setminus S_\xs\)</span>. We
+set <span class="math inline">\(k_g =
+|K_\theta|\)</span>. We further divide these <span
+class="math inline">\(k_g\)</span> iterations into <span
+class="math inline">\(u = \lg\lg \kappa\)</span> bundles, each of which
+is of size <span class="math inline">\(k_b = \Omega(\kappa)\)</span>.
+Those bundles are denoted by <span class="math inline">\(K_{\theta, 1},
+\ldots, K_{\theta,u}\)</span>. We also let <span
+class="math inline">\(K_{bad} := \overline{K_{\theta}}\)</span>.</p>
+<h4 data-number="7.3.5.3"
+id="random-variables-for-the-protocol-output."><span
+class="header-section-number">7.3.5.3</span> Random variables for the
+protocol output.</h4>
+<p>Let <span class="math inline">\(out^+_{bad}\)</span> be the
+protocol’s match count for sets <span class="math inline">\(A,
+\Bp\)</span> w.r.t. the hash functions in <span
+class="math inline">\(K_{bad}\)</span>: <span
+class="math display">\[out^+_{bad} := \left | \{ j \in K_{bad} : \min
+h_j(A) = \min h_j(\Bp) \} \right |.\]</span> Likewise, let <span
+class="math inline">\(out_{bad}\)</span> be the number of matches for
+sets <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> (instead of <span
+class="math inline">\(\Bp\)</span>) in iterations in <span
+class="math inline">\(K_{bad}\)</span>. Similarly, for <span
+class="math inline">\(i \in [u]\)</span>, we let <span
+class="math inline">\(out^+_{i}\)</span> and <span
+class="math inline">\(out_i\)</span> denote the output for the <span
+class="math inline">\(i\)</span>-th bundle, with or without <span
+class="math inline">\(\xs\)</span> respectively. Note that <span
+class="math inline">\(out^+_{i} = out_i\)</span>, since we ruled out
+<span class="math inline">\(S_\xs\)</span> from <span
+class="math inline">\(K_\theta\)</span>. Note that the final output of
+the min-hash protocol for input <span class="math inline">\(\Bp\)</span>
+is equal to <span class="math inline">\(out^+_{bad} + \sum_{i=1}^u
+out_i\)</span>; the final output for input <span
+class="math inline">\(B\)</span> is <span
+class="math inline">\(out_{bad} + \sum_{i=1}^u out_i\)</span>. Let <span
+class="math display">\[\vec{out} = out^+_{bad} || out_{bad} || out_1 ||
+\cdots || out_u.\]</span> We also consider the output with the <span
+class="math inline">\(i\)</span>th bundle missing; that is, for <span
+class="math inline">\(i \in [u]\)</span> let <span
+class="math display">\[\vec{out}_{-i} = out^+_{bad} || out_{bad} ||
+out_1 || \cdots
+|| out_{i-1} || out_{i+1} || \cdots
+|| out_u.\]</span></p>
+<h4 data-number="7.3.5.4"
+id="upper-bounding-leakage-from-the-output."><span
+class="header-section-number">7.3.5.4</span> Upper-bounding leakage from
+the output.</h4>
+<p>Since <span class="math inline">\(|K_{bad}|\)</span> and <span
+class="math inline">\(|K_{\theta,i}|\)</span> are at most <span
+class="math inline">\(k \in poly(\kappa)\)</span>, we can safely assume
+that the total number of bits in <span
+class="math inline">\(\vec{out}\)</span> is <span
+class="math display">\[2\lg |K_{bad}| + \sum_{i=1}^u \lg |K_{\theta, i}|
+\leq ( 2 + \lg\lg \kappa) \lg |poly(\kappa)| \le \kappa.\]</span></p>
+<h4 data-number="7.3.5.5"
+id="distribution-of-r-and-its-min-entropy."><span
+class="header-section-number">7.3.5.5</span> Distribution of <span
+class="math inline">\(R\)</span> and its min-entropy.</h4>
+<p>The original distribution on the secret set <span
+class="math inline">\(R\)</span> is the uniform distribution over all
+sets of size <span class="math inline">\(n_R\)</span> with each element
+is chosen from a universe <span class="math inline">\(\U\)</span>. The
+universe <span class="math inline">\(\U\)</span> has size <span
+class="math inline">\(\ell \cdot n_R\)</span> with <span
+class="math inline">\(\ell \ge 4(n_R)^3\)</span>.</p>
+<p>Now choose, uniformly at random, a partition <span
+class="math inline">\(\{U_1, \ldots, U_{n_R}\}\)</span> of <span
+class="math inline">\(\U\)</span> where each <span
+class="math inline">\(|U_j| = \ell\)</span> such that the element in the
+<span class="math inline">\(j\)</span>th slot of <span
+class="math inline">\(R\)</span> belongs to <span
+class="math inline">\(U_j\)</span>. These universes <span
+class="math inline">\(\{U_1, \ldots, U_{n_R}\}\)</span> are leaked in
+the analysis.</p>
+<p>Let <span class="math inline">\(\DDD\)</span> denote the original
+distribution over the set <span class="math inline">\(R\)</span>, but
+conditioned on the leaked information <span class="math inline">\(\{
+U_1, \ldots, U_{n_R} \}\)</span>. The distribution <span
+class="math inline">\(\DDD\)</span> is equivalent to a distribution over
+streams of <span class="math inline">\(n_R\)</span> elements, where the
+element in the <span class="math inline">\(i\)</span>-th slot is chosen
+uniformly at random from <span class="math inline">\(U_i\)</span>.
+Therefore, <span class="math inline">\(\DDD\)</span> has min-entropy
+<span class="math inline">\(n_R \lg \ell\)</span>.</p>
+<p>We additionally consider arbitrary leakage <span
+class="math inline">\(f(R)\)</span> of length <span
+class="math inline">\(L\)</span> such that <span
+class="math display">\[n_R \lg \ell - L \ge  \frac{8n_R}{9} \lg \ell +
+2n_R.\]</span></p>
+<h4 data-number="7.3.5.6" id="available-iterations-in-a-bundle."><span
+class="header-section-number">7.3.5.6</span> Available iterations in a
+bundle.</h4>
+<p>For a fixed set <span class="math inline">\(Z \subseteq R\)</span>,
+in a min-hash graph, we say that a set of iterations in the <span
+class="math inline">\(i\)</span>th bundle <span
+class="math inline">\(K_{\theta, i}\)</span> is available with respect
+to <span class="math inline">\(Z\)</span> if there are no edges from
+<span class="math inline">\(Z\)</span> to that set. In other words, no
+elements in <span class="math inline">\(Z\)</span> contribute to the
+final count reduction for any of those iterations. In this sense, those
+iterations are is still available for the count reduction by the other
+elements than those in <span class="math inline">\(Z\)</span>. More
+formally, consider a graph <span class="math inline">\(G \from {\bf
+MinhashG}_{H_1}(A, I, \xs, H_2)\)</span> and letting <span
+class="math inline">\(G = (\XXX, \YYY, \EEE)\)</span>, we define <span
+class="math display">\[\Avail_G(K_{\theta,i}, Z) := \{ j \in K_{\theta,
+i}:  \forall z \in Z: (z, j) \not \in  \EEE)\}.\]</span></p>
+<h4 data-number="7.3.5.7" id="existence-of-a-good-bundle."><span
+class="header-section-number">7.3.5.7</span> Existence of a good
+bundle.</h4>
+<p>We now describe an experiment to check if the <span
+class="math inline">\(i\)</span>th bundle of iterations is good in the
+sense that given the fixed hash, the distribution <span
+class="math inline">\(\DDD\)</span> (after the leakage) satisfies the
+DP-like property conditions specified in Lemma <a
+href="#cor:fixed_oracle_prob" data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>.
+Roughly speaking, Lemma <a href="#cor:fixed_oracle_prob"
+data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a> shows
+that a bundle will be good with a high probability.</p>
+<ol>
+<li><p>Process <strong>IsAGoodBundle</strong><span
+class="math inline">\((i, \vec{out}_{-i}, \DDD, A, I, \xs, H_1,
+H_2)\)</span>:</p></li>
+<li><p>Consider <span class="math inline">\(G \from {\bf
+MinhashG}_{H_1}(A, I, \xs, H_2)\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(\DDD_{1,i} := \DDD \mid
+\vec{out}_{-i}\)</span>. In other words, <span
+class="math inline">\(\DDD_{1,i}\)</span> is the distribution <span
+class="math inline">\(\DDD\)</span> on <span
+class="math inline">\(R\)</span>, but conditioned on the output vector
+<span class="math inline">\(\vec{out}_{-i}\)</span>. If <span
+class="math inline">\(\DDD_{1,i}\)</span> has min-entropy less than
+<span class="math inline">\(n_R \lg(\ell) - L - 2\kappa\)</span> then
+output <span class="math inline">\(\mathsf{FAIL}_{1,i}\)</span> and
+terminate.</p></li>
+<li><p>Check if if there is a leakage function <span
+class="math inline">\(f_G(R)\)</span> which leaks <span
+class="math inline">\(V = \{j_1,
+    \ldots, j_{n&#39;_R} \}\)</span> and <span class="math inline">\(T =
+\Avail_G(K_{\theta,i}, R \setminus R&#39;)\)</span> such that there
+exists a distribution with the Geometric Collision Property over sets
+<span class="math inline">\(R&#39; = \{x_j \in R : j \in V\}\)</span>.
+If there is no such distribution, output <span
+class="math inline">\(\mathsf{FAIL}_{2,i}\)</span> and terminate. Let
+<span class="math inline">\(\DDD_{2,i} := \DDD_{1,i} |
+f_G(R)\)</span>.</p></li>
+<li><p>If it holds <span class="math inline">\(|T| \le \frac{1}{10} |
+K_{\theta,i}|\)</span>, output <span
+class="math inline">\(\mathsf{FAIL}_{3,i}\)</span> and terminate. Let
+<span class="math inline">\(k_v = |T|\)</span>.</p></li>
+<li><p>Compute <span class="math inline">\(D_{T, r}(\DDD_{2,i})\)</span>
+and check if <span class="math inline">\(D_{T,r}\)</span> satisfies the
+conditions given in Lemma <a href="#cor:fixed_oracle_prob"
+data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>.
+Output <span class="math inline">\(\mathsf{FAIL}_{4,i}\)</span> and
+terminate, if the above check fails.</p></li>
+<li><p>Output SUCCESS.</p></li>
+</ol>
+<h4 data-number="7.3.5.8" id="failure-probability-mathsffail_1i."><span
+class="header-section-number">7.3.5.8</span> Failure probability <span
+class="math inline">\(\mathsf{FAIL}_{1,i}\)</span>.</h4>
+<p>We claim that <span
+class="math inline">\(\mathsf{FAIL}_{1,i}\)</span> takes place with a
+negligible probability. By applying <span class="citation"
+data-cites="DORS08">[150], Lemma 2.2</span>, the average min-entropy of
+<span class="math inline">\(\DDD|\vec{out}_{-i}\)</span> is at least
+<span class="math inline">\(n_R\lg \ell - L - \kappa\)</span>, which
+implies that the min-entropy of <span class="math inline">\(\DDD |
+\vec{out}_{-i}\)</span> is at least <span class="math inline">\(n_R\lg
+\ell - L -
+2\kappa \ge  \frac{8n_R}{9} \lg \ell + n_R\)</span> with probability
+<span class="math inline">\(1 - 2^{-\kappa}\)</span> (assuming that
+<span class="math inline">\(n_R \ge 2\kappa\)</span>).</p>
+<h4 data-number="7.3.5.9" id="failure-probability-mathsffail_2i."><span
+class="header-section-number">7.3.5.9</span> Failure probability <span
+class="math inline">\(\mathsf{FAIL}_{2,i}\)</span>.</h4>
+<div id="lem:fail2" class="lemma">
+<p><strong>Lemma 80</strong>. The experiment outptus <span
+class="math inline">\(\mathsf{FAIL}_{2,i}\)</span> with a negligible
+probability.</p>
+</div>
+<p>We give the proof later in Appendix <a href="#sec:tradeoff"
+data-reference-type="ref" data-reference="sec:tradeoff">7.3.8</a>.</p>
+<h4 data-number="7.3.5.10" id="failure-probability-mathsffail_3i"><span
+class="header-section-number">7.3.5.10</span> Failure probability <span
+class="math inline">\(\mathsf{FAIL}_{3,i}\)</span></h4>
+<p>We show that <span class="math inline">\(\FAIL{3,i}\)</span> occurs
+with negligible probability. Let <span class="math inline">\(n =
+n_R\)</span> and <span class="math inline">\(n&#39; = n&#39;_R\)</span>
+for brevity of notation. Recall that <span class="math inline">\(n&#39;
+= n/3\)</span>. Let <span class="math inline">\(X_j\)</span> be an
+indicator variable that represents whether there is an edge from <span
+class="math inline">\((n-n&#39;)\)</span> nodes to iteration <span
+class="math inline">\(j\)</span>. Therefore, we have <span
+class="math display">\[\Pr_{H_2}[|T| = r] = \Pr_{H_2} \left[
+\sum_{j=1}^{k_b} X_j = k_b - r \right].\]</span> Recall that <span
+class="math inline">\(p_j \le 1-(\etan)^{1/n&#39;}\)</span> and <span
+class="math inline">\(\Pr[X_j = 1] = 1 - (1 - p_j)^{n-n&#39;} \le 1 -
+(\etan)^\frac{n-n&#39;}{n&#39;} = 1 - (\etan)^2 \le 1 -
+(2/5)^2\)</span>. Therefore, we have <span class="math display">\[m:=
+{\bf E}\left[ \sum_{j=1}^{k_b} X_j \right] \le k_b \cdot (1
+- (\etan)^2) \le 0.84 k_b\]</span> Using the Chernoff bound and due to
+<span class="math inline">\(k_b \in \Omega(\secparam)\)</span>, we have
+<span class="math display">\[\Pr_{H_2}\left [|T| \le \frac{k_b}{10}
+\right] = \Pr_{H_2} \left[ \sum_{j=1}^{k_b} X_j \ge \frac{9}{10}k_b
+\right] \le \exp\left(-\frac{(0.9 k_b - m_0)^2}{2 m_0}\right) =
+\exp(-\Omega(\kappa)).  \qedhere\]</span></p>
+<h4 data-number="7.3.5.11" id="failure-probability-fail4i."><span
+class="header-section-number">7.3.5.11</span> Failure probability <span
+class="math inline">\(\FAIL{4,i}\)</span>.</h4>
+<p>By Lemma <a href="#cor:fixed_oracle_prob" data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>, for
+all <span class="math inline">\(i \in [u]\)</span>, conditioned on <span
+class="math inline">\(\mathsf{FAIL}_{1,i}\)</span>, <span
+class="math inline">\(\mathsf{FAIL}_{2,i}\)</span>, <span
+class="math inline">\(\mathsf{FAIL}_{3,i}\)</span> not occurring, let
+<span class="math display">\[p_4 := \Pr_{H_1,
+H_2}[\textbf{IsAGoodBundle}(i, \vec{out}_{-i}, \DDD, A,
+I, \xs, H_1, H_2)  =\  \mathsf{FAIL}_{4,i}].\]</span> Then, we have
+<span class="math inline">\(p_4 \in O(k_v
+\lg^3(\kappa)/(n_R)^{0.5})\)</span>.</p>
+<h4 data-number="7.3.5.12"
+id="existence-of-a-good-bundle-out-of-u-bundles."><span
+class="header-section-number">7.3.5.12</span> Existence of a good bundle
+out of <span class="math inline">\(u\)</span> bundles.</h4>
+<p>Observe that conditioned on <span
+class="math inline">\(\mathsf{FAIL}_{1,i}\)</span>, <span
+class="math inline">\(\mathsf{FAIL}_{2,i}\)</span>, <span
+class="math inline">\(\mathsf{FAIL}_{3,i}\)</span> not occurring, the
+process outputs <span class="math inline">\(\Fail_{4,i}\)</span>
+independently of <span class="math inline">\((\vec{out}_{-i},
+R&#39;)\)</span>, since the hash values in <span
+class="math inline">\(H_2\)</span> for any iteration are chosen
+independently of those for the other iterations. Using the above, since
+<span class="math inline">\(k_v /\sqrt{n_R} =
+O(1/\sqrt{\kappa})\)</span>, we have the following:</p>
+<ul>
+<li><p><em>The experiment <span><strong>IsAGoodBundle</strong></span>
+outputs SUCCESS for at least one bundle with probability <span
+class="math inline">\(1 - p_4^u = 1 -
+\negl(\kappa)\)</span>.</em></p></li>
+</ul>
+<h4 data-number="7.3.5.13" id="noise-distribution.-1"><span
+class="header-section-number">7.3.5.13</span> Noise distribution.</h4>
+<p>We define a noise distribution <span
+class="math inline">\(\Phi\)</span> and give an analysis of the hockey
+stick divergence of <span class="math inline">\(\Phi(r)\)</span> and
+<span class="math inline">\(\Phi(r-\lg\lg(\kappa))\)</span>.</p>
+<div class="definition">
+<p><strong>Definition 81</strong> (Noise distribution <span
+class="math inline">\(\Phi\)</span>). We define <span
+class="math inline">\(\Phi(r)\)</span> as follows:</p>
+<ul>
+<li><p>Choose <span class="math inline">\(H_1\)</span> and <span
+class="math inline">\(H_2\)</span> randomly.</p></li>
+<li><p>Let <span class="math inline">\(i^* \in [u]\)</span> be the index
+to the bundle that <span><strong>IsAGoodBundle</strong></span> outputs
+SUCCESS.</p></li>
+<li><p>For <span class="math inline">\(r \in [0, k_v]\)</span>, output
+<span class="math inline">\(D_{T, r}(\DDD_{2,i^*})\)</span>, where <span
+class="math inline">\(T = \Avail_G(K_{\theta, i^*}, R \setminus
+R&#39;)\)</span>.</p></li>
+<li><p>For <span class="math inline">\(r \not \in [0, k_v]\)</span>,
+<span class="math inline">\(\Phi(r) := 0\)</span></p></li>
+</ul>
+</div>
+<div id="lem:hockeyphi" class="lemma">
+<p><strong>Lemma 82</strong>. The hockey stick divergences <span
+class="math inline">\(\hsd{e^\epsilon}{\Phi(r)}{\Phi(r-\lg\lg(\kappa))}\)</span>
+and<br />
+<span
+class="math inline">\(\hsd{e^\epsilon}{\Phi(r-\lg\lg(\kappa))}{\Phi(r)}\)</span>
+are both negligible in <span class="math inline">\(\kappa\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For brevity, for any <span
+class="math inline">\(r\)</span>, denote <span class="math inline">\(D_r
+:= D_{T, r}(\DDD_{2,i^*})\)</span>. Conditioned on
+<span><strong>IsAGoodBundle</strong></span> outputting SUCCESS with
+input <span class="math inline">\(\vec{out}_{-{i^*}}\)</span>, we have
+<span class="math inline">\(a\)</span> and <span
+class="math inline">\(b\)</span> such that for <span
+class="math inline">\(r \in [a + \lg\lg \kappa, b]\)</span>, <span
+class="math display">\[e^{-\ee} \le
+\frac{e^{-\epsilon/3}E^{n&#39;}_{k_v, r}}{e^{\epsilon/3}E^{n&#39;}_{k_v,
+r-\lg\lg(\kappa)}} \le
+\frac{D_r}{D_{r-\lg\lg(\kappa)}}
+\le \frac{e^{\epsilon/3}E^{n&#39;}_{k_v,
+r}}{e^{-\epsilon/3}E^{n&#39;}_{k_v, r-\lg\lg(\kappa)}}
+\le e^{\ee}.\]</span> The first and last inequalities are from
+Corollary <a href="#lem:concrete_expected_probs"
+data-reference-type="ref"
+data-reference="lem:concrete_expected_probs">56</a>. The second and
+third inequalities are from the condition that the process outputs
+SUCCESS. The hockey stick divergence <span
+class="math inline">\(\hsd{e^\epsilon}{\Phi(r)}{\Phi(r-\lg\lg(\kappa))}\)</span>
+is therefore at most <span class="math display">\[\sum_{r \not \in
+[a+\lg\lg\kappa, b]}  D_r \le k_v \cdot
+\ensuremath{\mathsf{negl}}(\kappa) = \ensuremath{\mathsf{negl}}(\kappa).
+\tag*{\qedhere}\]</span> Similarly, <span
+class="math inline">\(\hsd{e^\epsilon}{\Phi(r-\lg\lg(\kappa))}{\Phi(r)}\)</span>
+is also <span
+class="math inline">\(\ensuremath{\mathsf{negl}}(\kappa)\)</span>. ◻</p>
+</div>
+<h4 data-number="7.3.5.14" id="putting-it-all-together."><span
+class="header-section-number">7.3.5.14</span> Putting it all
+together.</h4>
+<p>Let <span class="math inline">\(c\)</span> be the final count
+produced by running protocol <span class="math inline">\(\PPH\)</span>.
+We consider the probabilities <span class="math display">\[\Pr_{H_1,
+H_2,\mathcal{D}}[
+c \mid \Bp]
+\mbox{~~and~~}
+\Pr_{H_1, H_2, \mathcal{D}}[c \mid B].\]</span></p>
+<p>We consider only runs of the protocol that yield <span
+class="math inline">\(c\)</span> and for which there exists some <span
+class="math inline">\(i^* \in [u]\)</span> such that the process <span
+class="math inline">\({\bf IsAGoodBundle}\)</span> returns SUCCESS given
+<span class="math inline">\(\vec{out}_{-i^*}\)</span> as input. We just
+have argued that such an <span class="math inline">\(i^*\)</span> exists
+with all but negligible probability.</p>
+<p>Further, we consider only runs of the protocol for which <span
+class="math inline">\(out^+_{bad}  - out_{bad} \leq s =
+\lg\lg(\kappa)\)</span>. By Lemma <a href="#lem:sen"
+data-reference-type="ref" data-reference="lem:sen">45</a>, this also
+occurs with all but negligible probability, We will also leak <span
+class="math inline">\(k_v = |\Avail(K_{\theta, i^*}, R \setminus
+R&#39;)|\)</span>.</p>
+<p>Conditioned on the above events, by the definition of the
+distribution <span class="math inline">\(\Phi\)</span>, the value <span
+class="math inline">\(out_{i^*}\)</span> contributes <span
+class="math inline">\((k_v - r)\)</span> to the final count <span
+class="math inline">\(c\)</span> with probability <span
+class="math inline">\(p = \Phi(r)\)</span>. Recall that every iteration
+<span class="math inline">\(j\)</span> in <span
+class="math inline">\(K_{\theta,i^*}\)</span> is good, which means <span
+class="math inline">\(\min h_j(A) = \min h_j(I)\)</span>, potentially
+contributing to the output.</p>
+<p>Therefore, assuming none of bad events occur (which happens with
+overwhelming probability), by applying Lemma <a href="#lem:hockeyphi"
+data-reference-type="ref" data-reference="lem:hockeyphi">82</a>, the
+probability that the ratio of probabilities of a certain output <span
+class="math inline">\(out\)</span> for <span
+class="math inline">\(\Bp\)</span> and <span
+class="math inline">\(B\)</span> is not contained in <span
+class="math inline">\([e^{-\epsilon}, e^{\epsilon}]\)</span> is <span
+class="math inline">\(\negl(\kappa)\)</span>, and therefore we conclude
+that the protocol satisfies the DDP security.</p>
+<h3 data-number="7.3.6" id="sec:fixed_oracle_prob"><span
+class="header-section-number">7.3.6</span> Proof of Lemma <a
+href="#cor:fixed_oracle_prob" data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a></h3>
+<p>When considering the probability of <span
+class="math inline">\(D_{T,r}(\DDD)\)</span> and <span
+class="math inline">\(I_{R&#39;, T, r}\)</span> over the choice of <span
+class="math inline">\(H_2\)</span>, the identity of <span
+class="math inline">\(T\)</span> doesn’t matter except for its size
+<span class="math inline">\(k_b = |T|\)</span>. Therefore, in this case,
+we will simply use <span class="math inline">\(D_{k_b,r}(\DDD)\)</span>
+and <span class="math inline">\(I_{R&#39;, k_b, r}\)</span> Moreover,
+when it is clear from the context, we will sometimes omit <span
+class="math inline">\(k_b\)</span> and <span
+class="math inline">\(\DDD\)</span> and say <span
+class="math inline">\(E^{R&#39;}_{r} = E^{n&#39;_R}_r\)</span> and <span
+class="math inline">\(I_{R&#39;,r} = I_{R&#39;, k_b, r}\)</span>, and
+<span class="math inline">\(D_r = D_{k_b,r}(\DDD)\)</span>.</p>
+<p>We first show the following lemma holds.</p>
+<div id="lem:fixed_oracle_prob" class="lemma">
+<p><strong>Lemma 83</strong>. Let <span
+class="math inline">\(\DDD\)</span> be a distribution over sets of size
+<span class="math inline">\(n_R&#39;\)</span> with geometric collision
+property. Fix <span class="math inline">\(H_1\)</span> and consider
+<span class="math inline">\(k_b, \theta, a, b\)</span> specified in
+Lemma <a href="#lem:concrete_expected_probs" data-reference-type="ref"
+data-reference="lem:concrete_expected_probs">56</a> with the same
+requirements. Then, we have the following:</p>
+<dl>
+<dt>Case 1:</dt>
+<dd>
+<p>If <span class="math inline">\(r \not \in [a+s, b]\)</span>, we have
+<span class="math inline">\(\Pr_{H_2}\left[ D_{k_b,r}(\DDD) \le
+\negl(\secparam) \right] \ge 1 - \negl(\secparam)\)</span>.</p>
+</dd>
+<dt>Case 2:</dt>
+<dd>
+<p>If <span class="math inline">\(r \in [a,b]\)</span>, then we have</p>
+<p><span class="math display">\[\Pr_{H_2}\left[ e^{-\epsilon/3}
+E^{n&#39;_R}_{k_b,r} \leq D_{k_b,r}(\DDD) \leq e^{\epsilon/3}
+E^{n&#39;_R}_{k_b,r} \right] \ge 1-(e^{\epsilon/3}-1)^{-2} \cdot
+\frac{16 \lg^3(\kappa)}{\sqrt{n_R}}.\]</span></p>
+</dd>
+</dl>
+</div>
+<p>Then, Lemma <a href="#cor:fixed_oracle_prob"
+data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>
+follows by taking a union bound over different cases of <span
+class="math inline">\(r \in [k_b]\)</span>.</p>
+<p>We also define <span class="math inline">\(\rho(R&#39;) :=
+\Pr_{R&#39; \sim \tilde{\mathcal{D}}}[R&#39;]\)</span>.</p>
+<h4 data-number="7.3.6.1" id="proof-for-case-1."><span
+class="header-section-number">7.3.6.1</span> Proof for Case 1.</h4>
+<p>We first consider Case (1). By applying the Case (1) of Corollary <a
+href="#lem:concrete_expected_probs" data-reference-type="ref"
+data-reference="lem:concrete_expected_probs">56</a>, we have <span
+class="math inline">\(E^{n_R&#39;}_{r} \in
+\mathsf{negl}(\kappa)\)</span>. Given <span
+class="math inline">\(E^{n_R&#39;}_{r} \in
+\mathsf{negl}(\kappa)\)</span>, we show <span
+class="math display">\[\Pr_{H_2}\left[ D_r(\DDD) \leq
+\mathsf{negl}(\kappa) \right] \ge 1 - \negl(\kappa).\]</span></p>
+<p>Recall that <span class="math inline">\(D_r(\DDD) = \sum_{R&#39;}
+\rho(R&#39;) \cdot I_{R&#39;,r}\)</span>. Assume toward the
+contradiction that the negation of the statement holds. This means there
+are polynomials <span class="math inline">\(p\)</span> and <span
+class="math inline">\(q\)</span>, and a collection <span
+class="math inline">\(\sf Heavy\)</span> of <span
+class="math inline">\(R&#39;\)</span>s such that <span
+class="math display">\[\Pr_{H_2}\left[
+\sum_{R&#39; \in {\sf Heavy}} \rho(R&#39;) \cdot I_{R&#39;, r} \ge
+1/p(\kappa) \right] \ge 1/q(\kappa).\]</span></p>
+<p>The above implies that <span class="math inline">\(\sum_{R&#39; \in
+{\sf Heavy}} \rho(R&#39;)  \ge 1/p(\kappa)\)</span>. Now, since <span
+class="math inline">\(\DDD\)</span> and <span
+class="math inline">\(H_2\)</span> are independent, we have <span
+class="math inline">\(\sum_{R&#39; \in {\sf Heavy}} \rho(R&#39;)
+\Pr_{H_2}\left[I_{R&#39;, r} \right]
+\ge \frac{1}{p(\kappa) q(\kappa)}.\)</span> However, considering that
+<span class="math inline">\(\Pr_{H_2}\left[I_{R&#39;, r}\right] =
+E^{n_R&#39;}_{r}\)</span>, which is negligible, the above is a
+contradiction.</p>
+<h4 data-number="7.3.6.2" id="proof-for-case-2."><span
+class="header-section-number">7.3.6.2</span> Proof for Case 2.</h4>
+<p>We will bound <span class="math inline">\(D_r = \sum_{R&#39;}
+\rho(R&#39;) \cdot I_{R&#39;, r}\)</span> using Chebyshev inequality.
+For this, we would like to bound the variance of <span
+class="math inline">\(D_r\)</span>.</p>
+<p>We start with showing the following lemma, which will allow us to
+ignore the tail when we bound the variance. Below, the value <span
+class="math inline">\(z\)</span> will correspond to the size of the
+intersection of the two sets <span
+class="math inline">\(R&#39;_i\)</span> and <span
+class="math inline">\(R&#39;_j\)</span>.</p>
+<div id="lem:edges" class="lemma">
+<p><strong>Lemma 84</strong>. Fix <span
+class="math inline">\(H_1\)</span>. Consider a graph <span
+class="math inline">\(G \from {\bf MinhashG}_{H_1}(A, I, \xs,
+H_2)\)</span>. Consider any set <span class="math inline">\(T\)</span>
+of iterations in <span class="math inline">\(G\)</span> such that <span
+class="math inline">\(|T| = k_b\)</span>. Let <span
+class="math inline">\(Z\)</span> be a set of left nodes in <span
+class="math inline">\(G\)</span> such that <span
+class="math inline">\(|Z| \le n&#39;_R\)</span>. Let <span
+class="math inline">\(z = |Z|\)</span>. Consider the probability (over
+the choice of <span class="math inline">\(H_2\)</span>) that <span
+class="math inline">\(Z\)</span> has more than <span
+class="math inline">\(z \lg\lg \kappa\)</span> outgoing edges in <span
+class="math inline">\(G\)</span>. This probability is negligible in
+<span class="math inline">\(\kappa\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(p = 1 -
+(\etan)^{1/n&#39;_R}\)</span>. We first show that <span
+class="math inline">\(p \le 1/n&#39;_R.\)</span> Recall <span
+class="math inline">\(\theta \le 1/10\)</span>, which implies <span
+class="math inline">\(e^{-1} \le 1/2 - \theta = \etan\)</span>.
+Therefore, we have <span class="math inline">\((1-1/n_R&#39;)^{n_R&#39;}
+\le e^{-1} \le \etan\)</span>, so <span
+class="math inline">\(1-1/n_R&#39; \le (\etan)^{1/n_R&#39;}\)</span>.
+Therefore, we have <span class="math inline">\(p = 1 -
+(\etan)^{1/n&#39;_R} \le 1/n&#39;_R\)</span>.</p>
+<p>Let <span class="math inline">\(\edges(Z, T)\)</span> be the set of
+edges from <span class="math inline">\(Z\)</span> to <span
+class="math inline">\(T\)</span>. Over the choice of <span
+class="math inline">\(H_2\)</span>, the probability that each pair in
+<span class="math inline">\(Z \times T\)</span> forms an edge is at most
+<span class="math inline">\(p\)</span>. Therefore, we can simply use a
+Binomial distribution to bound the probability. In particular, with
+<span class="math inline">\(t = \lg\lg \kappa\)</span> we have <span
+class="math display">\[\begin{aligned}
+\Pr_{H_2}\big[ |\edges(Z,T)| \ge zt\big] \le \Pr \big[ \Bino(z\hat{k},
+p) \ge zt \big]  
+\le \binom{z\hat{k}}{zt} \cdot p^{zt}
+\le \binom{z\hat{k}}{zt} \cdot \left(\frac{1}{n_R&#39;}\right)^{zt}
+\le \left(\frac{e \hat{k}}{t n&#39;_R}\right)^{zt}
+\end{aligned}\]</span> Since <span
+class="math inline">\(n&#39;_R\)</span> is much larger than <span
+class="math inline">\(k_b\)</span>, the above probability becomes
+negligible in <span class="math inline">\(\kappa\)</span>. ◻</p>
+</div>
+<p>Now we prove the following lemma towards bounding the variance of
+<span class="math inline">\(D_r\)</span>.</p>
+<div id="lem:dependency" class="lemma">
+<p><strong>Lemma 85</strong>. Fix <span
+class="math inline">\(H_1\)</span>. We set the parameters for <span
+class="math inline">\(k_b, a\)</span> and <span
+class="math inline">\(b\)</span> as stated in Lemma <a
+href="#cor:fixed_oracle_prob" data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>. Let
+<span class="math inline">\(R&#39;_i, R&#39;_j\)</span> be sets of nodes
+on the left of size <span class="math inline">\(n&#39;_R\)</span> such
+that with <span class="math inline">\(|R&#39;_i \cap R&#39;_j| =
+z\)</span>. Let <span class="math inline">\(\zeta = z
+\lg\lg\kappa\)</span>. Then for all <span class="math inline">\(a \leq r
+\leq b\)</span>, we have <span class="math display">\[\begin{aligned}
+\Pr_{H_2}[I_{R&#39;_i,r} \wedge I_{R&#39;_j, r}]
+= \EE_{H_2}[I_{R&#39;_i,r} \cdot I_{R&#39;_j, r}]
+\leq  \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z
+k_b/n&#39;_R} } \right) \left(E^{n&#39;_R}_r\right)^2
+\end{aligned}\]</span></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Fix <span class="math inline">\(R&#39;_i,
+R&#39;_j\)</span> with <span class="math inline">\(|R&#39;_i \cap
+R&#39;_j| = z\)</span>. Let <span class="math inline">\(Z = R&#39;_i
+\cap R&#39;_j\)</span> and <span class="math inline">\(X = R&#39;_i -
+Z\)</span>. Then, we have <span class="math display">\[\begin{aligned}
+\Pr_{H_2}[I_{R&#39;_i,r} \wedge I_{R&#39;_j, r}] &amp; =
+\sum_{m=0}^r \Pr[ I_{X,m} \wedge I_{Z, r-m} \wedge I_{R&#39;_j, r} ]\\
+  &amp; \leq \sum_{m=0}^{r-\zeta} \Pr[I_{Z, r-m}] + \sum_{m=r-\zeta+1}^r
+\Pr[ I_{X,m}  \wedge I_{R&#39;_j, r} ] \\
+  &amp; = \sum_{m = \zeta}^{r} \Pr[I_{Z, m}] + \sum_{m=r-\zeta+1}^r \Pr[
+I_{X,m} ] \cdot \Pr[I_{R&#39;_j, r} ] \\
+&amp;\le  \negl(\kappa) + \sum_{m=r-\zeta+1}^r \Pr[I_{X, m}] \cdot
+\Pr[I_{R&#39;_j, r}]\\
+&amp;= \negl(\kappa) + E^{n&#39;_R}_r\cdot \sum_{m=r-\zeta+1}^r
+\Pr[I_{X, m}] .
+\end{aligned}\]</span> The second inequality holds due to Lemma <a
+href="#lem:edges" data-reference-type="ref"
+data-reference="lem:edges">84</a>.</p>
+<p>It is left to bound <span class="math inline">\(\Pr[I_{X,
+m}]\)</span> for <span class="math inline">\(m \in (r-\zeta,
+r]\)</span>. We observe that <span class="math inline">\(\Pr_{H_2}[I_{X,
+m}] = \Pr[I_{R&#39;_i, m} |~ I_{Z, 0}]\)</span>. In other words, the
+event that <span class="math inline">\(X\)</span> contributes to noise
+pattern <span class="math inline">\(m\)</span> is equivalent to the
+event that <span class="math inline">\(R&#39;_i\)</span> contributes to
+<span class="math inline">\(m\)</span> conditioned on the intersection
+having no contribution. Therefore, we have <span
+class="math display">\[\Pr_{H_2}[I_{X, m}] = \frac{\Pr[I_{R&#39;_i, m}
+\wedge I_{Z, 0}]}{ \Pr[I_{Z,0}] }
+\le \frac{\Pr[I_{R&#39;_i, m}]}{ \etan^{z k_b/n&#39;_R} } =
+\frac{E^{n&#39;_R}_{m}}{ \etan^{z k_b/n&#39;_R} }.\]</span></p>
+<p>We now bound <span class="math inline">\(E_m^{n&#39;_R}\)</span> for
+<span class="math inline">\(m \in (r-\zeta, r]\)</span>. Let <span
+class="math inline">\(m^* :=
+\arg\max_{m} \{E^{n&#39;_R}_m: m \in (r-\zeta, r] \}\)</span>. Using
+Corollary <a href="#lem:concrete_expected_probs"
+data-reference-type="ref"
+data-reference="lem:concrete_expected_probs">56</a> we have <span
+class="math inline">\(E^{n&#39;_R}_{m^*}
+\le (e^{\ee/3})^{\zeta} \cdot E^{n&#39;_R}_{r} + \negl(\kappa)\)</span>.
+Therefore, we have <span class="math display">\[\begin{aligned}
+\Pr_{H_2}[I_{R&#39;_i,r} \wedge I_{R&#39;_j, r}] &amp;\le  \negl(\kappa)
++  E^{n&#39;_R}_r \cdot  \sum_{m=r-\zeta+1}^{r} \Pr[I_{X, m}]
+~\le~ \negl(\kappa)  + \zeta \cdot E^{n&#39;_R}_r \cdot \Pr[I_{X, m^*}]
+\\
+&amp;=  \negl(\kappa)  + \zeta \cdot E^{n&#39;_R}_r
+\cdot  \frac{E^{n&#39;_R}_{m^*}}{ \etan^{z k_b/n&#39;_R} }
+=  \negl(\kappa) + \zeta \cdot E^{n&#39;_R}_r \cdot  \frac{e^{\zeta
+\ee/3} E^{n&#39;_R}_{r} + \negl(\kappa)}{ \etan^{z k_b/n&#39;_R} } \\
+&amp;\le \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z
+k_b/n&#39;_R} } \right) \left(E^{n&#39;_R}_r\right)^2  \tag*{\qedhere}
+\end{aligned}\]</span> ◻</p>
+</div>
+<p>We set the parameters for <span class="math inline">\(H_1, k_b,
+a\)</span> and <span class="math inline">\(b\)</span> as stated in
+Lemma <a href="#cor:fixed_oracle_prob" data-reference-type="ref"
+data-reference="cor:fixed_oracle_prob">[cor:fixed_oracle_prob]</a>. Let
+<span class="math inline">\(\mathcal{D}\)</span> be a distribution with
+the geometric collision property. Then, we show that for every <span
+class="math inline">\(a \leq r \leq b\)</span>, we have <span
+class="math display">\[\mathsf{Var}_{H_2} [D_r] \leq
+\frac{16 \lg^3(\kappa)}{\sqrt{n_R}} \left (E^{n&#39;_R}_{k_b, r} \right
+)^2.\]</span></p>
+<p>Consider any <span class="math inline">\(r \in [a, b]\)</span>.
+Recall that <span class="math inline">\(D_r := \sum_{R&#39; \in
+\mathsf{Supp}(\tilde{\mathcal{D}})} \rho(R&#39;) \cdot  I_{R&#39;,
+r}\)</span>.</p>
+<p><span class="math display">\[\begin{aligned}
+\mathsf{Var}_{H_2}[D_r] &amp;\quad \quad =  \sum_{R&#39;_i, R&#39;_j}
+\rho(R&#39;_i) \cdot \rho(R&#39;_j) \cdot ( \mathbb{E}[I_{R&#39;_i, r }
+\cdot I_{R&#39;_j, r}
+] - \mathbb{E}[I_{R&#39;_i, r }] \cdot \mathbb{E}[I_{R&#39;_j, r}] ) \\
+&amp;\quad \quad \leq  \sum_{R&#39;_i, R&#39;_j : |R&#39;_i \cap
+R&#39;_j| \ge 1} \rho(R&#39;_i) \cdot \rho(R&#39;_j) \cdot
+\mathbb{E}[I_{R&#39;_i,r} \cdot I_{R&#39;_j, r}]\\
+&amp;\quad \quad =  \sum_{z=1}^{n&#39;_R}
+\Pr_{R&#39;_i, R&#39;_j \sim \DDD} [|R&#39;_i \cap R&#39;_j| = z]
+\cdot \mathbb{E}[I_{R&#39;_i,r} \cdot I_{R&#39;_j, r}] \\
+&amp;\quad \quad \le \sum_{z=1}^{n&#39;_R}
+\left(\frac{1}{\sqrt{n_R}}\right)^z \cdot
+\left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3} + 1)}{\etan^{
+z k/n&#39;_R} } \right) \cdot \left(E^{n&#39;_R}_r\right)^2  \\
+&amp;\quad \quad \le \sum_{z=1}^{n&#39;_R}
+\left(\frac{1}{\sqrt{n_R}}\right)^z \cdot
+\left(  \zeta \cdot \frac{e^\zeta + 2}{(2/5)^{\zeta/3} } \right) \cdot
+\left(E^{n&#39;_R}_r\right)^2  \\
+&amp;\quad \quad \le \sum_{z=1}^{n&#39;_R}
+\left(\frac{1}{\sqrt{n_R}}\right)^z \cdot
+\left(  8^{\zeta+1} \right) \cdot \left(E^{n&#39;_R}_r\right)^2  \\
+\end{aligned}\]</span> The first inequality holds because if <span
+class="math inline">\(R&#39;_i\)</span> are <span
+class="math inline">\(R&#39;_j\)</span> are disjoint, then <span
+class="math inline">\(I_{R&#39;_i,r}\)</span> and <span
+class="math inline">\(I_{R&#39;_j, r}\)</span> are independent over the
+choice of <span class="math inline">\(H_2\)</span>, and the relevant
+terms are canceled out. The second inequality is due to the geometric
+collision property of <span class="math inline">\(\DDD\)</span> and
+Lemma <a href="#lem:dependency" data-reference-type="ref"
+data-reference="lem:dependency">85</a>. The third inequality holds with
+<span class="math inline">\(\epsilon\leq 3\)</span> since <span
+class="math inline">\(\theta &lt; 1/10\)</span> and <span
+class="math inline">\(k_b\)</span> is much smaller than <span
+class="math inline">\(n&#39;_R\)</span>. Therefore, we have <span
+class="math inline">\(\mathsf{Var}_{H_2}[D_r] \le
+8 \cdot \left(E^{n&#39;_R}_r\right)^2 \cdot \sum_{z=1}^{n&#39;_R} \left(
+\frac{\lg^3\kappa }{\sqrt{n_R}} \right)^z  \leq \frac{16 \lg^3
+\kappa}{\sqrt{n_R}} {\left (E^{n&#39;_R}_{r} \right )}^2\)</span>.
+0◻</p>
+<p>Finally, by Chebyshev, we have that for all <span
+class="math inline">\(a \leq r \leq b\)</span>, <span
+class="math display">\[\begin{aligned}
+\label{eq:chebyshev}
+\Pr_{H_2}\left [D_r \notin [e^{-\epsilon/3} (E^{n&#39;_R}_{k_b, r}),
+e^{\epsilon/3} (E^{n&#39;_R}_{k_b, r})]  \right ] &amp; \leq \Pr\left
+[|D_r -E^{n&#39;_R}_{k_b, r}| \geq  (1-e^{-\epsilon/3}) \cdot
+E^{n&#39;_R}_{k_b, r} \right ] \\
+&amp; \leq  \frac{\mathsf{Var}[D_r]}{(1-e^{-\epsilon/3})^{2} \cdot
+(E^{n&#39;_R}_{k_b, r})^2}
+\leq  \frac{16 \lg^3(\kappa)}{(1-e^{-\epsilon/3})^{2}\sqrt{n_R}}.
+\end{aligned}\]</span></p>
+<h3 data-number="7.3.7" id="sec:construct-gcp2"><span
+class="header-section-number">7.3.7</span> Strong Chain Rule</h3>
+<h4 data-number="7.3.7.1"
+id="strong-chain-rule-for-a-special-case-achieving-flatness-through-clustering."><span
+class="header-section-number">7.3.7.1</span> Strong chain rule for a
+special case: achieving flatness through clustering.</h4>
+<p>Fortunately, a stronger version of the chain rule is known to hold
+for a special leakage pattern, i.e., when elements are conditioned
+<span><em>in order</em></span> <span class="citation"
+data-cites="skorski2019strong">[144]</span>; very roughly speaking, for
+every <span class="math inline">\(i\)</span>, the min-entropy of <span
+class="math inline">\(R_i | (R_1, \ldots, R_{i-1})\)</span> is
+essentially the same as the min-entropy of <span
+class="math inline">\((R_1, \ldots, R_i)\)</span> minus the min-entropy
+of <span class="math inline">\((R_1, \ldots, R_{i-1})\)</span> at the
+sacrifice of an additional small leakage, which is called a
+<span><em>spoiling leakage</em></span>.</p>
+<p>They achieve this by grouping possible sequences with a similar
+distributional characteristic into the same cluster. Then, in every
+cluster, the distribution of sequences conditioned on that cluster will
+be essentially flat. Now, the spoiling leakage corresponds to the
+cluster identifier. By making every cluster contain sufficiently many
+sequences (leading to sufficient min-entropy due to flatness), the total
+number of clusters can be small (leading to a short spoiling
+leakage).</p>
+<h4 data-number="7.3.7.2" id="notes-on-notations."><span
+class="header-section-number">7.3.7.2</span> Notes on notations.</h4>
+<p>For brevity, in this section, we omit the subscript from <span
+class="math inline">\(n_R\)</span>, i.e., we denote <span
+class="math inline">\(n = n_R\)</span>. For any sequence of random
+variables <span class="math inline">\(R = R_1, \dots, R_n\)</span> (for
+the secret input <span class="math inline">\(R\)</span>), we denote
+<span class="math inline">\(R_{&lt;i} = R_1,\dots,R_{i-1}\)</span> and
+<span class="math inline">\(R_{\leq i} = R_1,\dots,R_{i}\)</span>.
+Likewise, we extend such subscript notations and use <span
+class="math inline">\(R_{&gt;i}\)</span> and <span
+class="math inline">\(R_{\ge i}\)</span>. We use lower case <span
+class="math inline">\(r = r_1,\dots,r_n\)</span> to denote the actual
+set/sequence.</p>
+<h4 data-number="7.3.7.3" id="strong-chain-rule-for-our-setting."><span
+class="header-section-number">7.3.7.3</span> Strong chain rule for our
+setting.</h4>
+<p>We first adapt the result in <span class="citation"
+data-cites="skorski2019strong">[144]</span> into our setting. Then, we
+argue that a sufficient number of elements still have high min-entropy,
+even conditioned on the previous elements. Finally, we show that these
+high min-entropy (conditioned) elements provide the geometric collision
+property.</p>
+<div id="thm:chain_leak_2" class="theorem">
+<p><strong>Theorem 86</strong> (Block structures with few bits spoiled
+in our setting). We consider a min-hash graph <span
+class="math inline">\(G = (\XXX, \YYY, \EEE)\)</span> constructed from
+<span class="math inline">\({\bf MinhashG}_{H_1}(A, I, \xs,
+H_2)\)</span>, while focusing on a single bundle <span
+class="math inline">\(K_{\theta,*}\)</span> of iterations.</p>
+<p>Let <span class="math inline">\(\mathcal{U} = U_1 \times \cdots
+\times U_n\)</span> be a fixed universe and <span
+class="math inline">\(R = (R_1,\dots,R_n)\)</span> be a sequence of
+(possibly correlated) random variables where each <span
+class="math inline">\(R_i\)</span> is over <span
+class="math inline">\(U_i\)</span> (and all are disjoint) and <span
+class="math inline">\(|U_i| = \ell\)</span> for all <span
+class="math inline">\(i\)</span>. Then, for any <span
+class="math inline">\(\epsilon \in (0, 1)\)</span> and any <span
+class="math inline">\(\dd &gt; 0\)</span>, there exists a spoiling
+leakage function <span class="math inline">\(f_G(R)\)</span> that
+satisfies the following properties.</p>
+<ol>
+<li><p>It holds that <span class="math inline">\(\Pr_{R}[f(R) = \bot]
+\leq \epsilon n\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(Im(f)\)</span> be the set of
+images of <span class="math inline">\(f\)</span>. Every <span
+class="math inline">\(y \in Im(f) \setminus \{\bot\}\)</span> specifies
+two disjoint sets <span class="math inline">\(V\)</span> and <span
+class="math inline">\(W\)</span> such that <span class="math inline">\(V
+\cup W = [n]\)</span>.</p></li>
+<li><p>Conditioned on any <span class="math inline">\(y \in Im(f)
+\setminus \{\bot\}\)</span>, for every <span class="math inline">\(i \in
+V\)</span>, every element in distribution <span
+class="math inline">\(R_i \mid R_{&lt;i}\)</span> has low probability
+weight, i.e., <span class="math display">\[\begin{aligned}
+    &amp;\forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. }
+f(r) = y, \forall i \in V: ~~
+    \Pr\left[R_i = r_i~ \Bigg |~R_{&lt;i} = r_{&lt;i},~ y\right]
+    \leq  \frac{2^{\delta}}{n^{1.5}}.
+    
+\end{aligned}\]</span></p></li>
+<li><p>Conditioned on any <span class="math inline">\(y \in Im(f)
+\setminus \{\bot\}\)</span>, for every <span class="math inline">\(i \in
+W\)</span>, it holds that <span class="math inline">\(R_i \mid
+R_{&lt;i}\)</span> has small support size, i.e., <span
+class="math display">\[\begin{aligned}
+        \forall y \in Im(f) \setminus \{\bot\}, \forall r \mbox{ s.t. }
+f(r) =  y, \forall i \in W: \\
+        \left | \left \{ r_i : \Pr[R_i = r_i|R_{&lt;i} = r_{&lt;i}, y]]
+\geq 0 \right \}  \right | \leq 2^{\delta} \cdot n^{1.5}.
+    
+\end{aligned}\]</span></p></li>
+<li><p><span class="math inline">\(|Im(f)| \leq  n \cdot (2e)^{n/2}
+\cdot \frac{(n+k_b)!}{n!} \cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon))
+/\delta \right )^{n}\)</span>.</p></li>
+<li><p><span class="math inline">\(\Avail_G(K_{\theta,*}, R_W)\)</span>
+can be computed from <span class="math inline">\(f(R)\)</span>, where
+<span class="math inline">\(R_W := \{R_i : i \in W\}\)</span>.</p></li>
+</ol>
+</div>
+<p>By following the general idea of <span class="citation"
+data-cites="skorski2019strong">[144]</span>, we will build clusters, and
+the spoiling leakage will be the cluster identifier. However, we will
+slightly change the way we build clusters.</p>
+<h4 data-number="7.3.7.4" id="condition-1."><span
+class="header-section-number">7.3.7.4</span> Condition 1.</h4>
+<p>Throughout our proof, we let <span
+class="math inline">\(\Pr[r_i]\)</span> denote <span
+class="math inline">\(\Pr[R_i = r_i]\)</span> for brevity, whenever the
+referred random variable is clear. Before forming the clusters, we will
+first like to exclude all sequences <span class="math inline">\(r \in \U
+= U_1 \times\dots\times U_n\)</span> having a very small probability
+<span class="math inline">\(\Pr_{R}[R_i = r_i \mid R_{&lt;i} =
+r_{&lt;i}] &lt; \epsilon/\ell\)</span> for any <span
+class="math inline">\(i \in [n]\)</span> and only consider the remaining
+<span class="math inline">\(\U&#39; \subset \U\)</span>. Specifically,
+we let <span class="math inline">\(f(r) = \perp\)</span> for all <span
+class="math inline">\(r \notin \U&#39;\)</span>. As we will see later,
+this probability lower bound is vital to upper bound <span
+class="math inline">\(|Im(f)|\)</span>.</p>
+<div class="claim">
+<p><strong>Claim 87</strong>. Let <span
+class="math inline">\(\U&#39;\)</span> be the set containing all the
+sequences <span class="math inline">\(r\)</span> such that <span
+class="math inline">\(\Pr_{R}[R_i = r_i \mid R_{&lt;i} = r_{&lt;i}] \geq
+\epsilon/\ell\)</span> for all <span class="math inline">\(i \in
+[n]\)</span> . Then, we have <span class="math inline">\(\Pr[ r \in
+\U&#39; ] \ge 1 - \epsilon n\)</span>.</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For each <span class="math inline">\(i \in
+[n]\)</span>, and any <span class="math inline">\(r_{&lt;i} \in U_1
+\times\dots\times U_{i-1}\)</span>, we have <span
+class="math display">\[\sum_{u \in U_i: \Pr_{R}[R_i = u \mid R_{&lt;i} =
+r_{&lt;i}] &lt; \epsilon/\ell} \Pr_{R}[R_i = u \mid R_{&lt;i} =
+r_{&lt;i}] &lt; \sum_{u \in U_i} \epsilon/\ell =\epsilon.\]</span>
+Therefore, using a union bound across all <span
+class="math inline">\(i\in [n]\)</span>, we have <span
+class="math inline">\(\Pr[r \not \in \U&#39;] \leq \ee \cdot
+n\)</span>. ◻</p>
+</div>
+<h4 data-number="7.3.7.5" id="building-clusters."><span
+class="header-section-number">7.3.7.5</span> Building clusters.</h4>
+<p>For each <span class="math inline">\(r \in \U&#39;\)</span>, we
+describe how to compute <span class="math inline">\(f(r) = (f_1(r),
+f_2(r),\)</span> <span class="math inline">\(\ldots, f_n(r))\)</span>,
+which will serve as the cluster identifier. Let <span
+class="math inline">\(\round(a)\)</span> denote a rounding function that
+rounds <span class="math inline">\(a\)</span> to the closest multiple of
+<span class="math inline">\(\delta/2\)</span>. We say <span
+class="math inline">\(a \approx_{\round} a&#39;\)</span> if <span
+class="math inline">\(\round(a) = \round(a&#39;)\)</span>.</p>
+<ol>
+<li><p>For each <span class="math inline">\(r\)</span>, do the
+following:</p></li>
+<li><p>Let <span class="math inline">\(f_{&gt;n}(r) = \bot\)</span> for
+any <span class="math inline">\(r\)</span>, and initialize <span
+class="math inline">\(W = \emptyset\)</span>.</p></li>
+<li><p>For <span class="math inline">\(i = n,\dots,1\)</span>, do the
+following:</p>
+<ol>
+<li><p>Let <span class="math inline">\(\sur^1_i(r)\)</span> denote the
+surprise of the <span class="math inline">\(i\)</span>th element of
+<span class="math inline">\(r\)</span>. More formally, <span
+class="math display">\[\sur^1_i(r) = -\lg \Pr_{R}[R_i = r_i \mid
+R_{&lt;i} = r_{&lt;i}, ~f_{&gt;i}(R) = f_{&gt;i}(r)].\]</span> This
+surprise measure represents how rare and surprising the event <span
+class="math inline">\(r_i\)</span> is, conditioned on <span
+class="math inline">\(r_{&lt;i}\)</span>, <span
+class="math inline">\(f_{&gt;i}(r)\)</span>. In a sense, we will group
+sequences with similar surprises into a cluster.</p></li>
+<li><p>Let <span class="math inline">\(\sur^2_i(r)\)</span> denote the
+surprise of the sequences with a similar surprise level in aggregate.
+<span class="math display">\[\sur^2_i(r) = -\lg \Pr_{R}[\sur^1_i(R)
+\approx_{\round} \sur^1_i(r)
+     \mid R_{&lt;i} = r_{&lt;i}, ~f_{&gt;i}(R) = f_{&gt;i}(r)].\]</span>
+Note <span class="math inline">\(\sur^1_i(r) \ge \sur^2_i(r)\)</span>,
+since at least sequence <span class="math inline">\(r\)</span> has <span
+class="math inline">\(\sur^1_i(r)\)</span> and possibly more points may
+approximately share the surprise. Note also that <span
+class="math inline">\(\sur^2_i(r)\)</span> is a deterministic function
+of <span class="math inline">\(\sur^1_i(r), r_{&lt;i}\)</span>, <span
+class="math inline">\(f_{&gt;i}(r)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(\round(\sur^1_i(r)) -
+\round(\sur^2_i(r)) \geq 1.5\lg(n)\)</span> then let <span
+class="math inline">\(f_i(r) = (\round(\sur^1_i(r)),
+\true)\)</span>.</p></li>
+<li><p>Otherwise, let <span class="math inline">\(f_i(r) =
+(\round(\sur^1_i(r)), \false, H_i)\)</span> and add <span
+class="math inline">\(i\)</span> to <span
+class="math inline">\(W\)</span>. Here, <span
+class="math inline">\(H_i\)</span> is defined as <span
+class="math inline">\(N(\{r_i\})\setminus N(r_W)\)</span>, where <span
+class="math inline">\(N\)</span> refers to the neighbors (restricted to
+<span class="math inline">\(K_{\theta,*}\)</span>) of the input set of
+nodes in <span class="math inline">\(G\)</span>. In other words, <span
+class="math inline">\(H_i\)</span> contains the iterations newly covered
+by element <span class="math inline">\(r_i\)</span>; any iterations
+previously covered by <span class="math inline">\(r_W\)</span> are ruled
+out in <span class="math inline">\(H_i\)</span>. In this way, we can
+reduce the length of the cluster identifier.</p></li>
+</ol></li>
+<li><p>Set <span class="math inline">\(f(r) =
+f_1(r),\dots,f_n(r)\)</span>. Set <span class="math inline">\(V = [n]
+\setminus W\)</span>.</p></li>
+</ol>
+<h4 data-number="7.3.7.6" id="conditions-2-and-3."><span
+class="header-section-number">7.3.7.6</span> Conditions 2 and 3.</h4>
+<p>Condition 2 follows from how <span class="math inline">\(V\)</span>
+is computed in step 3. We now show that condition 3 holds. In
+particular, <span class="math inline">\(\forall y \in Im(f(\cdot))
+\setminus \{\bot\}, \forall r \mbox{ s.t. } f(r) = y, \forall i \in
+V\)</span> we have <span class="math display">\[\begin{aligned}
+\Pr[r_i \mid r_{&lt;i}, y] &amp; = \Pr[r_i \mid r_{&lt;i}, y_{\geq i}] =
+\frac{\Pr[r_i \land r_{&lt;i} \land y_{\geq i}]}{\Pr[r_{&lt;i} \land
+y_{\geq i}]}
+&amp;= \frac{\Pr[r_i \land r_{&lt;i} \land y_{&gt; i} ]}{\Pr[r_{&lt;i}
+\land y_{&gt;i} ]\Pr[y_i \mid r_{&lt;i} \land y_{&gt;i} ]  }
+\end{aligned}\]</span></p>
+<p>The first equality is due to <span class="math inline">\(y_{&lt;
+i}\)</span> being a deterministic function of <span
+class="math inline">\(r_{&lt; i}\)</span>, <span
+class="math inline">\(y_{\geq i}\)</span>. Similarly, the nominator of
+the final fraction is due to <span class="math inline">\(y_{i}\)</span>
+being a deterministic function of <span class="math inline">\(r_{\leq
+i}\)</span>, <span class="math inline">\(y_{&gt;i}\)</span>. Moreover,
+<span class="math inline">\(y_{i,2}\)</span> (i.e., <span
+class="math inline">\(\true\)</span>) can be deterministically computed
+from <span class="math inline">\(y_{i,1}\)</span>(i.e., <span
+class="math inline">\(\round(\sur^1_i(r))\)</span>), <span
+class="math inline">\(r_{&lt;i}, y_{&gt;i}\)</span>. Therefore, the
+above is equal to <span class="math display">\[\label{eq:sp1_sp2}
+    \frac{\Pr[r_i \land r_{&lt;i} \land y_{&gt; i} ]}{\Pr[y_{i,1}  \mid
+r_{&lt;i} \land y_{&gt;i}]  \Pr[r_{&lt;i} \land y_{&gt;i} ]} =
+\frac{\Pr[r_i \mid r_{&lt;i} \land y_{&gt;i} ]}{\Pr[y_{1,i} \mid
+r_{&lt;i} \land y_{&gt;i} ]} =\frac{2^{-\sur^1_i(r)}}{2^{-\sur^2_i(r)}}
+\leq \frac{2^\delta}{n^{1.5}}.\]</span></p>
+<p>The last inequality holds since <span class="math inline">\(i \in
+V\)</span>, <span class="math inline">\(\round(\sur^1_i(r)) -
+\round(\sur^2_i(r)) \ge 1.5\lg(n)\)</span>.</p>
+<h4 data-number="7.3.7.7" id="condition-4."><span
+class="header-section-number">7.3.7.7</span> Condition 4.</h4>
+<p>For <span class="math inline">\(r, y, i\)</span> as quantified in the
+theorem statement, we have <span class="math display">\[\begin{aligned}
+&amp; \left | \left \{ r_i : \Pr[R_i = r_i|R_{&lt;i} = r_{&lt;i}, y]]
+\geq 0 \right \}  \right | \\&amp;=
+\left | \left \{ r_i : \Pr[R_i = r_i \land R_{&lt;i} = r_{&lt;i} \land y
+]] \geq 0 \right \}  \right |\\
+&amp;=
+\left | \left \{ r_i : \Pr[R_i = r_i \land R_{&lt;i} = r_{&lt;i}
+\land  y_{i,1}, y_{i,2}, y_{&gt;i} ]] \geq 0 \right \}  \right |\\
+&amp;\leq \left | \left \{ r_i : \Pr[R_i = r_i | R_{&lt;i} = r_{&lt;i},
+y_{i,1}, y_{i,2}, y_{&gt;i} ]] \geq 0 \right \}  \right |
+\end{aligned}\]</span> By a similar argument as above, for all <span
+class="math inline">\(r_i\)</span> s.t. <span
+class="math inline">\(\Pr[R_i = r_i | R_{&lt;i} = r_{&lt;i}, y_{i,1},
+y_{i,2}, y_{&gt;i} ]] \geq 0,\)</span> it holds <span
+class="math display">\[\Pr[R_i = r_i | R_{&lt;i} = r_{&lt;i}, y_{i,1},
+y_{i,2}, y_{&gt;i} ]
+= \frac{\Pr[r_i \mid r_{&lt;i} \land y_{&gt;i} ]}{\Pr[y_{i,1} \mid
+r_{&lt;i} \land y_{&gt;i} ]} =
+\frac{2^{-\sur^1_i(r)}}{2^{-\sur^2_1(r)}}\geq
+\frac{2^{-\delta}}{n^{1.5}}\]</span> where the inequality holds since
+<span class="math inline">\(i \in W\)</span>, we know that <span
+class="math inline">\(\round(\sur^1_i(r)) - \round(\sur^2_i(r)) \le
+1.5\lg(n)\)</span>. This means that <span class="math inline">\(\left |
+\left \{ r_i : \Pr[R_i = r_i | R_{&lt;i} = r_{&lt;i}, y_{\ge i} ]] \geq
+0 \right \}  \right |
+\leq 2^\delta \cdot n^{1.5}.\)</span></p>
+<h4 data-number="7.3.7.8" id="condition-5."><span
+class="header-section-number">7.3.7.8</span> Condition 5.</h4>
+<p>To bound <span class="math inline">\(|Im(f)|\)</span>, we first upper
+bound <span class="math inline">\(y_{i,1}\)</span>. Recall that <span
+class="math inline">\(\Pr_{R}[R_i = r_i \mid R_{&lt;i} = r_{&lt;i}] \geq
+\epsilon/\ell\)</span> for all <span class="math inline">\(i \in
+[n]\)</span> and <span class="math inline">\(r \in \U&#39;\)</span>.
+Therefore, <span class="math inline">\(\Pr_{R}[R_i = r_i \mid R_{&lt;i}
+= r_{&lt;i}, y] \geq \epsilon/\ell\)</span> for all <span
+class="math inline">\(i \in [n]\)</span>, and <span
+class="math inline">\(\forall r\)</span> such that <span
+class="math inline">\(f(r) = y\)</span>.</p>
+<p>Therefore, for all <span class="math inline">\(r\in \U&#39;, i \in
+[n]\)</span>, we have <span class="math inline">\(\sur^1_i(r) \le \lg
+(\ell) + \lg (1/\epsilon),\)</span> which implies that <span
+class="math inline">\(y_{i,1}\)</span> has at most <span
+class="math inline">\(2(\lg(\ell)) + \lg (1/\epsilon))/\delta\)</span>
+different possibilities.</p>
+<p>To upper bound the number of possibilities of the remaining parts, it
+suffices to upper bound the number of choices for set <span
+class="math inline">\(W\)</span> of size <span
+class="math inline">\(m\)</span>, as well as the number of possibilities
+for <span class="math inline">\(H_i\)</span>’s in each slot <span
+class="math inline">\(i \in W\)</span>. Clearly, the former is <span
+class="math inline">\(\binom{n}{m}\)</span>. For the latter part, note
+that each iteration appears at most once over all <span
+class="math inline">\(m\)</span> slots. Therefore, the problem becomes
+how we can assign <span class="math inline">\(k_b\)</span> different
+iterations into <span class="math inline">\(m+1\)</span> positions (with
+some positions possibly containing none) while assigning them to the
+<span class="math inline">\(m+1\)</span>th position when they never
+appear in any slot of <span class="math inline">\(W\)</span>. This is a
+well-known problem of stars and bars with <span
+class="math inline">\(m+1\)</span> variables and sum <span
+class="math inline">\(k_b\)</span>, which has <span
+class="math inline">\(\binom{m+k_b}{m}\)</span> possibilities. Since we
+have <span class="math inline">\(k_b!\)</span> different orderings for
+<span class="math inline">\(k_b\)</span> iterations, the upper bound is
+<span class="math inline">\(\binom{m+k_b}{m} \cdot (k_b!)\)</span>. We
+have:</p>
+<p><span class="math display">\[\begin{aligned}
+|Im(f)| &amp;\leq \left (2 (\lg(\ell) + \lg (1/\epsilon)) /\delta \right
+)^n \left ( \sum_{m=0}^n {n \choose m} {m + k_b \choose m} \cdot k_b!
+\right )\\
+&amp;= \left (2 (\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^n \left
+( \sum_{m=0}^n {n \choose m}\frac{(m+k_b)!}{m!} \right )\\
+&amp;\leq n \cdot {n \choose n/2} \cdot \frac{(n+k_b)!}{n!} \cdot \left
+( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}\\
+&amp;\leq n \cdot (2e)^{n/2} \cdot \frac{(n+k_b)!}{n!} \cdot \left (
+2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}.
+\end{aligned}\]</span></p>
+<h4 data-number="7.3.7.9" id="condition-6."><span
+class="header-section-number">7.3.7.9</span> Condition 6.</h4>
+<p>Finally, condition 6 follows from the definition of the clustering
+procedure. In particular, <span class="math inline">\(H_W = \bigcup_{i
+\in W} H_i\)</span> contains all the iterations that <span
+class="math inline">\(r_W\)</span> covers. The available set can be
+computed by <span class="math inline">\(K_{\theta,*} \setminus
+H_W\)</span>. This concludes our proof.</p>
+<p><span id="sec:generalization" label="sec:generalization"></span> It
+can be seen that in the above proof, the only properties that we used of
+the additional leakage <span class="math inline">\(H_i\)</span> is that
+for <span class="math inline">\(i \in W\)</span>, <span
+class="math inline">\(H_i\)</span> depends only on <span
+class="math inline">\(R_i, y_{&gt;i}\)</span> and that the number of
+choices for the output of the sequence of leakages <span
+class="math inline">\([H_i]_{i \in W}\)</span> is bounded by some <span
+class="math inline">\(B\)</span>. Theorem <a href="#thm:chain_leak_3"
+data-reference-type="ref" data-reference="thm:chain_leak_3">58</a>
+stated in Section <a href="#sec:strong-chain-rule"
+data-reference-type="ref"
+data-reference="sec:strong-chain-rule">5.8.5</a> is restatement of
+Theorem <a href="#thm:chain_leak_2" data-reference-type="ref"
+data-reference="thm:chain_leak_2">86</a> with respect to any such
+leakage function.</p>
+<p>Note that the leakage functions <span
+class="math inline">\(\ell_i\)</span> specified above can model leakage
+with respect to a random oracle <span class="math inline">\(h\)</span>,
+by letting <span class="math inline">\(\rho_i = h(R_i)\)</span>.</p>
+<h3 data-number="7.3.8" id="sec:tradeoff"><span
+class="header-section-number">7.3.8</span> Proof of Lemma <a
+href="#lem:fail2" data-reference-type="ref"
+data-reference="lem:fail2">80</a></h3>
+<p>For brevity, we denote <span class="math inline">\(\DDD =
+\DDD_{2,i}\)</span> and <span class="math inline">\(\DDD_\leak =
+\DDD_{1,i}\)</span> in the experiment <span class="math inline">\(\sf
+IsAGoodBundle\)</span>. We show that <span
+class="math inline">\(\DDD\)</span> has the geometric collision
+property. In other words, we would like to show that when <span
+class="math inline">\(R\)</span> is chosen uniformly at random from
+universe <span class="math inline">\(\U\)</span> then the distribution
+of these <span class="math inline">\(n_R = n_B - n_I\)</span> elements
+has the geometric collision property even with the leakage.</p>
+<p>Towards this goal, by applying Theorem <a href="#thm:chain_leak_2"
+data-reference-type="ref" data-reference="thm:chain_leak_2">86</a> to
+this distribution, we show that even with the leakage, there are at
+least <span class="math inline">\(n_R/3\)</span> elements that preserves
+enough min-entropy. We next show how these elements with sufficient
+min-entropy give the geometric collision property.</p>
+<div id="rem:del_tiny_2" class="remark">
+<p><strong>Remark 88</strong> (Getting rid of tiny parts). Similar to
+<span class="citation" data-cites="skorski2019strong">[144], Remark
+2</span>, we can further require that each cluster should have a
+probability that is “not too small”. Therefore, we define a new leakage
+function <span class="math inline">\(f&#39;\)</span> by substituting the
+<span class="math inline">\(\epsilon\)</span> in the above theorem with
+<span class="math inline">\(\epsilon/2\)</span>, and additionally
+letting <span class="math inline">\(f&#39;(r) = \perp\)</span> for all
+<span class="math inline">\(r\)</span> such that <span
+class="math inline">\(y \in f(r)\)</span> and <span
+class="math inline">\(\Pr_R[f(R) =y] &lt; \epsilon n/(2|Im(f)|)\)</span>
+(their total probability is at most <span class="math inline">\(\epsilon
+n/2\)</span>), we obtain the following: <span
+class="math inline">\(f&#39;\)</span> satisfies all conditions in
+Theorem <a href="#thm:chain_leak_2" data-reference-type="ref"
+data-reference="thm:chain_leak_2">86</a>. Additionally, <span
+class="math inline">\(\forall y \in Im(f&#39;)\)</span>, we have <span
+class="math inline">\(\Pr_R[f&#39;(R) =y] \geq \ee n / (2
+|Im(f)|)\)</span>.</p>
+</div>
+<h4 data-number="7.3.8.1"
+id="fraction-of-blocks-with-high-entropy."><span
+class="header-section-number">7.3.8.1</span> Fraction of blocks with
+high entropy.</h4>
+<p>Using Theorem <a href="#thm:chain_leak_2" data-reference-type="ref"
+data-reference="thm:chain_leak_2">86</a>, with setting <span
+class="math inline">\(\ell \geq 4n^3\)</span> and assuming sufficient
+min-entropy of <span class="math inline">\(R\)</span>, we first show
+that one can ensure more than <span class="math inline">\(1/3\)</span>
+fraction of the blocks having min-entropy at least <span
+class="math inline">\(1.5\lg(n)\)</span>, upon leaking the outcome of
+<span class="math inline">\(f&#39;\)</span> and all previous blocks.</p>
+<p>First notice that with all but <span class="math inline">\(\ee
+n\)</span> probability, <span class="math inline">\(f&#39;(R) \neq
+\perp\)</span>. Therefore, it suffices to let <span
+class="math inline">\(\ee = 2^{-\kappa}\)</span>. Then, by setting <span
+class="math inline">\(\dd = 1\)</span>, we have <span
+class="math display">\[\begin{aligned}
+    \lg(|Im(f)|) &amp;\leq  n \cdot (2e)^{n/2} \cdot (n+{k_b})^{k_b}
+\cdot \left ( 2(\lg(\ell) + \lg (1/\epsilon)) /\delta \right )^{n}\\
+    &amp;= \bigg(\lg(n) +n/2 \cdot \lg(2e) \bigg)+ {k_b} \cdot \lg
+(n+{k_b})  + n \cdot (1+\lg(\lg(\ell) + \kappa))\\
+    &amp; &lt; 3n/2 + 2 k_b \lg n + n (2 + \lg \kappa)
+    &lt; 0.5 n \lg n
+\end{aligned}\]</span> for sufficiently large <span
+class="math inline">\(n\)</span> with <span class="math inline">\(k_b =
+\Omega(\kappa)\)</span> and <span class="math inline">\(n/k_b^2 =
+\Omega(\kappa)\)</span>.</p>
+<p>Combining the above with Remark <a href="#rem:del_tiny_2"
+data-reference-type="ref" data-reference="rem:del_tiny_2">88</a>, we
+have <span class="math inline">\(\Pr_{\DDD_\leak}[f&#39;(R) =y] \geq \ee
+n / (2 \cdot 2^{0.5 n \lg (n)})\)</span> and for every <span
+class="math inline">\(y\in Im(f&#39;)\setminus\{\perp\}\)</span>.
+Moreover, for every <span class="math inline">\(r\)</span> such that
+<span class="math inline">\(f&#39;(r) = y\)</span>, we have <span
+class="math display">\[\begin{aligned}
+\Pr_{\DDD}[r] = \Pr_{\DDD_\leak}[r \mid y] = \frac{\Pr_{\DDD_\leak}[r
+\wedge y]}{\Pr_{\DDD_\leak}[y]} \le
+\frac{2^{-(\frac{8n}{9} \lg \ell+n)} }{(\ee n/2) \cdot 2^{-0.5n \lg n}}
+= 2^{-(\frac{8}{9} \log \ell - 0.5 \lg n + 1) \cdot n} \cdot (2/\ee n),
+\label{eq:min-ent-leak_2}
+\end{aligned}\]</span> which suggests <span
+class="math inline">\(\DDD\)</span> has min-entropy at least <span
+class="math inline">\((\frac{8}{9} \log \ell - 0.5 \lg n + 1) \cdot n -
+\lg (2/\ee n)\)</span>. We show that the following holds: The
+min-entropy of at least <span class="math inline">\(n&#39; =
+n/3\)</span> blocks, <span><em>conditioned on the outcome of all prior
+blocks</em></span> as well as <span class="math inline">\(y\)</span>, is
+at least <span class="math inline">\(\lg(n^{1.5})\)</span>.</p>
+<p>Towards a contradiction, assume otherwise. Let <span
+class="math inline">\(V\)</span> be the set of blocks with min-entropy
+at least <span class="math inline">\(\lg(n^{1.5})\)</span> and let <span
+class="math inline">\(W\)</span> be the set of blocks with min-entropy
+less than <span class="math inline">\(\lg(n^{1.5})\)</span> (as defined
+in Theorem <a href="#thm:chain_leak_2" data-reference-type="ref"
+data-reference="thm:chain_leak_2">86</a>). We will show that if <span
+class="math inline">\(|V| \leq n/3\)</span> there exists a point <span
+class="math inline">\(r\)</span> in the support of <span
+class="math inline">\(\mathcal{\DDD}\)</span> such that <span
+class="math inline">\(\Pr_{\mathcal{\DDD}}[r] &gt; 2^{-(\frac{8}{9} \log
+\ell - 0.5 \lg n + 1) \cdot n} \cdot (2/\ee n)\)</span>, contradicting
+the min-entropy of <span
+class="math inline">\(\mathcal{\DDD}\)</span>.</p>
+<p>First, find any value <span class="math inline">\(r^*_V\)</span> such
+that <span class="math inline">\(\Pr_{\mathcal{\DDD}}[R_V =r^*_V]
+\geq \frac{1}{\ell^{|V|}}\)</span>. Note that <span
+class="math inline">\(r^*_V\)</span> must exist since the support size
+of <span class="math inline">\(R_V\)</span> is at most <span
+class="math inline">\(\ell^{|V|}\)</span>. Let <span
+class="math inline">\(\supp_W(r^*_V) = \{r: r_V = r^*_V \wedge
+\Pr_{\mathcal{\DDD}}[R = r] &gt; 0 \}\)</span>. Then, we have <span
+class="math inline">\(\Pr_{\DDD}[R \in \supp_W(r^*_V)]
+%\sum_{r \in \supp_W(r^*_V)} \Pr_{\mathcal{\DDD}}[R_V = r_V \wedge R_W =
+r_W]
+= \Pr[R_V = r^*_V]
+\geq \frac{1}{\ell^{|V|}}.
+%\geq \frac{1}{(4\cdot n^3)^{|V|}}.\)</span></p>
+<p>Second, we show that <span class="math inline">\(|\supp_W(r^*_V)| \le
+(2 \cdot n^{1.5})^{|W|}\)</span>. Consider any <span
+class="math inline">\(r \in \supp_W(r^*_V)\)</span>. Applying the fourth
+condition of Theorem <a href="#thm:chain_leak_2"
+data-reference-type="ref" data-reference="thm:chain_leak_2">86</a> with
+<span class="math inline">\(\dd = 1\)</span>, condition on any <span
+class="math inline">\(y\in Im(f&#39;)\setminus\{\perp\}\)</span>, for
+any <span class="math inline">\(i \in W\)</span> and any fixing of <span
+class="math inline">\(R_{&lt; i} = r_{&lt; i}\)</span>, the number of
+elements in the support of <span class="math inline">\(R_i \mid r_{&lt;
+i}\)</span> is at most <span class="math inline">\(2 \cdot
+n^{1.5}\)</span>, which implies that <span
+class="math inline">\(|\supp_W(r^*_V)|\)</span> must be at most <span
+class="math inline">\((2 \cdot n^{1.5})^{|W|}\)</span>, since the
+positions for <span class="math inline">\(V\)</span> are fixed to <span
+class="math inline">\(r^*_V\)</span>.</p>
+<p>Based on the above two arguments, by the averaging argument, there
+must be some <span class="math inline">\(r^* \in \supp_W(r^*_V)\)</span>
+for which <span class="math inline">\(\Pr_{\mathcal{\DDD}}[R = r^*]
+\geq \frac{1}{(\ell)^{|V|}} \cdot \frac{1}{(2 \cdot
+n^{1.5})^{|W|}}.\)</span> Therefore, we have <span
+class="math display">\[\begin{aligned}
+-\lg \Pr_{\DDD}[r^*] &amp; =
+|V| \lg (\ell) + |W| \lg (2 n^{1.5})  
+=  |V| \lg \ell + |W| + 1.5 (n-|V|) \lg n \\
+&amp; \leq  n + |V| \lg (\ell/n) + 1.5 n \lg n
+\leq  n + n/3 \lg (\ell/n) + 1.5 n \lg n \\
+&amp; = n + n/3 \lg (\ell) - 1/3 n \lg n + 1.5 n \lg n,
+\end{aligned}\]</span> where the second to last line follows assuming
+<span class="math inline">\(|V| &lt; n/3\)</span>.</p>
+<p>To reach contradiction to (<a href="#eq:min-ent-leak_2"
+data-reference-type="ref"
+data-reference="eq:min-ent-leak_2">[eq:min-ent-leak_2]</a>), we require
+that <span class="math display">\[n + n/3 \lg (\ell) - 1/3 n \lg n + 1.5
+n \lg n \leq
+\left(\frac{8}{9} \lg \ell - 0.5 \lg n + 1 \right) \cdot n - \lg (2/\ee
+n).\]</span> The above is implied by <span class="math inline">\(5/3 n
+\lg n \leq 5/9 n \lg \ell - \lg (2/\ee n).\)</span></p>
+<p>When <span class="math inline">\(\ell \geq 4n^3\)</span> the above is
+implied by <span class="math inline">\(5/3 n \lg n \leq 5/3 n \lg n +
+10/3 n - \lg (2/\ee n),\)</span> which is true for <span
+class="math inline">\(n \geq \lg(1/\ee) = \kappa\)</span>. Thus we reach
+contradiction to (<a href="#eq:min-ent-leak_2" data-reference-type="ref"
+data-reference="eq:min-ent-leak_2">[eq:min-ent-leak_2]</a>). We
+therefore conclude that <span class="math inline">\(|V| \geq
+n/3\)</span>.</p>
+<h4 data-number="7.3.8.2" id="geometric-collision-property.-1"><span
+class="header-section-number">7.3.8.2</span> Geometric collision
+property.</h4>
+<p>Note that we can equivalently view <span
+class="math inline">\(R&#39;\)</span> in the support of <span
+class="math inline">\(\DDD\)</span> as a set of size <span
+class="math inline">\(n&#39;\)</span>, or as a stream of elements of
+length <span class="math inline">\(n&#39;\)</span>, where the element in
+the <span class="math inline">\(i\)</span>-th block (for <span
+class="math inline">\(i \in [n&#39;]\)</span>) comes from universe <span
+class="math inline">\(U_{i}\)</span>, and <span
+class="math inline">\(\{U_{1}, \ldots, U_{n&#39;}\}\)</span> are
+mutually disjoint. Taking the second view, given <span
+class="math inline">\(R&#39;,S&#39;\)</span> in the support of <span
+class="math inline">\(\DDD\)</span>, we have that <span
+class="math inline">\(|R&#39; \cap S&#39;| = z\)</span> if and only if
+there exists some set <span class="math inline">\(Z \subseteq
+[n&#39;]\)</span> of size <span class="math inline">\(z\)</span> such
+that (1) the <em>ordered</em> set of elements in the blocks of <span
+class="math inline">\(R&#39;\)</span> indexed by <span
+class="math inline">\(Z\)</span> (denoted <span
+class="math inline">\(R&#39;_{Z}\)</span>) is equal to the
+<em>ordered</em> set of elements in the blocks of <span
+class="math inline">\(S&#39;\)</span> indexed by <span
+class="math inline">\(Z\)</span> (denoted <span
+class="math inline">\(S&#39;_{Z}\)</span>) and (2) the set of elements
+in the blocks of <span class="math inline">\(R&#39;\)</span> indexed by
+<span class="math inline">\([n&#39;] \setminus Z\)</span> (denoted <span
+class="math inline">\(R&#39;_{ \overline{Z}}\)</span>) and the set of
+elements in the blocks of <span class="math inline">\(S&#39;\)</span>
+indexed by <span class="math inline">\([n&#39;] \setminus Z\)</span>
+(denoted <span class="math inline">\(S&#39;_{ \overline{Z}}\)</span>)
+are disjoint.</p>
+<p>We are now ready to analyze the probability that <span
+class="math inline">\(|R&#39; \cap S&#39;| = z\)</span> for <span
+class="math inline">\(R&#39;, S&#39;\)</span> drawn from <span
+class="math inline">\(\DDD\)</span>, and for <span
+class="math inline">\(z \in [n&#39;]\)</span>: <span
+class="math display">\[\begin{aligned}
+    \Pr_{R&#39;, S&#39; \leftarrow \DDD} [|R&#39; \cap S&#39;| = z]
+    &amp;= \sum_{Z \subseteq [n&#39;], |Z| = z} \Pr_{R&#39;, S&#39;
+\leftarrow  \DDD}
+    \left [ \left ( R&#39;_{Z} = S&#39;_{Z} \right ) \wedge
+    \left ( R&#39;_{\overline{Z}} \cap S&#39;_{\overline{Z}}) =
+\emptyset \right ) \right]\\
+    &amp;\leq \sum_{Z \subseteq [n&#39;], |Z| = z} \Pr_{R&#39;, S&#39;
+\leftarrow  \DDD} [R&#39;_{Z} = S&#39;_{Z}]
+    ~~\leq \sum_{Z \subseteq [n&#39;], |Z| = z} \left (
+\frac{1}{n^{1.5}} \right )^z
+\end{aligned}\]</span> The second inequality holds since each element in
+the stream has min-entropy at least <span class="math inline">\(\lg
+(n^{1.5})\)</span>. Therefore, we have <span
+class="math inline">\(\Pr_{R&#39;, S&#39; \leftarrow \DDD} [|R&#39; \cap
+S&#39;| = z]
+\le {{n/3} \choose z} \cdot  \left ( \frac{1}{n^{1.5}} \right )^z
+   \leq \left ( \frac{1}{n^{0.5}} \right )^z.\)</span></p>
+<h2 data-number="7.4" id="facts-1"><span
+class="header-section-number">7.4</span> FACTS</h2>
+<h3 data-number="7.4.1" id="app:proofs"><span
+class="header-section-number">7.4.1</span> Proofs for tail bound
+probabilistic analysis</h3>
+<p>We now complete the proofs of lemmas and theorems in <a
+href="#sec:tailbounds" data-reference-type="ref"
+data-reference="sec:tailbounds">6.4.3</a>.</p>
+<p>We start with the following standard way to approximate numbers near
+1 with exponentials.</p>
+<div id="lem:expapprox" class="lemma">
+<p><strong>Lemma 89</strong>. For any real constant <span
+class="math inline">\(\alpha&gt;0\)</span>, and any real <span
+class="math inline">\(x\)</span> with <span
+class="math inline">\(0&lt;x\le\alpha\)</span>, we have <span
+class="math display">\[\exp\left(-\tfrac{1}{\alpha}\ln\tfrac{1}{1-\alpha}\cdot{}x\right)
+    \le 1-x &lt; \exp(-x).\]</span></p>
+</div>
+<p>We also re-state this straightforward consequence of the
+Hoeffding/Chernoff bound on the sum of random variables:</p>
+<div id="lem:hoeff" class="lemma">
+<p><strong>Lemma 90</strong>. Let <span
+class="math inline">\(X_1,\ldots,X_n\)</span> be independent Poisson
+trials, and write <span class="math inline">\(Y=\sum_i X_i\)</span> for
+their sum. If <span class="math inline">\(\Expect[Y] = \mu\)</span>,
+then for any <span class="math inline">\(\delta&gt;0\)</span>, each of
+<span class="math inline">\(\Pr(Y \ge \mu + \delta)\)</span> and <span
+class="math inline">\(\Pr(Y \le \mu - \delta)\)</span> are at most <span
+class="math inline">\(\exp(-2\delta^2/n)\)</span>.</p>
+</div>
+<p>We now recall and prove the building-block lemmas from <a
+href="#sec:tailbounds" data-reference-type="ref"
+data-reference="sec:tailbounds">6.4.3</a>.</p>
+<div class="proof">
+<p><em>Proof.</em> From <a href="#eqn:pw" data-reference-type="eqref"
+data-reference="eqn:pw">[eqn:pw]</a>, we know this probability is
+exactly <span class="math inline">\(p_w = 1 -
+\frac{\falling{(s-u)}{w}}{\falling{s}{w}},\)</span> where <span
+class="math inline">\(w = v-\tau\)</span> is the number of unfilled
+slots remaining. Using <a href="#lem:expapprox"
+data-reference-type="ref" data-reference="lem:expapprox">89</a> we have
+<span class="math inline">\(\frac{\falling{(s-u)}{w}}{\falling{s}{w}}
+    \le \left(1-\frac{u}{s}\right)^w
+    \le \exp(-uw/s)\)</span>, which means that <span
+class="math display">\[p_w \ge 1 -
+\exp\left(-\tfrac{u(v-\tau)}{s}\right)
+        = 1 -
+\exp\left(-\tfrac{u\tau}{s}\cdot{}\left(\tfrac{v}{\tau}-1\right)\right).\]</span>
+Applying the two lower bounds on <span
+class="math inline">\(\frac{u\tau}{s}\)</span> and <span
+class="math inline">\(\tfrac{v}{\tau}\)</span> from the lemma statement
+yields the claimed result. ◻</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Using again <a href="#eqn:pw"
+data-reference-type="eqref" data-reference="eqn:pw">[eqn:pw]</a>, the
+probability is exactly <span class="math inline">\(p_w = 1 -
+\frac{\falling{(s-u)}{w}}{\falling{s}{w}},\)</span> where again <span
+class="math inline">\(w\le v\)</span> is the number of unfilled slots
+for item <span class="math inline">\(x\)</span>. Then <span
+class="math display">\[\tfrac{\falling{(s-u)}{w}}{\falling{s}{w}}
+        \ge \tfrac{\falling{(s-u)}{v}}{\falling{s}{v}}
+        \ge \left(\tfrac{s-u-v+1}{s-v+1}\right)^v
+        &gt; \left(1 - \tfrac{u}{s-v}\right)^v.\]</span> Using upper
+bounds on <span class="math inline">\(\frac{v}{s}\)</span> and <span
+class="math inline">\(u\)</span> from the lemma statement, we have <span
+class="math display">\[p_w
+        &lt; 1 - \left(1 - \tfrac{u}{s-v}\right)^v
+        \le 1 - \left(1 - 3.66567{}\tfrac{1}{v}\right)^v.\]</span>
+Finally, the lower bound on <span class="math inline">\(v\)</span> from
+the lemma statement shows <span class="math inline">\(3.66567{}/v \le
+0.00989{}\)</span>, and so we can finally use the lower exponential
+bound of <a href="#lem:expapprox" data-reference-type="ref"
+data-reference="lem:expapprox">89</a> to obtain the stated result. ◻</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The tipping point <span
+class="math inline">\(\tau\)</span> is the expected number of slots
+filled in the table if <span class="math inline">\(t\)</span> of the
+<span class="math inline">\(m\)</span> total calls to <span
+class="math inline">\(\mathsf{Increment}\)</span> were actually called
+on this particular item.</p>
+<p>We can divide the calls to <span
+class="math inline">\(\mathsf{Increment}\)</span> into two groups: the
+<span class="math inline">\(t\)</span> calls for item <span
+class="math inline">\(x\)</span>, and the <span
+class="math inline">\(m-t\)</span> calls for other items. The expected
+number of slots within <span class="math inline">\(x\)</span>’s item set
+filled by the first group is at most <span
+class="math inline">\(0.974876t\)</span>, from <a href="#lem:upperp"
+data-reference-type="ref"
+data-reference="lem:upperp">[lem:upperp]</a>.</p>
+<p>For the second group, these calls to <span
+class="math inline">\(\mathsf{Increment}\)</span> on unrelated items are
+distributed uniformly at random among all table indices, and so their
+expected fraction within this item set is the same as their overall
+fraction in the table. Therefore, the expected number of slots filled by
+calls to <span class="math inline">\(\mathsf{Increment}\)</span> on
+other items is at most <span class="math display">\[\frac{(m-t)v}{s}
+&lt; \frac{mv}{s}
+        \le \frac{7.409}{96} t.\]</span></p>
+<p>By linearity of expectation, we can sum these two to obtain an upper
+bound on the total expected tipping point as given in the lemma
+statement. ◻</p>
+</div>
+<p>Now we can proceed to the proofs of the main theorems on the accuracy
+of the CCBF.</p>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\tau_t\)</span> be
+the tipping point for any actual number <span class="math inline">\(m\le
+n\)</span> of total set bits in the table <span
+class="math inline">\(T\)</span> and for the given threshold <span
+class="math inline">\(t\)</span>. And consider random variables <span
+class="math inline">\(X_1,\ldots,X_v\)</span> for the <span
+class="math inline">\(v\)</span> slots assigned to item <span
+class="math inline">\(x\)</span>, where each <span
+class="math inline">\(X_1\)</span> is 0 or 1 depending on whether the
+corresponding slot in table <span class="math inline">\(T\)</span> is 0
+or 1. We want to know the probability that the sum of the <span
+class="math inline">\(X_i\)</span>’s is at least <span
+class="math inline">\(\tau_t\)</span>, which is what would cause <span
+class="math inline">\(\ensuremath{\mathsf{TestCount}}(x,t)\)</span> to
+produce a false positive.</p>
+<p>Let <span class="math inline">\(k = t - 2.1\sqrt{\lambda t}\)</span>
+be the actual number of calls to <span
+class="math inline">\(\mathsf{Increment}\)</span> on item <span
+class="math inline">\(x\)</span>, and write <span
+class="math inline">\(\tau_k\)</span> for the tipping point at threshold
+<span class="math inline">\(k\)</span>. By definition and the exact
+calculations for <span class="math inline">\(\tau_k\)</span> outlined
+earlier, we know that <span class="math inline">\(\Expect[\sum X_i] =
+\tau_k\)</span>.</p>
+<p>The difference between these two tipping points <span
+class="math inline">\(\tau_t - \tau_k\)</span> is the expected number of
+extra slots filled by <span class="math inline">\(t-k\)</span> calls to
+<span class="math inline">\(\mathsf{Increment}\)</span>, which from <a
+href="#lem:lowerp" data-reference-type="ref"
+data-reference="lem:lowerp">[lem:lowerp]</a> is at least <span
+class="math display">\[0.956414(t-k) =
+0.956414{}\cdot{}2.1{}\sqrt{\lambda t} \ge \sqrt{\tfrac{\lambda
+v}{2}},\]</span> where in the last step we used the upper bound on <span
+class="math inline">\(v\)</span> from the assumptions of the
+theorem.</p>
+<p>The variables <span class="math inline">\(X_i\)</span> are not
+independent, but they are <em>negatively correlated</em>, meaning that
+the whenever one slot is filled, it only decreases the likelihood that
+another is filled; intuitively, this is because there are now fewer
+chances to fill the other slot. Therefore we can apply the Hoeffding
+bound in this direction (<a href="#lem:hoeff" data-reference-type="ref"
+data-reference="lem:hoeff">90</a>) to say that <span
+class="math display">\[Pr\left(\sum X_i \ge \tau_k +
+\sqrt{\tfrac{\lambda v}{2}}\right)
+    \le \exp(-\lambda),\]</span> as required. ◻</p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Writing <span class="math inline">\(k\)</span> for
+the actual number of complaints given in <a href="#eqn:fn"
+data-reference-type="eqref" data-reference="eqn:fn">[eqn:fn]</a>, we
+need a tail bound on the probability that, after <span
+class="math inline">\(k\)</span> calls to <span
+class="math inline">\(\ensuremath{\mathsf{Increment}}{}\)</span> on the
+same item <span class="math inline">\(x\)</span>, there are still fewer
+than <span class="math inline">\(1.0520553{}t\)</span> slots of <span
+class="math inline">\(x\)</span>’s item set filled in, where the latter
+constant comes from applying the upper bound on the tipping point from
+<a href="#lem:uppertau" data-reference-type="ref"
+data-reference="lem:uppertau">[lem:uppertau]</a>.</p>
+<p>For this, we need a lower bound on the <em>expected</em> number of
+bits set after <span class="math inline">\(k\)</span> calls to <span
+class="math inline">\(\mathsf{Increment}\)</span> on item <span
+class="math inline">\(x\)</span>; from <a href="#lem:lowerp"
+data-reference-type="ref" data-reference="lem:lowerp">[lem:lowerp]</a>
+this is at least <span class="math inline">\(0.956414{}k\)</span>.</p>
+<p>Now we can apply the Hoeffding bound (<a href="#lem:hoeff"
+data-reference-type="ref" data-reference="lem:hoeff">90</a>), with <span
+class="math inline">\(\mu = 0.956414{}k\)</span> and <span
+class="math inline">\(\mu+\delta=1.0520553{}t\ge\tau\)</span> to see
+that the probability that less than <span
+class="math inline">\(\tau\)</span> bits of <span
+class="math inline">\(x\)</span>’s user set are flipped is at most <span
+class="math display">\[\begin{aligned}
+    &amp;\exp\left(-2(1.0520553{}t-0.956414{}k)^2/k\right) \\
+    \le&amp; \exp\left(-2\left(0.38\lambda + 0.66\sqrt{\lambda
+t}\right)^2/k\right)\\
+    \le&amp; \exp\left(-\frac{.28\lambda^2 + \lambda\sqrt{\lambda t} +
+.87\lambda t}%
+        {.4\lambda + .7\sqrt{\lambda t} + 1.1t}\right) \\
+    \le&amp; \exp(-.7\lambda)  \le 2^{-\lambda}.
+   
+\end{aligned}\]</span> ◻</p>
+</div>
+<h1 data-number="8" id="timeline"><span
+class="header-section-number">8</span> Timeline</h1>
 <p>The following timeline outlines the completion of the remaining
 research items and the preparation of the final dissertation. As noted,
 sublinear secure protocol works are largely complete. The schedule
@@ -10311,8 +12775,8 @@ Defense.</em></td>
 </tbody>
 </table>
 </div>
-<h1 data-number="8" id="preliminary-results"><span
-class="header-section-number">8</span> Preliminary Results</h1>
+<h1 data-number="9" id="preliminary-results"><span
+class="header-section-number">9</span> Preliminary Results</h1>
 <p>As detailed in previous sections, the research objectives for our
 first line of work (Secure Search, Sampling, and Similarity) and the
 second line of work (the threshold traceback for originator tracking via
@@ -10330,8 +12794,8 @@ of number of users and messages on End-to-End Encrypted messaging
 systems. The goal of the cryptography analysis is to deliver strict
 security and privacy guarantee while keeping the protocol practical and
 cost-friendly.</p>
-<h2 data-number="8.1" id="microbenchmarks"><span
-class="header-section-number">8.1</span> Microbenchmarks</h2>
+<h2 data-number="9.1" id="microbenchmarks"><span
+class="header-section-number">9.1</span> Microbenchmarks</h2>
 <p>Unlike the hash-based structures (CCBF) used in the original FACTs
 system, our proposed follow-up design runs by two non-colluding servers
 with malicious security. A primary concern is whether these secure
@@ -10344,8 +12808,8 @@ Table <a href="#tab:bandwidth" data-reference-type="ref"
 data-reference="tab:bandwidth">2</a> shows the major
 communication-intensive 2-party operations and their servers’
 communication cost.</p>
-<h2 data-number="8.2" id="bandwidth-overhead-analysis"><span
-class="header-section-number">8.2</span> Bandwidth Overhead
+<h2 data-number="9.2" id="bandwidth-overhead-analysis"><span
+class="header-section-number">9.2</span> Bandwidth Overhead
 Analysis</h2>
 <p>This new follow-up work focuses on the actual spreader of reported
 messages instead of the originator. A fundamental change of this is that
@@ -10395,8 +12859,8 @@ rounds</strong></th>
 </tbody>
 </table>
 </div>
-<h2 data-number="8.3" id="conclusion-of-preliminary-data"><span
-class="header-section-number">8.3</span> Conclusion of Preliminary
+<h2 data-number="9.3" id="conclusion-of-preliminary-data"><span
+class="header-section-number">9.3</span> Conclusion of Preliminary
 Data</h2>
 <p>These benchmarks indicate that while the proposed tools for this
 follow-up work are communicational heavier than the original FACTs
@@ -10404,8 +12868,8 @@ primitives, they provide efficient and lightweight protocols for the
 large scale of popular E2EE messaging systems such as Signal. This
 confirms the capability of our design. We are also working on evaluation
 of end-to-end server runtime to show the actual cost of our design.</p>
-<h1 data-number="9" id="conclusion-1"><span
-class="header-section-number">9</span> Conclusion</h1>
+<h1 data-number="10" id="conclusion-1"><span
+class="header-section-number">10</span> Conclusion</h1>
 <p>This proposal outlines a comprehensive research agenda addressing the
 tension between data privacy and utility, culminating in a rigorous
 examination of accountability in end-to-end encrypted systems.</p>
@@ -11801,6 +14265,108 @@ set-intersection cardinality via bloom filters,”</span> in
 <span>ACISP</span> 2015, brisbane, QLD, australia, june 29 - july 1,
 2015, proceedings</em>, 2015, pp. 413–430. doi: <a
 href="https://doi.org/10.1007/978-3-319-19962-7\_24">10.1007/978-3-319-19962-7\_24</a>.</div>
+</div>
+<div id="ref-KatzLindell2007" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[178] </div><div
+class="csl-right-inline">J. Katz and Y. Lindell, <em>Introduction to
+modern cryptography</em>. Chapman; Hall/CRC Press, 2007.</div>
+</div>
+<div id="ref-EKR18" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[179] </div><div
+class="csl-right-inline">D. Evans, V. Kolesnikov, and M. Rosulek,
+<span>“A pragmatic introduction to secure multi-party
+computation,”</span> <em>Foundations and Trends in Privacy and
+Security</em>, vol. 2, no. 2–3, pp. 70–246, 2018, doi: <a
+href="https://doi.org/10.1561/3300000019">10.1561/3300000019</a>.</div>
+</div>
+<div id="ref-JC:LinPin09" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[180] </div><div
+class="csl-right-inline">Y. Lindell and B. Pinkas, <span>“A proof of
+security of <span>Yao</span>’s protocol for two-party
+computation,”</span> <em>Journal of Cryptology</em>, vol. 22, no. 2, pp.
+161–188, 2009, doi: <a
+href="https://doi.org/10.1007/s00145-008-9036-8">10.1007/s00145-008-9036-8</a>.</div>
+</div>
+<div id="ref-ICALP:Dwork06" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[181] </div><div
+class="csl-right-inline">C. Dwork, <span>“Differential privacy (invited
+paper),”</span> in <em>ICALP 2006, part II</em>, M. Bugliesi, B.
+Preneel, V. Sassone, and I. Wegener, Eds., in <span>LNCS</span>, vol.
+4052. Springer, Heidelberg, 2006, pp. 1–12. doi: <a
+href="https://doi.org/10.1007/11787006_1">10.1007/11787006_1</a>.</div>
+</div>
+<div id="ref-TCC:DMNS06" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[182] </div><div
+class="csl-right-inline">C. Dwork, F. McSherry, K. Nissim, and A. Smith,
+<span>“Calibrating noise to sensitivity in private data
+analysis,”</span> in <em>TCC 2006</em>, S. Halevi and T. Rabin, Eds., in
+<span>LNCS</span>, vol. 3876. Springer, Heidelberg, 2006, pp. 265–284.
+doi: <a
+href="https://doi.org/10.1007/11681878_14">10.1007/11681878_14</a>.</div>
+</div>
+<div id="ref-C:BeiNisOmr08" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[183] </div><div
+class="csl-right-inline">A. Beimel, K. Nissim, and E. Omri,
+<span>“Distributed private data analysis: Simultaneously solving how and
+what,”</span> in <em>CRYPTO 2008</em>, D. Wagner, Ed., in
+<span>LNCS</span>, vol. 5157. Springer, Heidelberg, 2008, pp. 451–468.
+doi: <a
+href="https://doi.org/10.1007/978-3-540-85174-5_25">10.1007/978-3-540-85174-5_25</a>.</div>
+</div>
+<div id="ref-TALG:SCRS17" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[184] </div><div
+class="csl-right-inline">E. Shi, T.-H. H. Chan, E. G. Rieffel, and D.
+Song, <span>“Distributed private data analysis: Lower bounds and
+practical constructions,”</span> <em><span>ACM</span> Trans.
+Algorithms</em>, vol. 13, no. 4, pp. 50:1–50:38, 2017, doi: <a
+href="https://doi.org/10.1145/3146549">10.1145/3146549</a>.</div>
+</div>
+<div id="ref-C:DDGR20" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[185] </div><div
+class="csl-right-inline">D. Dachman-Soled, L. Ducas, H. Gong, and M.
+Rossi, <span>“<span>LWE</span> with side information: Attacks and
+concrete security estimation,”</span> in <em>CRYPTO 2020, part II</em>,
+D. Micciancio and T. Ristenpart, Eds., in <span>LNCS</span>, vol. 12171.
+Springer, Heidelberg, 2020, pp. 329–358. doi: <a
+href="https://doi.org/10.1007/978-3-030-56880-1_12">10.1007/978-3-030-56880-1_12</a>.</div>
+</div>
+<div id="ref-Liu" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[186] </div><div
+class="csl-right-inline">L.-P. Liu, <span>“Linear transformation of
+multivariate normal distribution: Marginal, joint and posterior.”</span>
+<a href="http://www.cs.columbia.edu/~liulp/pdf/linear_normal_dist.pdf"
+class="uri">http://www.cs.columbia.edu/~liulp/pdf/linear_normal_dist.pdf</a>.</div>
+</div>
+<div id="ref-IMS+09" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[187] </div><div
+class="csl-right-inline">Y. Ishai, T. Malkin, M. J. Strauss, and R. N.
+Wright, <span>“Private multiparty sampling and approximation of vector
+combinations,”</span> <em>Theor. Comput. Sci.</em>, vol. 410, no. 18,
+pp. 1730–1745, 2009, doi: <a
+href="https://doi.org/10.1016/j.tcs.2008.12.062">10.1016/j.tcs.2008.12.062</a>.</div>
+</div>
+<div id="ref-SasVer15" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[188] </div><div
+class="csl-right-inline">I. Sason and S. Verdú, <span>“Bounds among
+f-divergences,”</span> <em>CoRR</em>, vol. abs/1508.00335, 2015,
+Available: <a
+href="https://arxiv.org/abs/1508.00335">https://arxiv.org/abs/1508.00335</a></div>
+</div>
+<div id="ref-Ost02" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[189] </div><div
+class="csl-right-inline">F. Österreicher, <span>“Csiszar’s
+f-divergence-basic properties,”</span> <em>RGMIA Research Report
+Collection</em>, 2002.</div>
+</div>
+<div id="ref-ICALP:BarOlm13" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[190] </div><div
+class="csl-right-inline">G. Barthe and F. Olmedo, <span>“Beyond
+differential privacy: Composition theorems and relational logic for
+f-divergences between probabilistic programs,”</span> in <em>ICALP 2013,
+part II</em>, F. V. Fomin, R. Freivalds, M. Z. Kwiatkowska, and D.
+Peleg, Eds., in <span>LNCS</span>, vol. 7966. Springer, Heidelberg,
+2013, pp. 49–60. doi: <a
+href="https://doi.org/10.1007/978-3-642-39212-2_8">10.1007/978-3-642-39212-2_8</a>.</div>
 </div>
 </div>
 <aside id="footnotes" class="footnotes footnotes-end-of-document"
