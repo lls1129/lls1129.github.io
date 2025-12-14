@@ -192,7 +192,7 @@
 <header id="title-block-header">
 <h1 class="title">Thesis Proposal</h1>
 <p class="author">Linsheng Liu</p>
-<p class="date">December 1, 2025</p>
+<p class="date">December 1, 2025<br /></p>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
@@ -581,7 +581,6 @@ if you want bold vectors)
     % 3. Add any other missing math macros here
     \newcommand{\e}{\epsilon}
     \newcommand{\d}{\delta}\)</span></p>
-<p><a href="http://lls1129.github.io/main.pdf">PDF Version</a></p>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
 <p>This dissertation investigates how to reduce communication overhead
 in privacy-preserving applications. It develops two complementary
@@ -11653,6 +11652,21 @@ class="math inline">\(L\)</span> complaints per user per epoch.<a
 href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </aside>
+<div style="position: absolute; top: 20px; left: 20px; z-index: 100;">
+    <a href="lls1129.github.io/main.pdf" style="
+        text-decoration: none; 
+        color: #333; 
+        background-color: #f8f9fa; 
+        border: 1px solid #ddd; 
+        padding: 8px 12px; 
+        border-radius: 5px; 
+        font-family: sans-serif; 
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        &darr; PDF Version
+    </a>
+</div>
+
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
 <style>
@@ -11693,10 +11707,17 @@ function scrollFunction() {
   }
 }
 
-// When the user clicks on the button, scroll to the top of the document
+// When the user clicks on the button, scroll to the top AND clean the URL
 function topFunction() {
+  // 1. Scroll to top (Your original logic)
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  
+  // 2. NEW: Clean the URL (Remove #section)
+  if (history.replaceState) {
+      // This resets the URL bar to just the domain (e.g. linshengliu.com)
+      history.replaceState(null, null, window.location.pathname);
+  }
 }
 </script>
 </body>
