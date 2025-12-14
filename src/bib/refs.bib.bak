@@ -9647,8 +9647,6 @@
 
 @string{ndssname =              "{ISOC} Network and Distributed System Security Symposium -- {NDSS}"}
 
-@string{ndss =              "{ISOC} Network and Distributed System Security Symposium -- {NDSS}"}
-
 @string{ndsspub_v1 =            "IEEE Computer Society"}
 
 @string{ndsspub_v2 =            "The Internet Society"}
