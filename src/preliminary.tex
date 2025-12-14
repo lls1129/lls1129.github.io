@@ -18,7 +18,7 @@ We benchmarked all major building blocks on two standard CloudLab servers with a
 
 % --- Result 2: Proving it fits into the 'Different Angle' ---
 \subsection{Bandwidth Overhead Analysis}
-This new follow-up work focuses on the actual spreader of controversial messages instead of the originator. A fundamental change of this is that we rely on non-colluding 2-party to make the design practical. With strong security guarantee, this often comes at the cost of increased communication overhead as well as computation cost. So far the main concern is the bandwidth and latency between two servers would set a limit of how many complaints we could handle in each epoch. 
+This new follow-up work focuses on the actual spreader of reported messages instead of the originator. A fundamental change of this is that we rely on non-colluding 2-party to make the design practical. With strong security guarantee, this often comes at the cost of increased communication overhead as well as computation cost. So far the main concern is the bandwidth and latency between two servers would set a limit of how many complaints we could handle in each epoch. 
 
 Since our design is sequential across different components and fully parallel within each component, to assess this feasibility, we micro-benchmarked each building blocks using the state-of-art protocols on 1 million reports per epoch.  
 % Table~\ref{tab:bandwidth} shows the major building blocks and their communication cost.

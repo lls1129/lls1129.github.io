@@ -1,0 +1,55 @@
+\section{Literature Review}
+
+This section surveys existing literature relevant to the two primary lines of work. First, we discuss the foundational cryptographic primitives and protocols for \textbf{Secure Search, Secure Sampling, and Privacy-Preserving Set Similarity}. Second, we review the literature relevant to our specific application in accountability systems of End-to-End Encrypted Messaging System, \textbf{FACTs}.
+
+% --- LINE OF WORK 1 ---
+\subsection{Line 1: Secure Search, Sampling, and Similarity}
+This line of work focuses on optimizing privacy-preserving protocols for retrieving and analyzing data. We divide the literature into three interconnected domains: secure search, secure sampling, and set similarity.
+
+\subsubsection{Secure Search}
+Secure search is a widely-studied problem with solutions spanning various cryptographic settings. In the discussion below, let $n$ denote the number of data items.
+
+\paragraph{Secure pattern matching (SPM) on FHE-encrypted data.}
+In SPM, given an encrypted query $\lbra q \lket$ and $n$ FHE-encrypted data items $(\lbra x_1 \lket, \ldots, \lbra x_n \lket)$, the protocol returns a vector of $n$ ciphertexts $\lbra b_1 \lket, \ldots, \lbra b_n \lket$, where $b_i$ indicates whether the $i$-th data element matches the query~\cite{CCSW:YSKYK13,FCW:CheKimLau15,TIFS:CKK16,TDSC:KLLTW19}. These works primarily focus on optimizing the search circuits used to determine matches. Consequently, the communication complexity and the client’s running time remain proportional to the number of data items. In contrast, our work focuses on the orthogonal problem of optimizing the \emph{retrieval} of matched data items, aiming for sublinear communication and client computation.
+
+\paragraph{Searchable encryption (SE).}
+Searchable encryption~\cite{SP:SonWagPer00,EC:BDOP04} enables highly efficient search (typically $o(n)$ time) over encrypted data. Efficient SE schemes have been proposed for a wide variety of queries, including equality queries~\cite{CCS:CGKO06, AC:ChaKam10}, range queries~\cite{RSA:IKLO16, CCS:RACY16}, and conjunctive queries~\cite{SP:PKVKMC14, C:CJJKRS13}. However, to achieve sublinear query performance, SE schemes generally require significant preprocessing and must relax security guarantees, allowing partial information (such as access patterns) to leak to the server~\cite{SP:FVYSHG17}. Unlike standard SE, our work focuses on achieving preprocessing-free constructions that leak nothing about the queries or results beyond their sizes.
+
+\paragraph{Property Preserving Encryption (PPE).}
+PPE~\cite{EC:PanRou12} produces ciphertexts that maintain certain relationships (e.g., equality or order) of the underlying plaintexts. Examples include deterministic encryption~\cite{C:BelBolONe07} and order-preserving encryption~\cite{EC:BCLO09, C:BolCheONe11}. However, it has been demonstrated~\cite{NDSS:IslKuzKan12, CCS:GMNRS16,SP:GSBNR17} that such ciphertexts leak significant information, rendering them undesirable for many security-critical applications.
+
+\paragraph{General Techniques (PIR, MPC, ORAM).}
+Private Information Retrieval (PIR)~\cite{JACM:CKGS98} allows retrieval while hiding the index, but requires the client to know the index beforehand. General MPC~\cite{FOCS:Yao86} and ORAM~\cite{GO96} can theoretically solve secure search, but generic constructions typically incur high communication ($\Omega(n)$ for MPC) or round complexity ($\Omega(\log^2 n)$ for ODS), which we aim to improve upon.
+
+\subsubsection{Secure Sampling}
+\paragraph{Sampling from streaming data.}
+Non-private sampling from data streams has been studied extensively~\cite{cormode2019p,ganguly2007counting,jowhari2011tight,MW10,woodruff2016distributed}, typically achieving $\ell_p$ sampling with sublinear computation. These works generally operate in a single-party setting and do not consider privacy.
+
+\paragraph{Secure multiparty sampling.}
+In the privacy domain, works like~\cite{prabhakaran2012secure,prabhakaran2014assisted} investigate sampling in the information-theoretic setting, while Champion et al.~\cite{CCS:ChasheUll19} consider the computational setting for publicly-known distributions. Our work is distinct in focusing on sampling from a \emph{private} distribution in the computational setting, with a specific emphasis on reducing communication.
+
+\paragraph{Secure MPC of differentially private functionalities.}
+Since Dwork et al.~\cite{dwork2006our}, significant work has focused on using MPC to realize DP functionalities~\cite{acar2017achieving,clifton2013challenges,eriguchi2021efficient}. While these works address machine learning and aggregation, we focus specifically on optimizing the communication complexity for sampling functionalities.
+
+\subsubsection{Set Similarity via Min-Hash}
+\paragraph{Jaccard Index and Min-Hash.}
+Many works have constructed 2-party Jaccard index estimation protocols using Min-hash with sublinear communication to avoid the high cost of exact computation~\cite{wpes:CFGT12,eprint:RCSWK19,Faber:thesis}.
+
+\paragraph{Differentially Private (DP) Min-Hash.}
+Recent research aims to output Jaccard similarity estimates while preserving differential privacy. Aum{\"u}ller et al.~\cite{sisap:AumBouSch20} achieve local DP min-hash by perturbing vectors with noise. Other attempts have faced challenges; for example, \cite{conc:YWRLLQ19} was shown to have flaws in its privacy claim, while \cite{arxiv:YLLHQ17} incurs high noise overhead.
+
+\paragraph{Optimizing Secure Computation using DP.}
+Our work sits at the intersection of DP and MPC. A specific line of research relevant to our goals is \emph{optimizing secure computation using DP}, initiated by Beimel et al.~\cite{BNO08}. Subsequent works have applied this to set intersection~\cite{CCS:HMFS17,PETS:GroRinRos19}, graph-parallel computations~\cite{CCS:MazGor18}, and shuffling~\cite{ACNS:GKLX22}. We similarly leverage DP to improve the efficiency of our similarity protocols.
+
+% --- LINE OF WORK 2 ---
+\subsection{Line 2: FACTs (Forwarding Accountability in End-to-End Encrypted Messaging Platform)}
+Our second line of work shifts focus to a specific application: enabling accountability in end-to-end encrypted messaging systems.
+
+\paragraph{Message Franking.}
+The prevailing approach for reporting malicious messages is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}. This technique allows a recipient to cryptographically prove the identity of the sender. However, message franking is limited to identifying the \emph{immediate} sender and cannot trace the original source in a forwarding chain. Furthermore, it does not provide threshold guarantees to prevent unmasking users based on a single complaint.
+
+\paragraph{Scalable Oblivious Data Structures.}
+FACTs requires scalable oblivious storage to track complaints. While multi-client ORAM protocols exist~\cite{maffei-msmcoram,concuroram,MOSE}, they do not yet scale to the millions of users required for messaging applications. Similarly, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} generally focus on exact counting or complex operations, lacking the specific compression traits of the Compact Count-Min Bloom Filter (CCBF) we utilize.
+
+\paragraph{Private Sketching for User-Server Settings.}
+While CCBF resembles a private sketch, existing private sketching literature (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19}) predominantly focuses on the multi-party setting with multiple servers. These techniques are not directly applicable to the FACTs setting, which restricts communication strictly to the user-server model.
