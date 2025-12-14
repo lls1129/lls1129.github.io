@@ -70,7 +70,8 @@ communication.
 \begin{proof}
 Let $\vec{w'}_b = (w_{b,1}^p, \ldots, w_{b,n}^p).$
 The lemma follows by observing the following:
-$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ \qed
+$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ 
+% \qed
 %Each party samples from its own distribution (i.e., $P_b$ outputs $i$
 %with probability $\frac{w_{b,i}^2}{||\vec{w}_b||^2}$).  Then the
 %parties do a weighted coin flip to choose which of these two values is
@@ -125,7 +126,7 @@ For all $i \in \mathsf{supp}(D_{L_p}(\vec{w}_1, \vec{w}_2))$,
 $$\Pr_{D_{L_p}(\vec{w}_1, \vec{w}_2)}[i] \leq 2^{p-1}/c \cdot \Pr_{D_{\mathsf{ignore}, p}(\vec{w}_1, \vec{w}_2)}[i].$$
 \end{lemma}
 
-The proof is found in Appendix~\ref{apx:pfLemma5}.
+The proof is found in Section~\ref{apx:pfLemma5}.
 
 We now present the $L_p$ sampling protocol $\Pi_{L_p}$ in Protocol~\ref{fig:lpexact}. We show the correctness and efficiency of the protocol below. 
 
@@ -136,7 +137,7 @@ Further, for any constant $p$, the protocol has communication
 $\tilde{O}(1)$.
 \end{lemma}
 
-The proof is found in Appendix~\ref{apx:pfLemma6}.
+The proof is found in Section~\ref{apx:pfLemma6}.
 We note that this result strictly generalizes
 Lemma~\ref{lem:insecure_L2_prot}.
 In particular, setting $p=2$ in the above
