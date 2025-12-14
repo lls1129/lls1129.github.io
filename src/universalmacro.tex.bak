@@ -17,6 +17,22 @@
   \def\commentson{1}
   \providecommand{\textcolor}[2]{#2} % Fixes color crash
   
+  % === NEW PATCHES FOR WEB STABILITY ===
+  % 1. Shim for DeclareMathOperator (often missing in pure web parsers)
+  \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
+  
+  % 2. Shim for obsolete fonts (\sf) used in your shared macros
+  % Web parsers prefer \mathsf, but your macros use \sf
+  \def\sf{\mathsf}
+  \def\cal{\mathcal}
+  \providecommand{\textsf}[1]{\mathsf{#1}}
+  
+  % 3. Ignore PDF-specific formatting commands that crash web builds
+  \providecommand{\boldmath}{}
+  \providecommand{\unboldmath}{}
+  \providecommand{\texorpdfstring}[2]{#1}
+  % =====================================
+
   % --- FIX PROTOCOLS ---
   % We define the superset (5 arguments) to be safe.
   \newcommand{\protocol}[5]{
@@ -54,6 +70,7 @@
   % --- FAKE COMMANDS ---
   \renewcommand{\caption}[1]{\medskip\noindent\textbf{Caption:} #1 \par}
   \providecommand{\floatname}[2]{}
+ 
   \providecommand{\State}{\bullet~}
   \providecommand{\Require}{\textbf{Require: }}
   \providecommand{\Ensure}{\textbf{Ensure: }}
@@ -88,6 +105,7 @@
       \begin{minipage}{0.90\textwidth} \small #1 \end{minipage}
     \quad}
   }} 
+ 
   \newcommand{\tbox}[1]{
     \medskip
     \noindent
@@ -110,7 +128,8 @@
   %   \end{center}
   %   \vspace{-4ex}
   %   \end{figure}}}
-  % \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+  
+ % \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 \fi
 
 % =========================================================
@@ -235,7 +254,8 @@
 \def\vd{{\vec{d}}}
 \def\mask{{\sf mask}}
 \newcommand{\wl}[1]{\|\w_{#1}\|_1}
-\renewcommand{\paragraph}[1]{\medskip \noindent\textbf{#1}}
+\renewcommand{\paragraph}[1]{\medskip 
+\noindent\textbf{#1}}
 \providecommand{\zo}{\{0,1\}}
 \providecommand{\bitset}{\{0,1\}}
 \renewcommand{\to}{\rightarrow}
@@ -281,7 +301,8 @@
 \providecommand{\fmin}{\min(f)}
 
 % Math Operators
-% Note: \vec is handled in the if/else block above. Do not redefine it here!
+% Note: \vec is handled in the if/else block above.
+% Do not redefine it here!
 \def\NN{\mathbb{N}}
 \def\RR{\mathbb{R}}
 \def\F{\mathcal{F}}
@@ -440,7 +461,8 @@
 \newcommand{\FAIL}[1]{\mathsf{FAIL}_{#1}}
 \newcommand{\Supp}{\mathsf{Support}}
 \DeclareMathOperator{\E}{\mathbb{E}}
-\newcommand{\st}{\mbox{ s.t. }}
+\newcommand{\st}{\mbox{ s.t. 
+}}
 
 \makeatletter
 
