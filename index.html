@@ -192,7 +192,7 @@ class="toc-section-number">1.2</span> Sublinear Secure Protocols:
 Primitives for Sublinear Privacy</a></li>
 <li><a href="#facts-accountability-via-probabilistic-structures"
 id="toc-facts-accountability-via-probabilistic-structures"><span
-class="toc-section-number">1.3</span> FACTs: Accountability via
+class="toc-section-number">1.3</span> FACTS: Accountability via
 Probabilistic Structures</a></li>
 </ul></li>
 <li><a href="#literature-review" id="toc-literature-review"><span
@@ -207,16 +207,20 @@ and Similarity</a>
 class="toc-section-number">2.1.1</span> Secure Search</a></li>
 <li><a href="#secure-sampling" id="toc-secure-sampling"><span
 class="toc-section-number">2.1.2</span> Secure Sampling</a></li>
+<li><a href="#private-sketching-and-secure-sketching"
+id="toc-private-sketching-and-secure-sketching"><span
+class="toc-section-number">2.1.3</span> Private Sketching and Secure
+Sketching</a></li>
 <li><a href="#set-similarity-via-min-hash"
 id="toc-set-similarity-via-min-hash"><span
-class="toc-section-number">2.1.3</span> Set Similarity via
+class="toc-section-number">2.1.4</span> Set Similarity via
 Min-Hash</a></li>
 </ul></li>
 <li><a
-href="#line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"
-id="toc-line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"><span
-class="toc-section-number">2.2</span> Line 2: FACTs (Forwarding
-Accountability in End-to-End Encrypted Messaging Platform)</a></li>
+href="#line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platforms"
+id="toc-line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platforms"><span
+class="toc-section-number">2.2</span> Line 2: FACTS (Forwarding
+Accountability in End-to-End Encrypted Messaging Platforms)</a></li>
 </ul></li>
 <li><a href="#secure-search-1" id="toc-secure-search-1"><span
 class="toc-section-number">3</span> Secure Search</a>
@@ -549,17 +553,20 @@ class="toc-section-number">9</span> Conclusion</a></li>
 <p>This dissertation investigates how to reduce communication overhead
 in privacy-preserving applications. It develops two complementary
 directions toward this goal. The first studies how sublinear
-communication protocols can be achieved for tasks such as searching over
-encrypted datasets and secure collaborative sampling – a common building
-block in privacy-preserving applications. The second direction instead
-considers the inherent privacy provided by sublinear approximation
-algorithms where we show how such algorithms can be used to provide
-differential privacy guarantees at low cost. Together, these results
-reveal a unified perspective on how limited communication and provable
-privacy reinforce each other across modern cryptographic and
-data-analytic settings, and extend to practical systems such as the
-FACTS framework for privacy-preserving accountability in encrypted
-messaging</p>
+communication protocols can be achieved for tasks such as secure search
+over encrypted datasets, secure collaborative sampling protocols, and
+sublinear approximation algorithms such as Min-Hash for set similarity.
+These techniques serve as common building blocks across a wide range of
+privacy-preserving applications. Together, these results reveal a
+unified perspective on how limited communication and provable privacy
+reinforce each other across modern cryptographic and data-analytic
+settings. The second direction extends these to practical systems such
+as the FACTS framework for privacy-preserving accountability on
+end-to-end encrypted messaging systems (EEMS). This work enables
+threshold tracebacks to identify the originator of reported messages
+while the cost depends only on the number of reports, and includes
+preliminary designs and analysis for extending these mechanisms to
+identify the super-spreader of reported messages.</p>
 <h1 data-number="1" id="introduction"><span
 class="header-section-number">1</span> Introduction</h1>
 <p>The modern digital landscape is defined by a fundamental tension
@@ -568,9 +575,9 @@ privacy of the individuals generating it. As datasets scale into the
 terabytes and petabytes, and as digital communication becomes the
 primary medium for societal discourse, the computational paradigms that
 served the early internet are reaching their limits. Traditional
-cryptographic protocols for privacy—preserving applications as Secure
-Multi-Party Computation (MPC) and Fully Homomorphic Encryption
-(FHE)—offer mathematically robust guarantees of confidentiality.
+cryptographic protocols for privacy-preserving applications, such as
+Secure Multi-Party Computation (MPC) and Fully Homomorphic Encryption
+(FHE), offer mathematically robust guarantees of confidentiality.
 However, these protocols typically exhibit linear or super-linear
 complexity with respect to the input size (<span
 class="math inline">\(O(n)\)</span>). In a world of massive datasets,
@@ -578,25 +585,23 @@ linear complexity is often synonymous with infeasibility. A query that
 requires touching every record in a billion-row database, even if
 cryptographically secure, remains practically useless if it takes days
 to execute.</p>
-<p>Consequently, the frontier of cryptographic research has shifted
-toward the development of <strong>sublinear
-algorithms</strong>—protocols that scale logarithmically (<span
-class="math inline">\(\tilde{O}(\log n)\)</span>) or constantly (<span
-class="math inline">\(\tilde{O}(1)\)</span>) relative to the dataset
-size. This thesis proposal report synthesizes four seminal contributions
-that pioneer this shift across two distinct but interrelated
-domains.</p>
+<p>Consequently, one important frontier of cryptographic research has
+shifted toward the development of <strong>sublinear
+algorithms</strong>—protocols whose complexity is logarithmic, constant
+with respect to the input size, or dependent only on the output size.
+This thesis proposal report synthesizes four seminal contributions that
+pioneer this shift across two distinct but interrelated domains.</p>
 <p>The first domain, <strong>Sublinear Secure Protocols</strong>,
 comprises three studies that attack the fundamental algorithmic
-bottlenecks of secure computation. These works invent the new data
-structure for compressing large sparse data vector for Homomorphically
-Encrypted Search to allow for parallel, sublinear retrieval, develop
+bottlenecks of secure computation. These works introduce a new data
+structure for compressing large sparse data vectors for homomorphically
+encrypted search to allow for parallel, sublinear retrieval, develop
 protocols for secure sampling from distributed distributions without
 linear communication, and investigate the inherent privacy properties of
-sketching algorithms (Min-hash).</p>
-<p>The second domain, designated as <strong>FACTs</strong>, addresses
-the societal crisis of misinformation within End-to-End Encrypted
-Messaging Systems (EEMS). Here, the challenge is not merely
+sketching algorithms (Min-Hash).</p>
+<p>The second domain, designated as <strong>FACTS</strong>, addresses
+the societal crisis of misinformation within end-to-end encrypted
+messaging systems (EEMS). Here, the challenge is not merely
 computational efficiency but the architectural reconciliation of user
 privacy with platform accountability. The proposed solution, the Fuzzy
 Anonymous Complaint Tally System (FACTS), leverages a novel
@@ -605,8 +610,8 @@ complaint auditing, proving that privacy and moderation need not be
 mutually exclusive.</p>
 <p>A unifying theme across both groups is the strategic utilization of
 <strong>approximation</strong> and <strong>probabilistic
-correctness</strong>. Whether it is the “fuzzy” counting of complaints
-in FACTS, the rejection sampling in secure estimation, or the
+correctness</strong>. Whether it is the fuzzy counting of complaints in
+FACTS, the rejection sampling in secure estimation, or the
 false-positive rates of compressed encodings in search, these works
 demonstrate that controlled relaxation of exactness is the key to
 unlocking sublinear performance. This introduction delineates the
@@ -623,7 +628,7 @@ class="math inline">\(x\)</span> and Party B holds a vector <span
 class="math inline">\(y\)</span>, computing a function <span
 class="math inline">\(f(x, y)\)</span> usually requires processing every
 bit of the inputs to avoid leaking information about which bits were
-“useful.” For example, in Private Information Retrieval (PIR), the
+“useful”. For example, in Private Information Retrieval (PIR), the
 server must process the entire database to answer a single query;
 otherwise, the server learns which items were <em>not</em> touched,
 narrowing down the user’s interest.</p>
@@ -659,7 +664,7 @@ technique that corrects a proxy distribution into a target distribution
 without computing normalization factors—allows for constant-round
 sampling protocols.</p></li>
 <li><p><strong>Min-Hash Privacy:</strong> The third paper in this group
-interrogates the “folklore” that sketching algorithms like Min-hash are
+interrogates the “folklore” that sketching algorithms like Min-Hash are
 inherently private. It rigorously proves that while sketches compress
 data (sublinear representation), they do not automatically guarantee
 Differential Privacy (DP) in the public hash setting. The authors
@@ -674,25 +679,27 @@ mathematical approximation provides the necessary slack to achieve
 scalability.</p>
 <h2 data-number="1.3"
 id="facts-accountability-via-probabilistic-structures"><span
-class="header-section-number">1.3</span> FACTs: Accountability via
+class="header-section-number">1.3</span> FACTS: Accountability via
 Probabilistic Structures</h2>
 <p>This line of research focuses on the application of “fighting fake
-news”. EEMS platforms like WhatsApp and Signal utilize encryption that
-hides message content from the service provider. This prevents any
-content moderation methods that rely on analyzing the content in the
-clear, such as tools used by platforms like Facebook or Twitter. The
-FACTS system introduces a paradigm where moderation is triggered only by
-a consensus of user complaints.</p>
+news”. end-to-end encrypted messaging systems (EEMS) platforms like
+WhatsApp and Signal utilize encryption that hides message content from
+the service provider. This prevents any content moderation methods that
+rely on analyzing the content in the clear, such as tools used by
+platforms like Facebook or Twitter. The FACTS system introduces a
+paradigm where moderation is triggered only by a consensus of user
+complaints.</p>
 <p>The core innovation here is the <strong>Collaborative Counting Bloom
 Filter (CCBF)</strong>. This data structure allows the system to tally
 complaints against millions of messages without the server knowing which
 complaints correspond to which message until a threshold is crossed.
 This is achieved by “mixing” counters in a shared bit array. The
-efficiency is strictly sublinear: identifying a message for audit
-requires no linear scan of the database, and registering a complaint
-requires flipping a single bit. This work exemplifies how probabilistic
-data structures—traditionally used for efficiency in networking-can be
-repurposed as privacy primitives.</p>
+efficiency is sublinear in the number of messages in the system per
+epoch: identifying a message for audit requires no linear scan of the
+database, and registering a complaint requires flipping a single bit.
+This work exemplifies how probabilistic data structures—traditionally
+used for efficiency in networking–can be repurposed as privacy
+primitives.</p>
 <h1 data-number="2" id="literature-review"><span
 class="header-section-number">2</span> Literature Review</h1>
 <p>This section surveys existing literature relevant to the two primary
@@ -700,8 +707,8 @@ lines of work. First, we discuss the foundational cryptographic
 primitives and protocols for <strong>Secure Search, Secure Sampling, and
 Privacy-Preserving Set Similarity</strong>. Second, we review the
 literature relevant to our specific application in accountability
-systems of End-to-End Encrypted Messaging System,
-<strong>FACTs</strong>.</p>
+systems of end-to-end encrypted messaging systems,
+<strong>FACTS</strong>.</p>
 <h2 data-number="2.1"
 id="line-1-secure-search-sampling-and-similarity"><span
 class="header-section-number">2.1</span> Line 1: Secure Search,
@@ -710,6 +717,17 @@ Sampling, and Similarity</h2>
 for retrieving and analyzing data. We divide the literature into three
 interconnected domains: secure search, secure sampling, and set
 similarity.</p>
+<h4 data-number="2.1.0.1" id="differential-privacy-dp."><span
+class="header-section-number">2.1.0.1</span> Differential privacy
+(DP).</h4>
+<p>Differential privacy limits what an adversary can learn about any
+individual input from the output of a computation <span class="citation"
+data-cites="dwork2006differential dwork2006calibrating"></span>. For an
+overview of DP and standard mechanisms in both the curator setting and
+distributed settings, we refer the reader to the book by Dwork and
+Roth <span class="citation" data-cites="dwork2014algorithmic"></span>.
+DP will appear repeatedly in our discussion, both as an explicit privacy
+goal and as a tool for trading accuracy for improved efficiency.</p>
 <h3 data-number="2.1.1" id="secure-search"><span
 class="header-section-number">2.1.1</span> Secure Search</h3>
 <p>Secure search is a widely-studied problem with solutions spanning
@@ -766,9 +784,10 @@ demonstrated <span class="citation"
 data-cites="NDSS:IslKuzKan12 CCS:GMNRS16 SP:GSBNR17"></span> that such
 ciphertexts leak significant information, rendering them undesirable for
 many security-critical applications.</p>
-<h4 data-number="2.1.1.4" id="general-techniques-pir-mpc-oram."><span
+<h4 data-number="2.1.1.4"
+id="general-techniques-pir-mpc-oram-ods."><span
 class="header-section-number">2.1.1.4</span> General Techniques (PIR,
-MPC, ORAM).</h4>
+MPC, ORAM, ODS).</h4>
 <p>Private Information Retrieval (PIR) <span class="citation"
 data-cites="JACM:CKGS98"></span> allows retrieval while hiding the
 index, but requires the client to know the index beforehand. General
@@ -776,8 +795,11 @@ MPC <span class="citation" data-cites="FOCS:Yao86"></span> and
 ORAM <span class="citation" data-cites="GO96"></span> can theoretically
 solve secure search, but generic constructions typically incur high
 communication (<span class="math inline">\(\Omega(n)\)</span> for MPC)
-or round complexity (<span class="math inline">\(\Omega(\log^2
-n)\)</span> for ODS), which we aim to improve upon.</p>
+or significant overhead to hide access patterns. Oblivious data
+structures (ODS) can support richer data structures (e.g., search
+trees), but typical ODS constructions incur <span
+class="math inline">\(\Omega(\log^2 n)\)</span> rounds per operation,
+which motivates constant-round designs for practical secure search.</p>
 <h3 data-number="2.1.2" id="secure-sampling"><span
 class="header-section-number">2.1.2</span> Secure Sampling</h3>
 <h4 data-number="2.1.2.1" id="sampling-from-streaming-data."><span
@@ -811,18 +833,46 @@ data-cites="acar2017achieving clifton2013challenges eriguchi2021efficient"></spa
 While these works address machine learning and aggregation, we focus
 specifically on optimizing the communication complexity for sampling
 functionalities.</p>
-<h3 data-number="2.1.3" id="set-similarity-via-min-hash"><span
-class="header-section-number">2.1.3</span> Set Similarity via
+<h3 data-number="2.1.3"
+id="private-sketching-and-secure-sketching"><span
+class="header-section-number">2.1.3</span> Private Sketching and Secure
+Sketching</h3>
+<h4 data-number="2.1.3.1" id="secure-sketching."><span
+class="header-section-number">2.1.3.1</span> Secure sketching.</h4>
+<p>A long line of work studies secure sketches for estimating statistics
+(e.g., Tor usage, web traffic, unique count, median) with sublinear
+communication and computation <span class="citation"
+data-cites="CCS:ElaDanGol14 CCS:JanJoh16 NDSS:MelDanDec16 CCS:WJSYG19 PoPETS:CDKY20"></span>.
+These works are closely related in spirit, but generally focus on
+building secure protocols for specific streaming-style statistics,
+whereas our focus is on sublinear primitives (search, sampling, and
+similarity) that can serve as broadly reusable building blocks.</p>
+<h4 data-number="2.1.3.2" id="private-sketching."><span
+class="header-section-number">2.1.3.2</span> Private sketching.</h4>
+<p>Sketching algorithms are sublinear-space methods that produce compact
+summaries enabling efficient storage, merging, and processing. A growing
+body of work observes that sketches can also aid privacy, since
+information loss in the sketch can make the sketch itself differentially
+private or reduce the additional noise required <span class="citation"
+data-cites="FOCS:BBDS12 choi2020differentially smith2020flajolet wang2022differentially ICML:HehTinCor23 dickens2022order li2019privacy pagh2022improved mir2011pan melis2015efficient bassily2015local bassily2017practical huang2021frequency zhao2022differentially"></span>.
+Related work also constructs private sketches for set cardinality and
+set operations, including mergeable sketches for estimating intersection
+and union <span class="citation"
+data-cites="stanojevic2017distributed sparka2018p2kmv nunez2020rrtxfm kreuter2020privacy pagh_et_al:LIPIcs.ICDT.2021.18 ICML:HehTinCor23"></span>.
+This perspective directly motivates our study of privacy properties of
+Min-hash and related similarity sketches.</p>
+<h3 data-number="2.1.4" id="set-similarity-via-min-hash"><span
+class="header-section-number">2.1.4</span> Set Similarity via
 Min-Hash</h3>
-<h4 data-number="2.1.3.1" id="jaccard-index-and-min-hash."><span
-class="header-section-number">2.1.3.1</span> Jaccard Index and
+<h4 data-number="2.1.4.1" id="jaccard-index-and-min-hash."><span
+class="header-section-number">2.1.4.1</span> Jaccard Index and
 Min-Hash.</h4>
 <p>Many works have constructed 2-party Jaccard index estimation
 protocols using Min-hash with sublinear communication to avoid the high
 cost of exact computation <span class="citation"
 data-cites="wpes:CFGT12 eprint:RCSWK19 Faber:thesis"></span>.</p>
-<h4 data-number="2.1.3.2" id="differentially-private-dp-min-hash."><span
-class="header-section-number">2.1.3.2</span> Differentially Private (DP)
+<h4 data-number="2.1.4.2" id="differentially-private-dp-min-hash."><span
+class="header-section-number">2.1.4.2</span> Differentially Private (DP)
 Min-Hash.</h4>
 <p>Recent research aims to output Jaccard similarity estimates while
 preserving differential privacy. Aum<span>ü</span>ller et al. <span
@@ -832,9 +882,9 @@ challenges; for example, <span class="citation"
 data-cites="conc:YWRLLQ19"></span> was shown to have flaws in its
 privacy claim, while <span class="citation"
 data-cites="arxiv:YLLHQ17"></span> incurs high noise overhead.</p>
-<h4 data-number="2.1.3.3"
+<h4 data-number="2.1.4.3"
 id="optimizing-secure-computation-using-dp."><span
-class="header-section-number">2.1.3.3</span> Optimizing Secure
+class="header-section-number">2.1.4.3</span> Optimizing Secure
 Computation using DP.</h4>
 <p>Our work sits at the intersection of DP and MPC. A specific line of
 research relevant to our goals is <em>optimizing secure computation
@@ -844,12 +894,35 @@ intersection <span class="citation"
 data-cites="CCS:HMFS17 PETS:GroRinRos19"></span>, graph-parallel
 computations <span class="citation" data-cites="CCS:MazGor18"></span>,
 and shuffling <span class="citation" data-cites="ACNS:GKLX22"></span>.
-We similarly leverage DP to improve the efficiency of our similarity
-protocols.</p>
+We similarly leverage DP-style relaxations to improve the efficiency of
+similarity protocols.</p>
+<h4 data-number="2.1.4.4" id="secure-approximation."><span
+class="header-section-number">2.1.4.4</span> Secure approximation.</h4>
+<p>Secure approximation studies what functions can be securely
+approximated without revealing anything beyond the true output <span
+class="citation" data-cites="ICALP:FIMNSW01 STOC:HKKN01"></span>. This
+notion is distinct from DP-style approximation, but it is conceptually
+adjacent: both investigate how controlled relaxation can enable more
+efficient privacy-preserving computation.</p>
+<h4 data-number="2.1.4.5"
+id="robust-sketching-and-property-preserving-hashing."><span
+class="header-section-number">2.1.4.5</span> Robust sketching and
+property-preserving hashing.</h4>
+<p>Property-preserving hash (PPH) compresses large inputs into short
+digests enabling computation of a property from the digests alone, and
+adversarially robust PPH further requires correctness even when inputs
+are adaptively chosen after the hash is fixed <span class="citation"
+data-cites="itcs:BoyLavVai19 EC:FleSim21 EC:FleLarSim22 C:HLTW22"></span>.
+Related work on robust sketching similarly studies sketches that remain
+accurate under adaptive inputs <span class="citation"
+data-cites="ITCS:ACSS23 JACM:BJWY22"></span>. These works focus on
+robustness to adversarial inputs, whereas our focus is on privacy when
+the adversary additionally sees the hash functions or sketch
+randomness.</p>
 <h2 data-number="2.2"
-id="line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platform"><span
-class="header-section-number">2.2</span> Line 2: FACTs (Forwarding
-Accountability in End-to-End Encrypted Messaging Platform)</h2>
+id="line-2-facts-forwarding-accountability-in-end-to-end-encrypted-messaging-platforms"><span
+class="header-section-number">2.2</span> Line 2: FACTS (Forwarding
+Accountability in End-to-End Encrypted Messaging Platforms)</h2>
 <p>Our second line of work shifts focus to a specific application:
 enabling accountability in end-to-end encrypted messaging systems.</p>
 <h4 data-number="2.2.0.1" id="message-franking."><span
@@ -865,24 +938,32 @@ to prevent unmasking users based on a single complaint.</p>
 <h4 data-number="2.2.0.2" id="scalable-oblivious-data-structures."><span
 class="header-section-number">2.2.0.2</span> Scalable Oblivious Data
 Structures.</h4>
-<p>FACTs requires scalable oblivious storage to track complaints. While
+<p>FACTS requires scalable oblivious storage to track complaints. While
 multi-client ORAM protocols exist <span class="citation"
 data-cites="maffei-msmcoram concuroram MOSE"></span>, they do not yet
 scale to the millions of users required for messaging applications.
 Similarly, oblivious counters <span class="citation"
 data-cites="EC:KatMyeOst01 FC:GohGol05"></span> generally focus on exact
 counting or complex operations, lacking the specific compression traits
-of the Compact Count-Min Bloom Filter (CCBF) we utilize.</p>
+of the Compact Count-Min Bloom Filter (CCBF) we utilize. More generally,
+oblivious data structures <span class="citation"
+data-cites="CCS:WNLCSS14 AC:KelSch14 SP:Shi20"></span> enable
+higher-level oblivious operations over encrypted data, but do not
+directly provide the compression needed to store and update complaint
+tallies at large scale.</p>
 <h4 data-number="2.2.0.3"
 id="private-sketching-for-user-server-settings."><span
 class="header-section-number">2.2.0.3</span> Private Sketching for
 User-Server Settings.</h4>
-<p>While CCBF resembles a private sketch, existing private sketching
-literature (e.g., <span class="citation"
-data-cites="PoPETS:CDKY20 CCS:WJSYG19"></span>) predominantly focuses on
-the multi-party setting with multiple servers. These techniques are not
-directly applicable to the FACTs setting, which restricts communication
-strictly to the user-server model.</p>
+<p>CCBF can be viewed as a compact <em>sketch</em> for storing complaint
+counts over a large set of messages. There has been significant interest
+in privacy-preserving sketching algorithms for cardinality estimation,
+frequency measurement, and related approximations <span class="citation"
+data-cites="PoPETS:CDKY20 CCS:WJSYG19"></span>. However, much of this
+literature targets multi-party settings (often with multiple servers)
+where parties run secure computation to evaluate the statistic. In
+contrast, FACTS restricts communication to the user–server model, which
+limits the direct applicability of these approaches.</p>
 <h1 data-number="3" id="secure-search-1"><span
 class="header-section-number">3</span> Secure Search</h1>
 <h2 data-number="3.1" id="introduction-1"><span
@@ -3608,10 +3689,10 @@ These works have focused on building efficient, private applications in
 machine learning and other fields, whereas we focus on reducing the
 communication necessary for the specific functionalities of
 sampling.</p>
-<h4 data-number="4.1.3.4" id="secure-sketching."><span
+<h4 data-number="4.1.3.4" id="secure-sketching.-1"><span
 class="header-section-number">4.1.3.4</span> Secure sketching.</h4>
 <p>A long line of work <span class="citation"
-data-cites="CCS:ElaDanGol14 CCS:JanJoh16 NDSS:MelDanDec16 CCS:WJSYG19 popets:CDKY20"></span>
+data-cites="CCS:ElaDanGol14 CCS:JanJoh16 NDSS:MelDanDec16 CCS:WJSYG19 PoPETS:CDKY20"></span>
 has investigated building secure sketches for securely estimating
 statistics of Tor usage, web traffic, and other applications. These
 works focus on building sublinear communication and computation
@@ -6132,7 +6213,7 @@ data-cites="ICML:HehTinCor23"></span> in Section <a href="#sec:eval"
 data-reference-type="ref" data-reference="sec:eval">5.9</a>.</p>
 <h2 data-number="5.2" id="related-works"><span
 class="header-section-number">5.2</span> Related Works</h2>
-<h4 data-number="5.2.0.1" id="differential-privacy-dp."><span
+<h4 data-number="5.2.0.1" id="differential-privacy-dp.-1"><span
 class="header-section-number">5.2.0.1</span> Differential privacy
 (DP).</h4>
 <p>Differential privacy protects the privacy of individuals by limiting
@@ -6165,7 +6246,7 @@ relaxation.  <span class="citation" data-cites="ACNS:GKLX22"></span>
 consider multiparty shuffle that allows a differentially private leakage
 and shows that it suffices to achieve end-to-end differential privacy in
 the shuffle model of DP.</p>
-<h4 data-number="5.2.0.3" id="private-sketching."><span
+<h4 data-number="5.2.0.3" id="private-sketching.-1"><span
 class="header-section-number">5.2.0.3</span> Private sketching.</h4>
 <p>Sketching algorithms, or “sketches” are sublinear space algorithms
 for approximating certain properties of large inputs or data streams.
@@ -6184,7 +6265,7 @@ data-cites="stanojevic2017distributed sparka2018p2kmv nunez2020rrtxfm kreuter202
 Recently,  <span class="citation" data-cites="ICML:HehTinCor23"></span>
 proposed a private mergeable sketch that can be used to estimate the
 size of the intersection and union of sets.</p>
-<h4 data-number="5.2.0.4" id="secure-approximation."><span
+<h4 data-number="5.2.0.4" id="secure-approximation.-1"><span
 class="header-section-number">5.2.0.4</span> Secure approximation.</h4>
 <p>Secure approximation studies what functions can be securely
 approximated without revealing anything beyond the true output <span
@@ -7159,8 +7240,8 @@ contribute to the final count.</p></li>
 <li><p>Output the resulting bipartite graph <span
 class="math inline">\((\XXX, \YYY, \EEE)\)</span>.</p></li>
 </ol>
-<p><img src="Images/bipartilenew.png" style="width:55.0%" alt="image" />
-<span id="fig:bigraph" label="fig:bigraph"></span></p>
+<p><img src="src/minhash/Images/bipartilenew.png" style="width:55.0%"
+alt="image" /> <span id="fig:bigraph" label="fig:bigraph"></span></p>
 <table>
 <thead>
 <tr class="header">
@@ -9877,7 +9958,7 @@ class="header-section-number">7</span> Timeline</h1>
 <p>The following timeline outlines the completion of the remaining
 research items and the preparation of the final dissertation. As noted,
 sublinear secure protocol works are largely complete. The schedule
-focuses on the execution of the follow-up work on FACTs.</p>
+focuses on the execution of the follow-up work on FACTS.</p>
 <div id="tab:timeline">
 <table>
 <caption>Proposed timeline for the completion of the Ph.D.
@@ -9898,7 +9979,7 @@ publication for Secure Search/Sampling (Sublinear-communication Secure
 MPC). <span class="math inline">\(\bullet\)</span> Completed research
 and publication for Privacy-preserving set similarity via Min-Hash.
 <span class="math inline">\(\bullet\)</span> Completed design, analysis,
-and evaluation of FACTs (Accountability tracking on End-to-End Encrypted
+and evaluation of FACTS (Accountability tracking on End-to-End Encrypted
 Messaging Systems). <span class="math inline">\(\bullet\)</span>
 Follow-up Work to enable spreader tracking via new protocol designs
 (Accountability tracking on End-to-End Encrypted Messaging
@@ -9910,7 +9991,7 @@ Systems).</td>
 <span class="math inline">\(\bullet\)</span> Analyzing the system loads
 that our new design could handle and identify bottlenecks if any. <span
 class="math inline">\(\bullet\)</span> Estimating the actual cost of the
-new designed FACTs for spreaders with two non-colluding servers.</td>
+new designed FACTS for spreaders with two non-colluding servers.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Month 1 – Month 3</strong></td>
@@ -9918,7 +9999,7 @@ new designed FACTs for spreaders with two non-colluding servers.</td>
 Analysis:</strong> <span class="math inline">\(\bullet\)</span> Proof of
 security in malicious 2-party setting. <span
 class="math inline">\(\bullet\)</span> Compare performance against the
-original FACTs baseline. <span class="math inline">\(\bullet\)</span>
+original FACTS baseline. <span class="math inline">\(\bullet\)</span>
 <em>Milestone: Submit the paper to [TBD].</em></td>
 </tr>
 <tr class="even">
@@ -9933,7 +10014,7 @@ work and write down the full chapter of thesis research results.</td>
 <td style="text-align: left;"><strong>Month 5</strong></td>
 <td style="text-align: left;"><strong>Thesis Writing (Part II) &amp;
 Defense:</strong> <span class="math inline">\(\bullet\)</span> Finish
-and integrate the results of the follow-up work of FACTs on spreader
+and integrate the results of the follow-up work of FACTS on spreader
 tracking results into the final dissertation. <span
 class="math inline">\(\bullet\)</span> Final review with advisor. <span
 class="math inline">\(\bullet\)</span> <em>Milestone: Thesis
@@ -9978,13 +10059,13 @@ communication cost.</p>
 <h2 data-number="8.2" id="bandwidth-overhead-analysis"><span
 class="header-section-number">8.2</span> Bandwidth Overhead
 Analysis</h2>
-<p>This new follow-up work focuses on the actual spreader of
-controversial messages instead of the originator. A fundamental change
-of this is that we rely on non-colluding 2-party to make the design
-practical. With strong security guarantee, this often comes at the cost
-of increased communication overhead as well as computation cost. So far
-the main concern is the bandwidth and latency between two servers would
-set a limit of how many complaints we could handle in each epoch.</p>
+<p>This new follow-up work focuses on the actual spreader of reported
+messages instead of the originator. A fundamental change of this is that
+we rely on non-colluding 2-party to make the design practical. With
+strong security guarantee, this often comes at the cost of increased
+communication overhead as well as computation cost. So far the main
+concern is the bandwidth and latency between two servers would set a
+limit of how many complaints we could handle in each epoch.</p>
 <p>Since our design is sequential across different components and fully
 parallel within each component, to assess this feasibility, we
 micro-benchmarked each building blocks using the state-of-art protocols
@@ -10045,9 +10126,9 @@ primitives for <strong>Secure Search</strong>, <strong>Secure
 Sampling</strong>, and <strong>Privacy-Preserving Set Similarity via
 Min-Hash</strong>, demonstrating that sublinear communication is
 achievable without compromising security and privacy guarantees. Our
-second line of work, <strong>FACTs</strong> and the ongoing follow-up
+second line of work, <strong>FACTS</strong> and the ongoing follow-up
 work, focused on a more specific application, enabled threshold
-tracebacks of originator or spreader of controversial messages on E2EE
+tracebacks of originator or spreader of reported messages on E2EE
 messaging systems, proving that accountability mechanisms can coexist
 with encryption, while still remain sublinear to the number of total
 messages but only number of complaints.</p>
