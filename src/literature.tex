@@ -1,10 +1,13 @@
 \section{Literature Review}
 
-This section surveys existing literature relevant to the two primary lines of work. First, we discuss the foundational cryptographic primitives and protocols for \textbf{Secure Search, Secure Sampling, and Privacy-Preserving Set Similarity}. Second, we review the literature relevant to our specific application in accountability systems of End-to-End Encrypted Messaging System, \textbf{FACTs}.
+This section surveys existing literature relevant to the two primary lines of work. First, we discuss the foundational cryptographic primitives and protocols for \textbf{Secure Search, Secure Sampling, and Privacy-Preserving Set Similarity}. Second, we review the literature relevant to our specific application in accountability systems of end-to-end encrypted messaging systems, \textbf{FACTS}.
 
 % --- LINE OF WORK 1 ---
 \subsection{Line 1: Secure Search, Sampling, and Similarity}
 This line of work focuses on optimizing privacy-preserving protocols for retrieving and analyzing data. We divide the literature into three interconnected domains: secure search, secure sampling, and set similarity.
+
+\paragraph{Differential privacy (DP).}
+Differential privacy limits what an adversary can learn about any individual input from the output of a computation~\cite{dwork2006differential,dwork2006calibrating}. For an overview of DP and standard mechanisms in both the curator setting and distributed settings, we refer the reader to the book by Dwork and Roth~\cite{dwork2014algorithmic}. DP will appear repeatedly in our discussion, both as an explicit privacy goal and as a tool for trading accuracy for improved efficiency.
 
 \subsubsection{Secure Search}
 Secure search is a widely-studied problem with solutions spanning various cryptographic settings. In the discussion below, let $n$ denote the number of data items.
@@ -18,8 +21,8 @@ Searchable encryption~\cite{SP:SonWagPer00,EC:BDOP04} enables highly efficient s
 \paragraph{Property Preserving Encryption (PPE).}
 PPE~\cite{EC:PanRou12} produces ciphertexts that maintain certain relationships (e.g., equality or order) of the underlying plaintexts. Examples include deterministic encryption~\cite{C:BelBolONe07} and order-preserving encryption~\cite{EC:BCLO09, C:BolCheONe11}. However, it has been demonstrated~\cite{NDSS:IslKuzKan12, CCS:GMNRS16,SP:GSBNR17} that such ciphertexts leak significant information, rendering them undesirable for many security-critical applications.
 
-\paragraph{General Techniques (PIR, MPC, ORAM).}
-Private Information Retrieval (PIR)~\cite{JACM:CKGS98} allows retrieval while hiding the index, but requires the client to know the index beforehand. General MPC~\cite{FOCS:Yao86} and ORAM~\cite{GO96} can theoretically solve secure search, but generic constructions typically incur high communication ($\Omega(n)$ for MPC) or round complexity ($\Omega(\log^2 n)$ for ODS), which we aim to improve upon.
+\paragraph{General Techniques (PIR, MPC, ORAM, ODS).}
+Private Information Retrieval (PIR)~\cite{JACM:CKGS98} allows retrieval while hiding the index, but requires the client to know the index beforehand. General MPC~\cite{FOCS:Yao86} and ORAM~\cite{GO96} can theoretically solve secure search, but generic constructions typically incur high communication ($\Omega(n)$ for MPC) or significant overhead to hide access patterns. Oblivious data structures (ODS) can support richer data structures (e.g., search trees), but typical ODS constructions incur $\Omega(\log^2 n)$ rounds per operation, which motivates constant-round designs for practical secure search.
 
 \subsubsection{Secure Sampling}
 \paragraph{Sampling from streaming data.}
@@ -31,6 +34,13 @@ In the privacy domain, works like~\cite{prabhakaran2012secure,prabhakaran2014ass
 \paragraph{Secure MPC of differentially private functionalities.}
 Since Dwork et al.~\cite{dwork2006our}, significant work has focused on using MPC to realize DP functionalities~\cite{acar2017achieving,clifton2013challenges,eriguchi2021efficient}. While these works address machine learning and aggregation, we focus specifically on optimizing the communication complexity for sampling functionalities.
 
+\subsubsection{Private Sketching and Secure Sketching}
+\paragraph{Secure sketching.}
+A long line of work studies secure sketches for estimating statistics (e.g., Tor usage, web traffic, unique count, median) with sublinear communication and computation~\cite{CCS:ElaDanGol14,CCS:JanJoh16,NDSS:MelDanDec16,CCS:WJSYG19,PoPETS:CDKY20}. These works are closely related in spirit, but generally focus on building secure protocols for specific streaming-style statistics, whereas our focus is on sublinear primitives (search, sampling, and similarity) that can serve as broadly reusable building blocks.
+
+\paragraph{Private sketching.}
+Sketching algorithms are sublinear-space methods that produce compact summaries enabling efficient storage, merging, and processing. A growing body of work observes that sketches can also aid privacy, since information loss in the sketch can make the sketch itself differentially private or reduce the additional noise required~\cite{FOCS:BBDS12,choi2020differentially,smith2020flajolet,wang2022differentially,ICML:HehTinCor23,dickens2022order,li2019privacy,pagh2022improved,mir2011pan,melis2015efficient,bassily2015local,bassily2017practical,huang2021frequency,zhao2022differentially}. Related work also constructs private sketches for set cardinality and set operations, including mergeable sketches for estimating intersection and union~\cite{stanojevic2017distributed,sparka2018p2kmv,nunez2020rrtxfm,kreuter2020privacy,pagh_et_al:LIPIcs.ICDT.2021.18,ICML:HehTinCor23}. This perspective directly motivates our study of privacy properties of Min-hash and related similarity sketches.
+
 \subsubsection{Set Similarity via Min-Hash}
 \paragraph{Jaccard Index and Min-Hash.}
 Many works have constructed 2-party Jaccard index estimation protocols using Min-hash with sublinear communication to avoid the high cost of exact computation~\cite{wpes:CFGT12,eprint:RCSWK19,Faber:thesis}.
@@ -39,17 +49,23 @@ Many works have constructed 2-party Jaccard index estimation protocols using Min
 Recent research aims to output Jaccard similarity estimates while preserving differential privacy. Aum{\"u}ller et al.~\cite{sisap:AumBouSch20} achieve local DP min-hash by perturbing vectors with noise. Other attempts have faced challenges; for example, \cite{conc:YWRLLQ19} was shown to have flaws in its privacy claim, while \cite{arxiv:YLLHQ17} incurs high noise overhead.
 
 \paragraph{Optimizing Secure Computation using DP.}
-Our work sits at the intersection of DP and MPC. A specific line of research relevant to our goals is \emph{optimizing secure computation using DP}, initiated by Beimel et al.~\cite{BNO08}. Subsequent works have applied this to set intersection~\cite{CCS:HMFS17,PETS:GroRinRos19}, graph-parallel computations~\cite{CCS:MazGor18}, and shuffling~\cite{ACNS:GKLX22}. We similarly leverage DP to improve the efficiency of our similarity protocols.
+Our work sits at the intersection of DP and MPC. A specific line of research relevant to our goals is \emph{optimizing secure computation using DP}, initiated by Beimel et al.~\cite{BNO08}. Subsequent works have applied this to set intersection~\cite{CCS:HMFS17,PETS:GroRinRos19}, graph-parallel computations~\cite{CCS:MazGor18}, and shuffling~\cite{ACNS:GKLX22}. We similarly leverage DP-style relaxations to improve the efficiency of similarity protocols.
+
+\paragraph{Secure approximation.}
+Secure approximation studies what functions can be securely approximated without revealing anything beyond the true output~\cite{ICALP:FIMNSW01,STOC:HKKN01}. This notion is distinct from DP-style approximation, but it is conceptually adjacent: both investigate how controlled relaxation can enable more efficient privacy-preserving computation.
+
+\paragraph{Robust sketching and property-preserving hashing.}
+Property-preserving hash (PPH) compresses large inputs into short digests enabling computation of a property from the digests alone, and adversarially robust PPH further requires correctness even when inputs are adaptively chosen after the hash is fixed~\cite{itcs:BoyLavVai19,EC:FleSim21,EC:FleLarSim22,C:HLTW22}. Related work on robust sketching similarly studies sketches that remain accurate under adaptive inputs~\cite{ITCS:ACSS23,JACM:BJWY22}. These works focus on robustness to adversarial inputs, whereas our focus is on privacy when the adversary additionally sees the hash functions or sketch randomness.
 
 % --- LINE OF WORK 2 ---
-\subsection{Line 2: FACTs (Forwarding Accountability in End-to-End Encrypted Messaging Platform)}
+\subsection{Line 2: FACTS (Forwarding Accountability in End-to-End Encrypted Messaging Platforms)}
 Our second line of work shifts focus to a specific application: enabling accountability in end-to-end encrypted messaging systems.
 
 \paragraph{Message Franking.}
 The prevailing approach for reporting malicious messages is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}. This technique allows a recipient to cryptographically prove the identity of the sender. However, message franking is limited to identifying the \emph{immediate} sender and cannot trace the original source in a forwarding chain. Furthermore, it does not provide threshold guarantees to prevent unmasking users based on a single complaint.
 
 \paragraph{Scalable Oblivious Data Structures.}
-FACTs requires scalable oblivious storage to track complaints. While multi-client ORAM protocols exist~\cite{maffei-msmcoram,concuroram,MOSE}, they do not yet scale to the millions of users required for messaging applications. Similarly, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} generally focus on exact counting or complex operations, lacking the specific compression traits of the Compact Count-Min Bloom Filter (CCBF) we utilize.
+FACTS requires scalable oblivious storage to track complaints. While multi-client ORAM protocols exist~\cite{maffei-msmcoram,concuroram,MOSE}, they do not yet scale to the millions of users required for messaging applications. Similarly, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} generally focus on exact counting or complex operations, lacking the specific compression traits of the Compact Count-Min Bloom Filter (CCBF) we utilize. More generally, oblivious data structures~\cite{CCS:WNLCSS14, AC:KelSch14, SP:Shi20} enable higher-level oblivious operations over encrypted data, but do not directly provide the compression needed to store and update complaint tallies at large scale.
 
 \paragraph{Private Sketching for User-Server Settings.}
-While CCBF resembles a private sketch, existing private sketching literature (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19}) predominantly focuses on the multi-party setting with multiple servers. These techniques are not directly applicable to the FACTs setting, which restricts communication strictly to the user-server model.
+CCBF can be viewed as a compact \emph{sketch} for storing complaint counts over a large set of messages. There has been significant interest in privacy-preserving sketching algorithms for cardinality estimation, frequency measurement, and related approximations~\cite{PoPETS:CDKY20, CCS:WJSYG19}. However, much of this literature targets multi-party settings (often with multiple servers) where parties run secure computation to evaluate the statistic. In contrast, FACTS restricts communication to the user--server model, which limits the direct applicability of these approaches.
