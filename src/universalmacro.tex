@@ -6,8 +6,12 @@
 \ifdefined\pandoc
   % --- FIX VECTORS & BRACKETS ---
   \def\vec#1{\boldsymbol{#1}} 
-  \def\lbra{[\![} \def\lket{]\!]}
-  \def\llbracket{[\![} \def\rrbracket{]\!]}
+  % \def\lbra{[\![} \def\lket{]\!]}
+  % \def\llbracket{[\![} \def\rrbracket{]\!]}
+
+  % Use Unicode double brackets for web
+  \def\lbra{⟦} \def\lket{⟧}
+  \def\llbracket{⟦} \def\rrbracket{⟧}
 
   % fixing webpage
   \newcommand{\w}{\vec{w}}
