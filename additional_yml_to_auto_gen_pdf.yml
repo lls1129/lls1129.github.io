@@ -1,0 +1,20 @@
+- name: Build LaTeX PDF
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          working_directory: src
+          
+      - name: Move PDF to Root
+        run: mv src/main.pdf main.pdf
+
+      - name: Commit and Push PDF
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add main.pdf
+          git commit -m "Update compiled PDF" || echo "No changes to commit"
+          git push
+
+
+
+% Add above at the end of the yml script. 
