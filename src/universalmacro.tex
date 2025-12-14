@@ -10,8 +10,10 @@
   % \def\llbracket{[\![} \def\rrbracket{]\!]}
 
   % Use Unicode double brackets for web
-  \def\lbra{⟦} \def\lket{⟧}
-  \def\llbracket{⟦} \def\rrbracket{⟧}
+  \def\lbra{\unicode{x27E6}} 
+  \def\lket{\unicode{x27E7}}
+  \def\llbracket{\unicode{x27E6}} 
+  \def\rrbracket{\unicode{x27E7}}
 
   % fixing webpage
   \newcommand{\w}{\vec{w}}
@@ -33,8 +35,19 @@
   % Support for \pprotocol (used in commands.tex)
   \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-  % --- FAKE ALGORITHMS ---
+  % % --- FAKE ALGORITHMS ---
+  % \renewenvironment{algorithm}[1][]
+  %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
+  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+
+  % --- FAKE ALGORITHMS (Prints "ALGORITHM") ---
   \renewenvironment{algorithm}[1][]
+    {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{ALGORITHM}\par\noindent\rule{\linewidth}{0.5pt}\par}
+    {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+
+  % --- FAKE PROTOCOLS (Prints "PROTOCOL") ---
+  % We use a new name 'protocol-env' to avoid conflict with the \protocol command
+  \newenvironment{protocol-env}[1][]
     {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
     {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
@@ -100,6 +113,12 @@
     \quad}
     } \medskip
   }
+
+  % --- PDF PROTOCOL SETUP ---
+  % Define a new floating environment called 'protocol-env'
+  \usepackage{float}
+  \newfloat{protocol-env}{htbp}{lop}      % Create the float
+  \floatname{protocol-env}{Protocol}      % Name the caption "Protocol"
   
   % % Protocol (5 Arguments)
   % \newlength{\protowidth}
@@ -510,3 +529,6 @@ rline{Good}_{i-1}}}
 \def\blackslug
 {\hbox{\hskip 1pt\vrule width 8pt height 8pt depth 1.5pt\hskip 1pt}}
 \def\qed{\hspace*{\fill}\quad\blackslug\lower 8.5pt\null\par}
+
+% Rename "Algorithm" to "Protocol" in captions and references
+% \floatname{algorithm}{Protocol}
