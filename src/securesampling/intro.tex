@@ -95,9 +95,9 @@ the two samples using an appropriately biased coin toss.  The results
 are described in Section \ref{sec:l1}. 
 %
 % SG: commented out -- OT based solution is mentioned in the main body. 
-%     I don't feel strong about saying the appendix-result as one of
+%     I don't feel strong about saying the Section-result as one of
 %     the first results..
-%In Appendix~\ref{apx:otl1}, we give another construction that relies on
+%In Section~\ref{apx:otl1}, we give another construction that relies on
 %sub-linear 1-out-of-$m$ oblivious transfer (OT), but requires
 %computation that is exponential in the bit precision.  
 
@@ -113,7 +113,7 @@ are described in Section \ref{sec:l1}.
 %% \dov{Unlike in section \ref{sec:prodip}, we do not know whether such a promise is necessary for achieving sub-linear communication.  We leave this as an open problem.}  
 %%This construction also uses $L_1$ sampling as a black-box. 
 %This construction appears in Section \ref{sec:l2} and the hardness of
-%hardness proof is in Appendix~\ref{sec:hahaprooffull}.
+%hardness proof is in Section~\ref{sec:hahaprooffull}.
 %
 
 \paragraph{$L_2$ sampling.} We also provide a protocol for secure $L_2$
@@ -247,7 +247,7 @@ $i_1$.  The parties reverse roles to sample $i_2$.  Details of this
 construction are provided in Section~\ref{sec:l1}.  
 
 Additionally, an alternative construction that uses sub-linear OT for
-the oblivious sampling is provided in Appendix~\ref{apx:otl1}.
+the oblivious sampling is provided in Section~\ref{apx:otl1}.
 
 \paragraph{$L_2$ Sampling of component-wise sum.}
 In this case, party 1 (resp. party 2) holds a  vector
@@ -486,7 +486,7 @@ $\langle \vec{w}_1, \vec{w}_2 \rangle$.
 % with respect to the target distribution $\mathcal{D}$
 % (i.e.~for any $i$ in the support of $\mathcal{D}'$,
 % $\mathcal{D}'[i] \leq (1+ O(1/n^{1/8})) \cdot \mathcal{D}[i]$)
-% with communication complexity of just $O(n^{1/2})$ (see Appendix~\ref{sec:hahaapproxip}).
+% with communication complexity of just $O(n^{1/2})$ (see Section~\ref{sec:hahaapproxip}).
 
 % Using the above result, we show that it is impossible to prove that
 % $L_2$ sampling  requires linear communication via a black-box,
@@ -504,7 +504,7 @@ $\langle \vec{w}_1, \vec{w}_2 \rangle$.
 % occurs with at most a small multiplicative constant factor higher probability during an execution of $\Pi_L^{\Pi'}$. By considering the events that $\Pi_L^{\Pi}$ outputs $0$ when $x \in \mathcal{L}$
 % and that $\Pi$ outputs $1$ when $x \notin \mathcal{L}$, we are able to show that $\Pi_L^{\Pi'}$ must still achieve a constant gap between YES and NO instances. Repeating a constant number of times (which does not affect the communication complexity) amplifies this gap. Since all the calls of $\Pi_L^{\Pi'}$
 % have total communication $o(n^{1/8} \cdot n^{1/2}) = o(n^{5/8})$,
-% $\Pi_L^{\Pi'}$ is a sublinear communication protocol that decides $\mathcal{L}$, which is a contradiction to the hardness of $\mathcal{L}$. See Section~\ref{sec:hahathm} and Appendix~\ref{sec:hahaprooffull} for more details.
+% $\Pi_L^{\Pi'}$ is a sublinear communication protocol that decides $\mathcal{L}$, which is a contradiction to the hardness of $\mathcal{L}$. See Section~\ref{sec:hahathm} and Section~\ref{sec:hahaprooffull} for more details.
 
 \paragraph{Product sampling in constant rounds.}
 The protocol presented above for product sampling required a

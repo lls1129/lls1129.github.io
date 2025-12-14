@@ -103,7 +103,7 @@ $f^{c_i}_{\mathsf{loss}}(D_b)$ to change by $\pm 1/|D|$.
 Instead of using $1/|D|$, our mechanism uses a larger value $\Delta u$.
 Since the $\Delta u$ is larger than the sensitivity whenever $|D| \ge 40 (\log{n}+\secparam)/\epsilon$, and our mechanism
 is a simple exponential mechanism, $(\e, 0)$-DP holds.  
-\qed
+%\qed
 \end{proof}
 
 % \dnote{Notes so we don't forget:
@@ -230,7 +230,7 @@ Ultimately, this means that we have additive sensitivity of $\epsilon/
 (\Delta u \cdot |D|)$ in the \emph{exponent}.  To achieve differential
 privacy, we thus need to multiply the dot product estimate by $e^x$,
 where $x$ is drawn from $\mathsf{Lap}(1/ (\Delta u \cdot |D|))$.  
-\qed
+%\qed
 \end{proof}
 
 \paragraph{Correctness.}
@@ -368,7 +368,7 @@ The first inequality holds form the DP of protocol $\dIP$, and the
 second inequality holds from the DP of the exponential mechanism.
 
 The case when $P_2$ is corrupted can be proved similarly. 
-\qed
+%\qed
 \end{proof}
 
 
