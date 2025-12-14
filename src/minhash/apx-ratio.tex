@@ -1,4 +1,3 @@
-
 \subsection{Proof of Theorem~\ref{thm:CDDP2}}\label{apx:proof_CDDP2}
 \paragraph{On the definition of a $\theta$-good iteration.}
 We keep the same definition of a $\theta$-good iteration, except we set the
@@ -259,9 +258,10 @@ e^{-\ee} \le
 %
 The first and last inequalities are from Corollary~\ref{lem:concrete_expected_probs}. The second and third inequalities are from the condition that the process outputs SUCCESS. 
 The hockey stick divergence $\hsd{e^\epsilon}{\Phi(r)}{\Phi(r-\lg\lg(\kappa))}$ is therefore at most
-\[
-\sum_{r \not \in [a+\lg\lg\kappa, b]}  D_r \le k_v \cdot \negl(\kappa) = \negl(\kappa). \qedhere
-\]
+\renewcommand{\negl}{\ensuremath{\mathsf{negl}}} % Force fix right here
+\begin{equation*}
+\sum_{r \not \in [a+\lg\lg\kappa, b]}  D_r \le k_v \cdot \negl(\kappa) = \negl(\kappa). \tag*{\qedhere}
+\end{equation*}
 Similarly, $\hsd{e^\epsilon}{\Phi(r-\lg\lg(\kappa))}{\Phi(r)}$ is also $\negl(\kappa)$. 
 \end{proof}
 
@@ -447,7 +447,7 @@ Then, we have
   & = \sum_{m = \zeta}^{r} \Pr[I_{Z, m}] + \sum_{m=r-\zeta+1}^r \Pr[ I_{X,m} ] \cdot \Pr[I_{R'_j, r} ] \\
 &\le  \negl(\kappa) + \sum_{m=r-\zeta+1}^r \Pr[I_{X, m}] \cdot \Pr[I_{R'_j, r}]\\
 &= \negl(\kappa) + E^{n'_R}_r\cdot \sum_{m=r-\zeta+1}^r \Pr[I_{X, m}] .
- \end{align*}
+\end{align*}
 The second inequality holds due to Lemma~\ref{lem:edges}. 
 
 It is left to bound $\Pr[I_{X, m}]$ for $m \in (r-\zeta, r]$. We observe
@@ -474,7 +474,7 @@ Therefore, we have
 ~\le~ \negl(\kappa)  + \zeta \cdot E^{n'_R}_r \cdot \Pr[I_{X, m^*}] \\
 &=  \negl(\kappa)  + \zeta \cdot E^{n'_R}_r \cdot  \frac{E^{n'_R}_{m^*}}{ \etan^{z k_b/n'_R} } 
 =  \negl(\kappa) + \zeta \cdot E^{n'_R}_r \cdot  \frac{e^{\zeta \ee/3} E^{n'_R}_{r} + \negl(\kappa)}{ \etan^{z k_b/n'_R} } \\
-&\le \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z k_b/n'_R} } \right) \left(E^{n'_R}_r\right)^2  \qedhere
+&\le \left(  1  + \frac{\zeta \cdot (e^{\zeta \ee/3}+1)}{\etan^{z k_b/n'_R} } \right) \left(E^{n'_R}_r\right)^2  \tag*{\qedhere}
 \end{align*} 
 \end{proof}
 

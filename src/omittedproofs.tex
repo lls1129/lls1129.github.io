@@ -1,0 +1,104 @@
+\section{Omitted Proofs}
+\label{sec:omitted_proofs}
+
+% --- AUTOMATIC HEADER DEMOTION ---
+\let\oldsection\section
+\let\oldsubsection\subsection
+\let\oldsubsubsection\subsubsection
+\let\oldsubsubsubsection\subsubsubsection % Save your custom one
+
+% Shift everything down by one step
+\renewcommand{\section}[1]{\oldsubsection{#1}}
+\renewcommand{\subsection}[1]{\oldsubsubsection{#1}}
+\renewcommand{\subsubsection}[1]{\oldsubsubsubsection{#1}}
+\renewcommand{\subsubsubsection}[1]{\paragraph{#1}}
+
+% Input the files
+% secure search
+\input{securesearch/app}
+% secure sampling
+\input{securesampling/security_definition}
+\input{securesampling/apx_L1}
+\input{securesampling/apx_proofs}
+\input{securesampling/apx_ot_L1}
+\input{securesampling/ssL1}
+% Minhash
+\input{minhash/apx-prelim}
+\input{minhash/apx-ratio}
+\input{facts/prob-proofs}
+% \input{appendix_paper4}
+
+% Restore everything
+\let\section\oldsection
+\let\subsection\oldsubsection
+\let\subsubsection\oldsubsubsection
+\let\subsubsubsection\oldsubsubsubsection
+
+
+
+
+
+% % 1. Increase numbering depth so deeper levels get numbers
+% \setcounter{secnumdepth}{5} 
+
+% % 2. Save original commands
+% \let\oldsection\section
+% \let\oldsubsection\subsection
+% \let\oldsubsubsection\subsubsection
+% \let\oldsubsubsubsection\subsubsubsection
+% \let\oldparagraph\paragraph
+
+% % 3. CRITICAL FIX: Restore \paragraph to standard LaTeX behavior (with numbers)
+% % We temporarily undo your universalmacro's "bold only" definition.
+% \makeatletter
+% \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+%                                     {3.25ex \@plus1ex \@minus.2ex}%
+%                                     {-1em}%
+%                                     {\normalfont\normalsize\bfseries}}
+% \makeatother
+
+% % 4. Define \subparagraph if it's missing (for the deepest level)
+% \let\oldsubparagraph\subparagraph
+% \makeatletter
+% \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+%                                        {3.25ex \@plus1ex \@minus .2ex}%
+%                                        {-1em}%
+%                                       {\normalfont\normalsize\bfseries}}
+% \makeatother
+
+% % 5. Perform the Hierarchy Shift
+% % Input \section -> Output \subsection (7.1)
+% \renewcommand{\section}[1]{\oldsubsection{#1}}
+
+% % Input \subsection -> Output \subsubsection (7.1.1)
+% \renewcommand{\subsection}[1]{\oldsubsubsection{#1}}
+
+% % Input \subsubsection -> Output \paragraph (7.1.1.1)
+% \renewcommand{\subsubsection}[1]{\paragraph{#1}}
+
+% % Input \subsubsubsection -> Output \subparagraph (7.1.1.1.1)
+% \renewcommand{\subsubsubsection}[1]{\subparagraph{#1}}
+
+% % 6. Input your files
+% % secure search
+% \input{securesearch/app}
+% % secure sampling
+% \input{securesampling/security_definition}
+% \input{securesampling/apx_L1}
+% \input{securesampling/apx_proofs}
+% \input{securesampling/apx_ot_L1}
+% \input{securesampling/ssL1}
+% % Minhash
+% \input{minhash/apx-prelim}
+% \input{minhash/apx-ratio}
+% % \input{appendix_paper3}
+% % \input{appendix_paper4}
+
+% % 7. Restore everything (Clean up)
+% \let\section\oldsection
+% \let\subsection\oldsubsection
+% \let\subsubsection\oldsubsubsection
+% \let\subsubsubsection\oldsubsubsubsection
+% \let\paragraph\oldparagraph
+% \let\subparagraph\oldsubparagraph
+% \setcounter{secnumdepth}{3} % Reset numbering depth to normal

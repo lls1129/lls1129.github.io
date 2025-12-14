@@ -50,7 +50,52 @@
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{definition}[theorem]{Definition}
-\newtheorem{protocol}[theorem]{Protocol}
+% \newtheorem{protocol}[theorem]{Protocol}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode} 
+
+% 1. Rename the label so it says "Protocol X" instead of "Algorithm X"
+\floatname{algorithm}{Protocol}
+
+% 2. Define the Wrapper Command
+\newcommand{\protocol}[5]{
+    % #1: Main Title (appears in the header)
+    % #2: Short Title (for list of algorithms, usually ignored)
+    % #3: Label (for referencing, e.g., \ref{prot:minhash})
+    % #4: Placement (e.g., !htbp)
+    % #5: The Content Body
+    
+    \begin{algorithm}[#4]
+        \caption{\textbf{#1}} % Title
+        \label{#3}            % Label
+        
+        % The 'algorithm' package automatically handles the lines 
+        % and forces the content to the next line.
+        
+        #5
+    \end{algorithm}
+}
+
+% % 1. Create the ACTUAL environment (rename it to 'innerprotocol')
+% %    This handles the numbering (Protocol 5.15) and the look.
+% \newtheorem{innerprotocol}[theorem]{Protocol}
+
+% % 2. Create the WRAPPER command that matches your 5-argument usage
+% \newcommand{\protocol}[5]{
+%     % #1: Title
+%     % #2: Short Title (Ignored by standard theorems)
+%     % #3: Label
+%     % #4: Placement (Ignored because theorems don't float like figures)
+%     % #5: Body
+    
+%     \begin{innerprotocol}[#1]
+%         \label{#3}
+%         #5
+%     \end{innerprotocol}
+% }
+
+
 \newtheorem{fact}[theorem]{Fact}
 \newtheorem{claim}[theorem]{Claim}
 \newtheorem{corollary}[theorem]{Corollary}

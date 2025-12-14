@@ -1,10 +1,11 @@
-\section{Definitions}
+\section{Secure Sampling}
+\subsection{Definitions}
 We assume that readers are familiar with security notions of standard
 cryptographic primitives~\cite{KatzLindell2007} and formal definitions
 of a protocol securely realizing an ideal functionality
 (cf.~\cite{EKR18}). 
 
-\subsection{Ideal functionality $\F_{2PC}$} 
+\subsubsection{Ideal functionality $\F_{2PC}$} 
 The ideal functionality works as follows:
 
 \bbox
@@ -31,7 +32,7 @@ It is well know that Yao's protocol securely realizes $F_{2PC}$ in the
 semi-honest security setting with a constant round and $O(|C_1| +
 |C_2|)$ communication~\cite{JC:LinPin09}. 
 
-\subsection{Differential privacy}
+\subsubsection{Differential privacy}
 We say that two vectors $\vec{d} = (d_1, d_2, \ldots)$ and $\vec{d}' =
 (d_1', d_2', \ldots)$ are \emph{neighboring} if they have the same
 length, and there exists only one index $i$ s.t. $d_{i} \neq d'_{i}$.
@@ -46,7 +47,7 @@ and all sets $S \subseteq Range(\mathcal{M})$ \[
 
 \paragraph{Differential privacy in the two-party setting.}
 Our presentation here follows the similar definitions given in prior
-work~\cite{C:BeiNisOmr08,TALG:SCRS17,popets:CDKY20}.  For a two-party protocol
+work~\cite{C:BeiNisOmr08,TALG:SCRS17,PoPETS:CDKY20}.  For a two-party protocol
 $\Pi$ and an input $(\vd_1, \vd_2)$, we let $\Pi(\vd_1, \vd_2)$ denote the
 execution of $\Pi$ on this input.  For an adversary $\A$ (corrupting
 either $P_1$ or $P_2$), we define Let $\view^\Pi_A(\vd_1, \vd_2)$ be the view
