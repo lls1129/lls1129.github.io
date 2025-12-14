@@ -64,6 +64,23 @@
 
 \begin{document}
 
+\ifdefined\pandoc
+  \noindent
+  \(
+    % 1. Redefine \vec to be bold (optional, if you want bold vectors)
+    \renewcommand{\vec}[1]{\boldsymbol{#1}}
+    
+    % 2. Define your shortcuts
+    \newcommand{\w}{\vec{w}}
+    % \newcommand{\x}{\vec{x}}
+    % \newcommand{\y}{\vec{y}}
+    
+    % 3. Add any other missing math macros here
+    \newcommand{\e}{\epsilon}
+    \newcommand{\d}{\delta}
+  \)
+\fi
+
 % This title becomes the main web header
 \title{Thesis Proposal}
 \author{Linsheng Liu}
