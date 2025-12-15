@@ -807,6 +807,8 @@ class="toc-section-number">10</span> Conclusion</a></li>
     \def\llbracket{\unicode{x27E6}}
     \def\rrbracket{\unicode{x27E7}}
 
+    \def\textsc#1{\mathsf{#1}}
+    \def\ensuremath#1{#1}
     % --- FIX 2: Fonts &amp; Vectors ---
     \def\vec#1{\boldsymbol{#1}}
     \newcommand{\w}{\vec{w}}
@@ -819,9 +821,7 @@ class="toc-section-number">10</span> Conclusion</a></li>
     % Shim for DeclareMathOperator (prevents crashes)
     \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
 
-    \def\textsc#1{\mathsf{#1}}
 
-    \def\ensuremath#1{#1}
 
     % --- FIX 3: PROTOCOL COMMAND (Make it visible &amp; linkable) ---
     % Replaces fragile \rule with standard styling.
