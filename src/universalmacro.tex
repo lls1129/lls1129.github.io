@@ -9,11 +9,12 @@
   % \def\lbra{[\![} \def\lket{]\!]}
   % \def\llbracket{[\![} \def\rrbracket{]\!]}
 
-  % Use Unicode double brackets for web
-  \def\lbra{\unicode{x27E6}} 
-  \def\lket{\unicode{x27E7}}
-  \def\llbracket{\unicode{x27E6}} 
-  \def\rrbracket{\unicode{x27E7}}
+% --- FIX 1: Brackets (Visual construction for Web) ---
+  % We squeeze two standard brackets together using negative math spacing (-3mu)
+  \def\lbra{[\mkern-3mu[} 
+  \def\lket{]\mkern-3mu]}
+  \def\llbracket{[\mkern-3mu[} 
+  \def\rrbracket{]\mkern-3mu]}
 
   % fixing webpage
   \newcommand{\w}{\vec{w}}
