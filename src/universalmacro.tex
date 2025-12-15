@@ -5,25 +5,25 @@
 % =========================================================
 \ifdefined\pandoc
   % --- FIX VECTORS & BRACKETS ---
-  \def\vec#1{\boldsymbol{#1}} 
+  %%%%\def\vec#1{\boldsymbol{#1}} 
   % \def\lbra{[\![} \def\lket{]\!]}
   % \def\llbracket{[\![} \def\rrbracket{]\!]}
 
 % --- FIX 1: Brackets (Visual construction for Web) ---
   % We squeeze two standard brackets together using negative math spacing (-3mu)
-  \def\lbra{[\mkern-3mu[} 
-  \def\lket{]\mkern-3mu]}
-  \def\llbracket{[\mkern-3mu[} 
-  \def\rrbracket{]\mkern-3mu]}
+  %%%%\def\lbra{[\mkern-3mu[} 
+  %%%%\def\lket{]\mkern-3mu]}
+  %%%%\def\llbracket{[\mkern-3mu[} 
+  %%%%\def\rrbracket{]\mkern-3mu]}
 
   % fixing webpage
-  \newcommand{\w}{\vec{w}}
-  \newcommand\F{\mathcal{F}}
+  %%%%\newcommand{\w}{\vec{w}}
+  %%%%\newcommand\F{\mathcal{F}}
   
   % --- FIX MISSING BOOLEANS (Prevents "Hiding" bug) ---
-  \newif\ifllncs \llncsfalse
-  \def\commentson{1}
-  \providecommand{\textcolor}[2]{#2} % Fixes color crash
+  %%%%\newif\ifllncs \llncsfalse
+  %%%%\def\commentson{1}
+  %%%%\providecommand{\textcolor}[2]{#2} % Fixes color crash
   
   % % --- FIX PROTOCOLS ---
   % % We define the superset (5 arguments) to be safe.
@@ -60,27 +60,49 @@
   % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
   % Replaces fragile \rule with standard styling.
   % Adds \write4 to create an HTML anchor for the label (#3).
+
+  % --- FIX 1: Brackets (The "Smush" Method) ---
+  % We visually squeeze two brackets together. 
+  % This works on almost all web renderers.
+  \def\lbra{[\mkern-3mu[} 
+  \def\lket{]\mkern-3mu]}
+  \def\llbracket{[\mkern-3mu[} 
+  \def\rrbracket{]\mkern-3mu]}
+
+  % --- FIX 2: Fonts & Helpers ---
+  \def\vec#1{\boldsymbol{#1}} 
+  \newcommand{\w}{\vec{w}}
+  \def\sf{\mathsf} % Fix obsolete fonts
+  \def\cal{\mathcal}
+  \providecommand{\boldmath}{}
+  \providecommand{\textcolor}[2]{#2} 
+  \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
+  \newcommand{\F}{\mathcal{F}}
+
+  % --- FIX 3: PROTOCOL COMMAND (Original Design + Links) ---
   \newcommand{\protocol}[5]{
     \bigskip
-    \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
-    \noindent\textbf{#1} (Figure #3)
-    \par\noindent\hrulefill
-    \par #5
-    \par\noindent\hrulefill
+    \par\noindent\rule{\linewidth}{2pt}     % Top Thick Line
+    % Link Fix: Create an anchor using the Label (#3)
+    \hypertarget{#3}{} 
+    \par\noindent\textbf{#1} (Figure #3)
+    \par\noindent\rule{\linewidth}{0.5pt}   % Middle Thin Line
+    \par #5                                 % Content
+    \par\noindent\rule{\linewidth}{2pt}     % Bottom Thick Line
     \bigskip
   }
   \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-  % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
+  % --- FIX 4: ALGORITHM ENVIRONMENT (Original Design + Links) ---
   \renewenvironment{algorithm}[1][]
     { \bigskip
-      \par\noindent\hrulefill
+      \par\noindent\rule{\linewidth}{2pt}
       \par\noindent\textbf{ALGORITHM}
-      % Creates anchor for \label{xyz} inside the environment
-      \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
-      \par\noindent\hrulefill\par
+      % Link Fix: Redefine \label to creating a matching anchor
+      \def\label##1{\label{##1}\hypertarget{##1}{}}
+      \par\noindent\rule{\linewidth}{0.5pt}\par
     }
-    {\par\noindent\hrulefill\bigskip}
+    {\par\noindent\rule{\linewidth}{2pt}\bigskip}
 
   % % 1. Algorithm Environment
   % \renewenvironment{algorithm}[1][]
