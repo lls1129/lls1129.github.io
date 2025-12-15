@@ -345,6 +345,10 @@
     % Shim for DeclareMathOperator (prevents crashes)
     \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
 
+    \def\textsc#1{\mathsf{#1}}
+
+    \def\ensuremath#1{#1}
+
     % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
     % Replaces fragile \rule with standard styling.
     % Adds \write4 to create an HTML anchor for the label (#3).
