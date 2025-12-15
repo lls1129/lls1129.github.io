@@ -642,7 +642,63 @@ class="toc-section-number">10</span> Conclusion</a></li>
     \def\lket{\unicode{x27E7}}
     \def\llbracket{\unicode{x27E6}}
     \def\rrbracket{\unicode{x27E7}}
+
+    % --- FIX 2: Fonts &amp; Vectors ---
+    \def\vec#1{\boldsymbol{#1}}
+    \newcommand{\w}{\vec{w}}
+    \def\sf{\mathsf}          % Fix obsolete fonts
+    \def\cal{\mathcal}
+    \providecommand{\boldmath}{}
+    \providecommand{\textcolor}[2]{#2}
     \newcommand{\F}{\mathcal{F}}
+  
+    % Shim for DeclareMathOperator (prevents crashes)
+    \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
+
+    % --- FIX 3: PROTOCOL COMMAND (Make it visible &amp; linkable) ---
+    % Replaces fragile \rule with standard styling.
+    % Adds \write4 to create an HTML anchor for the label (#3).
+    \newcommand{\protocol}[5]{
+    \bigskip
+    \phantomsection\label{#3}\write4{\string&lt;div
+id=&quot;#3&quot;\string&gt;}\write4{\string&lt;/div\string&gt;}
+    \noindent\textbf{#1} (Figure #3)
+    \par\noindent\hrulefill
+    \par #5
+    \par\noindent\hrulefill
+    \bigskip
+    }
+    \newcommand{\pprotocol}[5]{
+    % #1: Main Title (appears in the header)
+    % #2: Short Title (for list of algorithms, usually ignored)
+    % #3: Label (for referencing, e.g., \ref{prot:minhash})
+    % #4: Placement (e.g., !htbp)
+    % #5: The Content Body
+    
+    \begin{algorithm}[#4]
+        \caption{\textbf{#1}} % Title
+        \label{#3}            % Label
+        
+        % The &#39;algorithm&#39; package automatically handles the
+lines
+        % and forces the content to the next line.
+        
+        #5
+    \end{algorithm}
+}
+
+    % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible &amp; linkable)
+---
+    \renewenvironment{algorithm}[1][]
+      { \bigskip
+        \par\noindent\hrulefill
+        \par\noindent\textbf{ALGORITHM}
+        % Creates anchor for \label{xyz} inside the environment
+        \def\label##1{\phantomsection\label{##1}\write4{\string&lt;div
+id=&quot;##1&quot;\string&gt;}\write4{\string&lt;/div\string&gt;}}
+        \par\noindent\hrulefill\par
+      }
+    {\par\noindent\hrulefill\bigskip}
 
     \newcommand{\protocol}[5]{
     \bigskip
