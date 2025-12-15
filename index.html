@@ -637,7 +637,53 @@ class="toc-section-number">10</span> Conclusion</a></li>
     
     % 3. Add any other missing math macros here
     \newcommand{\e}{\epsilon}
-    \newcommand{\d}{\delta}\)</span></p>
+    \newcommand{\d}{\delta}
+    \def\lbra{\unicode{x27E6}}
+    \def\lket{\unicode{x27E7}}
+    \def\llbracket{\unicode{x27E6}}
+    \def\rrbracket{\unicode{x27E7}}
+    \newcommand{\F}{\mathcal{F}}
+
+    \newcommand{\protocol}[5]{
+    \bigskip
+    \par\noindent\rule{\linewidth}{2pt}     % Top Thick Line
+    % Link Fix: Create an anchor using the Label (#3)
+    \hypertarget{#3}{}
+    \par\noindent\textbf{#1} (Figure #3)
+    \par\noindent\rule{\linewidth}{0.5pt}   % Middle Thin Line
+    \par #5                                 % Content
+    \par\noindent\rule{\linewidth}{2pt}     % Bottom Thick Line
+    \bigskip
+  }
+  \newcommand{\pprotocol}[5]{
+    % #1: Main Title (appears in the header)
+    % #2: Short Title (for list of algorithms, usually ignored)
+    % #3: Label (for referencing, e.g., \ref{prot:minhash})
+    % #4: Placement (e.g., !htbp)
+    % #5: The Content Body
+    
+    \begin{algorithm}[#4]
+        \caption{\textbf{#1}} % Title
+        \label{#3}            % Label
+        
+        % The &#39;algorithm&#39; package automatically handles the
+lines
+        % and forces the content to the next line.
+        
+        #5
+    \end{algorithm}
+}
+
+  % --- FIX 4: ALGORITHM ENVIRONMENT (Original Design + Links) ---
+  \renewenvironment{algorithm}[1][]
+    { \bigskip
+      \par\noindent\rule{\linewidth}{2pt}
+      \par\noindent\textbf{ALGORITHM}
+      % Link Fix: Redefine \label to creating a matching anchor
+      \def\label##1{\label{##1}\hypertarget{##1}{}}
+      \par\noindent\rule{\linewidth}{0.5pt}\par
+    }
+    {\par\noindent\rule{\linewidth}{2pt}\bigskip}\)</span></p>
 <h1 class="unnumbered" id="abstract">Abstract</h1>
 <p>This dissertation investigates how to reduce communication overhead
 in privacy-preserving applications. It develops two complementary
@@ -4199,7 +4245,7 @@ class="math inline">\(\tilde{O}(1)\)</span> communication.</p>
 <p><em>Proof.</em> Let <span class="math inline">\(\vec{w&#39;}_b =
 (w_{b,1}^2, \ldots, w_{b,n}^2).\)</span> The lemma follows by observing
 the following: <span class="math display">\[D_\ig(\w_1, \w_2) =
-D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> 0◻ ◻</p>
+D_{L_1}(\vec{w&#39;}_1, \vec{w&#39;}_2).\]</span> ◻</p>
 </div>
 <div class="definition">
 <p><strong>Definition 11</strong>. For <span class="math inline">\(i \in
@@ -4243,7 +4289,7 @@ class="math display">\[\begin{aligned}
 &amp;= w^2_{1,i} -2w_{1,i}w_{2,i} + w^2_{2,i}\\
 &amp;= (w_{1,i} - w_{2,i})^2\\
 &amp;\geq 0.
-\end{aligned}\]</span> 0◻ ◻</p>
+\end{aligned}\]</span> ◻</p>
 </div>
 <p>We now present the <span class="math inline">\(L_2\)</span> sampling
 protocol <span class="math inline">\(\Pi_{L_2}\)</span>, which is
@@ -4331,7 +4377,7 @@ round. Combining the above, we have that <span
 class="math inline">\(\Pi_{L_2}\)</span> has expected communication
 <span class="math inline">\(\tilde{O}(1)\)</span> and worst case (with
 all but negligible probability) communication <span
-class="math inline">\(\tilde{O}(1)\)</span>. 0◻ ◻</p>
+class="math inline">\(\tilde{O}(1)\)</span>. ◻</p>
 </div>
 <div class="remark">
 <p><strong>Remark 15</strong>. Note that the protocol and analysis above
@@ -5144,7 +5190,7 @@ random variable corresponding to the number of rounds from a geometric
 distribution with success probability <span class="math inline">\(p_c =
 \langle
 \vec{w}_1, \vec{w}_2 \rangle\)</span>, which is exactly what <span
-class="math inline">\(\Sim\)</span> does. 0◻ ◻</p>
+class="math inline">\(\Sim\)</span> does. ◻</p>
 </div>
 <h4 data-number="4.4.2.5" id="performance."><span
 class="header-section-number">4.4.2.5</span> Performance.</h4>
