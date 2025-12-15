@@ -186,7 +186,7 @@ Other than this, there are also other earlier efforts. For example, ~\cite{conc:
 
 %min hash
 
-\subsection{FACTs}
+\subsection{FACTS}
 \paragraph{Message Franking:}
 The most common approach today for reporting malicious messages in encrypted messaging systems is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}.  Message franking allows a recipient to prove the identity of the sender of a malicious message.  However, message franking is focused on identifying the last sender of a message, whereas we are interested in identifying the originator.  Moreover, message franking does not provide any threshold-type guarantees to prevent unmasking of senders given only one (or a few) complaints.
 

@@ -1,13 +1,13 @@
 \section{Preliminary Results}
 
 % --- Status Summary: Clearing the deck ---
-As detailed in previous sections, the research objectives for our first line of work (Secure Search, Sampling, and Similarity) and the second line of work (the threshold traceback for originator tracking via FACTs) have been successfully met. The results have been published and evaluated. 
+As detailed in previous sections, the research objectives for our first line of work (Secure Search, Sampling, and Similarity) and the second line of work (the threshold traceback for originator tracking via FACTS) have been successfully met. The results have been published and evaluated. 
 
-Therefore, this section presents preliminary approach solely for our \textbf{proposed follow-up work of FACTs for messaging accountability tracking, targeting spreader instead of originator}: using \textit{efficient secure 2-party computation with malicious security}. The next steps include experiments and cryptography analysis. The goal of these experiments is to demonstrate and justify that with the most state-of-art 2-party computation building blocks such as oblivious sorting, our design is practical and efficient with today's large scale of number of users and messages on End-to-End Encrypted messaging systems. The goal of the cryptography analysis is to deliver strict security and privacy guarantee while keeping the protocol practical and cost-friendly. 
+Therefore, this section presents preliminary approach solely for our \textbf{proposed follow-up work of FACTS for messaging accountability tracking, targeting spreader instead of originator}: using \textit{efficient secure 2-party computation with malicious security}. The next steps include experiments and cryptography analysis. The goal of these experiments is to demonstrate and justify that with the most state-of-art 2-party computation building blocks such as oblivious sorting, our design is practical and efficient with today's large scale of number of users and messages on End-to-End Encrypted messaging systems. The goal of the cryptography analysis is to deliver strict security and privacy guarantee while keeping the protocol practical and cost-friendly. 
 
 % --- Result 1: Proving the 'New Tool' is fast enough ---
 \subsection{Microbenchmarks}
-Unlike the hash-based structures (CCBF) used in the original FACTs system, our proposed follow-up design runs by two non-colluding servers with malicious security. A primary concern is whether these secure 2-party computations introduces prohibitive data transfer or latency, which in turns hurts the capability of the design to handle the large scale of users and messages. 
+Unlike the hash-based structures (CCBF) used in the original FACTS system, our proposed follow-up design runs by two non-colluding servers with malicious security. A primary concern is whether these secure 2-party computations introduces prohibitive data transfer or latency, which in turns hurts the capability of the design to handle the large scale of users and messages. 
 
 We benchmarked all major building blocks on two standard CloudLab servers with average network bandwidth and latency inside United States. Table~\ref{tab:bandwidth} shows the major communication-intensive 2-party operations and their servers' communication cost.
 % Figure~\ref{fig:primitive_bench} lists the major time-consuming parts of our proposed method through piece-wise micro-benchmarks.
@@ -47,9 +47,9 @@ Since our design is sequential across different components and fully parallel wi
         % Identities Reconstruction &  &  \\
         \hline
     \end{tabular}
-    \caption{Throughput and Round for each components in the follow-up FACTs for spreaders with one million complaints per epoch}
+    \caption{Throughput and Round for each components in the follow-up FACTS for spreaders with one million complaints per epoch}
     \label{tab:bandwidth}
 \end{table}
 
 \subsection{Conclusion of Preliminary Data}
-These benchmarks indicate that while the proposed tools for this follow-up work are communicational heavier than the original FACTs primitives, they provide efficient and lightweight protocols for the large scale of popular E2EE messaging systems such as Signal. This confirms the capability of our design. We are also working on evaluation of end-to-end server runtime to show the actual cost of our design. 
+These benchmarks indicate that while the proposed tools for this follow-up work are communicational heavier than the original FACTS primitives, they provide efficient and lightweight protocols for the large scale of popular E2EE messaging systems such as Signal. This confirms the capability of our design. We are also working on evaluation of end-to-end server runtime to show the actual cost of our design. 

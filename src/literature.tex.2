@@ -1,6 +1,6 @@
 \section{Literature Review}
 
-This section surveys existing literature relevant to the two primary lines of work. First, we discuss the foundational cryptographic primitives and protocols for \textbf{Secure Search, Secure Sampling, and Privacy-Preserving Set Similarity}. Second, we review the literature relevant to our specific application in accountability systems of End-to-End Encrypted Messaging System, \textbf{FACTs}.
+This section surveys existing literature relevant to the two primary lines of work. First, we discuss the foundational cryptographic primitives and protocols for \textbf{Secure Search, Secure Sampling, and Privacy-Preserving Set Similarity}. Second, we review the literature relevant to our specific application in accountability systems of End-to-End Encrypted Messaging System, \textbf{FACTS}.
 
 % --- LINE OF WORK 1 ---
 \subsection{Line 1: Secure Search, Sampling, and Similarity}
@@ -42,14 +42,14 @@ Recent research aims to output Jaccard similarity estimates while preserving dif
 Our work sits at the intersection of DP and MPC. A specific line of research relevant to our goals is \emph{optimizing secure computation using DP}, initiated by Beimel et al.~\cite{BNO08}. Subsequent works have applied this to set intersection~\cite{CCS:HMFS17,PETS:GroRinRos19}, graph-parallel computations~\cite{CCS:MazGor18}, and shuffling~\cite{ACNS:GKLX22}. We similarly leverage DP to improve the efficiency of our similarity protocols.
 
 % --- LINE OF WORK 2 ---
-\subsection{Line 2: FACTs (Forwarding Accountability in End-to-End Encrypted Messaging Platform)}
+\subsection{Line 2: FACTS (Forwarding Accountability in End-to-End Encrypted Messaging Platform)}
 Our second line of work shifts focus to a specific application: enabling accountability in end-to-end encrypted messaging systems.
 
 \paragraph{Message Franking.}
 The prevailing approach for reporting malicious messages is \emph{message franking}~\cite{C:DGRW18, C:TGLMR19, C:GruLuRis17}. This technique allows a recipient to cryptographically prove the identity of the sender. However, message franking is limited to identifying the \emph{immediate} sender and cannot trace the original source in a forwarding chain. Furthermore, it does not provide threshold guarantees to prevent unmasking users based on a single complaint.
 
 \paragraph{Scalable Oblivious Data Structures.}
-FACTs requires scalable oblivious storage to track complaints. While multi-client ORAM protocols exist~\cite{maffei-msmcoram,concuroram,MOSE}, they do not yet scale to the millions of users required for messaging applications. Similarly, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} generally focus on exact counting or complex operations, lacking the specific compression traits of the Compact Count-Min Bloom Filter (CCBF) we utilize.
+FACTS requires scalable oblivious storage to track complaints. While multi-client ORAM protocols exist~\cite{maffei-msmcoram,concuroram,MOSE}, they do not yet scale to the millions of users required for messaging applications. Similarly, oblivious counters~\cite{EC:KatMyeOst01, FC:GohGol05} generally focus on exact counting or complex operations, lacking the specific compression traits of the Compact Count-Min Bloom Filter (CCBF) we utilize.
 
 \paragraph{Private Sketching for User-Server Settings.}
-While CCBF resembles a private sketch, existing private sketching literature (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19}) predominantly focuses on the multi-party setting with multiple servers. These techniques are not directly applicable to the FACTs setting, which restricts communication strictly to the user-server model.
+While CCBF resembles a private sketch, existing private sketching literature (e.g.,~\cite{PoPETS:CDKY20, CCS:WJSYG19}) predominantly focuses on the multi-party setting with multiple servers. These techniques are not directly applicable to the FACTS setting, which restricts communication strictly to the user-server model.
