@@ -337,7 +337,32 @@
     \def\ensuremath#1{#1}
     \def\qedhere{\quad\ensuremath{\blacksquare}}
 
-    \renewenvironment{restatable}[3][]{\begin{#2}}{\end{#2}}
+    \newenvironment{restatable}[3][]
+    {\begin{#2}}
+    {\end{#2}}
+
+    % --- 6. Fix Algorithms & Protocols ---
+    \renewcommand{\protocol}[5]{
+      \bigskip
+      \par\noindent\rule{\linewidth}{2pt}
+      \hypertarget{#3}{} 
+      \par\noindent\textbf{#1} (Figure #3)
+      \par\noindent\rule{\linewidth}{0.5pt}
+      \par #5
+      \par\noindent\rule{\linewidth}{2pt}
+      \bigskip
+    }
+    \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+
+    \renewenvironment{algorithm}[1][]
+      { \bigskip
+        \par\noindent\rule{\linewidth}{2pt}
+        \par\noindent\textbf{ALGORITHM}
+        \def\label##1{\label{##1}\hypertarget{##1}{}}
+        \par\noindent\rule{\linewidth}{0.5pt}\par
+      }
+      {\par\noindent\rule{\linewidth}{2pt}\bigskip}
+    
     % % --- FIX 2: Fonts & Vectors ---
     % \def\vec#1{\boldsymbol{#1}} 
     % \newcommand{\w}{\vec{w}}
