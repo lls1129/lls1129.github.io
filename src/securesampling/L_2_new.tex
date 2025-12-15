@@ -37,7 +37,8 @@ communication.
 \begin{proof}
 Let $\vec{w'}_b = (w_{b,1}^2, \ldots, w_{b,n}^2).$
 The lemma follows by observing the following:
-$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ \qed
+$$D_\ig(\w_1, \w_2) = D_{L_1}(\vec{w'}_1, \vec{w'}_2).$$ 
+% \qed
 %Each party samples from its own distribution (i.e., $P_b$ outputs $i$
 %with probability $\frac{w_{b,i}^2}{||\vec{w}_b||^2}$).  Then the
 %parties do a weighted coin flip to choose which of these two values is
@@ -106,7 +107,7 @@ The inequality holds since
 &= (w_{1,i} - w_{2,i})^2\\
 &\geq 0.
 \end{align*}
-\qed
+% \qed
 \end{proof}
 
 We now present the $L_2$ sampling protocol $\Pi_{L_2}$, which is described in Protocol~\ref{fig:l2approx}. We show the correctness and efficiency of the protocol. 
@@ -167,8 +168,7 @@ and since, in addition to that, only a constant number of length $\tilde{O}(1)$ 
 Combining the above, we have that $\Pi_{L_2}$ has expected
 communication $\tilde{O}(1)$
 and worst case (with all but negligible probability) communication $\tilde{O}(1)$.
-\qed
-
+% \qed
 \end{proof}
 
 \begin{remark}
