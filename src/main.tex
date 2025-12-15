@@ -333,6 +333,8 @@
     \def\llbracket{\unicode{x27E6}} 
     \def\rrbracket{\unicode{x27E7}}
 
+    \def\textsc#1{\mathsf{#1}}
+    \def\ensuremath#1{#1}
     % --- FIX 2: Fonts & Vectors ---
     \def\vec#1{\boldsymbol{#1}} 
     \newcommand{\w}{\vec{w}}
@@ -345,9 +347,7 @@
     % Shim for DeclareMathOperator (prevents crashes)
     \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
 
-    \def\textsc#1{\mathsf{#1}}
 
-    \def\ensuremath#1{#1}
 
     % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
     % Replaces fragile \rule with standard styling.
