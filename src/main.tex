@@ -340,9 +340,15 @@
     \let\restatable\relax
     \let\endrestatable\relax
 
+    \newcommand{\WebTitle}[1]{\uppercase{#1}}
+
     \newenvironment{restatable}[3][]
-    {\par\medskip\noindent\textbf{\textsc{#2}.}\itshape\label{#3}}
-    {\par\medskip}
+        {   \par\bigskip
+            \noindent\textbf{\WebTitle{#2}.} \itshape % Prints "LEMMA." in bold
+            \hypertarget{#3}{}                        % Creates invisible anchor for links
+            \label{#3}                                % Keeps standard referencing valid
+        }
+        { \par\bigskip }
 
     % % --- 6. Fix Algorithms & Protocols ---
     % \renewcommand{\protocol}[5]{
