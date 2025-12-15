@@ -339,9 +339,11 @@
 
     \let\restatable\relax
     \let\endrestatable\relax
+    \providecommand{\MakeUppercase}[1]{\uppercase{#1}}
+  
     \newenvironment{restatable}[3][]
-    {\begin{#2}}
-    {\end{#2}}
+    {\par\medskip\noindent\textbf{\MakeUppercase{#2}.}\itshape}
+    {\par\medskip}
 
     % % --- 6. Fix Algorithms & Protocols ---
     % \renewcommand{\protocol}[5]{
