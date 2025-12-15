@@ -349,54 +349,54 @@
 
 
 
-    % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
-    % Replaces fragile \rule with standard styling.
-    % Adds \write4 to create an HTML anchor for the label (#3).
-    \newcommand{\protocol}[5]{
-    \bigskip
-    \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
-    \noindent\textbf{#1} (Figure #3)
-    \par\noindent\hrulefill
-    \par #5
-    \par\noindent\hrulefill
-    \bigskip
-    }
-    \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+  %   % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
+  %   % Replaces fragile \rule with standard styling.
+  %   % Adds \write4 to create an HTML anchor for the label (#3).
+  %   \newcommand{\protocol}[5]{
+  %   \bigskip
+  %   \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
+  %   \noindent\textbf{#1} (Figure #3)
+  %   \par\noindent\hrulefill
+  %   \par #5
+  %   \par\noindent\hrulefill
+  %   \bigskip
+  %   }
+  %   \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-    % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
-    \renewenvironment{algorithm}[1][]
-      { \bigskip
-        \par\noindent\hrulefill
-        \par\noindent\textbf{ALGORITHM}
-        % Creates anchor for \label{xyz} inside the environment
-        \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
-        \par\noindent\hrulefill\par
-      }
-    {\par\noindent\hrulefill\bigskip}
+  %   % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
+  %   \renewenvironment{algorithm}[1][]
+  %     { \bigskip
+  %       \par\noindent\hrulefill
+  %       \par\noindent\textbf{ALGORITHM}
+  %       % Creates anchor for \label{xyz} inside the environment
+  %       \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
+  %       \par\noindent\hrulefill\par
+  %     }
+  %   {\par\noindent\hrulefill\bigskip}
 
-    \newcommand{\protocol}[5]{
-    \bigskip
-    \par\noindent\rule{\linewidth}{2pt}     % Top Thick Line
-    % Link Fix: Create an anchor using the Label (#3)
-    \hypertarget{#3}{} 
-    \par\noindent\textbf{#1} (Figure #3)
-    \par\noindent\rule{\linewidth}{0.5pt}   % Middle Thin Line
-    \par #5                                 % Content
-    \par\noindent\rule{\linewidth}{2pt}     % Bottom Thick Line
-    \bigskip
-  }
-  \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+  %   \newcommand{\protocol}[5]{
+  %   \bigskip
+  %   \par\noindent\rule{\linewidth}{2pt}     % Top Thick Line
+  %   % Link Fix: Create an anchor using the Label (#3)
+  %   \hypertarget{#3}{} 
+  %   \par\noindent\textbf{#1} (Figure #3)
+  %   \par\noindent\rule{\linewidth}{0.5pt}   % Middle Thin Line
+  %   \par #5                                 % Content
+  %   \par\noindent\rule{\linewidth}{2pt}     % Bottom Thick Line
+  %   \bigskip
+  % }
+  % \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-  % --- FIX 4: ALGORITHM ENVIRONMENT (Original Design + Links) ---
-  \renewenvironment{algorithm}[1][]
-    { \bigskip
-      \par\noindent\rule{\linewidth}{2pt}
-      \par\noindent\textbf{ALGORITHM}
-      % Link Fix: Redefine \label to creating a matching anchor
-      \def\label##1{\label{##1}\hypertarget{##1}{}}
-      \par\noindent\rule{\linewidth}{0.5pt}\par
-    }
-    {\par\noindent\rule{\linewidth}{2pt}\bigskip}
+  % % --- FIX 4: ALGORITHM ENVIRONMENT (Original Design + Links) ---
+  % \renewenvironment{algorithm}[1][]
+  %   { \bigskip
+  %     \par\noindent\rule{\linewidth}{2pt}
+  %     \par\noindent\textbf{ALGORITHM}
+  %     % Link Fix: Redefine \label to creating a matching anchor
+  %     \def\label##1{\label{##1}\hypertarget{##1}{}}
+  %     \par\noindent\rule{\linewidth}{0.5pt}\par
+  %   }
+  %   {\par\noindent\rule{\linewidth}{2pt}\bigskip}
   \)
 \fi
 
