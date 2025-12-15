@@ -4,158 +4,158 @@
 % 1. WEB MODE (Pandoc) - Overrides for Website
 % =========================================================
 \ifdefined\pandoc
-  % --- FIX VECTORS & BRACKETS ---
-  %%%%\def\vec#1{\boldsymbol{#1}} 
-  % \def\lbra{[\![} \def\lket{]\!]}
-  % \def\llbracket{[\![} \def\rrbracket{]\!]}
+%   % --- FIX VECTORS & BRACKETS ---
+%   %%%%\def\vec#1{\boldsymbol{#1}} 
+%   % \def\lbra{[\![} \def\lket{]\!]}
+%   % \def\llbracket{[\![} \def\rrbracket{]\!]}
 
-% --- FIX 1: Brackets (Visual construction for Web) ---
-  % We squeeze two standard brackets together using negative math spacing (-3mu)
-  %%%%\def\lbra{[\mkern-3mu[} 
-  %%%%\def\lket{]\mkern-3mu]}
-  %%%%\def\llbracket{[\mkern-3mu[} 
-  %%%%\def\rrbracket{]\mkern-3mu]}
+% % --- FIX 1: Brackets (Visual construction for Web) ---
+%   % We squeeze two standard brackets together using negative math spacing (-3mu)
+%   %%%%\def\lbra{[\mkern-3mu[} 
+%   %%%%\def\lket{]\mkern-3mu]}
+%   %%%%\def\llbracket{[\mkern-3mu[} 
+%   %%%%\def\rrbracket{]\mkern-3mu]}
 
-  % fixing webpage
-  %%%%\newcommand{\w}{\vec{w}}
-  %%%%\newcommand\F{\mathcal{F}}
+%   % fixing webpage
+%   %%%%\newcommand{\w}{\vec{w}}
+%   %%%%\newcommand\F{\mathcal{F}}
   
-  % --- FIX MISSING BOOLEANS (Prevents "Hiding" bug) ---
-  %%%%\newif\ifllncs \llncsfalse
-  %%%%\def\commentson{1}
-  %%%%\providecommand{\textcolor}[2]{#2} % Fixes color crash
+%   % --- FIX MISSING BOOLEANS (Prevents "Hiding" bug) ---
+%   %%%%\newif\ifllncs \llncsfalse
+%   %%%%\def\commentson{1}
+%   %%%%\providecommand{\textcolor}[2]{#2} % Fixes color crash
   
-  % % --- FIX PROTOCOLS ---
-  % % We define the superset (5 arguments) to be safe.
-  % \newcommand{\protocol}[5]{
-  %   \medskip\par\noindent\rule{\linewidth}{1.5pt}
-  %   \par\noindent\textbf{#1} (Figure #3)
-  %   \par\noindent\rule{\linewidth}{0.5pt}
-  %   \par #5
-  %   \par\noindent\rule{\linewidth}{1.5pt}\medskip
-  % }
-  % % Support for \pprotocol (used in commands.tex)
-  % \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+%   % % --- FIX PROTOCOLS ---
+%   % % We define the superset (5 arguments) to be safe.
+%   % \newcommand{\protocol}[5]{
+%   %   \medskip\par\noindent\rule{\linewidth}{1.5pt}
+%   %   \par\noindent\textbf{#1} (Figure #3)
+%   %   \par\noindent\rule{\linewidth}{0.5pt}
+%   %   \par #5
+%   %   \par\noindent\rule{\linewidth}{1.5pt}\medskip
+%   % }
+%   % % Support for \pprotocol (used in commands.tex)
+%   % \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-  % % --- FAKE ALGORITHMS ---
-  % \renewenvironment{algorithm}[1][]
-  %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
-  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+%   % % --- FAKE ALGORITHMS ---
+%   % \renewenvironment{algorithm}[1][]
+%   %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
+%   %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
-  % % --- FAKE ALGORITHMS (Prints "ALGORITHM") ---
-  % \renewenvironment{algorithm}[1][]
-  %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{ALGORITHM}\par\noindent\rule{\linewidth}{0.5pt}\par}
-  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+%   % % --- FAKE ALGORITHMS (Prints "ALGORITHM") ---
+%   % \renewenvironment{algorithm}[1][]
+%   %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{ALGORITHM}\par\noindent\rule{\linewidth}{0.5pt}\par}
+%   %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
-  % % --- FAKE PROTOCOLS (Prints "PROTOCOL") ---
-  % % We use a new name 'protocol-env' to avoid conflict with the \protocol command
-  % \newenvironment{protocol-env}[1][]
-  %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
-  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+%   % % --- FAKE PROTOCOLS (Prints "PROTOCOL") ---
+%   % % We use a new name 'protocol-env' to avoid conflict with the \protocol command
+%   % \newenvironment{protocol-env}[1][]
+%   %   {\medskip\par\noindent\rule{\linewidth}{1.5pt}\par\noindent\textbf{PROTOCOL}\par\noindent\rule{\linewidth}{0.5pt}\par}
+%   %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
-  % --- FIX HYPERLINKS FOR WEB ---
-  % We redefine \label inside these environments to create an HTML anchor (<div id="...">)
-  % This allows the hyperlinks to actually jump to this spot on the webpage.
+%   % --- FIX HYPERLINKS FOR WEB ---
+%   % We redefine \label inside these environments to create an HTML anchor (<div id="...">)
+%   % This allows the hyperlinks to actually jump to this spot on the webpage.
 
-  % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
-  % Replaces fragile \rule with standard styling.
-  % Adds \write4 to create an HTML anchor for the label (#3).
+%   % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
+%   % Replaces fragile \rule with standard styling.
+%   % Adds \write4 to create an HTML anchor for the label (#3).
 
-  % --- FIX 1: Brackets (The "Smush" Method) ---
-  % We visually squeeze two brackets together. 
-  % This works on almost all web renderers.
-  %%%% in main.tex already
-  % \def\lbra{[\mkern-3mu[} 
-  % \def\lket{]\mkern-3mu]}
-  % \def\llbracket{[\mkern-3mu[} 
-  % \def\rrbracket{]\mkern-3mu]}
+%   % --- FIX 1: Brackets (The "Smush" Method) ---
+%   % We visually squeeze two brackets together. 
+%   % This works on almost all web renderers.
+%   %%%% in main.tex already
+%   % \def\lbra{[\mkern-3mu[} 
+%   % \def\lket{]\mkern-3mu]}
+%   % \def\llbracket{[\mkern-3mu[} 
+%   % \def\rrbracket{]\mkern-3mu]}
 
-  % --- FIX 2: Fonts & Helpers ---
-  \def\vec#1{\boldsymbol{#1}} 
-  \newcommand{\w}{\vec{w}}
-  \def\sf{\mathsf} % Fix obsolete fonts
-  \def\cal{\mathcal}
-  \providecommand{\boldmath}{}
-  \providecommand{\textcolor}[2]{#2} 
-  \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
-  \newcommand{\F}{\mathcal{F}}
+%   % --- FIX 2: Fonts & Helpers ---
+%   \def\vec#1{\boldsymbol{#1}} 
+%   \newcommand{\w}{\vec{w}}
+%   \def\sf{\mathsf} % Fix obsolete fonts
+%   \def\cal{\mathcal}
+%   \providecommand{\boldmath}{}
+%   \providecommand{\textcolor}[2]{#2} 
+%   \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
+%   \newcommand{\F}{\mathcal{F}}
 
-  % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
-  % Replaces fragile \rule with standard styling.
-  % Adds \write4 to create an HTML anchor for the label (#3).
-  \newcommand{\protocol}[5]{
-    \bigskip
-    \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
-    \noindent\textbf{#1} (Figure #3)
-    \par\noindent\hrulefill
-    \par #5
-    \par\noindent\hrulefill
-    \bigskip
-  }
-  \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+%   % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
+%   % Replaces fragile \rule with standard styling.
+%   % Adds \write4 to create an HTML anchor for the label (#3).
+%   \newcommand{\protocol}[5]{
+%     \bigskip
+%     \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
+%     \noindent\textbf{#1} (Figure #3)
+%     \par\noindent\hrulefill
+%     \par #5
+%     \par\noindent\hrulefill
+%     \bigskip
+%   }
+%   \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
 
-  % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
-  \renewenvironment{algorithm}[1][]
-    { \bigskip
-      \par\noindent\hrulefill
-      \par\noindent\textbf{ALGORITHM}
-      % Creates anchor for \label{xyz} inside the environment
-      \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
-      \par\noindent\hrulefill\par
-    }
-    {\par\noindent\hrulefill\bigskip}
+%   % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
+%   \renewenvironment{algorithm}[1][]
+%     { \bigskip
+%       \par\noindent\hrulefill
+%       \par\noindent\textbf{ALGORITHM}
+%       % Creates anchor for \label{xyz} inside the environment
+%       \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
+%       \par\noindent\hrulefill\par
+%     }
+%     {\par\noindent\hrulefill\bigskip}
 
 
-  % % 1. Algorithm Environment
-  % \renewenvironment{algorithm}[1][]
-  %   { \medskip\par\noindent\rule{\linewidth}{1.5pt}
-  %     \par\noindent\textbf{ALGORITHM}
-  %     % Redefine \label locally to create an HTML anchor
-  %     \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
-  %     \par\noindent\rule{\linewidth}{0.5pt}\par
-  %   }
-  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+%   % % 1. Algorithm Environment
+%   % \renewenvironment{algorithm}[1][]
+%   %   { \medskip\par\noindent\rule{\linewidth}{1.5pt}
+%   %     \par\noindent\textbf{ALGORITHM}
+%   %     % Redefine \label locally to create an HTML anchor
+%   %     \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
+%   %     \par\noindent\rule{\linewidth}{0.5pt}\par
+%   %   }
+%   %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
-  % % 2. Protocol Environment
-  % \renewenvironment{protocol-env}[1][]
-  %   { \medskip\par\noindent\rule{\linewidth}{1.5pt}
-  %     \par\noindent\textbf{PROTOCOL}
-  %     % Redefine \label locally to create an HTML anchor
-  %     \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
-  %     \par\noindent\rule{\linewidth}{0.5pt}\par
-  %   }
-  %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
+%   % % 2. Protocol Environment
+%   % \renewenvironment{protocol-env}[1][]
+%   %   { \medskip\par\noindent\rule{\linewidth}{1.5pt}
+%   %     \par\noindent\textbf{PROTOCOL}
+%   %     % Redefine \label locally to create an HTML anchor
+%   %     \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
+%   %     \par\noindent\rule{\linewidth}{0.5pt}\par
+%   %   }
+%   %   {\par\noindent\rule{\linewidth}{1.5pt}\medskip}
 
-  % --- FAKE THEOREMS ---
-  \providecommand{\theoremstyle}[1]{}
-  \renewenvironment{theorem}{\medskip\noindent\textbf{Theorem.}\itshape}{\medskip}
-  \renewenvironment{lemma}{\medskip\noindent\textbf{Lemma.}\itshape}{\medskip}
-  \renewenvironment{definition}{\medskip\noindent\textbf{Definition.}\itshape}{\medskip}
-  \renewenvironment{protocol-env}{\medskip\noindent\textbf{Protocol.}\itshape}{\medskip}
-  \renewenvironment{fact}{\medskip\noindent\textbf{Fact.}\itshape}{\medskip}
-  \renewenvironment{claim}{\medskip\noindent\textbf{Claim.}\itshape}{\medskip}
-  \renewenvironment{remark}{\medskip\noindent\textbf{Remark.}\itshape}{\medskip}
-  \renewenvironment{proof}{\medskip\noindent\textit{Proof.}}{\medskip}
-  \renewenvironment{corollary}{\medskip\noindent\textbf{Corollary.}\itshape}{\medskip}
-  \renewenvironment{proposition}{\medskip\noindent\textbf{Proposition.}\itshape}{\medskip}
-  \renewenvironment{example}{\medskip\noindent\textbf{Example.}\itshape}{\medskip}
-  \renewenvironment{observation}{\medskip\noindent\textbf{Observation.}\itshape}{\medskip}
-  \renewenvironment{assumption}{\medskip\noindent\textbf{Assumption.}\itshape}{\medskip}
-  \renewenvironment{conjecture}{\medskip\noindent\textbf{Conjecture.}\itshape}{\medskip}
+%   % --- FAKE THEOREMS ---
+%   \providecommand{\theoremstyle}[1]{}
+%   \renewenvironment{theorem}{\medskip\noindent\textbf{Theorem.}\itshape}{\medskip}
+%   \renewenvironment{lemma}{\medskip\noindent\textbf{Lemma.}\itshape}{\medskip}
+%   \renewenvironment{definition}{\medskip\noindent\textbf{Definition.}\itshape}{\medskip}
+%   \renewenvironment{protocol-env}{\medskip\noindent\textbf{Protocol.}\itshape}{\medskip}
+%   \renewenvironment{fact}{\medskip\noindent\textbf{Fact.}\itshape}{\medskip}
+%   \renewenvironment{claim}{\medskip\noindent\textbf{Claim.}\itshape}{\medskip}
+%   \renewenvironment{remark}{\medskip\noindent\textbf{Remark.}\itshape}{\medskip}
+%   \renewenvironment{proof}{\medskip\noindent\textit{Proof.}}{\medskip}
+%   \renewenvironment{corollary}{\medskip\noindent\textbf{Corollary.}\itshape}{\medskip}
+%   \renewenvironment{proposition}{\medskip\noindent\textbf{Proposition.}\itshape}{\medskip}
+%   \renewenvironment{example}{\medskip\noindent\textbf{Example.}\itshape}{\medskip}
+%   \renewenvironment{observation}{\medskip\noindent\textbf{Observation.}\itshape}{\medskip}
+%   \renewenvironment{assumption}{\medskip\noindent\textbf{Assumption.}\itshape}{\medskip}
+%   \renewenvironment{conjecture}{\medskip\noindent\textbf{Conjecture.}\itshape}{\medskip}
 
-  % --- FAKE COMMANDS ---
-  \renewcommand{\caption}[1]{\medskip\noindent\textbf{Caption:} #1 \par}
-  \providecommand{\floatname}[2]{}
-  \providecommand{\State}{\bullet~}
-  \providecommand{\Require}{\textbf{Require: }}
-  \providecommand{\Ensure}{\textbf{Ensure: }}
-  \providecommand{\Return}{\textbf{Return: }}
-  \providecommand{\qedsymbol}{\ensuremath{\blacksquare}}
-  \providecommand{\qed}{\ensuremath{\blacksquare}}
+%   % --- FAKE COMMANDS ---
+%   \renewcommand{\caption}[1]{\medskip\noindent\textbf{Caption:} #1 \par}
+%   \providecommand{\floatname}[2]{}
+%   \providecommand{\State}{\bullet~}
+%   \providecommand{\Require}{\textbf{Require: }}
+%   \providecommand{\Ensure}{\textbf{Ensure: }}
+%   \providecommand{\Return}{\textbf{Return: }}
+%   \providecommand{\qedsymbol}{\ensuremath{\blacksquare}}
+%   \providecommand{\qed}{\ensuremath{\blacksquare}}
   
-  % --- FAKE BOXES ---
-  \newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
-  \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
+%   % --- FAKE BOXES ---
+%   \newcommand{\bbox}[1]{\medskip \noindent #1 \medskip}
+%   \newcommand{\tbox}[1]{\medskip \noindent #1 \medskip}
 
 % =========================================================
 % 2. PDF MODE (Overleaf)
