@@ -337,9 +337,11 @@
     \def\ensuremath#1{#1}
     \def\qedhere{\quad\ensuremath{\blacksquare}}
 
-    % \newenvironment{restatable}[3][]
-    % {\begin{#2}}
-    % {\end{#2}}
+    \let\restatable\relax
+    \let\endrestatable\relax
+    \newenvironment{restatable}[3][]
+    {\begin{#2}}
+    {\end{#2}}
 
     % % --- 6. Fix Algorithms & Protocols ---
     % \renewcommand{\protocol}[5]{
