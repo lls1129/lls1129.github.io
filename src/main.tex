@@ -337,18 +337,31 @@
     \def\ensuremath#1{#1}
     \def\qedhere{\quad\ensuremath{\blacksquare}}
 
-    \let\restatable\relax
-    \let\endrestatable\relax
 
-    \newcommand{\WebTitle}[1]{\uppercase{#1}}
+    \def\restatable[#1]#2#3{
+        \par\bigskip\noindent
+        \hypertarget{#3}{}             % Create Link Anchor
+        \textbf{\uppercase{#2}.} \itshape % Print "LEMMA." in bold uppercase
+        \label{#3}                     % Register Label
+        \ignorespaces
+    }
+  
+    % We define the end command to just add spacing
+    \def\endrestatable{\par\bigskip}
 
-    \newenvironment{restatable}[3][]
-        {   \par\bigskip
-            \noindent\textbf{\WebTitle{#2}.} \itshape % Prints "LEMMA." in bold
-            \hypertarget{#3}{}                        % Creates invisible anchor for links
-            \label{#3}                                % Keeps standard referencing valid
-        }
-        { \par\bigskip }
+
+    % \let\restatable\relax
+    % \let\endrestatable\relax
+
+    % \newcommand{\WebTitle}[1]{\uppercase{#1}}
+
+    % \newenvironment{restatable}[3][]
+    %     {   \par\bigskip
+    %         \noindent\textbf{\WebTitle{#2}.} \itshape % Prints "LEMMA." in bold
+    %         \hypertarget{#3}{}                        % Creates invisible anchor for links
+    %         \label{#3}                                % Keeps standard referencing valid
+    %     }
+    %     { \par\bigskip }
 
     % % --- 6. Fix Algorithms & Protocols ---
     % \renewcommand{\protocol}[5]{
