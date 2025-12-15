@@ -170,7 +170,43 @@
     \def\lket{\unicode{x27E7}}
     \def\llbracket{\unicode{x27E6}} 
     \def\rrbracket{\unicode{x27E7}}
+
+    % --- FIX 2: Fonts & Vectors ---
+    \def\vec#1{\boldsymbol{#1}} 
+    \newcommand{\w}{\vec{w}}
+    \def\sf{\mathsf}          % Fix obsolete fonts
+    \def\cal{\mathcal}
+    \providecommand{\boldmath}{}
+    \providecommand{\textcolor}[2]{#2} 
     \newcommand{\F}{\mathcal{F}}
+  
+    % Shim for DeclareMathOperator (prevents crashes)
+    \providecommand{\DeclareMathOperator}[2]{\def#1{\operatorname{#2}}}
+
+    % --- FIX 3: PROTOCOL COMMAND (Make it visible & linkable) ---
+    % Replaces fragile \rule with standard styling.
+    % Adds \write4 to create an HTML anchor for the label (#3).
+    \newcommand{\protocol}[5]{
+    \bigskip
+    \phantomsection\label{#3}\write4{\string<div id="#3"\string>}\write4{\string</div\string>}
+    \noindent\textbf{#1} (Figure #3)
+    \par\noindent\hrulefill
+    \par #5
+    \par\noindent\hrulefill
+    \bigskip
+    }
+    \newcommand{\pprotocol}[5]{\protocol{#1}{#2}{#3}{#4}{#5}}
+
+    % --- FIX 4: ALGORITHM ENVIRONMENT (Make it visible & linkable) ---
+    \renewenvironment{algorithm}[1][]
+      { \bigskip
+        \par\noindent\hrulefill
+        \par\noindent\textbf{ALGORITHM}
+        % Creates anchor for \label{xyz} inside the environment
+        \def\label##1{\phantomsection\label{##1}\write4{\string<div id="##1"\string>}\write4{\string</div\string>}}
+        \par\noindent\hrulefill\par
+      }
+    {\par\noindent\hrulefill\bigskip}
 
     \newcommand{\protocol}[5]{
     \bigskip
