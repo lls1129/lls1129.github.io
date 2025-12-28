@@ -338,28 +338,28 @@
     \def\qedhere{\quad\ensuremath{\blacksquare}}
     \renewcommand{\tag}[1]{}
 
-    \let\restatable\relax
-    \let\endrestatable\relax
+    % \let\restatable\relax
+    % \let\endrestatable\relax
   
-    \newenvironment{restatable}[2]
-      { \par\bigskip\noindent
-        \hypertarget{#2}{}              % Link Anchor using Arg #2 (Label)
-        \textbf{#1.} \itshape           % Print Arg #1 (Type) in Bold (e.g. "Lemma.")
-        \label{#2}                      % Register Label
-      }
-      { \par\bigskip }
+    % \newenvironment{restatable}[2]
+    %   { \par\bigskip\noindent
+    %     \hypertarget{#2}{}              % Link Anchor using Arg #2 (Label)
+    %     \textbf{#1.} \itshape           % Print Arg #1 (Type) in Bold (e.g. "Lemma.")
+    %     \label{#2}                      % Register Label
+    %   }
+    %   { \par\bigskip }
 
 
-    % \def\restatable[#1]#2#3{
-    %     \par\bigskip\noindent
-    %     \hypertarget{#3}{}             % Create Link Anchor
-    %     \textbf{\uppercase{#2}.} \itshape % Print "LEMMA." in bold uppercase
-    %     \label{#3}                     % Register Label
-    %     \ignorespaces
-    % }
+    % % \def\restatable[#1]#2#3{
+    % %     \par\bigskip\noindent
+    % %     \hypertarget{#3}{}             % Create Link Anchor
+    % %     \textbf{\uppercase{#2}.} \itshape % Print "LEMMA." in bold uppercase
+    % %     \label{#3}                     % Register Label
+    % %     \ignorespaces
+    % % }
   
-    % We define the end command to just add spacing
-    \def\endrestatable{\par\bigskip}
+    % % We define the end command to just add spacing
+    % \def\endrestatable{\par\bigskip}
 
     % 1. Define a counter since HTML won't have the 'algorithm' counter
   \newcounter{protocolcount}
