@@ -361,6 +361,33 @@
     % We define the end command to just add spacing
     \def\endrestatable{\par\bigskip}
 
+    % 1. Define a counter since HTML won't have the 'algorithm' counter
+  \newcounter{protocolcount}
+  \setcounter{protocolcount}{0}
+
+  % 2. Simple definition: Horizontal Rule -> Title -> Content -> Horizontal Rule
+  \newcommand{\protocol}[5]{
+      % #1: Title
+      % #2: Short Title (ignored)
+      % #3: Label (ignored for numbering, but useful if you need to reference)
+      % #4: Placement (ignored)
+      % #5: Content
+      
+      \refstepcounter{protocolcount} % Increment our fake counter
+      
+      \par\bigskip
+      \noindent\rule{\linewidth}{2pt} % Thick Top Line <hr>
+      
+      \par\noindent\textbf{Protocol \theprotocolcount: #1} % The Title
+      
+      \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator Line <hr>
+      
+      \par #5 % The Content
+      
+      \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line <hr>
+      \bigskip
+  }
+
 
     % \let\restatable\relax
     % \let\endrestatable\relax
