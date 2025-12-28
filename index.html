@@ -8112,7 +8112,9 @@ Collision Property</em> if for all <span class="math inline">\(z \in
 \sim {\mathcal{D}}} \left [|R&#39;_i \cap R&#39;_j| = z \right ] \leq
 \left ( \frac{1}{\sqrt{n_R}} \right)^z.\]</span></p>
 </div>
-<p>Based on this property, we can show the following lemma. <span
+<p>Based on this property, we can show the following lemma.</p>
+<div class="restatable">
+<p><span>lemma</span><span>lfixedoracle</span> <span
 id="cor:fixed_oracle_prob" label="cor:fixed_oracle_prob"></span> Let
 <span class="math inline">\(k_b \in \Omega(\kappa)\)</span>, and
 consider any <span class="math inline">\(H_1\)</span> that makes <span
@@ -8134,6 +8136,7 @@ class="math inline">\(s = O(\lg\lg \kappa)\)</span>.</p></li>
 class="math inline">\(e^{-\epsilon/3} E^{n&#39;_R}_{k_b,r} \leq D_{T,r}
 \leq e^{\epsilon/3} E^{n&#39;_R}_{k_b,r}\)</span>.</p></li>
 </ul>
+</div>
 <p>The proof is found in Section <a href="#sec:fixed_oracle_prob"
 data-reference-type="ref"
 data-reference="sec:fixed_oracle_prob">7.3.6</a>.</p>
@@ -9457,29 +9460,36 @@ specified. These constants in themselves are not particularly
 meaningful; rather, they represent the tightest values which worked with
 our proof techniques and the parameter ranges we deemed reasonable for
 the application in mind.</p>
-<p><span id="lem:lowerp" label="lem:lowerp"></span> Let <span
-class="math inline">\(x\)</span> be an item such that at most <span
-class="math inline">\(\tau\)</span> of <span
-class="math inline">\(x\)</span>’s item slots are filled. If the CCBF
-parameters <span class="math inline">\(s,u,v\)</span> satisfy <span
+<div class="restatable">
+<p><span>lemma</span><span>lemmalowerp</span><span id="lem:lowerp"
+label="lem:lowerp"></span> Let <span class="math inline">\(x\)</span> be
+an item such that at most <span class="math inline">\(\tau\)</span> of
+<span class="math inline">\(x\)</span>’s item slots are filled. If the
+CCBF parameters <span class="math inline">\(s,u,v\)</span> satisfy <span
 class="math inline">\(v \ge 7.042652{} \tau\)</span> and <span
 class="math inline">\(u \ge 0.5184846{} \tfrac{s}{\tau}\)</span>, then
 the probability that a call to <span
 class="math inline">\(\mathsf{Increment}(x,C)\)</span> fills in one more
 of <span class="math inline">\(x\)</span>’s item slots is at least <span
 class="math inline">\(0.956414\)</span>.</p>
-<p><span id="lem:upperp" label="lem:upperp"></span> Let <span
-class="math inline">\(x\)</span> be any item. If the CCBF parameters
-<span class="math inline">\(s,u,v\)</span> satisfy <span
+</div>
+<div class="restatable">
+<p><span>lemma</span><span>lemmaupperp</span><span id="lem:upperp"
+label="lem:upperp"></span> Let <span class="math inline">\(x\)</span> be
+any item. If the CCBF parameters <span
+class="math inline">\(s,u,v\)</span> satisfy <span
 class="math inline">\(371{} \le v \le 0.00386{} s\)</span> and <span
 class="math inline">\(u \le 3.65151{} \tfrac{s}{v}\)</span>, then the
 probability that a call to <span
 class="math inline">\(\mathsf{Increment}(x,C)\)</span> fills in one more
 of <span class="math inline">\(x\)</span>’s item slots is at most <span
 class="math inline">\(0.974876\)</span>.</p>
+</div>
 <p>Now we use the probability upper bound to prove an upper bound on the
 tipping point <span class="math inline">\(\tau\)</span>.</p>
-<p><span id="lem:uppertau" label="lem:uppertau"></span> Let <span
+<div class="restatable">
+<p><span>lemma</span><span>lemmauppertau</span><span id="lem:uppertau"
+label="lem:uppertau"></span> Let <span
 class="math inline">\(s,u,v\)</span> be CCBF parameters that satisfy the
 conditions of <a href="#lem:upperp" data-reference-type="ref"
 data-reference="lem:upperp">[lem:upperp]</a>, and suppose <span
@@ -9491,6 +9501,7 @@ class="math inline">\(t\)</span> and with <span
 class="math inline">\(m\)</span> total set bits in the table <span
 class="math inline">\(T\)</span>, is at most <span
 class="math inline">\(1.0520553{} t\)</span>.</p>
+</div>
 <p>We can now state our main theorems on the accuracy of the CCBF data
 structure. Consider a call to the predicate function <span
 class="math inline">\(\mathsf{TestCount}(x,t)\)</span>, which attempts
@@ -9516,10 +9527,12 @@ class="math inline">\(t\)</span>. Our main theorem captures and
 quantifies this intuition, saying that, ignoring low-order terms, <span
 class="math inline">\(\mathsf{TestCount}\)</span> is accurate to within
 a 10% margin of error with high probability.</p>
-<p><span id="thm:fp" label="thm:fp"></span> Let <span
-class="math inline">\(n\)</span> be an upper bound on the total number
-of calls to <span class="math inline">\(\mathsf{Increment}\)</span>, and
-<span class="math inline">\(t\)</span> be a desired threshold for <span
+<div class="restatable">
+<p><span>theorem</span><span>theoremfp</span><span id="thm:fp"
+label="thm:fp"></span> Let <span class="math inline">\(n\)</span> be an
+upper bound on the total number of calls to <span
+class="math inline">\(\mathsf{Increment}\)</span>, and <span
+class="math inline">\(t\)</span> be a desired threshold for <span
 class="math inline">\(\mathsf{TestCount}\)</span>. Suppose the
 parameters <span class="math inline">\(s,u,v\)</span> for a CCBF data
 structure satisfy the conditions of <a href="#lem:lowerp"
@@ -9531,10 +9544,13 @@ class="math inline">\(t - 2.1\sqrt{\lambda t}\)</span>, then the
 probability <span class="math inline">\(\mathsf{TestCount}(x,t)\)</span>
 gives a false positive is at most <span
 class="math inline">\(2^{-\lambda}\)</span>.</p>
-<p><span id="thm:fn" label="thm:fn"></span> Let <span
-class="math inline">\(n\)</span> be an upper bound on the total number
-of calls to <span class="math inline">\(\mathsf{Increment}\)</span>, and
-<span class="math inline">\(t\)</span> be a desired threshold for <span
+</div>
+<div class="restatable">
+<p><span>theorem</span><span>theoremfn</span><span id="thm:fn"
+label="thm:fn"></span> Let <span class="math inline">\(n\)</span> be an
+upper bound on the total number of calls to <span
+class="math inline">\(\mathsf{Increment}\)</span>, and <span
+class="math inline">\(t\)</span> be a desired threshold for <span
 class="math inline">\(\mathsf{TestCount}\)</span>. Suppose the
 parameters <span class="math inline">\(s,u,v\)</span> for a CCBF data
 structure satisfy the conditions of <a href="#lem:lowerp,lem:uppertau"
@@ -9547,6 +9563,7 @@ class="math display">\[\label{eqn:fn}
 probability <span class="math inline">\(\mathsf{TestCount}(x,t)\)</span>
 gives a false negative is at most <span
 class="math inline">\(2^{-\lambda}\)</span>.</p>
+</div>
 <p>We can easily summarize the various conditions on the parameters as
 follows:</p>
 <div id="cor:params" class="corollary">
