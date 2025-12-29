@@ -58,6 +58,8 @@
 % 1. Rename the label so it says "Protocol X" instead of "Algorithm X"
 % \floatname{algorithm}{Protocol}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Uncommand these if pdf version protocol not working
 % 2. Define the Wrapper Command
 % \newcommand{\protocol}[5]{
 %     % #1: Main Title (appears in the header)
@@ -76,6 +78,7 @@
 %         #5
 %     \end{algorithm}
 % }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % % 1. Create the ACTUAL environment (rename it to 'innerprotocol')
 % %    This handles the numbering (Protocol 5.15) and the look.
@@ -361,19 +364,43 @@
     % % We define the end command to just add spacing
     % \def\endrestatable{\par\bigskip}
 
-    \newcounter{protocolcount} % Create a fake counter for the web
-    
+    % Create a single counter so numbering is continuous
+    \newcounter{protocolcount}
+    \setcounter{protocolcount}{0}
+
+    % --- A. Handle the \protocol{...} command ---
     \newcommand{\protocol}[5]{
+        % #1: Title, #2-#4: Unused, #5: Content
+        \refstepcounter{protocolcount}
+        
         \par\bigskip
-        \noindent\textbf{>>> DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE <<<}
-        \par
-        \textbf{PROTOCOL TITLE: #1}
-        \par
-        -------------------------------------------
-        \par
-        #5
-        \par
-        -------------------------------------------
+        \noindent\textbf{================================================}
+        \par\noindent\textbf{Protocol \theprotocolcount: #1}
+        \par\noindent\textbf{------------------------------------------------}
+        
+        \par #5 % The Content
+        
+        \par\noindent\textbf{================================================}
+        \bigskip
+    }
+
+    % --- B. Handle \begin{algorithm} environment ---
+    % We redefine the environment to mimic the look of the command above.
+    % We also redefine \caption inside it to print the title correctly.
+    
+    \renewenvironment{algorithm}[1][]{
+        \par\bigskip
+        \noindent\textbf{================================================}
+        % Redefine \caption locally to print our header
+        \renewcommand{\caption}[2][]{
+            \refstepcounter{protocolcount}
+            \par\noindent\textbf{Protocol \theprotocolcount: ##2}
+            \par\noindent\textbf{------------------------------------------------}
+            \par
+        }
+    }{
+        % This runs at \end{algorithm}
+        \par\noindent\textbf{================================================}
         \bigskip
     }
 
