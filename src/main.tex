@@ -364,18 +364,16 @@
     \newcounter{protocolcount} % Create a fake counter for the web
     
     \newcommand{\protocol}[5]{
-        % #1: Title, #2-#4: Unused args, #5: Content
-        \refstepcounter{protocolcount}
-        
         \par\bigskip
-        \noindent\textbf{--------------------------------------------------------------------------------}
-        \par\noindent\textbf{Protocol \theprotocolcount: #1}
-        \par\noindent\textbf{--------------------------------------------------------------------------------}
-        
-        % The content
-        \par #5 
-        
-        \par\noindent\textbf{--------------------------------------------------------------------------------}
+        \noindent\textbf{>>> DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE <<<}
+        \par
+        \textbf{PROTOCOL TITLE: #1}
+        \par
+        -------------------------------------------
+        \par
+        #5
+        \par
+        -------------------------------------------
         \bigskip
     }
 
