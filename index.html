@@ -1936,7 +1936,6 @@ the parameters after describing our construction. The encoding algorithm
 is described in Algorithm <a href="#alg:BFCOIEE"
 data-reference-type="ref"
 data-reference="alg:BFCOIEE">[alg:BFCOIEE]</a>.</p>
-<div class="algorithm">
 <p>For simplicity, <span class="math inline">\(n\)</span> and <span
 class="math inline">\(s\)</span> are assumed to be powers of 2.</p>
 <p><span class="math inline">\(t := \lg {\frac n {2s}}\)</span></p>
@@ -1964,7 +1963,13 @@ Otherwise, <span class="math inline">\(\unicode{x27E6}B^k_j
 <p>Output <span class="math inline">\(\unicode{x27E6}B^0
 \unicode{x27E7}, \ldots, \unicode{x27E6}B^t
 \unicode{x27E7}\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+BF\mbox{-}COIE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
+\ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
+<hr />
+<p><span id="alg:BFCOIEE" label="alg:BFCOIEE"></span></p>
+<hr />
 <p>Note that in steps (a) to (c) above, the warm-up construction is used
 to construct BF <span class="math inline">\(B^k\)</span> for indices
 <span class="math inline">\(I^k\)</span>.</p>
@@ -1979,7 +1984,6 @@ maintaining our invariant.</p>
 <p>The decoding algorithm is described in Algorithm <a
 href="#alg:BFCOIED" data-reference-type="ref"
 data-reference="alg:BFCOIED">[alg:BFCOIED]</a>.</p>
-<div class="algorithm">
 <p>Initialize <span class="math inline">\(I, I^0, \ldots, I^{t-1} :=
 \emptyset\)</span></p>
 <p>Initialize <span class="math inline">\(I^t := \{1, \ldots, n/2^t\} =
@@ -1997,7 +2001,12 @@ class="math inline">\({\mathsf BF.Check}(B^0, i)\)</span> is “yes", add
 <span class="math inline">\(i\)</span> to <span
 class="math inline">\(I\)</span></p>
 <p>Output <span class="math inline">\(I\)</span></p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+BF\mbox{-}COIE}.\mathsf{Decode}(B^0, \ldots, B^t)\)</span></strong></p>
+<hr />
+<p><span id="alg:BFCOIED" label="alg:BFCOIED"></span></p>
+<hr />
 <h4 data-number="3.4.2.3" id="useful-lemma."><span
 class="header-section-number">3.4.2.3</span> Useful lemma.</h4>
 <p>The following lemma will be useful to analyze the parameters <span
@@ -2140,7 +2149,6 @@ class="header-section-number">3.4.3.2</span> PS-COIE.</h4>
 <p>We describe a COIE scheme based on power sums, which we call PS-COIE.
 As before, we will work out the parameters after describing our
 construction. The encoding algorithm is shown below.</p>
-<div class="algorithm">
 <p>For <span class="math inline">\(j = 1, \ldots, s\)</span>:<br />
 <span class="math inline">\(~~~\)</span> Compute <span
 class="math inline">\(\unicode{x27E6}w_j \unicode{x27E7}= \sum_{i=1}^n
@@ -2148,7 +2156,12 @@ i^j \cdot \unicode{x27E6}v_i \unicode{x27E7}\)</span></p>
 <p>Output <span class="math inline">\(\unicode{x27E6}w_1
 \unicode{x27E7}, \ldots, \unicode{x27E6}w_s
 \unicode{x27E7}.\)</span></p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+PS\mbox{-}COIE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
+\ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
+<hr />
+<hr />
 <p>Note that the values of <span class="math inline">\(i^j\)</span>
 (modulo the underlying plaintext modulus) are publicly computable, so
 computing <span class="math inline">\(i^j \cdot \unicode{x27E6}v_i
@@ -2164,7 +2177,6 @@ class="math inline">\(j\)</span>th power sum of the indices. Using the
 power sums, we present the decoding algorithm in Algorithm <a
 href="#alg:pscoie" data-reference-type="ref"
 data-reference="alg:pscoie">[alg:pscoie]</a>.</p>
-<div class="algorithm">
 <p>Recall that we have <span class="math inline">\(w_j = \sum_{x \in I}
 x^j,\)</span> for <span class="math inline">\(j = 1,
 \ldots, s\)</span>, and we would like to reconstruct all <span
@@ -2185,7 +2197,13 @@ a_{0} &amp;= (a_{1} w_1 - a_{2} w_2 + \cdots w_s)/s
 \end{aligned}\]</span></p>
 <p>Extract and output the roots of the polynomial <span
 class="math inline">\(f(x)\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+PS\mbox{-}COIE}.\mathsf{Decode}(\unicode{x27E6}w_1 \unicode{x27E7},
+\ldots, \unicode{x27E6}w_s \unicode{x27E7})\)</span></strong></p>
+<hr />
+<p><span id="alg:pscoie" label="alg:pscoie"></span></p>
+<hr />
 <h4 data-number="3.4.3.3" id="parameters-c-and-f_p.-2"><span
 class="header-section-number">3.4.3.3</span> Parameters <span
 class="math inline">\(c\)</span> and <span
@@ -2378,7 +2396,6 @@ f_p)\)</span>-BFS-CODE construction over domain <span
 class="math inline">\(D\)</span>. As before, we will work out the
 parameters after describing our construction. The encoding algorithm is
 shown below.</p>
-<div class="algorithm">
 <p><span class="math inline">\(\eta = \kappa+\lg{s}\)</span>; <span
 class="math inline">\(\ell = 2 (\eta s - 1)\)</span></p>
 <p>Initialize <span class="math inline">\(\unicode{x27E6}B
@@ -2396,7 +2413,12 @@ class="math inline">\(\unicode{x27E6}B_j \unicode{x27E7}=
 \unicode{x27E7}\)</span></p>
 <p>Output <span class="math inline">\(\unicode{x27E6}B
 \unicode{x27E7}\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+BFS\mbox{-}CODE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
+\ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
+<hr />
+<hr />
 <p>Note that at step 4 in the above, if <span
 class="math inline">\(v_i\)</span> is 0, then <span
 class="math inline">\(B_j\)</span> stays the same. On the other hand, if
@@ -2409,10 +2431,14 @@ operations <span class="math inline">\(\{{\mathsf BFS.Insert}(B,
 <p>The decoding algorithm is simple, and it’s described in Algorithm <a
 href="#alg:BFSD" data-reference-type="ref"
 data-reference="alg:BFSD">[alg:BFSD]</a>.</p>
-<div class="algorithm">
 <p>Output <span class="math inline">\({\mathsf
 BFS.Values}(B)\)</span></p>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\({\mathsf
+BFS\mbox{-}CODE}.\mathsf{Decode}(B)\)</span></strong></p>
+<hr />
+<p><span id="alg:BFSD" label="alg:BFSD"></span></p>
+<hr />
 <h4 data-number="3.5.2.3" id="correctness.-2"><span
 class="header-section-number">3.5.2.3</span> Correctness.</h4>
 <p>This is immediate from the additive homomorphism of the underlying
@@ -2562,7 +2588,6 @@ class="math inline">\(f_p\)</span> on the number of false positives, and
 aborts if the actual number of false positives exceeds this bound.
 Otherwise, the client uses enough dummy queries to pad the number of PIR
 queries to <span class="math inline">\(s+ f_p\)</span>.</p>
-<div class="algorithm">
 <ol>
 <li><p>Client runs the FHE key generation algorithm and encrypts
 database <span class="math inline">\(x = (x_1, \ldots, x_n)\)</span>
@@ -2614,7 +2639,12 @@ class="math inline">\(\mathcal{S}&#39;\)</span>.</p></li>
 corresponding to the indexes in <span
 class="math inline">\(\mathcal{S}&#39;\)</span>.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : Secure search with a <span
+class="math inline">\((n, s, c, f_p)\)</span>-COIE scheme.</strong></p>
+<hr />
+<p><span id="alg:ssCOIE" label="alg:ssCOIE"></span></p>
+<hr />
 <div class="theorem">
 <p><strong>Theorem 5</strong>. Given an FHE scheme, a <span
 class="math inline">\((n, s, c, f_p)\)</span>-COIE scheme in the random
@@ -2695,7 +2725,6 @@ class="header-section-number">3.6.4</span> From CODE to Secure
 Search</h3>
 <p>We next present our framework for obtaining Secure Search from
 CODE.</p>
-<div class="algorithm">
 <ol>
 <li><p>Client runs the FHE key generation algorithm and encrypts
 database <span class="math inline">\(x = (x_1, \ldots, x_n)\)</span>
@@ -2747,7 +2776,12 @@ decodes <span class="math inline">\(C\)</span> to obtain a set <span
 class="math inline">\(\mathcal{S}\)</span> of size <span
 class="math inline">\(s\)</span> matching records.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : Secure search with a <span
+class="math inline">\((n, s, c, f_p)\)</span>-CODE scheme.</strong></p>
+<hr />
+<p><span id="alg:ssCODE" label="alg:ssCODE"></span></p>
+<hr />
 <div id="thm:ssp-code" class="theorem">
 <p><strong>Theorem 6</strong>. Given an FHE scheme, and a <span
 class="math inline">\((n, s, c, f_p)\)</span>-CODE scheme over domain
@@ -2889,8 +2923,10 @@ protocol between server and clients is a 1Gbps LAN.</p>
 <p><span>For <span>LEAF+</span>, we plot the time for fetching only a
 <span> <strong>single</strong></span> record, since fetching <span
 class="math inline">\(s\)</span> records takes too long.</span></p>
-<figcaption>Fetch time vs. Database size with <span
-class="math inline">\(s=16\)</span>.</figcaption>
+<hr />
+<p><strong>Protocol : Fetch time vs. Database size with <span
+class="math inline">\(s=16\)</span>.</strong></p>
+<hr />
 </figure>
 <h4 data-number="3.7.1.7"
 id="results-fetch-time-vs.-database-size."><span
@@ -2936,8 +2972,10 @@ than in BF-COIE protocol, the encoding step of this protocol takes
 longer.</p>
 <figure id="fig:ct_s">
 <img src="src/securesearch/expimgs/Figure_S.png" />
-<figcaption>Fetch time vs. Result set size with <span
-class="math inline">\(n=10,000\)</span>.</figcaption>
+<hr />
+<p><strong>Protocol : Fetch time vs. Result set size with <span
+class="math inline">\(n=10,000\)</span>.</strong></p>
+<hr />
 </figure>
 <h4 data-number="3.7.1.8"
 id="results-fetch-time-vs.-the-result-set-size."><span
@@ -3053,9 +3091,11 @@ class="math inline">\(2\)</span></td>
 </tr>
 </tbody>
 </table>
-<figcaption>The communication costs (<span
+<hr />
+<p><strong>Protocol : The communication costs (<span
 class="math inline">\(n=10,000\)</span> and <span
-class="math inline">\(s=16\)</span>).</figcaption>
+class="math inline">\(s=16\)</span>).</strong></p>
+<hr />
 </figure>
 <p>To explain this table, we first need to explain how we determined the
 costs of LEAF+ and PIR.</p>
@@ -4131,7 +4171,6 @@ class="math inline">\(L_1\)</span> sampling protocol.</h4>
 realizing <span class="math inline">\(\mathcal{F}_{L_1}\)</span> in the
 <span class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
 class="math inline">\(\boldsymbol{w}_b\)</span>.</p>
@@ -4163,7 +4202,14 @@ the following circuit:</p>
 \rangle, \langle b \rangle\)</span>.</p>
 <p>Output: <span class="math inline">\(i_1 \cdot (1-b) + i_2 \cdot
 b\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : Two-party <span class="math inline">\(L_1\)</span>
+sampling in the <span
+class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
+\mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</strong></p>
+<hr />
+<p><span id="fig:l1" label="fig:l1"></span></p>
+<hr />
 <div id="th:l1" class="theorem">
 <p><strong>Theorem 7</strong>. Protocol <a href="#fig:l1"
 data-reference-type="ref" data-reference="fig:l1">[fig:l1]</a> securely
@@ -4186,7 +4232,6 @@ class="math inline">\([s]\)</span>, where <span class="math inline">\(s
 := \| \boldsymbol{w} \|_1\)</span>. Our construction is found in
 Protocol <a href="#fig:os-fhe" data-reference-type="ref"
 data-reference="fig:os-fhe">[fig:os-fhe]</a>.</p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> The sender has input <span
 class="math inline">\(\boldsymbol{w} = (w_1, \ldots, w_n)\)</span>.</p>
 <p>The sender computes <span class="math inline">\(s := \|
@@ -4231,7 +4276,11 @@ class="math inline">\(c\)</span> is decrypted to the receiver.</p>
 <p>The sender outputs <span class="math inline">\(\pi\)</span> and the
 receiver outputs the decryption of <span
 class="math inline">\(c\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : Oblivious sampling from threshold FHE</strong></p>
+<hr />
+<p><span id="fig:os-fhe" label="fig:os-fhe"></span></p>
+<hr />
 <div id="thm:os-fhe" class="theorem">
 <p><strong>Theorem 8</strong>. Assuming the existence of threshold FHE
 with <span
@@ -4372,8 +4421,7 @@ protocol <span class="math inline">\(\Pi_{L_2}\)</span>, which is
 described in Protocol <a href="#fig:l2approx" data-reference-type="ref"
 data-reference="fig:l2approx">[fig:l2approx]</a>. We show the
 correctness and efficiency of the protocol.</p>
-<section id="inputs" class="algorithm" data-number="4.3.1.1">
-<h4 data-number="4.3.1.1"><span
+<h4 data-number="4.3.1.1" id="inputs"><span
 class="header-section-number">4.3.1.1</span> Inputs:</h4>
 <p>Parties <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> have inputs <span
@@ -4412,7 +4460,13 @@ probability <span class="math display">\[\begin{aligned}
 \Pr_{D_{\mathsf{ignore}}(\boldsymbol{w}_1, \boldsymbol{w}_2)}[i]}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
-</section>
+<hr />
+<p><strong>Protocol : Protocol for exact <span
+class="math inline">\(L_2\)</span> sampling (<span
+class="math inline">\(\Pi_{L_2}\)</span>)</strong></p>
+<hr />
+<p><span id="fig:l2approx" label="fig:l2approx"></span></p>
+<hr />
 <div id="lem:insecure_L2_prot" class="lemma">
 <p><strong>Lemma 14</strong>. With all but negligible probability, on
 inputs <span class="math inline">\(\boldsymbol{w}_1,
@@ -4475,7 +4529,6 @@ class="math inline">\(1\)</span> or to each other.</p>
 <h3 data-number="4.3.2" id="sec:secure"><span
 class="header-section-number">4.3.2</span> Secure <span
 class="math inline">\(L_2\)</span> Sampling From FHE</h3>
-<div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
 class="math inline">\(\boldsymbol{w}_b\)</span>.</p>
@@ -4535,7 +4588,13 @@ class="math inline">\(\widehat{\mathsf{out}}_j\)</span> decrypts to
 <span class="math inline">\(i_j \neq 0\)</span>. Or <span
 class="math inline">\(\bot\)</span> if no such <span
 class="math inline">\(j \in [B]\)</span> exists.</p>
-</div>
+<hr />
+<p><strong>Protocol : Two-party <span class="math inline">\(L_2\)</span>
+sampling in the <span class="math inline">\((\mathcal{F}_{L_1},
+F_{2PC})\)</span>-hybrid.</strong></p>
+<hr />
+<p><span id="fig:l2" label="fig:l2"></span></p>
+<hr />
 <h4 data-number="4.3.2.1" id="l_2-sampling-protocol."><span
 class="header-section-number">4.3.2.1</span> <span
 class="math inline">\(L_2\)</span> sampling protocol.</h4>
@@ -4593,8 +4652,7 @@ data-reference="apx:pfTheorem3">[apx:pfTheorem3]</a>.</p>
 class="header-section-number">4.3.3</span> A non-private <span
 class="math inline">\(L_p\)</span> sampling protocol with <span
 class="math inline">\(\tilde{O}(1)\)</span> communication</h3>
-<section id="inputs-1" class="algorithm" data-number="4.3.3.1">
-<h4 data-number="4.3.3.1"><span
+<h4 data-number="4.3.3.1" id="inputs-1"><span
 class="header-section-number">4.3.3.1</span> Inputs:</h4>
 <p>Parties <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> have inputs <span
@@ -4631,7 +4689,13 @@ p}(\boldsymbol{w}_1, \boldsymbol{w}_2)}[i]}\\
 p}(\boldsymbol{w}_1, \boldsymbol{w}_2)}[i]}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
-</section>
+<hr />
+<p><strong>Protocol : Protocol for exact <span
+class="math inline">\(L_p\)</span> sampling (<span
+class="math inline">\(\Pi_{L_p}\)</span>)</strong></p>
+<hr />
+<p><span id="fig:lpexact" label="fig:lpexact"></span></p>
+<hr />
 <p>In this section we present a <span
 class="math inline">\(\tilde{O}(1)\)</span> sampling protocol for <span
 class="math inline">\(L_p\)</span> sampling for constant <span
@@ -5176,7 +5240,6 @@ data-reference="prot:prodsampapx">[prot:prodsampapx]</a>). This protocol
 is in the <span
 class="math inline">\(\{\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{2PC} \}\)</span>-hybrid model.</p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
 class="math inline">\(\boldsymbol{w}_b\)</span> of length <span
@@ -5220,7 +5283,14 @@ outputs.</p></li>
 </ol>
 <p><strong>Output:</strong> Both parties output the sampled value <span
 class="math inline">\(i\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : Product sampling (<span
+class="math inline">\(\Pi_{\mathsf{prod}}^{IP}\)</span>) in the <span
+class="math inline">\(\{\mathcal{F}_{\mathsf{osample(L_1)}},
+\mathcal{F}_{2PC} \}\)</span>-hybrid. <span id="prot:prodsampapx"
+label="prot:prodsampapx"></span></strong></p>
+<hr />
+<hr />
 <h4 data-number="4.4.2.4" id="security.-1"><span
 class="header-section-number">4.4.2.4</span> Security.</h4>
 <p>We will prove the following theorem.</p>
@@ -5571,8 +5641,7 @@ the inner product. See Protocol <a href="#fig:ip-fhe"
 data-reference-type="ref" data-reference="fig:ip-fhe">[fig:ip-fhe]</a>.
 The protocol uses threshold FHE (e.g.,  <span class="citation"
 data-cites="popets:MTBH21">[130]</span>).</p>
-<section id="inputs-2" class="algorithm" data-number="4.5.1.5">
-<h4 data-number="4.5.1.5"><span
+<h4 data-number="4.5.1.5" id="inputs-2"><span
 class="header-section-number">4.5.1.5</span> Inputs:</h4>
 <p>Parties <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span> has inputs <span
@@ -5608,7 +5677,12 @@ class="math inline">\(P_1\)</span>.</p>
 <p>Parties execute threshold decryption to obtain and output <span
 class="math inline">\(\frac 1 k \cdot \langle \tilde{\boldsymbol{w}}_1,
 \tilde {\boldsymbol{w}}_2 \rangle\)</span>.</p>
-</section>
+<hr />
+<p><strong>Protocol : Private protocol for computing approximate inner
+product</strong></p>
+<hr />
+<p><span id="fig:ip-fhe" label="fig:ip-fhe"></span></p>
+<hr />
 <h4 data-number="4.5.1.6" id="security.-2"><span
 class="header-section-number">4.5.1.6</span> Security.</h4>
 <p>Since every protocol message is a ciphertext, based on semantic
@@ -5972,7 +6046,6 @@ sensitivity. This protocol is in the <span
 class="math inline">\(\mathcal{F}_{\mathsf{osample(L_1)}}\)</span>-hybrid
 model.</p>
 <p><span id="prot:prodsampdp" label="prot:prodsampdp"></span></p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
 class="math inline">\(D_b\)</span></p>
@@ -6035,7 +6108,13 @@ class="math inline">\(\mathsf{abort}\)</span>.</p></li>
 <p><strong>Output:</strong> Both parties output the sampled index <span
 class="math inline">\(i\)</span> or <span
 class="math inline">\(\mathsf{abort}\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : Exponential Mechanism Protocol (<span
+class="math inline">\(\Pi_{\mathsf{EM}}\)</span>) in the <span
+class="math inline">\(\{\mathcal{F}_{2PC},
+\mathcal{F}_{\mathsf{osample(L_1)}}\}\)</span>-hybrid model</strong></p>
+<hr />
+<hr />
 <h4 data-number="4.6.3.2" id="security.-3"><span
 class="header-section-number">4.6.3.2</span> Security.</h4>
 <p>We will prove the following theorem.</p>
@@ -6706,7 +6785,11 @@ functionality.</h4>
 href="#prot:pb" data-reference-type="ref"
 data-reference="prot:pb">[prot:pb]</a>. In this work, we will consider
 several variants and consider privacy implications.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : The Basic Min-Hash Functionality <span
+class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span></strong></p>
+<hr />
+<p><span id="prot:pb" label="prot:pb"></span></p>
 <p>The functionality is parameterized with a random oracle <span
 class="math inline">\(\mathcal{O}\)</span>.</p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
@@ -6748,7 +6831,7 @@ Eq}(u^A_j, u^B_j).\)</span></p></li>
 class="math inline">\((\mathsf{pre}, c)\)</span> to <span
 class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span>.</p>
-</div>
+<hr />
 <h4 data-number="5.3.0.4" id="differential-privacy.-1"><span
 class="header-section-number">5.3.0.4</span> Differential privacy.</h4>
 <p>The definitions of <span
@@ -7000,7 +7083,11 @@ class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span>
 of <span class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span>
 described in Figure <a href="#prot:noisy" data-reference-type="ref"
 data-reference="prot:noisy">[prot:noisy]</a>.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Noisy Min-Hash Functionality <span
+class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span></strong></p>
+<hr />
+<p><span id="prot:noisy" label="prot:noisy"></span></p>
 <ol>
 <li><p>Run <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> and let <span
@@ -7030,7 +7117,7 @@ class="math inline">\(P_1\)</span> and <span
 class="math inline">\(({\mathsf pre}, {\mathsf coins}_B, \mathsf{r}(c +
 \zeta^A))\)</span> to <span class="math inline">\(P_2\)</span>.</p></li>
 </ol>
-</div>
+<hr />
 <div class="theorem">
 <p><strong>Theorem 46</strong>. <span
 class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span>
@@ -7068,7 +7155,12 @@ data-cites="DGT12">[140]</span> that computes the exact cardinality of
 the intersection of the two input sets, as described in Figure <a
 href="#func:psica" data-reference-type="ref"
 data-reference="func:psica">[func:psica]</a>.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Functionality of Private Set Intersection
+Cardinality <span class="math inline">\(\mathcal{F}_{{\mathsf
+psi\mbox{-}ca}}\)</span></strong></p>
+<hr />
+<p><span id="func:psica" label="func:psica"></span></p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> has
 a set <span class="math inline">\(A\)</span> and <span
 class="math inline">\(P_2\)</span> has a set <span
@@ -7077,7 +7169,7 @@ class="math inline">\(B\)</span>.</p>
 B|\)</span> to <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(\bot\)</span> to <span
 class="math inline">\(P_2\)</span>.</p>
-</div>
+<hr />
 <p>In particular, in order to compute the noisy min-hash match counts,
 the parties construct two sets consisting min-hash values and additional
 dummy elements and then run <span
@@ -7112,7 +7204,12 @@ class="math inline">\(n_A\)</span> and <span
 class="math inline">\(n_B\)</span></em></span> even when the protocol
 implementing <span class="math inline">\(\mathcal{F}_{{\mathsf
 psi\mbox{-}ca}}\)</span> has a linear communication complexity.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Two-party Noisy Min-hash Protocol <span
+class="math inline">\(\pi_{\mathsf
+NMH}^{\mathcal{O}}\)</span></strong></p>
+<hr />
+<p><span id="pro:ph" label="pro:ph"></span></p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
 <span class="math inline">\(P_2\)</span>’s input vectors <span
 class="math inline">\(A = (x^A_1, \ldots,
@@ -7191,7 +7288,7 @@ class="math inline">\(c^B = c^{+} -
 class="math inline">\((\mathsf{pre}, {\mathsf coins}_A, c^A)\)</span>
 and <span class="math inline">\((\mathsf{pre}, {\mathsf coins}_B,
 c^B)\)</span> respectively.</p>
-</div>
+<hr />
 <div class="proposition">
 <p><strong>Proposition 47</strong>. Protocol <span
 class="math inline">\(\pi_{\mathsf NMH}^{\mathcal{O}}\)</span> described
@@ -7246,14 +7343,18 @@ noise satisfies differential privacy. Our observation is that the final
 count <span class="math inline">\(c\)</span> follows a binomial
 distribution in the private hash setting, which can be treated as noise
 to obscure the sensitivity.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Min-Hash in the Private Hash Setting <span
+class="math inline">\({\mathcal{F}_\mathsf{privH}}\)</span></strong></p>
+<hr />
+<p><span id="prot:cu" label="prot:cu"></span></p>
 <p><span class="math inline">\({\mathcal{F}_\mathsf{privH}}\)</span>
 works exactly the same as <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> except that
 it outputs only the final count <span class="math inline">\(c\)</span>
 (with the prefix <span class="math inline">\({\mathsf{pre}}\)</span>
 hidden to the participants).</p>
-</div>
+<hr />
 <div id="thm:PrivH" class="theorem">
 <p><strong>Theorem 48</strong>. For any constant <span
 class="math inline">\(\epsilon&gt; 0\)</span>, if <span
@@ -7348,7 +7449,11 @@ adversary, having corrupted one of the two parties, has access to the
 view of the party and even the actual intersection. However, the
 adversary does not know the other party’s input set (except from the
 intersection).</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Distribution Family <span
+class="math inline">\(\Delta_\mathsf{PH}\)</span></strong></p>
+<hr />
+<p><span id="fig:dist" label="fig:dist"></span></p>
 <p>Parameterized with <span class="math inline">\((n_A, n_B,
 n_I)\)</span>, a distribution <span class="math inline">\({\cal D}_{A,
 B}\)</span> in this family samples <span class="math inline">\((A,
@@ -7368,7 +7473,7 @@ class="math inline">\(B\)</span> respectively.</p></li>
 <li><p>Give <span class="math inline">\(I\)</span> to the adversary as
 the auxiliary information.</p></li>
 </ul>
-</div>
+<hr />
 <p>Below, we show that <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> achieves DDP
 under certain circumstances.</p>
@@ -8452,7 +8557,10 @@ assumption in the random oracle model. Essentially the same security
 proof found in the original paper can be applied to show the security of
 this variant, when <span class="math inline">\(H_2\)</span> is also
 modeled as a random oracle.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : Private Set Intersection Cardinality</strong></p>
+<hr />
+<p><span id="pro:psica" label="pro:psica"></span></p>
 <p>Let <span class="math inline">\(G\)</span> be a multiplicative group
 of order <span class="math inline">\(q\)</span>. Let <span
 class="math inline">\(H_1:\{0,1\}^* \to G\)</span> and <span
@@ -8488,7 +8596,7 @@ the following value: <span class="math display">\[| ~\{H_2(a&#39;_1),
 \ldots, H_2(a&#39;_v)\} \cap \{H_2(b&#39;_1), \ldots,
 H_2(b&#39;_w)\}|.\]</span></p></li>
 </ol>
-</div>
+<hr />
 <p>We briefly sketch the security proof here while referring the full
 proof to the original paper <span class="citation"
 data-cites="DGT12">[140]</span>. We first show the simulator for the
@@ -9206,7 +9314,11 @@ write locations within their own user set. So, if there are no 0 bits in
 the intersection of these two index sets, the user instead changes any
 other arbitrary 0 bit in its own user set in order to maintain item
 obliviousness.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : <span
+class="math inline">\(\mathsf{Increment}(x,C)\)</span><span
+id="alg:increment" label="alg:increment"></span></strong></p>
+<hr />
 <ol>
 <li><p>User and server separately compute the list of <span
 class="math inline">\(u\)</span> user locations for user <span
@@ -9236,7 +9348,7 @@ class="math inline">\(U_C\)</span> and that <span
 class="math inline">\(T[i] = 0\)</span>, then sets <span
 class="math inline">\(T[i]\)</span> to 1.</p></li>
 </ol>
-</div>
+<hr />
 <p>Since the bit vector <span class="math inline">\(T\)</span> is
 considered world-readable, the only communication here is the single
 index <span class="math inline">\(i\)</span> from client to server over
@@ -9260,7 +9372,11 @@ by the server and saved without violating item obliviousness.</p>
 <p>This protocol is detailed in <a href="#alg:testcount"
 data-reference-type="ref"
 data-reference="alg:testcount">[alg:testcount]</a>.</p>
-<div class="algorithm">
+<hr />
+<p><strong>Protocol : <span
+class="math inline">\(\mathsf{TestCount}(x,t)\)</span><span
+id="alg:testcount" label="alg:testcount"></span></strong></p>
+<hr />
 <ol>
 <li><p>Use parameters <span class="math inline">\(s,u,v\)</span> and
 current value of <span class="math inline">\(m\)</span> total number of
@@ -9274,7 +9390,7 @@ set for indices in <span class="math inline">\(V_x\)</span>. Return
 <strong>true</strong> if and only if this count is greater than or equal
 to <span class="math inline">\(\tau\)</span>.</p></li>
 </ol>
-</div>
+<hr />
 <h3 data-number="6.4.2" id="calculating-the-tipping-point"><span
 class="header-section-number">6.4.2</span> Calculating the tipping
 point</h3>
@@ -9627,7 +9743,6 @@ this signature prevents a malicious originator from including the wrong
 identity in the message. Moreover, since the tag is bound to the
 message, this prevents a replay attack where an adversary reuses tags
 across messages to change the identity of the originator.</p>
-<div class="algorithm">
 <ol>
 <li><p>To originate a message <span class="math inline">\(x\)</span>,
 the originator <span class="math inline">\(A\)</span> chooses a random
@@ -9645,7 +9760,11 @@ class="math inline">\(A\)</span>.</p></li>
 <li><p><span class="math inline">\(A\)</span> outputs <span
 class="math inline">\(\mathsf{tag}_m = (r,e,\sigma)\)</span>.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : <span
+class="math inline">\(\textsf{Originate}(A,x)\)</span></strong></p>
+<hr />
+<hr />
 <p>Next, we describe the <span
 class="math inline">\(\textsf{SendMsg}\)</span> protocol which makes use
 of the <span class="math inline">\(\textsf{Originate}\)</span> protocol
@@ -9663,7 +9782,6 @@ class="math inline">\(x\)</span>. In the case of a new message, <span
 class="math inline">\(_x\)</span> is sent along with the message, while
 in the case of a forward, it is discarded and the message is forwarded
 along with its original tag instead.</p>
-<div class="algorithm">
 <ol>
 <li><p>If <span class="math inline">\(\mathsf{tag}_x=\perp\)</span>,
 then <span class="math inline">\(x\)</span> is a new message <span
@@ -9682,7 +9800,11 @@ class="math inline">\((\mathsf{tag}_x,x)\)</span> to <span
 class="math inline">\(B\)</span> using the E2E messaging platform’s
 <span class="math inline">\(\textrm{send}\)</span> protocol.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : <span
+class="math inline">\(\textsf{SendMsg}(A,B,\mathsf{tag}_x,x)\)</span></strong></p>
+<hr />
+<hr />
 <p><span class="math inline">\(\textsf{RcvMsg}\)</span> is a
 non-interactive algorithm that allows a receiving user to verify the
 tag, <span class="math inline">\(\tag_x\)</span>, affiliated with a
@@ -9696,7 +9818,6 @@ perform this verification without learning the identity of the
 originator since the tag contains an encryption of this identity (this
 ciphertext is what is verified by <span
 class="math inline">\(B\)</span>).</p>
-<div class="algorithm">
 <ol>
 <li><p>Parse <span class="math inline">\(\mathsf{tag}_x\)</span> as
 <span
@@ -9708,7 +9829,11 @@ to check that <span class="math inline">\(\sigma\)</span> is a valid
 signature by the server on <span class="math inline">\((h||e)\)</span>.
 If not, then discard the received message.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : <span
+class="math inline">\(\textsf{RcvMsg}(A,B,\mathsf{tag}_x,x)\)</span></strong></p>
+<hr />
+<hr />
 <h4 data-number="6.5.0.3" id="complaints-and-audit"><span
 class="header-section-number">6.5.0.3</span> Complaints and Audit:</h4>
 <p>We now describe how FACTS allows users to complain about received
@@ -9754,7 +9879,6 @@ minimize the impact of this bottleneck. In case multiple clients call
 <span class="math inline">\(\textsf{Complain}\)</span> at overlapping
 times, the server can queue these complaints and process them one at a
 time.</p>
-<div class="algorithm">
 <ol>
 <li><p>Parse <span class="math inline">\(\mathsf{tag}_x\)</span> as
 <span
@@ -9762,7 +9886,11 @@ class="math inline">\(\mathsf{tag}_x=(r,e,\sigma)\)</span></p></li>
 <li><p>Call CCBF.<span
 class="math inline">\(\mathsf{Increment}(C,\mathsf{tag}_x)\)</span></p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\(\textsf{Complain}(C,
+\mathsf{tag}_x,x)\)</span></strong></p>
+<hr />
+<hr />
 <p>The <span class="math inline">\(\textsf{Audit}\)</span> protocol
 checks whether a threshold of complaints has been reached for a given
 message <span class="math inline">\(x\)</span> and, if so, triggers an
@@ -9780,7 +9908,6 @@ and thus does not need to block. Thus, unlike the <span
 class="math inline">\(\textsf{Complain}\)</span> command, many clients
 can execute the <span class="math inline">\(\textsf{Audit}\)</span>
 command in parallel.</p>
-<div class="algorithm">
 <ol>
 <li><p>Parse <span class="math inline">\(\mathsf{tag}_x\)</span> as
 <span
@@ -9800,7 +9927,11 @@ identity (<span class="math inline">\(A\)</span>) of the originator by
 computing <span class="math inline">\(A={\mathsf
 Dec}_{SK_S}(e)\)</span>.</p></li>
 </ol>
-</div>
+<hr />
+<p><strong>Protocol : <span class="math inline">\(\textsf{Audit}(C,
+\mathsf{tag}_x,x)\)</span></strong></p>
+<hr />
+<hr />
 <p>We note that <span class="math inline">\(\textsf{Audit}\)</span>
 allows the server to learn the message <span
 class="math inline">\(x\)</span> and the originator <span
@@ -9838,15 +9969,23 @@ class="math inline">\(v\)</span> goes from (approximately) 740 to
 <div class="figure*">
 <p><img src="src/facts/imgs/ExplicitThresholdPlotsTitleless.png"
 style="width:120.0%" alt="image" /></p>
+<hr />
+<p><strong>Protocol : The (left) Mean and (right) Relative Standard
+Deviation of Experimental Explicit Threshold vs. The Number of
+Background Complaints.</strong></p>
+<hr />
+<p><span id="fig:Accuracy" label="fig:Accuracy"></span></p>
 </div>
 <figure id="fig:report_msg_threshold">
 <img src="src/facts/imgs/var_threshold_size.png" />
-<figcaption>Average complaint time as a function of the threshold with
-<span class="math inline">\(n=1,000,000\)</span> complaints per epoch.
-Complaint time is measured as the average of 100 samples and has a
-variance of less than 5ms. Network latency shows the minimum latency
-required to transmit 3 sequential messages over the network, a lower
-bound on complaint time.</figcaption>
+<hr />
+<p><strong>Protocol : Average complaint time as a function of the
+threshold with <span class="math inline">\(n=1,000,000\)</span>
+complaints per epoch. Complaint time is measured as the average of 100
+samples and has a variance of less than 5ms. Network latency shows the
+minimum latency required to transmit 3 sequential messages over the
+network, a lower bound on complaint time.</strong></p>
+<hr />
 </figure>
 <h3 data-number="6.6.2" id="accuracy-and-stability"><span
 class="header-section-number">6.6.2</span> Accuracy and stability</h3>
@@ -11252,7 +11391,6 @@ expect we could support fairly large values of <span
 class="math inline">\(m\)</span>. The bottleneck on larger <span
 class="math inline">\(m\)</span> is likely to be storage, and the
 computation time needed for the OT.</p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> The sender has input <span
 class="math inline">\(\boldsymbol{w}\)</span>. We require every <span
 class="math inline">\(w_{i}/\|\boldsymbol{w}\|_1\)</span> is a multiple
@@ -11292,7 +11430,14 @@ class="math inline">\([m]\)</span>. Let <span
 class="math inline">\(u\)</span> be the output to the OT receiver.</p>
 <p>Output <span class="math inline">\(\pi\)</span> to the sender and
 output <span class="math inline">\(u\)</span> to the receiver.</p>
-</div>
+<hr />
+<p><strong>Protocol : Oblivious sampling protocol realizing <span
+class="math inline">\(\mathcal{F}_{{\mathsf{osample(L_1)}}}\)</span>
+based on <span class="math inline">\(1\)</span>-out-of-<span
+class="math inline">\(m\)</span> OT</strong></p>
+<hr />
+<p><span id="fig:osample-ot" label="fig:osample-ot"></span></p>
+<hr />
 <h4 data-number="7.2.3.2" id="oblivious-sampling-protocol."><span
 class="header-section-number">7.2.3.2</span> Oblivious sampling
 protocol.</h4>
@@ -11378,7 +11523,6 @@ class="math inline">\(P_1\)</span> and <span class="math inline">\(i
 class="math inline">\(\mathcal{F}_{L_1}^{ss}\)</span> in the <span
 class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</p>
-<div class="algorithm">
 <p><strong>Inputs:</strong> Party <span
 class="math inline">\(P_b\)</span> has input <span
 class="math inline">\(\boldsymbol{w}_b\)</span>.</p>
@@ -11414,7 +11558,13 @@ b\)</span>.</p>
 <p>Output <span class="math inline">\(\pi\)</span> to <span
 class="math inline">\(P_1\)</span> and <span class="math inline">\(\pi
 \oplus i\)</span> to <span class="math inline">\(P_2\)</span>.</p>
-</div>
+<hr />
+<p><strong>Protocol : Protocol securely realizing <span
+class="math inline">\(\mathcal{F}_{L_1}^{ss}\)</span> in the <span
+class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
+\mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</strong></p>
+<hr />
+<hr />
 <p>Security of the protocol can be shown similarly to Theorem <a
 href="#th:l1" data-reference-type="ref"
 data-reference="th:l1">7</a>.</p>
@@ -13113,21 +13263,11 @@ class="header-section-number">8</span> Timeline</h1>
 research items and the preparation of the final dissertation. As noted,
 sublinear secure protocol works are largely complete. The schedule
 focuses on the execution of the follow-up work on FACTS.</p>
-<div id="tab:timeline">
-<table>
-<caption>Proposed timeline for the completion of the Ph.D.
-thesis.</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;"><strong>Period</strong></th>
-<th style="text-align: left;"><strong>Key Objectives &amp;
-Milestones</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><strong>Completed – Present</strong></td>
-<td style="text-align: left;"><span
+<div class="tabular">
+<p><span>|p<span>0.25</span>|p<span>0.7</span>|</span>
+<strong>Period</strong> &amp; <strong>Key Objectives &amp;
+Milestones</strong><br />
+<strong>Completed – Present</strong> &amp; <span
 class="math inline">\(\bullet\)</span> Completed research and
 publication for Secure Search/Sampling (Sublinear-communication Secure
 MPC). <span class="math inline">\(\bullet\)</span> Completed research
@@ -13137,46 +13277,39 @@ and evaluation of FACTS (Accountability tracking on End-to-End Encrypted
 Messaging Systems). <span class="math inline">\(\bullet\)</span>
 Follow-up Work to enable spreader tracking via new protocol designs
 (Accountability tracking on End-to-End Encrypted Messaging
-Systems).</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Month 1 – Month 2</strong></td>
-<td style="text-align: left;"><strong>Line 3 Implementation:</strong>
-<span class="math inline">\(\bullet\)</span> Analyzing the system loads
-that our new design could handle and identify bottlenecks if any. <span
-class="math inline">\(\bullet\)</span> Estimating the actual cost of the
-new designed FACTS for spreaders with two non-colluding servers.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Month 1 – Month 3</strong></td>
-<td style="text-align: left;"><strong>Line 3 Security and Privacy
-Analysis:</strong> <span class="math inline">\(\bullet\)</span> Proof of
-security in malicious 2-party setting. <span
+Systems).<br />
+<strong>Month 1 – Month 2</strong> &amp; <strong>Line 3
+Implementation:</strong> <span class="math inline">\(\bullet\)</span>
+Analyzing the system loads that our new design could handle and identify
+bottlenecks if any. <span class="math inline">\(\bullet\)</span>
+Estimating the actual cost of the new designed FACTS for spreaders with
+two non-colluding servers.<br />
+<strong>Month 1 – Month 3</strong> &amp; <strong>Line 3 Security and
+Privacy Analysis:</strong> <span class="math inline">\(\bullet\)</span>
+Proof of security in malicious 2-party setting. <span
 class="math inline">\(\bullet\)</span> Compare performance against the
 original FACTS baseline. <span class="math inline">\(\bullet\)</span>
-<em>Milestone: Submit the paper to [TBD].</em></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><strong>Month 3 – Month 4</strong></td>
-<td style="text-align: left;"><strong>Thesis Writing (Part I):</strong>
-<span class="math inline">\(\bullet\)</span> Update Introduction and
-Literature Review based with feedback and further research. <span
-class="math inline">\(\bullet\)</span> Integrate all finished lines of
-work and write down the full chapter of thesis research results.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><strong>Month 5</strong></td>
-<td style="text-align: left;"><strong>Thesis Writing (Part II) &amp;
+<em>Milestone: Submit the paper to [TBD].</em><br />
+<strong>Month 3 – Month 4</strong> &amp; <strong>Thesis Writing (Part
+I):</strong> <span class="math inline">\(\bullet\)</span> Update
+Introduction and Literature Review based with feedback and further
+research. <span class="math inline">\(\bullet\)</span> Integrate all
+finished lines of work and write down the full chapter of thesis
+research results.<br />
+<strong>Month 5</strong> &amp; <strong>Thesis Writing (Part II) &amp;
 Defense:</strong> <span class="math inline">\(\bullet\)</span> Finish
 and integrate the results of the follow-up work of FACTS on spreader
 tracking results into the final dissertation. <span
 class="math inline">\(\bullet\)</span> Final review with advisor. <span
 class="math inline">\(\bullet\)</span> <em>Milestone: Thesis
-Defense.</em></td>
-</tr>
-</tbody>
-</table>
+Defense.</em><br />
+</p>
 </div>
+<hr />
+<p><strong>Protocol : Proposed timeline for the completion of the Ph.D.
+thesis.</strong></p>
+<hr />
+<p><span id="tab:timeline" label="tab:timeline"></span></p>
 <h1 data-number="9" id="preliminary-results"><span
 class="header-section-number">9</span> Preliminary Results</h1>
 <p>As detailed in previous sections, the research objectives for our
@@ -13207,7 +13340,7 @@ scale of users and messages.</p>
 <p>We benchmarked all major building blocks on two standard CloudLab
 servers with average network bandwidth and latency inside United States.
 Table <a href="#tab:bandwidth" data-reference-type="ref"
-data-reference="tab:bandwidth">2</a> shows the major
+data-reference="tab:bandwidth">1</a> shows the major
 communication-intensive 2-party operations and their servers’
 communication cost.</p>
 <h2 data-number="9.2" id="bandwidth-overhead-analysis"><span
@@ -13226,8 +13359,6 @@ micro-benchmarked each building blocks using the state-of-art protocols
 on 1 million reports per epoch.</p>
 <div id="tab:bandwidth">
 <table>
-<caption>Throughput and Round for each components in the follow-up FACTS
-for spreaders with one million complaints per epoch</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;"><strong>Protocols</strong></th>
@@ -13261,6 +13392,12 @@ rounds</strong></th>
 </tbody>
 </table>
 </div>
+<hr />
+<p><strong>Protocol : Throughput and Round for each components in the
+follow-up FACTS for spreaders with one million complaints per
+epoch</strong></p>
+<hr />
+<p><span id="tab:bandwidth" label="tab:bandwidth"></span></p>
 <h2 data-number="9.3" id="conclusion-of-preliminary-data"><span
 class="header-section-number">9.3</span> Conclusion of Preliminary
 Data</h2>
