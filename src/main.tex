@@ -61,23 +61,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Uncommand these if pdf version protocol not working
 % 2. Define the Wrapper Command
-% \newcommand{\protocol}[5]{
-%     % #1: Main Title (appears in the header)
-%     % #2: Short Title (for list of algorithms, usually ignored)
-%     % #3: Label (for referencing, e.g., \ref{prot:minhash})
-%     % #4: Placement (e.g., !htbp)
-%     % #5: The Content Body
+\newcommand{\protocol}[5]{
+    % #1: Main Title (appears in the header)
+    % #2: Short Title (for list of algorithms, usually ignored)
+    % #3: Label (for referencing, e.g., \ref{prot:minhash})
+    % #4: Placement (e.g., !htbp)
+    % #5: The Content Body
     
-%     \begin{algorithm}[#4]
-%         \caption{\textbf{#1}} % Title
-%         \label{#3}            % Label
+    \begin{algorithm}[#4]
+        \caption{\textbf{#1}} % Title
+        \label{#3}            % Label
         
-%         % The 'algorithm' package automatically handles the lines 
-%         % and forces the content to the next line.
+        % The 'algorithm' package automatically handles the lines 
+        % and forces the content to the next line.
         
-%         #5
-%     \end{algorithm}
-% }
+        #5
+    \end{algorithm}
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % % 1. Create the ACTUAL environment (rename it to 'innerprotocol')
@@ -363,7 +363,6 @@
   
     % % We define the end command to just add spacing
     % \def\endrestatable{\par\bigskip}
-
     % Create a single counter so numbering is continuous
     \newcounter{protocolcount}
     \setcounter{protocolcount}{0}
@@ -403,7 +402,6 @@
         \par\noindent\textbf{================================================}
         \bigskip
     }
-
     % \let\restatable\relax
     % \let\endrestatable\relax
 
@@ -503,23 +501,26 @@
   %   {\par\noindent\rule{\linewidth}{2pt}\bigskip}
   % \)
   \else
-      \newcommand{\protocol}[5]{
-        % #1: Main Title (appears in the header)
-        % #2: Short Title (for list of algorithms, usually ignored)
-        % #3: Label (for referencing, e.g., \ref{prot:minhash})
-        % #4: Placement (e.g., !htbp)
-        % #5: The Content Body
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% for protocol in pdf, comment all but one. 
+      % \newcommand{\protocol}[5]{
+      %   % #1: Main Title (appears in the header)
+      %   % #2: Short Title (for list of algorithms, usually ignored)
+      %   % #3: Label (for referencing, e.g., \ref{prot:minhash})
+      %   % #4: Placement (e.g., !htbp)
+      %   % #5: The Content Body
         
-        \begin{algorithm}[#4]
-            \caption{\textbf{#1}} % Title
-            \label{#3}            % Label
+      %   \begin{algorithm}[#4]
+      %       \caption{\textbf{#1}} % Title
+      %       \label{#3}            % Label
             
-            % The 'algorithm' package automatically handles the lines 
-            % and forces the content to the next line.
+      %       % The 'algorithm' package automatically handles the lines 
+      %       % and forces the content to the next line.
             
-            #5
-        \end{algorithm}
-      }
+      %       #5
+      %   \end{algorithm}
+      % }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fi
 
 % This title becomes the main web header
