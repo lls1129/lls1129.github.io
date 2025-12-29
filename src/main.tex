@@ -365,79 +365,48 @@
     % \def\endrestatable{\par\bigskip}
     % Create a single counter so numbering is continuous
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % \newcounter{protocolcount}
-    % \setcounter{protocolcount}{0}
+    \newcounter{protocolcount}
+    \setcounter{protocolcount}{0}
     
-    % % --- Helper command for the visual header ---
-    % \newcommand{\printprotocolheader}[1]{%
-    %    \par\vspace{1em}
-    %    \noindent\rule{\linewidth}{2pt} % Thick Top Line
-    %    \par\noindent\textbf{Protocol \theprotocolcount: #1} 
-    %    \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
-    %    \par
-    % }
-
-    % % --- A. Handle the \protocol{...} command ---
-    % \newcommand{\protocol}[5]{
-    %     \refstepcounter{protocolcount}
-    %     \phantomsection % Fixes the broken reference anchor
-    %     \addcontentsline{toc}{section}{Protocol \theprotocolcount: #1}
-        
-    %     \printprotocolheader{#1}
-    %     \label{#3} % Apply label immediately
-        
-    %     #5 % The Content
-        
-    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
-    %     \vspace{1em}
-    % }
-
-    % % --- B. Handle \begin{algorithm} environment ---
-    % \renewenvironment{algorithm}[1][]{
-    %     \par\vspace{1em}
-    %     % Redefine caption to act as the header printer
-    %     \renewcommand{\caption}[2][]{
-    %         \refstepcounter{protocolcount}
-    %         \phantomsection % Fixes the broken reference anchor
-    %         \printprotocolheader{##2}
-    %     }
-    % }{
-    %     % This runs at \end{algorithm}
-    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
-    %     \vspace{1em}
-    % }
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A. HELPER TO PRINT HEADERS
-    \newcommand{\printWebHeader}[2]{%
-        \par\bigskip
-        \noindent\textbf{================================================}
-        \par\noindent\textbf{#1: #2} % e.g., "Protocol: Title"
-        \par\noindent\textbf{------------------------------------------------}
-        \par
+    % --- Helper command for the visual header ---
+    \newcommand{\printprotocolheader}[1]{%
+       \par\vspace{1em}
+       \noindent\rule{\linewidth}{2pt} % Thick Top Line
+       \par\noindent\textbf{Protocol \theprotocolcount: #1} 
+       \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
+       \par
     }
 
-    % B. HANDLE \protocol{...} COMMAND
+    % --- A. Handle the \protocol{...} command ---
     \newcommand{\protocol}[5]{
-        \phantomsection
-        \label{#3}
-        \printWebHeader{Protocol}{#1} % Prints "Protocol: Title" at the top
+        \refstepcounter{protocolcount}
+        \phantomsection % Fixes the broken reference anchor
+        \addcontentsline{toc}{section}{Protocol \theprotocolcount: #1}
+        
+        \printprotocolheader{#1}
+        \label{#3} % Apply label immediately
+        
         #5 % The Content
-        \par\noindent\textbf{================================================}\par
+        
+        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+        \vspace{1em}
     }
 
-    % C. HANDLE \begin{algorithm} ENVIRONMENT
-    % We redefine the environment and the caption inside it
+    % --- B. Handle \begin{algorithm} environment ---
     \renewenvironment{algorithm}[1][]{
-        \par\bigskip
-        \noindent\textbf{================================================}
-        \renewcommand{\caption}[2][]{%
-             \par\noindent\textbf{Algorithm: ##2} % Prints "Algorithm: Title"
-             \par\noindent\textbf{------------------------------------------------}
-             \par
+        \par\vspace{1em}
+        % Redefine caption to act as the header printer
+        \renewcommand{\caption}[2][]{
+            \refstepcounter{protocolcount}
+            \phantomsection % Fixes the broken reference anchor
+            \printprotocolheader{##2}
         }
     }{
-        \par\noindent\textbf{================================================}\par
+        % This runs at \end{algorithm}
+        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+        \vspace{1em}
     }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % \let\restatable\relax
     % \let\endrestatable\relax
