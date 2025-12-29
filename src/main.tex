@@ -364,49 +364,124 @@
     % % We define the end command to just add spacing
     % \def\endrestatable{\par\bigskip}
     % Create a single counter so numbering is continuous
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % \newcounter{protocolcount}
+    % \setcounter{protocolcount}{0}
     
-    \newcounter{protocolcount}
-    \setcounter{protocolcount}{0}
-    
-    % --- Helper command for the visual header ---
-    \newcommand{\printprotocolheader}[1]{%
-       \par\vspace{1em}
-       \noindent\rule{\linewidth}{2pt} % Thick Top Line
-       \par\noindent\textbf{Protocol \theprotocolcount: #1} 
-       \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
-       \par
+    % % --- Helper command for the visual header ---
+    % \newcommand{\printprotocolheader}[1]{%
+    %    \par\vspace{1em}
+    %    \noindent\rule{\linewidth}{2pt} % Thick Top Line
+    %    \par\noindent\textbf{Protocol \theprotocolcount: #1} 
+    %    \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
+    %    \par
+    % }
+
+    % % --- A. Handle the \protocol{...} command ---
+    % \newcommand{\protocol}[5]{
+    %     \refstepcounter{protocolcount}
+    %     \phantomsection % Fixes the broken reference anchor
+    %     \addcontentsline{toc}{section}{Protocol \theprotocolcount: #1}
+        
+    %     \printprotocolheader{#1}
+    %     \label{#3} % Apply label immediately
+        
+    %     #5 % The Content
+        
+    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+    %     \vspace{1em}
+    % }
+
+    % % --- B. Handle \begin{algorithm} environment ---
+    % \renewenvironment{algorithm}[1][]{
+    %     \par\vspace{1em}
+    %     % Redefine caption to act as the header printer
+    %     \renewcommand{\caption}[2][]{
+    %         \refstepcounter{protocolcount}
+    %         \phantomsection % Fixes the broken reference anchor
+    %         \printprotocolheader{##2}
+    %     }
+    % }{
+    %     % This runs at \end{algorithm}
+    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+    %     \vspace{1em}
+    % }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % This CSS does 3 things:
+    % A. Creates separate counters for Protocols and Algorithms
+    % B. Adds the "Protocol X" or "Algorithm Y" prefixes automatically
+    % C. Uses 'order: -1' to FORCE the caption to the top visually
+    \newcommand{\injectWebStyles}{
+        \ifdefined\StylesLoaded\else
+            \def\StylesLoaded{1}
+            \begin{rawhtml}
+            <style>
+                body { counter-reset: protoCount algoCount; }
+                
+                /* --- CONTAINER STYLES --- */
+                .float-box {
+                    border-top: 2px solid black;
+                    border-bottom: 2px solid black;
+                    margin: 2em 0;
+                    padding: 1em 0;
+                    display: flex;         /* Enable Flexbox */
+                    flex-direction: column;/* Stack items vertically */
+                }
+                
+                /* --- CAPTION STYLES --- */
+                .float-caption {
+                    font-weight: bold;
+                    border-bottom: 1px solid #ccc;
+                    margin-bottom: 0.5em;
+                    order: -1;             /* MAGIC: Moves caption to top! */
+                }
+
+                /* --- PROTOCOL SPECIFIC --- */
+                .protocol-type { counter-increment: protoCount; }
+                .protocol-type .float-caption::before {
+                    content: "Protocol " counter(protoCount) ": ";
+                }
+
+                /* --- ALGORITHM SPECIFIC --- */
+                .algorithm-type { counter-increment: algoCount; }
+                .algorithm-type .float-caption::before {
+                    content: "Algorithm " counter(algoCount) ": ";
+                }
+            </style>
+            \end{rawhtml}
+        \fi
     }
 
-    % --- A. Handle the \protocol{...} command ---
+    % --- DEFINITION: PROTOCOL (Command) ---
     \newcommand{\protocol}[5]{
-        \refstepcounter{protocolcount}
-        \phantomsection % Fixes the broken reference anchor
-        \addcontentsline{toc}{section}{Protocol \theprotocolcount: #1}
-        
-        \printprotocolheader{#1}
-        \label{#3} % Apply label immediately
-        
-        #5 % The Content
-        
-        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
-        \vspace{1em}
+        \injectWebStyles
+        \phantomsection \label{#3}
+        % The class 'protocol-type' triggers the "Protocol X" counter
+        \begin{rawhtml}<div class="float-box protocol-type"><div class="float-caption">\end{rawhtml}
+            #1 % The Title
+        \begin{rawhtml}</div>\end{rawhtml}
+            #5 % The Content
+        \begin{rawhtml}</div>\end{rawhtml}
     }
 
-    % --- B. Handle \begin{algorithm} environment ---
+    % --- DEFINITION: ALGORITHM (Environment) ---
     \renewenvironment{algorithm}[1][]{
-        \par\vspace{1em}
-        % Redefine caption to act as the header printer
+        \injectWebStyles
+        \phantomsection
+        % The class 'algorithm-type' triggers the "Algorithm Y" counter
+        \begin{rawhtml}<div class="float-box algorithm-type">\end{rawhtml}
+        
+        % We redefine caption to wrap the title in our special div
         \renewcommand{\caption}[2][]{
-            \refstepcounter{protocolcount}
-            \phantomsection % Fixes the broken reference anchor
-            \printprotocolheader{##2}
+            \label{##1}
+            \begin{rawhtml}<div class="float-caption">\end{rawhtml}
+                ##2
+            \begin{rawhtml}</div>\end{rawhtml}
         }
     }{
-        % This runs at \end{algorithm}
-        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
-        \vspace{1em}
+        \begin{rawhtml}</div>\end{rawhtml}
     }
-    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % \let\restatable\relax
     % \let\endrestatable\relax
 
