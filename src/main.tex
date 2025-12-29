@@ -61,23 +61,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Uncommand these if pdf version protocol not working
 % 2. Define the Wrapper Command
-\newcommand{\protocol}[5]{
-    % #1: Main Title (appears in the header)
-    % #2: Short Title (for list of algorithms, usually ignored)
-    % #3: Label (for referencing, e.g., \ref{prot:minhash})
-    % #4: Placement (e.g., !htbp)
-    % #5: The Content Body
+% \newcommand{\protocol}[5]{
+%     % #1: Main Title (appears in the header)
+%     % #2: Short Title (for list of algorithms, usually ignored)
+%     % #3: Label (for referencing, e.g., \ref{prot:minhash})
+%     % #4: Placement (e.g., !htbp)
+%     % #5: The Content Body
     
-    \begin{algorithm}[#4]
-        \caption{\textbf{#1}} % Title
-        \label{#3}            % Label
+%     \begin{algorithm}[#4]
+%         \caption{\textbf{#1}} % Title
+%         \label{#3}            % Label
         
-        % The 'algorithm' package automatically handles the lines 
-        % and forces the content to the next line.
+%         % The 'algorithm' package automatically handles the lines 
+%         % and forces the content to the next line.
         
-        #5
-    \end{algorithm}
-}
+%         #5
+%     \end{algorithm}
+% }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % % 1. Create the ACTUAL environment (rename it to 'innerprotocol')
@@ -364,44 +364,49 @@
     % % We define the end command to just add spacing
     % \def\endrestatable{\par\bigskip}
     % Create a single counter so numbering is continuous
-    % \newcounter{protocolcount}
-    % \setcounter{protocolcount}{0}
-
-    % % --- A. Handle the \protocol{...} command ---
-    % \newcommand{\protocol}[5]{
-    %     % #1: Title, #2-#4: Unused, #5: Content
-    %     \refstepcounter{protocolcount}
-        
-    %     \par\bigskip
-    %     \noindent\textbf{================================================}
-    %     \par\noindent\textbf{Protocol \theprotocolcount: #1}
-    %     \par\noindent\textbf{------------------------------------------------}
-        
-    %     \par #5 % The Content
-        
-    %     \par\noindent\textbf{================================================}
-    %     \bigskip
-    % }
-
-    % % --- B. Handle \begin{algorithm} environment ---
-    % % We redefine the environment to mimic the look of the command above.
-    % % We also redefine \caption inside it to print the title correctly.
     
-    % \renewenvironment{algorithm}[1][]{
-    %     \par\bigskip
-    %     \noindent\textbf{================================================}
-    %     % Redefine \caption locally to print our header
-    %     \renewcommand{\caption}[2][]{
-    %         \refstepcounter{protocolcount}
-    %         \par\noindent\textbf{Protocol \theprotocolcount: ##2}
-    %         \par\noindent\textbf{------------------------------------------------}
-    %         \par
-    %     }
-    % }{
-    %     % This runs at \end{algorithm}
-    %     \par\noindent\textbf{================================================}
-    %     \bigskip
-    % }
+    \newcounter{protocolcount}
+    \setcounter{protocolcount}{0}
+    
+    % --- Helper command for the visual header ---
+    \newcommand{\printprotocolheader}[1]{%
+       \par\vspace{1em}
+       \noindent\rule{\linewidth}{2pt} % Thick Top Line
+       \par\noindent\textbf{Protocol \theprotocolcount: #1} 
+       \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
+       \par
+    }
+
+    % --- A. Handle the \protocol{...} command ---
+    \newcommand{\protocol}[5]{
+        \refstepcounter{protocolcount}
+        \phantomsection % Fixes the broken reference anchor
+        \addcontentsline{toc}{section}{Protocol \theprotocolcount: #1}
+        
+        \printprotocolheader{#1}
+        \label{#3} % Apply label immediately
+        
+        #5 % The Content
+        
+        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+        \vspace{1em}
+    }
+
+    % --- B. Handle \begin{algorithm} environment ---
+    \renewenvironment{algorithm}[1][]{
+        \par\vspace{1em}
+        % Redefine caption to act as the header printer
+        \renewcommand{\caption}[2][]{
+            \refstepcounter{protocolcount}
+            \phantomsection % Fixes the broken reference anchor
+            \printprotocolheader{##2}
+        }
+    }{
+        % This runs at \end{algorithm}
+        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+        \vspace{1em}
+    }
+    
     % \let\restatable\relax
     % \let\endrestatable\relax
 
@@ -503,23 +508,23 @@
   \else
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % for protocol in pdf, comment all but one. 
-      % \newcommand{\protocol}[5]{
-      %   % #1: Main Title (appears in the header)
-      %   % #2: Short Title (for list of algorithms, usually ignored)
-      %   % #3: Label (for referencing, e.g., \ref{prot:minhash})
-      %   % #4: Placement (e.g., !htbp)
-      %   % #5: The Content Body
+      \newcommand{\protocol}[5]{
+        % #1: Main Title (appears in the header)
+        % #2: Short Title (for list of algorithms, usually ignored)
+        % #3: Label (for referencing, e.g., \ref{prot:minhash})
+        % #4: Placement (e.g., !htbp)
+        % #5: The Content Body
         
-      %   \begin{algorithm}[#4]
-      %       \caption{\textbf{#1}} % Title
-      %       \label{#3}            % Label
+        \begin{algorithm}[#4]
+            \caption{\textbf{#1}} % Title
+            \label{#3}            % Label
             
-      %       % The 'algorithm' package automatically handles the lines 
-      %       % and forces the content to the next line.
+            % The 'algorithm' package automatically handles the lines 
+            % and forces the content to the next line.
             
-      %       #5
-      %   \end{algorithm}
-      % }
+            #5
+        \end{algorithm}
+      }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fi
 
