@@ -6706,7 +6706,11 @@ functionality.</h4>
 href="#prot:pb" data-reference-type="ref"
 data-reference="prot:pb">[prot:pb]</a>. In this work, we will consider
 several variants and consider privacy implications.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: The Basic Min-Hash Functionality <span
+class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span></strong></p>
+<p>——————————————-</p>
 <p>The functionality is parameterized with a random oracle <span
 class="math inline">\(\mathcal{O}\)</span>.</p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
@@ -6748,7 +6752,7 @@ Eq}(u^A_j, u^B_j).\)</span></p></li>
 class="math inline">\((\mathsf{pre}, c)\)</span> to <span
 class="math inline">\(P_1\)</span> and <span
 class="math inline">\(P_2\)</span>.</p>
-</div>
+<p>——————————————-</p>
 <h4 data-number="5.3.0.4" id="differential-privacy.-1"><span
 class="header-section-number">5.3.0.4</span> Differential privacy.</h4>
 <p>The definitions of <span
@@ -7000,7 +7004,11 @@ class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span>
 of <span class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span>
 described in Figure <a href="#prot:noisy" data-reference-type="ref"
 data-reference="prot:noisy">[prot:noisy]</a>.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Noisy Min-Hash Functionality <span
+class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span></strong></p>
+<p>——————————————-</p>
 <ol>
 <li><p>Run <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> and let <span
@@ -7030,7 +7038,7 @@ class="math inline">\(P_1\)</span> and <span
 class="math inline">\(({\mathsf pre}, {\mathsf coins}_B, \mathsf{r}(c +
 \zeta^A))\)</span> to <span class="math inline">\(P_2\)</span>.</p></li>
 </ol>
-</div>
+<p>——————————————-</p>
 <div class="theorem">
 <p><strong>Theorem 46</strong>. <span
 class="math inline">\({\mathcal{F}_\mathsf{noisy\mbox{-}minH}}\)</span>
@@ -7068,7 +7076,12 @@ data-cites="DGT12">[140]</span> that computes the exact cardinality of
 the intersection of the two input sets, as described in Figure <a
 href="#func:psica" data-reference-type="ref"
 data-reference="func:psica">[func:psica]</a>.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Functionality of Private Set Intersection
+Cardinality <span class="math inline">\(\mathcal{F}_{{\mathsf
+psi\mbox{-}ca}}\)</span></strong></p>
+<p>——————————————-</p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> has
 a set <span class="math inline">\(A\)</span> and <span
 class="math inline">\(P_2\)</span> has a set <span
@@ -7077,7 +7090,7 @@ class="math inline">\(B\)</span>.</p>
 B|\)</span> to <span class="math inline">\(P_1\)</span> and <span
 class="math inline">\(\bot\)</span> to <span
 class="math inline">\(P_2\)</span>.</p>
-</div>
+<p>——————————————-</p>
 <p>In particular, in order to compute the noisy min-hash match counts,
 the parties construct two sets consisting min-hash values and additional
 dummy elements and then run <span
@@ -7112,7 +7125,12 @@ class="math inline">\(n_A\)</span> and <span
 class="math inline">\(n_B\)</span></em></span> even when the protocol
 implementing <span class="math inline">\(\mathcal{F}_{{\mathsf
 psi\mbox{-}ca}}\)</span> has a linear communication complexity.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Two-party Noisy Min-hash Protocol <span
+class="math inline">\(\pi_{\mathsf
+NMH}^{\mathcal{O}}\)</span></strong></p>
+<p>——————————————-</p>
 <p><strong>Input:</strong> <span class="math inline">\(P_1\)</span> and
 <span class="math inline">\(P_2\)</span>’s input vectors <span
 class="math inline">\(A = (x^A_1, \ldots,
@@ -7191,7 +7209,7 @@ class="math inline">\(c^B = c^{+} -
 class="math inline">\((\mathsf{pre}, {\mathsf coins}_A, c^A)\)</span>
 and <span class="math inline">\((\mathsf{pre}, {\mathsf coins}_B,
 c^B)\)</span> respectively.</p>
-</div>
+<p>——————————————-</p>
 <div class="proposition">
 <p><strong>Proposition 47</strong>. Protocol <span
 class="math inline">\(\pi_{\mathsf NMH}^{\mathcal{O}}\)</span> described
@@ -7246,14 +7264,18 @@ noise satisfies differential privacy. Our observation is that the final
 count <span class="math inline">\(c\)</span> follows a binomial
 distribution in the private hash setting, which can be treated as noise
 to obscure the sensitivity.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Min-Hash in the Private Hash Setting <span
+class="math inline">\({\mathcal{F}_\mathsf{privH}}\)</span></strong></p>
+<p>——————————————-</p>
 <p><span class="math inline">\({\mathcal{F}_\mathsf{privH}}\)</span>
 works exactly the same as <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> except that
 it outputs only the final count <span class="math inline">\(c\)</span>
 (with the prefix <span class="math inline">\({\mathsf{pre}}\)</span>
 hidden to the participants).</p>
-</div>
+<p>——————————————-</p>
 <div id="thm:PrivH" class="theorem">
 <p><strong>Theorem 48</strong>. For any constant <span
 class="math inline">\(\epsilon&gt; 0\)</span>, if <span
@@ -7348,7 +7370,11 @@ adversary, having corrupted one of the two parties, has access to the
 view of the party and even the actual intersection. However, the
 adversary does not know the other party’s input set (except from the
 intersection).</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Distribution Family <span
+class="math inline">\(\Delta_\mathsf{PH}\)</span></strong></p>
+<p>——————————————-</p>
 <p>Parameterized with <span class="math inline">\((n_A, n_B,
 n_I)\)</span>, a distribution <span class="math inline">\({\cal D}_{A,
 B}\)</span> in this family samples <span class="math inline">\((A,
@@ -7368,7 +7394,7 @@ class="math inline">\(B\)</span> respectively.</p></li>
 <li><p>Give <span class="math inline">\(I\)</span> to the adversary as
 the auxiliary information.</p></li>
 </ul>
-</div>
+<p>——————————————-</p>
 <p>Below, we show that <span
 class="math inline">\({\mathcal{F}_\mathsf{minH}}\)</span> achieves DDP
 under certain circumstances.</p>
@@ -8452,7 +8478,11 @@ assumption in the random oracle model. Essentially the same security
 proof found in the original paper can be applied to show the security of
 this variant, when <span class="math inline">\(H_2\)</span> is also
 modeled as a random oracle.</p>
-<div class="algorithm">
+<p><strong>&gt;&gt;&gt; DEBUG: WEB PROTOCOL DEFINITION IS ACTIVE
+&lt;&lt;&lt;</strong></p>
+<p><strong>PROTOCOL TITLE: Private Set Intersection
+Cardinality</strong></p>
+<p>——————————————-</p>
 <p>Let <span class="math inline">\(G\)</span> be a multiplicative group
 of order <span class="math inline">\(q\)</span>. Let <span
 class="math inline">\(H_1:\{0,1\}^* \to G\)</span> and <span
@@ -8488,7 +8518,7 @@ the following value: <span class="math display">\[| ~\{H_2(a&#39;_1),
 \ldots, H_2(a&#39;_v)\} \cap \{H_2(b&#39;_1), \ldots,
 H_2(b&#39;_w)\}|.\]</span></p></li>
 </ol>
-</div>
+<p>——————————————-</p>
 <p>We briefly sketch the security proof here while referring the full
 proof to the original paper <span class="citation"
 data-cites="DGT12">[140]</span>. We first show the simulator for the
