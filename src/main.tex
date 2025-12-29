@@ -392,21 +392,53 @@
         \vspace{1em}
     }
 
-    % --- B. Handle \begin{algorithm} environment ---
+    % % --- B. Handle \begin{algorithm} environment ---
+    % \renewenvironment{algorithm}[1][]{
+    %     \par\vspace{1em}
+    %     % Redefine caption to act as the header printer
+    %     \renewcommand{\caption}[2][]{
+    %         \refstepcounter{protocolcount}
+    %         \phantomsection % Fixes the broken reference anchor
+    %         \printprotocolheader{##2}
+    %     }
+    % }{
+    %     % This runs at \end{algorithm}
+    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+    %     \vspace{1em}
+    % }
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % 1. Create a NEW separate counter for Algorithms
+    % (This ensures they don't get mixed up with Protocols or Figures)
+    \newcounter{algorithmcount}
+    \setcounter{algorithmcount}{0}
+
+    % 2. Define the Visual Header for Algorithms
+    \newcommand{\printalgorithmheader}[1]{%
+       \par\vspace{1em}
+       \noindent\rule{\linewidth}{2pt} % Thick Top Line
+       \par\noindent\textbf{Algorithm \thealgorithmcount: #1} 
+       \par\noindent\rule{\linewidth}{0.5pt} % Thin Separator
+       \par
+    }
+
+    % 3. Redefine the 'algorithm' environment
     \renewenvironment{algorithm}[1][]{
         \par\vspace{1em}
-        % Redefine caption to act as the header printer
+        
+        % We redefine \caption ONLY inside this environment.
+        % This guarantees that Figures use the standard caption and are NOT impacted.
         \renewcommand{\caption}[2][]{
-            \refstepcounter{protocolcount}
-            \phantomsection % Fixes the broken reference anchor
-            \printprotocolheader{##2}
+            \refstepcounter{algorithmcount}
+            \phantomsection 
+            \addcontentsline{toc}{section}{Algorithm \thealgorithmcount: ##2}
+            % This prints the header immediately where \caption is found
+            \printalgorithmheader{##2}
         }
     }{
-        % This runs at \end{algorithm}
+        % This runs at \end{algorithm} - Prints the closing line
         \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
         \vspace{1em}
     }
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % \let\restatable\relax
     % \let\endrestatable\relax
