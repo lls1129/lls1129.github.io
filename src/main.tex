@@ -364,44 +364,44 @@
     % % We define the end command to just add spacing
     % \def\endrestatable{\par\bigskip}
     % Create a single counter so numbering is continuous
-    \newcounter{protocolcount}
-    \setcounter{protocolcount}{0}
+    % \newcounter{protocolcount}
+    % \setcounter{protocolcount}{0}
 
-    % --- A. Handle the \protocol{...} command ---
-    \newcommand{\protocol}[5]{
-        % #1: Title, #2-#4: Unused, #5: Content
-        \refstepcounter{protocolcount}
+    % % --- A. Handle the \protocol{...} command ---
+    % \newcommand{\protocol}[5]{
+    %     % #1: Title, #2-#4: Unused, #5: Content
+    %     \refstepcounter{protocolcount}
         
-        \par\bigskip
-        \noindent\textbf{================================================}
-        \par\noindent\textbf{Protocol \theprotocolcount: #1}
-        \par\noindent\textbf{------------------------------------------------}
+    %     \par\bigskip
+    %     \noindent\textbf{================================================}
+    %     \par\noindent\textbf{Protocol \theprotocolcount: #1}
+    %     \par\noindent\textbf{------------------------------------------------}
         
-        \par #5 % The Content
+    %     \par #5 % The Content
         
-        \par\noindent\textbf{================================================}
-        \bigskip
-    }
+    %     \par\noindent\textbf{================================================}
+    %     \bigskip
+    % }
 
-    % --- B. Handle \begin{algorithm} environment ---
-    % We redefine the environment to mimic the look of the command above.
-    % We also redefine \caption inside it to print the title correctly.
+    % % --- B. Handle \begin{algorithm} environment ---
+    % % We redefine the environment to mimic the look of the command above.
+    % % We also redefine \caption inside it to print the title correctly.
     
-    \renewenvironment{algorithm}[1][]{
-        \par\bigskip
-        \noindent\textbf{================================================}
-        % Redefine \caption locally to print our header
-        \renewcommand{\caption}[2][]{
-            \refstepcounter{protocolcount}
-            \par\noindent\textbf{Protocol \theprotocolcount: ##2}
-            \par\noindent\textbf{------------------------------------------------}
-            \par
-        }
-    }{
-        % This runs at \end{algorithm}
-        \par\noindent\textbf{================================================}
-        \bigskip
-    }
+    % \renewenvironment{algorithm}[1][]{
+    %     \par\bigskip
+    %     \noindent\textbf{================================================}
+    %     % Redefine \caption locally to print our header
+    %     \renewcommand{\caption}[2][]{
+    %         \refstepcounter{protocolcount}
+    %         \par\noindent\textbf{Protocol \theprotocolcount: ##2}
+    %         \par\noindent\textbf{------------------------------------------------}
+    %         \par
+    %     }
+    % }{
+    %     % This runs at \end{algorithm}
+    %     \par\noindent\textbf{================================================}
+    %     \bigskip
+    % }
     % \let\restatable\relax
     % \let\endrestatable\relax
 
