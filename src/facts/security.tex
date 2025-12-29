@@ -58,7 +58,7 @@ Concretely, we define the following game between an adversary $\A$ controlling t
 \begin{enumerate}
     \item[] \hspace{-2em} \underline{$\GameSP$:}
     \item The challenger runs $\setup(c)$ to set up the EEMS with $c$ users.  He hands all keys corresponding to corrupted parties to $\A$
-    \item $\A$ chooses a sequence of messages $((\mathrm{send}, A_0,B_0,\tag_{x_0}, x_0),\ldots,(\mathrm{send}, A_\ell,B_\ell,\tag_{x_\ell}, x_{\ell}))$\footnote{We note that since $S \in \A$, $\A$ can produce valid-looking tags for each of these messages by producing the necessary signatures.}, and a sequence of complaints  $((\mathrm{complain}, C_0, \tag_{x^c_0}, x^c_0), \ldots, (\mathrm{complain}, C_{\ell'}, \tag_{x^c_{\ell'}})$ and interleaves them arbitrarily. We require that none of the sending users ($A_i$), receiving users ($B_i$), or complainers ($C_i$) are controlled by $\A$.
+    \item $\A$ chooses a sequence of messages $((\mathrm{send}, A_0,B_0,\tagg_{x_0}, x_0),\ldots,(\mathrm{send}, A_\ell,B_\ell,\tagg_{x_\ell}, x_{\ell}))$\footnote{We note that since $S \in \A$, $\A$ can produce valid-looking tags for each of these messages by producing the necessary signatures.}, and a sequence of complaints  $((\mathrm{complain}, C_0, \tagg_{x^c_0}, x^c_0), \ldots, (\mathrm{complain}, C_{\ell'}, \tagg_{x^c_{\ell'}})$ and interleaves them arbitrarily. We require that none of the sending users ($A_i$), receiving users ($B_i$), or complainers ($C_i$) are controlled by $\A$.
     \item The challenger chooses $b \gets \bool$ and does the following:
     \begin{enumerate}
         \item If $b=0$, Run the $\send$ and $\complain$ protocols with inputs supplied by $\A$, giving $\A$ the resulting server view.
