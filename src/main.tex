@@ -393,19 +393,19 @@
     }
 
     % --- B. Handle \begin{algorithm} environment ---
-    \renewenvironment{algorithm}[1][]{
-        \par\vspace{1em}
-        % Redefine caption to act as the header printer
-        \renewcommand{\caption}[2][]{
-            \refstepcounter{protocolcount}
-            \phantomsection % Fixes the broken reference anchor
-            \printprotocolheader{##2}
-        }
-    }{
-        % This runs at \end{algorithm}
-        \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
-        \vspace{1em}
-    }
+    % \renewenvironment{algorithm}[1][]{
+    %     \par\vspace{1em}
+    %     % Redefine caption to act as the header printer
+    %     \renewcommand{\caption}[2][]{
+    %         \refstepcounter{protocolcount}
+    %         \phantomsection % Fixes the broken reference anchor
+    %         \printprotocolheader{##2}
+    %     }
+    % }{
+    %     % This runs at \end{algorithm}
+    %     \par\noindent\rule{\linewidth}{2pt} % Thick Bottom Line
+    %     \vspace{1em}
+    % }
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
