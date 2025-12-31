@@ -1964,7 +1964,7 @@ Otherwise, <span class="math inline">\(\unicode{x27E6}B^k_j
 \unicode{x27E7}, \ldots, \unicode{x27E6}B^t
 \unicode{x27E7}\)</span>.</p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 BF\mbox{-}COIE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
 \ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
 <hr />
@@ -2002,7 +2002,7 @@ class="math inline">\({\mathsf BF.Check}(B^0, i)\)</span> is “yes", add
 class="math inline">\(I\)</span></p>
 <p>Output <span class="math inline">\(I\)</span></p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 BF\mbox{-}COIE}.\mathsf{Decode}(B^0, \ldots, B^t)\)</span></strong></p>
 <hr />
 <p><span id="alg:BFCOIED" label="alg:BFCOIED"></span></p>
@@ -2157,7 +2157,7 @@ i^j \cdot \unicode{x27E6}v_i \unicode{x27E7}\)</span></p>
 \unicode{x27E7}, \ldots, \unicode{x27E6}w_s
 \unicode{x27E7}.\)</span></p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 PS\mbox{-}COIE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
 \ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
 <hr />
@@ -2198,7 +2198,7 @@ a_{0} &amp;= (a_{1} w_1 - a_{2} w_2 + \cdots w_s)/s
 <p>Extract and output the roots of the polynomial <span
 class="math inline">\(f(x)\)</span>.</p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 PS\mbox{-}COIE}.\mathsf{Decode}(\unicode{x27E6}w_1 \unicode{x27E7},
 \ldots, \unicode{x27E6}w_s \unicode{x27E7})\)</span></strong></p>
 <hr />
@@ -2414,7 +2414,7 @@ class="math inline">\(\unicode{x27E6}B_j \unicode{x27E7}=
 <p>Output <span class="math inline">\(\unicode{x27E6}B
 \unicode{x27E7}\)</span>.</p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 BFS\mbox{-}CODE}.\mathsf{Encode}(\unicode{x27E6}v_1 \unicode{x27E7},
 \ldots, \unicode{x27E6}v_n \unicode{x27E7})\)</span></strong></p>
 <hr />
@@ -2434,7 +2434,7 @@ data-reference="alg:BFSD">[alg:BFSD]</a>.</p>
 <p>Output <span class="math inline">\({\mathsf
 BFS.Values}(B)\)</span></p>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\({\mathsf
+<p><strong>Protocol : <span class="math inline">\({\mathsf
 BFS\mbox{-}CODE}.\mathsf{Decode}(B)\)</span></strong></p>
 <hr />
 <p><span id="alg:BFSD" label="alg:BFSD"></span></p>
@@ -2640,7 +2640,7 @@ corresponding to the indexes in <span
 class="math inline">\(\mathcal{S}&#39;\)</span>.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : Secure search with a <span
+<p><strong>Protocol : Secure search with a <span
 class="math inline">\((n, s, c, f_p)\)</span>-COIE scheme.</strong></p>
 <hr />
 <p><span id="alg:ssCOIE" label="alg:ssCOIE"></span></p>
@@ -2777,7 +2777,7 @@ class="math inline">\(\mathcal{S}\)</span> of size <span
 class="math inline">\(s\)</span> matching records.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : Secure search with a <span
+<p><strong>Protocol : Secure search with a <span
 class="math inline">\((n, s, c, f_p)\)</span>-CODE scheme.</strong></p>
 <hr />
 <p><span id="alg:ssCODE" label="alg:ssCODE"></span></p>
@@ -2924,7 +2924,7 @@ protocol between server and clients is a 1Gbps LAN.</p>
 <span> <strong>single</strong></span> record, since fetching <span
 class="math inline">\(s\)</span> records takes too long.</span></p>
 <hr />
-<p><strong>Algorithm : Fetch time vs. Database size with <span
+<p><strong>Protocol : Fetch time vs. Database size with <span
 class="math inline">\(s=16\)</span>.</strong></p>
 <hr />
 </figure>
@@ -2973,7 +2973,7 @@ longer.</p>
 <figure id="fig:ct_s">
 <img src="src/securesearch/expimgs/Figure_S.png" />
 <hr />
-<p><strong>Algorithm : Fetch time vs. Result set size with <span
+<p><strong>Protocol : Fetch time vs. Result set size with <span
 class="math inline">\(n=10,000\)</span>.</strong></p>
 <hr />
 </figure>
@@ -3092,7 +3092,7 @@ class="math inline">\(2\)</span></td>
 </tbody>
 </table>
 <hr />
-<p><strong>Algorithm : The communication costs (<span
+<p><strong>Protocol : The communication costs (<span
 class="math inline">\(n=10,000\)</span> and <span
 class="math inline">\(s=16\)</span>).</strong></p>
 <hr />
@@ -4203,8 +4203,8 @@ the following circuit:</p>
 <p>Output: <span class="math inline">\(i_1 \cdot (1-b) + i_2 \cdot
 b\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Two-party <span
-class="math inline">\(L_1\)</span> sampling in the <span
+<p><strong>Protocol : Two-party <span class="math inline">\(L_1\)</span>
+sampling in the <span
 class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</strong></p>
 <hr />
@@ -4277,8 +4277,7 @@ class="math inline">\(c\)</span> is decrypted to the receiver.</p>
 receiver outputs the decryption of <span
 class="math inline">\(c\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Oblivious sampling from threshold
-FHE</strong></p>
+<p><strong>Protocol : Oblivious sampling from threshold FHE</strong></p>
 <hr />
 <p><span id="fig:os-fhe" label="fig:os-fhe"></span></p>
 <hr />
@@ -4462,7 +4461,7 @@ probability <span class="math display">\[\begin{aligned}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
 <hr />
-<p><strong>Algorithm : Protocol for exact <span
+<p><strong>Protocol : Protocol for exact <span
 class="math inline">\(L_2\)</span> sampling (<span
 class="math inline">\(\Pi_{L_2}\)</span>)</strong></p>
 <hr />
@@ -4590,9 +4589,8 @@ class="math inline">\(\widehat{\mathsf{out}}_j\)</span> decrypts to
 class="math inline">\(\bot\)</span> if no such <span
 class="math inline">\(j \in [B]\)</span> exists.</p>
 <hr />
-<p><strong>Algorithm : Two-party <span
-class="math inline">\(L_2\)</span> sampling in the <span
-class="math inline">\((\mathcal{F}_{L_1},
+<p><strong>Protocol : Two-party <span class="math inline">\(L_2\)</span>
+sampling in the <span class="math inline">\((\mathcal{F}_{L_1},
 F_{2PC})\)</span>-hybrid.</strong></p>
 <hr />
 <p><span id="fig:l2" label="fig:l2"></span></p>
@@ -4692,7 +4690,7 @@ p}(\boldsymbol{w}_1, \boldsymbol{w}_2)}[i]}
         
 \end{aligned}\]</span> and otherwise return to step 1.</p>
 <hr />
-<p><strong>Algorithm : Protocol for exact <span
+<p><strong>Protocol : Protocol for exact <span
 class="math inline">\(L_p\)</span> sampling (<span
 class="math inline">\(\Pi_{L_p}\)</span>)</strong></p>
 <hr />
@@ -5286,7 +5284,7 @@ outputs.</p></li>
 <p><strong>Output:</strong> Both parties output the sampled value <span
 class="math inline">\(i\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Product sampling (<span
+<p><strong>Protocol : Product sampling (<span
 class="math inline">\(\Pi_{\mathsf{prod}}^{IP}\)</span>) in the <span
 class="math inline">\(\{\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{2PC} \}\)</span>-hybrid. <span id="prot:prodsampapx"
@@ -5680,7 +5678,7 @@ class="math inline">\(P_1\)</span>.</p>
 class="math inline">\(\frac 1 k \cdot \langle \tilde{\boldsymbol{w}}_1,
 \tilde {\boldsymbol{w}}_2 \rangle\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Private protocol for computing approximate inner
+<p><strong>Protocol : Private protocol for computing approximate inner
 product</strong></p>
 <hr />
 <p><span id="fig:ip-fhe" label="fig:ip-fhe"></span></p>
@@ -6111,7 +6109,7 @@ class="math inline">\(\mathsf{abort}\)</span>.</p></li>
 class="math inline">\(i\)</span> or <span
 class="math inline">\(\mathsf{abort}\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Exponential Mechanism Protocol (<span
+<p><strong>Protocol : Exponential Mechanism Protocol (<span
 class="math inline">\(\Pi_{\mathsf{EM}}\)</span>) in the <span
 class="math inline">\(\{\mathcal{F}_{2PC},
 \mathcal{F}_{\mathsf{osample(L_1)}}\}\)</span>-hybrid model</strong></p>
@@ -9317,7 +9315,7 @@ the intersection of these two index sets, the user instead changes any
 other arbitrary 0 bit in its own user set in order to maintain item
 obliviousness.</p>
 <hr />
-<p><strong>Algorithm : <span
+<p><strong>Protocol : <span
 class="math inline">\(\mathsf{Increment}(x,C)\)</span><span
 id="alg:increment" label="alg:increment"></span></strong></p>
 <hr />
@@ -9375,7 +9373,7 @@ by the server and saved without violating item obliviousness.</p>
 data-reference-type="ref"
 data-reference="alg:testcount">[alg:testcount]</a>.</p>
 <hr />
-<p><strong>Algorithm : <span
+<p><strong>Protocol : <span
 class="math inline">\(\mathsf{TestCount}(x,t)\)</span><span
 id="alg:testcount" label="alg:testcount"></span></strong></p>
 <hr />
@@ -9763,7 +9761,7 @@ class="math inline">\(A\)</span>.</p></li>
 class="math inline">\(\mathsf{tag}_m = (r,e,\sigma)\)</span>.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : <span
+<p><strong>Protocol : <span
 class="math inline">\(\textsf{Originate}(A,x)\)</span></strong></p>
 <hr />
 <hr />
@@ -9803,7 +9801,7 @@ class="math inline">\(B\)</span> using the E2E messaging platform’s
 <span class="math inline">\(\textrm{send}\)</span> protocol.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : <span
+<p><strong>Protocol : <span
 class="math inline">\(\textsf{SendMsg}(A,B,\mathsf{tag}_x,x)\)</span></strong></p>
 <hr />
 <hr />
@@ -9832,7 +9830,7 @@ signature by the server on <span class="math inline">\((h||e)\)</span>.
 If not, then discard the received message.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : <span
+<p><strong>Protocol : <span
 class="math inline">\(\textsf{RcvMsg}(A,B,\mathsf{tag}_x,x)\)</span></strong></p>
 <hr />
 <hr />
@@ -9889,7 +9887,7 @@ class="math inline">\(\mathsf{tag}_x=(r,e,\sigma)\)</span></p></li>
 class="math inline">\(\mathsf{Increment}(C,\mathsf{tag}_x)\)</span></p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\(\textsf{Complain}(C,
+<p><strong>Protocol : <span class="math inline">\(\textsf{Complain}(C,
 \mathsf{tag}_x,x)\)</span></strong></p>
 <hr />
 <hr />
@@ -9930,7 +9928,7 @@ computing <span class="math inline">\(A={\mathsf
 Dec}_{SK_S}(e)\)</span>.</p></li>
 </ol>
 <hr />
-<p><strong>Algorithm : <span class="math inline">\(\textsf{Audit}(C,
+<p><strong>Protocol : <span class="math inline">\(\textsf{Audit}(C,
 \mathsf{tag}_x,x)\)</span></strong></p>
 <hr />
 <hr />
@@ -9972,7 +9970,7 @@ class="math inline">\(v\)</span> goes from (approximately) 740 to
 <p><img src="src/facts/imgs/ExplicitThresholdPlotsTitleless.png"
 style="width:120.0%" alt="image" /></p>
 <hr />
-<p><strong>Algorithm : The (left) Mean and (right) Relative Standard
+<p><strong>Protocol : The (left) Mean and (right) Relative Standard
 Deviation of Experimental Explicit Threshold vs. The Number of
 Background Complaints.</strong></p>
 <hr />
@@ -9981,7 +9979,7 @@ Background Complaints.</strong></p>
 <figure id="fig:report_msg_threshold">
 <img src="src/facts/imgs/var_threshold_size.png" />
 <hr />
-<p><strong>Algorithm : Average complaint time as a function of the
+<p><strong>Protocol : Average complaint time as a function of the
 threshold with <span class="math inline">\(n=1,000,000\)</span>
 complaints per epoch. Complaint time is measured as the average of 100
 samples and has a variance of less than 5ms. Network latency shows the
@@ -11433,7 +11431,7 @@ class="math inline">\(u\)</span> be the output to the OT receiver.</p>
 <p>Output <span class="math inline">\(\pi\)</span> to the sender and
 output <span class="math inline">\(u\)</span> to the receiver.</p>
 <hr />
-<p><strong>Algorithm : Oblivious sampling protocol realizing <span
+<p><strong>Protocol : Oblivious sampling protocol realizing <span
 class="math inline">\(\mathcal{F}_{{\mathsf{osample(L_1)}}}\)</span>
 based on <span class="math inline">\(1\)</span>-out-of-<span
 class="math inline">\(m\)</span> OT</strong></p>
@@ -11561,7 +11559,7 @@ b\)</span>.</p>
 class="math inline">\(P_1\)</span> and <span class="math inline">\(\pi
 \oplus i\)</span> to <span class="math inline">\(P_2\)</span>.</p>
 <hr />
-<p><strong>Algorithm : Protocol securely realizing <span
+<p><strong>Protocol : Protocol securely realizing <span
 class="math inline">\(\mathcal{F}_{L_1}^{ss}\)</span> in the <span
 class="math inline">\((\mathcal{F}_{\mathsf{osample(L_1)}},
 \mathcal{F}_{\mathsf{biasCoin}})\)</span>-hybrid.</strong></p>
@@ -13308,7 +13306,7 @@ Defense.</em><br />
 </p>
 </div>
 <hr />
-<p><strong>Algorithm : Proposed timeline for the completion of the Ph.D.
+<p><strong>Protocol : Proposed timeline for the completion of the Ph.D.
 thesis.</strong></p>
 <hr />
 <p><span id="tab:timeline" label="tab:timeline"></span></p>
@@ -13395,7 +13393,7 @@ rounds</strong></th>
 </table>
 </div>
 <hr />
-<p><strong>Algorithm : Throughput and Round for each components in the
+<p><strong>Protocol : Throughput and Round for each components in the
 follow-up FACTS for spreaders with one million complaints per
 epoch</strong></p>
 <hr />
